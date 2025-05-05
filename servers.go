@@ -1,45 +1,90 @@
 package steam
 
 import (
-	"math/rand"
+	"encoding/json"
+	"io"
+	"log"
+	"net"
+	"net/http"
 	"time"
 
 	"github.com/paralin/go-steam/netutil"
 )
 
-// CMServers contains a list of worldwide servers
-//
-// curl -s "https://api.steampowered.com/ISteamDirectory/GetCMListForConnect/v1/?key=$STEAM_API_KEY&format=json&celllid=1&cmtype=netfilter" | jq -r '.response.serverlist[] | .endpoint' | awk 'BEGIN {print "var CMServers = []string{"} {print "  \""$1"\","} END {print "}"}'
-var CMServers = []string{
-	"155.133.253.34:27017",
-	"155.133.253.50:27017",
-	"162.254.192.71:27017",
-	"162.254.192.74:27017",
-	"162.254.192.75:27017",
-	"162.254.192.87:27017",
-	"162.254.193.102:27017",
-	"162.254.193.74:27017",
-	"162.254.195.66:27017",
-	"162.254.195.71:27017",
-	"162.254.196.67:27017",
-	"162.254.196.68:27017",
-	"162.254.196.83:27017",
-	"162.254.196.84:27017",
-	"162.254.199.163:27017",
-	"162.254.199.181:27017",
-	"185.25.182.20:27017",
-	"185.25.182.52:27017",
-	"205.196.6.214:27017",
-	"205.196.6.215:27017",
+/*
+	We don't really need anything but the endpoint address.
+	Response example:
+
+	{
+		"endpoint":"162.254.197.38:27017",
+		"legacy_endpoint":"162.254.197.38:27017",
+		"type":"netfilter",
+		"dc":"fra1",
+		"realm":"steamglobal",
+		"load":30,
+		"wtd_load":25.342738151550293
+	}
+
+*/
+
+type CMListResponse struct {
+	Serverlist ServerList `json:"response"`
 }
 
-// GetRandomCM returns back a random server anywhere
-func GetRandomCM() *netutil.PortAddr {
-	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
-	servers := CMServers
-	addr := netutil.ParsePortAddr(servers[rng.Int31n(int32(len(servers)))])
-	if addr == nil {
-		panic("invalid address in CMServers slice")
+type ServerList struct {
+	EndpointList []EndpointObject `json:"serverlist"`
+}
+
+type EndpointObject struct {
+	EndpointIP string `json:"endpoint"`
+}
+
+// Doesn't require an API key
+const CMListFetchURL string = "http://api.steampowered.com/ISteamDirectory/GetCMListForConnect/v1/?cmtype=netfilter"
+
+func FetchCMList() CMListResponse {
+	var result CMListResponse
+	apiResponse, err := http.Get(CMListFetchURL)
+	if err != nil {
+		log.Fatal("failed to fetch cm server list", err)
+		return CMListResponse{}
 	}
-	return addr
+
+	apiResponseBody, err := io.ReadAll(apiResponse.Body)
+	if err != nil {
+		log.Fatal("failed to read the api response", err)
+		return CMListResponse{}
+	}
+
+	if err = json.Unmarshal(apiResponseBody, &result); err != nil {
+		log.Fatal("failed to unmarshal the api response", err)
+		return CMListResponse{}
+	}
+
+	return result
+}
+
+// Gets the best CM server from the list according to it's latency
+// Naming stays the same due to compatibility reasons.
+func GetRandomCM() *netutil.PortAddr {
+	cmServerList := FetchCMList()
+	smallestLatencyAddr := ""
+	var smallestLatency int64 = 1000 // random
+	for i := 0; i < len(cmServerList.Serverlist.EndpointList); i++ {
+		ipAddr := netutil.ParsePortAddr(cmServerList.Serverlist.EndpointList[i].EndpointIP)
+		curTime := time.Now()
+		conn, err := net.DialTCP("tcp", nil, ipAddr.ToTCPAddr())
+		if err != nil {
+			log.Fatal("failed to get a CM server", err)
+			return nil
+		}
+		latency := time.Since(curTime).Milliseconds()
+		conn.Close()
+		if latency < smallestLatency {
+			smallestLatency = latency
+			smallestLatencyAddr = cmServerList.Serverlist.EndpointList[i].EndpointIP
+		}
+	}
+
+	return netutil.ParsePortAddr(smallestLatencyAddr)
 }
