@@ -72,11 +72,15 @@ func GetRandomCM() *netutil.PortAddr {
 	var smallestLatency int64 = 1000 // random
 	for i := 0; i < len(cmServerList.Serverlist.EndpointList); i++ {
 		ipAddr := netutil.ParsePortAddr(cmServerList.Serverlist.EndpointList[i].EndpointIP)
+		if addr == nil {
+			log.Default("%s: invalid cm server\n", cmServerList.Serverlist.EndpointList[i].EndpointIP)
+			continue
+		}
 		curTime := time.Now()
 		conn, err := net.DialTCP("tcp", nil, ipAddr.ToTCPAddr())
 		if err != nil {
-			log.Fatal("failed to get a CM server", err)
-			return nil
+			log.Default("%s: failed to dial cm server\n", cmServerList.Serverlist.EndpointList[i].EndpointIP)
+			continue
 		}
 		latency := time.Since(curTime).Milliseconds()
 		conn.Close()
@@ -86,5 +90,10 @@ func GetRandomCM() *netutil.PortAddr {
 		}
 	}
 
+	if smallestLatencyAddr == "" {
+		panic("seems like we failed to get a cm server")
+		return nil
+	}
+	
 	return netutil.ParsePortAddr(smallestLatencyAddr)
 }
