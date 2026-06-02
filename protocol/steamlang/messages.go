@@ -5,9 +5,9 @@ package steamlang
 
 import (
 	"encoding/binary"
+	"github.com/golang/protobuf/proto"
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	"github.com/paralin/go-steam/rwu"
-	"github.com/golang/protobuf/proto"
 	"io"
 )
 
@@ -412,8 +412,7 @@ func (d *MsgHdrProtoBuf) Deserialize(r io.Reader) error {
 	if err != nil {
 		return err
 	}
-	buf1 := make([]byte, d.HeaderLength, d.HeaderLength)
-	_, err = io.ReadFull(r, buf1)
+	buf1, err := readProtoBufHeaderBytes(r, d.HeaderLength)
 	if err != nil {
 		return err
 	}
@@ -464,8 +463,7 @@ func (d *MsgGCHdrProtoBuf) Deserialize(r io.Reader) error {
 	if err != nil {
 		return err
 	}
-	buf1 := make([]byte, d.HeaderLength, d.HeaderLength)
-	_, err = io.ReadFull(r, buf1)
+	buf1, err := readProtoBufHeaderBytes(r, d.HeaderLength)
 	if err != nil {
 		return err
 	}
