@@ -3,9 +3,12 @@
 
 package unified
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	protobuf "github.com/paralin/go-steam/protocol/protobuf"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -13,98 +16,49 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package unified is being compiled against.
+// is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
-// proto package unified to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
-
-type CCredentials_TestAvailablePassword_Request struct {
-	Password          *string `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
-	ShaDigestPassword []byte  `protobuf:"bytes,2,opt,name=sha_digest_password,json=shaDigestPassword" json:"sha_digest_password,omitempty"`
-	AccountName       *string `protobuf:"bytes,3,opt,name=account_name,json=accountName" json:"account_name,omitempty"`
-	XXX_unrecognized  []byte  `json:"-"`
-}
-
-func (m *CCredentials_TestAvailablePassword_Request) Reset() {
-	*m = CCredentials_TestAvailablePassword_Request{}
-}
-func (m *CCredentials_TestAvailablePassword_Request) String() string {
-	return proto.CompactTextString(m)
-}
-func (*CCredentials_TestAvailablePassword_Request) ProtoMessage() {}
-func (*CCredentials_TestAvailablePassword_Request) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{0}
-}
-
-func (m *CCredentials_TestAvailablePassword_Request) GetPassword() string {
-	if m != nil && m.Password != nil {
-		return *m.Password
-	}
-	return ""
-}
-
-func (m *CCredentials_TestAvailablePassword_Request) GetShaDigestPassword() []byte {
-	if m != nil {
-		return m.ShaDigestPassword
-	}
-	return nil
-}
-
-func (m *CCredentials_TestAvailablePassword_Request) GetAccountName() string {
-	if m != nil && m.AccountName != nil {
-		return *m.AccountName
-	}
-	return ""
-}
-
-type CCredentials_TestAvailablePassword_Response struct {
-	IsValid          *bool  `protobuf:"varint,3,opt,name=is_valid,json=isValid" json:"is_valid,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *CCredentials_TestAvailablePassword_Response) Reset() {
-	*m = CCredentials_TestAvailablePassword_Response{}
-}
-func (m *CCredentials_TestAvailablePassword_Response) String() string {
-	return proto.CompactTextString(m)
-}
-func (*CCredentials_TestAvailablePassword_Response) ProtoMessage() {}
-func (*CCredentials_TestAvailablePassword_Response) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{1}
-}
-
-func (m *CCredentials_TestAvailablePassword_Response) GetIsValid() bool {
-	if m != nil && m.IsValid != nil {
-		return *m.IsValid
-	}
-	return false
-}
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type CCredentials_GetSteamGuardDetails_Request struct {
-	IncludeNewAuthentications *bool   `protobuf:"varint,1,opt,name=include_new_authentications,json=includeNewAuthentications,def=1" json:"include_new_authentications,omitempty"`
-	Webcookie                 *string `protobuf:"bytes,2,opt,name=webcookie" json:"webcookie,omitempty"`
-	TimestampMinimumWanted    *uint32 `protobuf:"fixed32,3,opt,name=timestamp_minimum_wanted,json=timestampMinimumWanted" json:"timestamp_minimum_wanted,omitempty"`
-	Ipaddress                 *int32  `protobuf:"varint,4,opt,name=ipaddress" json:"ipaddress,omitempty"`
-	XXX_unrecognized          []byte  `json:"-"`
+	Webcookie              *string                 `protobuf:"bytes,2,opt,name=webcookie" json:"webcookie,omitempty"`
+	TimestampMinimumWanted *uint32                 `protobuf:"fixed32,3,opt,name=timestamp_minimum_wanted,json=timestampMinimumWanted" json:"timestamp_minimum_wanted,omitempty"`
+	DeprecatedIpaddress    *int32                  `protobuf:"varint,4,opt,name=deprecated_ipaddress,json=deprecatedIpaddress" json:"deprecated_ipaddress,omitempty"`
+	IpAddress              *protobuf.CMsgIPAddress `protobuf:"bytes,5,opt,name=ip_address,json=ipAddress" json:"ip_address,omitempty"`
+	XXX_NoUnkeyedLiteral   struct{}                `json:"-"`
+	XXX_unrecognized       []byte                  `json:"-"`
+	XXX_sizecache          int32                   `json:"-"`
 }
 
 func (m *CCredentials_GetSteamGuardDetails_Request) Reset() {
 	*m = CCredentials_GetSteamGuardDetails_Request{}
 }
-func (m *CCredentials_GetSteamGuardDetails_Request) String() string { return proto.CompactTextString(m) }
-func (*CCredentials_GetSteamGuardDetails_Request) ProtoMessage()    {}
+func (m *CCredentials_GetSteamGuardDetails_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CCredentials_GetSteamGuardDetails_Request) ProtoMessage() {}
 func (*CCredentials_GetSteamGuardDetails_Request) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{2}
+	return fileDescriptor_50e19d183434a0ff, []int{0}
 }
 
-const Default_CCredentials_GetSteamGuardDetails_Request_IncludeNewAuthentications bool = true
-
-func (m *CCredentials_GetSteamGuardDetails_Request) GetIncludeNewAuthentications() bool {
-	if m != nil && m.IncludeNewAuthentications != nil {
-		return *m.IncludeNewAuthentications
-	}
-	return Default_CCredentials_GetSteamGuardDetails_Request_IncludeNewAuthentications
+func (m *CCredentials_GetSteamGuardDetails_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_GetSteamGuardDetails_Request.Unmarshal(m, b)
 }
+func (m *CCredentials_GetSteamGuardDetails_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_GetSteamGuardDetails_Request.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_GetSteamGuardDetails_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_GetSteamGuardDetails_Request.Merge(m, src)
+}
+func (m *CCredentials_GetSteamGuardDetails_Request) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_GetSteamGuardDetails_Request.Size(m)
+}
+func (m *CCredentials_GetSteamGuardDetails_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_GetSteamGuardDetails_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_GetSteamGuardDetails_Request proto.InternalMessageInfo
 
 func (m *CCredentials_GetSteamGuardDetails_Request) GetWebcookie() string {
 	if m != nil && m.Webcookie != nil {
@@ -120,26 +74,34 @@ func (m *CCredentials_GetSteamGuardDetails_Request) GetTimestampMinimumWanted() 
 	return 0
 }
 
-func (m *CCredentials_GetSteamGuardDetails_Request) GetIpaddress() int32 {
-	if m != nil && m.Ipaddress != nil {
-		return *m.Ipaddress
+func (m *CCredentials_GetSteamGuardDetails_Request) GetDeprecatedIpaddress() int32 {
+	if m != nil && m.DeprecatedIpaddress != nil {
+		return *m.DeprecatedIpaddress
 	}
 	return 0
 }
 
+func (m *CCredentials_GetSteamGuardDetails_Request) GetIpAddress() *protobuf.CMsgIPAddress {
+	if m != nil {
+		return m.IpAddress
+	}
+	return nil
+}
+
 type CCredentials_GetSteamGuardDetails_Response struct {
-	IsSteamguardEnabled                                   *bool                                                           `protobuf:"varint,1,opt,name=is_steamguard_enabled,json=isSteamguardEnabled" json:"is_steamguard_enabled,omitempty"`
-	TimestampSteamguardEnabled                            *uint32                                                         `protobuf:"fixed32,2,opt,name=timestamp_steamguard_enabled,json=timestampSteamguardEnabled" json:"timestamp_steamguard_enabled,omitempty"`
-	DeprecatedNewauthentication                           []*CCredentials_GetSteamGuardDetails_Response_NewAuthentication `protobuf:"bytes,3,rep,name=deprecated_newauthentication,json=deprecatedNewauthentication" json:"deprecated_newauthentication,omitempty"`
-	DeprecatedMachineNameUserchosen                       *string                                                         `protobuf:"bytes,4,opt,name=deprecated_machine_name_userchosen,json=deprecatedMachineNameUserchosen" json:"deprecated_machine_name_userchosen,omitempty"`
-	DeprecatedTimestampMachineSteamguardEnabled           *uint32                                                         `protobuf:"fixed32,5,opt,name=deprecated_timestamp_machine_steamguard_enabled,json=deprecatedTimestampMachineSteamguardEnabled" json:"deprecated_timestamp_machine_steamguard_enabled,omitempty"`
-	DeprecatedAuthenticationExistsFromGeolocBeforeMintime *bool                                                           `protobuf:"varint,6,opt,name=deprecated_authentication_exists_from_geoloc_before_mintime,json=deprecatedAuthenticationExistsFromGeolocBeforeMintime" json:"deprecated_authentication_exists_from_geoloc_before_mintime,omitempty"`
-	DeprecatedMachineId                                   *uint64                                                         `protobuf:"varint,7,opt,name=deprecated_machine_id,json=deprecatedMachineId" json:"deprecated_machine_id,omitempty"`
-	SessionData                                           []*CCredentials_GetSteamGuardDetails_Response_SessionData       `protobuf:"bytes,8,rep,name=session_data,json=sessionData" json:"session_data,omitempty"`
-	IsTwofactorEnabled                                    *bool                                                           `protobuf:"varint,9,opt,name=is_twofactor_enabled,json=isTwofactorEnabled" json:"is_twofactor_enabled,omitempty"`
-	TimestampTwofactorEnabled                             *uint32                                                         `protobuf:"fixed32,10,opt,name=timestamp_twofactor_enabled,json=timestampTwofactorEnabled" json:"timestamp_twofactor_enabled,omitempty"`
-	IsPhoneVerified                                       *bool                                                           `protobuf:"varint,11,opt,name=is_phone_verified,json=isPhoneVerified" json:"is_phone_verified,omitempty"`
-	XXX_unrecognized                                      []byte                                                          `json:"-"`
+	IsSteamguardEnabled                                   *bool                                                     `protobuf:"varint,1,opt,name=is_steamguard_enabled,json=isSteamguardEnabled" json:"is_steamguard_enabled,omitempty"`
+	TimestampSteamguardEnabled                            *uint32                                                   `protobuf:"fixed32,2,opt,name=timestamp_steamguard_enabled,json=timestampSteamguardEnabled" json:"timestamp_steamguard_enabled,omitempty"`
+	DeprecatedMachineNameUserchosen                       *string                                                   `protobuf:"bytes,4,opt,name=deprecated_machine_name_userchosen,json=deprecatedMachineNameUserchosen" json:"deprecated_machine_name_userchosen,omitempty"`
+	DeprecatedTimestampMachineSteamguardEnabled           *uint32                                                   `protobuf:"fixed32,5,opt,name=deprecated_timestamp_machine_steamguard_enabled,json=deprecatedTimestampMachineSteamguardEnabled" json:"deprecated_timestamp_machine_steamguard_enabled,omitempty"`
+	DeprecatedAuthenticationExistsFromGeolocBeforeMintime *bool                                                     `protobuf:"varint,6,opt,name=deprecated_authentication_exists_from_geoloc_before_mintime,json=deprecatedAuthenticationExistsFromGeolocBeforeMintime" json:"deprecated_authentication_exists_from_geoloc_before_mintime,omitempty"`
+	DeprecatedMachineId                                   *uint64                                                   `protobuf:"varint,7,opt,name=deprecated_machine_id,json=deprecatedMachineId" json:"deprecated_machine_id,omitempty"`
+	SessionData                                           []*CCredentials_GetSteamGuardDetails_Response_SessionData `protobuf:"bytes,8,rep,name=session_data,json=sessionData" json:"session_data,omitempty"`
+	IsTwofactorEnabled                                    *bool                                                     `protobuf:"varint,9,opt,name=is_twofactor_enabled,json=isTwofactorEnabled" json:"is_twofactor_enabled,omitempty"`
+	TimestampTwofactorEnabled                             *uint32                                                   `protobuf:"fixed32,10,opt,name=timestamp_twofactor_enabled,json=timestampTwofactorEnabled" json:"timestamp_twofactor_enabled,omitempty"`
+	IsPhoneVerified                                       *bool                                                     `protobuf:"varint,11,opt,name=is_phone_verified,json=isPhoneVerified" json:"is_phone_verified,omitempty"`
+	XXX_NoUnkeyedLiteral                                  struct{}                                                  `json:"-"`
+	XXX_unrecognized                                      []byte                                                    `json:"-"`
+	XXX_sizecache                                         int32                                                     `json:"-"`
 }
 
 func (m *CCredentials_GetSteamGuardDetails_Response) Reset() {
@@ -150,8 +112,26 @@ func (m *CCredentials_GetSteamGuardDetails_Response) String() string {
 }
 func (*CCredentials_GetSteamGuardDetails_Response) ProtoMessage() {}
 func (*CCredentials_GetSteamGuardDetails_Response) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{3}
+	return fileDescriptor_50e19d183434a0ff, []int{1}
 }
+
+func (m *CCredentials_GetSteamGuardDetails_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response.Unmarshal(m, b)
+}
+func (m *CCredentials_GetSteamGuardDetails_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_GetSteamGuardDetails_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response.Merge(m, src)
+}
+func (m *CCredentials_GetSteamGuardDetails_Response) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response.Size(m)
+}
+func (m *CCredentials_GetSteamGuardDetails_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response proto.InternalMessageInfo
 
 func (m *CCredentials_GetSteamGuardDetails_Response) GetIsSteamguardEnabled() bool {
 	if m != nil && m.IsSteamguardEnabled != nil {
@@ -165,13 +145,6 @@ func (m *CCredentials_GetSteamGuardDetails_Response) GetTimestampSteamguardEnabl
 		return *m.TimestampSteamguardEnabled
 	}
 	return 0
-}
-
-func (m *CCredentials_GetSteamGuardDetails_Response) GetDeprecatedNewauthentication() []*CCredentials_GetSteamGuardDetails_Response_NewAuthentication {
-	if m != nil {
-		return m.DeprecatedNewauthentication
-	}
-	return nil
 }
 
 func (m *CCredentials_GetSteamGuardDetails_Response) GetDeprecatedMachineNameUserchosen() string {
@@ -230,86 +203,17 @@ func (m *CCredentials_GetSteamGuardDetails_Response) GetIsPhoneVerified() bool {
 	return false
 }
 
-type CCredentials_GetSteamGuardDetails_Response_NewAuthentication struct {
-	TimestampSteamguardEnabled *uint32 `protobuf:"fixed32,1,opt,name=timestamp_steamguard_enabled,json=timestampSteamguardEnabled" json:"timestamp_steamguard_enabled,omitempty"`
-	IsWebCookie                *bool   `protobuf:"varint,2,opt,name=is_web_cookie,json=isWebCookie" json:"is_web_cookie,omitempty"`
-	Ipaddress                  *int32  `protobuf:"varint,3,opt,name=ipaddress" json:"ipaddress,omitempty"`
-	GeolocInfo                 *string `protobuf:"bytes,4,opt,name=geoloc_info,json=geolocInfo" json:"geoloc_info,omitempty"`
-	IsRemembered               *bool   `protobuf:"varint,5,opt,name=is_remembered,json=isRemembered" json:"is_remembered,omitempty"`
-	MachineNameUserSupplied    *string `protobuf:"bytes,6,opt,name=machine_name_user_supplied,json=machineNameUserSupplied" json:"machine_name_user_supplied,omitempty"`
-	Status                     *int32  `protobuf:"varint,7,opt,name=status" json:"status,omitempty"`
-	XXX_unrecognized           []byte  `json:"-"`
-}
-
-func (m *CCredentials_GetSteamGuardDetails_Response_NewAuthentication) Reset() {
-	*m = CCredentials_GetSteamGuardDetails_Response_NewAuthentication{}
-}
-func (m *CCredentials_GetSteamGuardDetails_Response_NewAuthentication) String() string {
-	return proto.CompactTextString(m)
-}
-func (*CCredentials_GetSteamGuardDetails_Response_NewAuthentication) ProtoMessage() {}
-func (*CCredentials_GetSteamGuardDetails_Response_NewAuthentication) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{3, 0}
-}
-
-func (m *CCredentials_GetSteamGuardDetails_Response_NewAuthentication) GetTimestampSteamguardEnabled() uint32 {
-	if m != nil && m.TimestampSteamguardEnabled != nil {
-		return *m.TimestampSteamguardEnabled
-	}
-	return 0
-}
-
-func (m *CCredentials_GetSteamGuardDetails_Response_NewAuthentication) GetIsWebCookie() bool {
-	if m != nil && m.IsWebCookie != nil {
-		return *m.IsWebCookie
-	}
-	return false
-}
-
-func (m *CCredentials_GetSteamGuardDetails_Response_NewAuthentication) GetIpaddress() int32 {
-	if m != nil && m.Ipaddress != nil {
-		return *m.Ipaddress
-	}
-	return 0
-}
-
-func (m *CCredentials_GetSteamGuardDetails_Response_NewAuthentication) GetGeolocInfo() string {
-	if m != nil && m.GeolocInfo != nil {
-		return *m.GeolocInfo
-	}
-	return ""
-}
-
-func (m *CCredentials_GetSteamGuardDetails_Response_NewAuthentication) GetIsRemembered() bool {
-	if m != nil && m.IsRemembered != nil {
-		return *m.IsRemembered
-	}
-	return false
-}
-
-func (m *CCredentials_GetSteamGuardDetails_Response_NewAuthentication) GetMachineNameUserSupplied() string {
-	if m != nil && m.MachineNameUserSupplied != nil {
-		return *m.MachineNameUserSupplied
-	}
-	return ""
-}
-
-func (m *CCredentials_GetSteamGuardDetails_Response_NewAuthentication) GetStatus() int32 {
-	if m != nil && m.Status != nil {
-		return *m.Status
-	}
-	return 0
-}
-
 type CCredentials_GetSteamGuardDetails_Response_SessionData struct {
-	MachineId                                   *uint64                                                         `protobuf:"varint,1,opt,name=machine_id,json=machineId" json:"machine_id,omitempty"`
-	MachineNameUserchosen                       *string                                                         `protobuf:"bytes,2,opt,name=machine_name_userchosen,json=machineNameUserchosen" json:"machine_name_userchosen,omitempty"`
-	TimestampMachineSteamguardEnabled           *uint32                                                         `protobuf:"fixed32,3,opt,name=timestamp_machine_steamguard_enabled,json=timestampMachineSteamguardEnabled" json:"timestamp_machine_steamguard_enabled,omitempty"`
-	AuthenticationExistsFromGeolocBeforeMintime *bool                                                           `protobuf:"varint,4,opt,name=authentication_exists_from_geoloc_before_mintime,json=authenticationExistsFromGeolocBeforeMintime" json:"authentication_exists_from_geoloc_before_mintime,omitempty"`
-	Newauthentication                           []*CCredentials_GetSteamGuardDetails_Response_NewAuthentication `protobuf:"bytes,5,rep,name=newauthentication" json:"newauthentication,omitempty"`
-	AuthenticationExistsFromSameIpBeforeMintime *bool                                                           `protobuf:"varint,6,opt,name=authentication_exists_from_same_ip_before_mintime,json=authenticationExistsFromSameIpBeforeMintime" json:"authentication_exists_from_same_ip_before_mintime,omitempty"`
-	PublicIpv4                                  *uint32                                                         `protobuf:"varint,7,opt,name=public_ipv4,json=publicIpv4" json:"public_ipv4,omitempty"`
-	XXX_unrecognized                            []byte                                                          `json:"-"`
+	MachineId                                   *uint64  `protobuf:"varint,1,opt,name=machine_id,json=machineId" json:"machine_id,omitempty"`
+	MachineNameUserchosen                       *string  `protobuf:"bytes,2,opt,name=machine_name_userchosen,json=machineNameUserchosen" json:"machine_name_userchosen,omitempty"`
+	TimestampMachineSteamguardEnabled           *uint32  `protobuf:"fixed32,3,opt,name=timestamp_machine_steamguard_enabled,json=timestampMachineSteamguardEnabled" json:"timestamp_machine_steamguard_enabled,omitempty"`
+	AuthenticationExistsFromGeolocBeforeMintime *bool    `protobuf:"varint,4,opt,name=authentication_exists_from_geoloc_before_mintime,json=authenticationExistsFromGeolocBeforeMintime" json:"authentication_exists_from_geoloc_before_mintime,omitempty"`
+	AuthenticationExistsFromSameIpBeforeMintime *bool    `protobuf:"varint,6,opt,name=authentication_exists_from_same_ip_before_mintime,json=authenticationExistsFromSameIpBeforeMintime" json:"authentication_exists_from_same_ip_before_mintime,omitempty"`
+	PublicIpv4                                  *uint32  `protobuf:"varint,7,opt,name=public_ipv4,json=publicIpv4" json:"public_ipv4,omitempty"`
+	PublicIpAddress                             *string  `protobuf:"bytes,8,opt,name=public_ip_address,json=publicIpAddress" json:"public_ip_address,omitempty"`
+	XXX_NoUnkeyedLiteral                        struct{} `json:"-"`
+	XXX_unrecognized                            []byte   `json:"-"`
+	XXX_sizecache                               int32    `json:"-"`
 }
 
 func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) Reset() {
@@ -320,8 +224,26 @@ func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) String() string
 }
 func (*CCredentials_GetSteamGuardDetails_Response_SessionData) ProtoMessage() {}
 func (*CCredentials_GetSteamGuardDetails_Response_SessionData) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{3, 1}
+	return fileDescriptor_50e19d183434a0ff, []int{1, 0}
 }
+
+func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response_SessionData.Unmarshal(m, b)
+}
+func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response_SessionData.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response_SessionData.Merge(m, src)
+}
+func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response_SessionData.Size(m)
+}
+func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response_SessionData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_GetSteamGuardDetails_Response_SessionData proto.InternalMessageInfo
 
 func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) GetMachineId() uint64 {
 	if m != nil && m.MachineId != nil {
@@ -351,13 +273,6 @@ func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) GetAuthenticati
 	return false
 }
 
-func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) GetNewauthentication() []*CCredentials_GetSteamGuardDetails_Response_NewAuthentication {
-	if m != nil {
-		return m.Newauthentication
-	}
-	return nil
-}
-
 func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) GetAuthenticationExistsFromSameIpBeforeMintime() bool {
 	if m != nil && m.AuthenticationExistsFromSameIpBeforeMintime != nil {
 		return *m.AuthenticationExistsFromSameIpBeforeMintime
@@ -372,65 +287,48 @@ func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) GetPublicIpv4()
 	return 0
 }
 
-type CCredentials_NewMachineNotificationDialog_Request struct {
-	IsApproved       *bool  `protobuf:"varint,1,opt,name=is_approved,json=isApproved" json:"is_approved,omitempty"`
-	IsWizardComplete *bool  `protobuf:"varint,2,opt,name=is_wizard_complete,json=isWizardComplete" json:"is_wizard_complete,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *CCredentials_NewMachineNotificationDialog_Request) Reset() {
-	*m = CCredentials_NewMachineNotificationDialog_Request{}
-}
-func (m *CCredentials_NewMachineNotificationDialog_Request) String() string {
-	return proto.CompactTextString(m)
-}
-func (*CCredentials_NewMachineNotificationDialog_Request) ProtoMessage() {}
-func (*CCredentials_NewMachineNotificationDialog_Request) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{4}
-}
-
-func (m *CCredentials_NewMachineNotificationDialog_Request) GetIsApproved() bool {
-	if m != nil && m.IsApproved != nil {
-		return *m.IsApproved
+func (m *CCredentials_GetSteamGuardDetails_Response_SessionData) GetPublicIpAddress() string {
+	if m != nil && m.PublicIpAddress != nil {
+		return *m.PublicIpAddress
 	}
-	return false
-}
-
-func (m *CCredentials_NewMachineNotificationDialog_Request) GetIsWizardComplete() bool {
-	if m != nil && m.IsWizardComplete != nil {
-		return *m.IsWizardComplete
-	}
-	return false
-}
-
-type CCredentials_NewMachineNotificationDialog_Response struct {
-	XXX_unrecognized []byte `json:"-"`
-}
-
-func (m *CCredentials_NewMachineNotificationDialog_Response) Reset() {
-	*m = CCredentials_NewMachineNotificationDialog_Response{}
-}
-func (m *CCredentials_NewMachineNotificationDialog_Response) String() string {
-	return proto.CompactTextString(m)
-}
-func (*CCredentials_NewMachineNotificationDialog_Response) ProtoMessage() {}
-func (*CCredentials_NewMachineNotificationDialog_Response) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{5}
+	return ""
 }
 
 type CCredentials_ValidateEmailAddress_Request struct {
-	Stoken           *string `protobuf:"bytes,1,opt,name=stoken" json:"stoken,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Stoken               *string  `protobuf:"bytes,1,opt,name=stoken" json:"stoken,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCredentials_ValidateEmailAddress_Request) Reset() {
 	*m = CCredentials_ValidateEmailAddress_Request{}
 }
-func (m *CCredentials_ValidateEmailAddress_Request) String() string { return proto.CompactTextString(m) }
-func (*CCredentials_ValidateEmailAddress_Request) ProtoMessage()    {}
-func (*CCredentials_ValidateEmailAddress_Request) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{6}
+func (m *CCredentials_ValidateEmailAddress_Request) String() string {
+	return proto.CompactTextString(m)
 }
+func (*CCredentials_ValidateEmailAddress_Request) ProtoMessage() {}
+func (*CCredentials_ValidateEmailAddress_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_50e19d183434a0ff, []int{2}
+}
+
+func (m *CCredentials_ValidateEmailAddress_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_ValidateEmailAddress_Request.Unmarshal(m, b)
+}
+func (m *CCredentials_ValidateEmailAddress_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_ValidateEmailAddress_Request.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_ValidateEmailAddress_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_ValidateEmailAddress_Request.Merge(m, src)
+}
+func (m *CCredentials_ValidateEmailAddress_Request) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_ValidateEmailAddress_Request.Size(m)
+}
+func (m *CCredentials_ValidateEmailAddress_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_ValidateEmailAddress_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_ValidateEmailAddress_Request proto.InternalMessageInfo
 
 func (m *CCredentials_ValidateEmailAddress_Request) GetStoken() string {
 	if m != nil && m.Stoken != nil {
@@ -440,8 +338,10 @@ func (m *CCredentials_ValidateEmailAddress_Request) GetStoken() string {
 }
 
 type CCredentials_ValidateEmailAddress_Response struct {
-	WasValidated     *bool  `protobuf:"varint,1,opt,name=was_validated,json=wasValidated" json:"was_validated,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	WasValidated         *bool    `protobuf:"varint,1,opt,name=was_validated,json=wasValidated" json:"was_validated,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCredentials_ValidateEmailAddress_Response) Reset() {
@@ -452,8 +352,26 @@ func (m *CCredentials_ValidateEmailAddress_Response) String() string {
 }
 func (*CCredentials_ValidateEmailAddress_Response) ProtoMessage() {}
 func (*CCredentials_ValidateEmailAddress_Response) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{7}
+	return fileDescriptor_50e19d183434a0ff, []int{3}
 }
+
+func (m *CCredentials_ValidateEmailAddress_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_ValidateEmailAddress_Response.Unmarshal(m, b)
+}
+func (m *CCredentials_ValidateEmailAddress_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_ValidateEmailAddress_Response.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_ValidateEmailAddress_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_ValidateEmailAddress_Response.Merge(m, src)
+}
+func (m *CCredentials_ValidateEmailAddress_Response) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_ValidateEmailAddress_Response.Size(m)
+}
+func (m *CCredentials_ValidateEmailAddress_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_ValidateEmailAddress_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_ValidateEmailAddress_Response proto.InternalMessageInfo
 
 func (m *CCredentials_ValidateEmailAddress_Response) GetWasValidated() bool {
 	if m != nil && m.WasValidated != nil {
@@ -463,9 +381,11 @@ func (m *CCredentials_ValidateEmailAddress_Response) GetWasValidated() bool {
 }
 
 type CCredentials_SteamGuardPhishingReport_Request struct {
-	ParamString      *string `protobuf:"bytes,1,opt,name=param_string,json=paramString" json:"param_string,omitempty"`
-	IpaddressActual  *uint32 `protobuf:"varint,2,opt,name=ipaddress_actual,json=ipaddressActual" json:"ipaddress_actual,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	ParamString          *string  `protobuf:"bytes,1,opt,name=param_string,json=paramString" json:"param_string,omitempty"`
+	IpaddressActual      *string  `protobuf:"bytes,2,opt,name=ipaddress_actual,json=ipaddressActual" json:"ipaddress_actual,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCredentials_SteamGuardPhishingReport_Request) Reset() {
@@ -476,8 +396,26 @@ func (m *CCredentials_SteamGuardPhishingReport_Request) String() string {
 }
 func (*CCredentials_SteamGuardPhishingReport_Request) ProtoMessage() {}
 func (*CCredentials_SteamGuardPhishingReport_Request) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{8}
+	return fileDescriptor_50e19d183434a0ff, []int{4}
 }
+
+func (m *CCredentials_SteamGuardPhishingReport_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Request.Unmarshal(m, b)
+}
+func (m *CCredentials_SteamGuardPhishingReport_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Request.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_SteamGuardPhishingReport_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Request.Merge(m, src)
+}
+func (m *CCredentials_SteamGuardPhishingReport_Request) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Request.Size(m)
+}
+func (m *CCredentials_SteamGuardPhishingReport_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Request proto.InternalMessageInfo
 
 func (m *CCredentials_SteamGuardPhishingReport_Request) GetParamString() string {
 	if m != nil && m.ParamString != nil {
@@ -486,24 +424,26 @@ func (m *CCredentials_SteamGuardPhishingReport_Request) GetParamString() string 
 	return ""
 }
 
-func (m *CCredentials_SteamGuardPhishingReport_Request) GetIpaddressActual() uint32 {
+func (m *CCredentials_SteamGuardPhishingReport_Request) GetIpaddressActual() string {
 	if m != nil && m.IpaddressActual != nil {
 		return *m.IpaddressActual
 	}
-	return 0
+	return ""
 }
 
 type CCredentials_SteamGuardPhishingReport_Response struct {
-	IpaddressLoginattempt   *uint32 `protobuf:"varint,1,opt,name=ipaddress_loginattempt,json=ipaddressLoginattempt" json:"ipaddress_loginattempt,omitempty"`
-	CountrynameLoginattempt *string `protobuf:"bytes,2,opt,name=countryname_loginattempt,json=countrynameLoginattempt" json:"countryname_loginattempt,omitempty"`
-	StatenameLoginattempt   *string `protobuf:"bytes,3,opt,name=statename_loginattempt,json=statenameLoginattempt" json:"statename_loginattempt,omitempty"`
-	CitynameLoginattempt    *string `protobuf:"bytes,4,opt,name=cityname_loginattempt,json=citynameLoginattempt" json:"cityname_loginattempt,omitempty"`
-	IpaddressActual         *uint32 `protobuf:"varint,5,opt,name=ipaddress_actual,json=ipaddressActual" json:"ipaddress_actual,omitempty"`
-	CountrynameActual       *string `protobuf:"bytes,6,opt,name=countryname_actual,json=countrynameActual" json:"countryname_actual,omitempty"`
-	StatenameActual         *string `protobuf:"bytes,7,opt,name=statename_actual,json=statenameActual" json:"statename_actual,omitempty"`
-	CitynameActual          *string `protobuf:"bytes,8,opt,name=cityname_actual,json=citynameActual" json:"cityname_actual,omitempty"`
-	SteamguardCode          *string `protobuf:"bytes,9,opt,name=steamguard_code,json=steamguardCode" json:"steamguard_code,omitempty"`
-	XXX_unrecognized        []byte  `json:"-"`
+	IpaddressLoginattempt   *string  `protobuf:"bytes,1,opt,name=ipaddress_loginattempt,json=ipaddressLoginattempt" json:"ipaddress_loginattempt,omitempty"`
+	CountrynameLoginattempt *string  `protobuf:"bytes,2,opt,name=countryname_loginattempt,json=countrynameLoginattempt" json:"countryname_loginattempt,omitempty"`
+	StatenameLoginattempt   *string  `protobuf:"bytes,3,opt,name=statename_loginattempt,json=statenameLoginattempt" json:"statename_loginattempt,omitempty"`
+	CitynameLoginattempt    *string  `protobuf:"bytes,4,opt,name=cityname_loginattempt,json=citynameLoginattempt" json:"cityname_loginattempt,omitempty"`
+	IpaddressActual         *string  `protobuf:"bytes,5,opt,name=ipaddress_actual,json=ipaddressActual" json:"ipaddress_actual,omitempty"`
+	CountrynameActual       *string  `protobuf:"bytes,6,opt,name=countryname_actual,json=countrynameActual" json:"countryname_actual,omitempty"`
+	StatenameActual         *string  `protobuf:"bytes,7,opt,name=statename_actual,json=statenameActual" json:"statename_actual,omitempty"`
+	CitynameActual          *string  `protobuf:"bytes,8,opt,name=cityname_actual,json=citynameActual" json:"cityname_actual,omitempty"`
+	SteamguardCode          *string  `protobuf:"bytes,9,opt,name=steamguard_code,json=steamguardCode" json:"steamguard_code,omitempty"`
+	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
+	XXX_unrecognized        []byte   `json:"-"`
+	XXX_sizecache           int32    `json:"-"`
 }
 
 func (m *CCredentials_SteamGuardPhishingReport_Response) Reset() {
@@ -514,14 +454,32 @@ func (m *CCredentials_SteamGuardPhishingReport_Response) String() string {
 }
 func (*CCredentials_SteamGuardPhishingReport_Response) ProtoMessage() {}
 func (*CCredentials_SteamGuardPhishingReport_Response) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{9}
+	return fileDescriptor_50e19d183434a0ff, []int{5}
 }
 
-func (m *CCredentials_SteamGuardPhishingReport_Response) GetIpaddressLoginattempt() uint32 {
+func (m *CCredentials_SteamGuardPhishingReport_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Response.Unmarshal(m, b)
+}
+func (m *CCredentials_SteamGuardPhishingReport_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Response.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_SteamGuardPhishingReport_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Response.Merge(m, src)
+}
+func (m *CCredentials_SteamGuardPhishingReport_Response) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Response.Size(m)
+}
+func (m *CCredentials_SteamGuardPhishingReport_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_SteamGuardPhishingReport_Response proto.InternalMessageInfo
+
+func (m *CCredentials_SteamGuardPhishingReport_Response) GetIpaddressLoginattempt() string {
 	if m != nil && m.IpaddressLoginattempt != nil {
 		return *m.IpaddressLoginattempt
 	}
-	return 0
+	return ""
 }
 
 func (m *CCredentials_SteamGuardPhishingReport_Response) GetCountrynameLoginattempt() string {
@@ -545,11 +503,11 @@ func (m *CCredentials_SteamGuardPhishingReport_Response) GetCitynameLoginattempt
 	return ""
 }
 
-func (m *CCredentials_SteamGuardPhishingReport_Response) GetIpaddressActual() uint32 {
+func (m *CCredentials_SteamGuardPhishingReport_Response) GetIpaddressActual() string {
 	if m != nil && m.IpaddressActual != nil {
 		return *m.IpaddressActual
 	}
-	return 0
+	return ""
 }
 
 func (m *CCredentials_SteamGuardPhishingReport_Response) GetCountrynameActual() string {
@@ -581,7 +539,10 @@ func (m *CCredentials_SteamGuardPhishingReport_Response) GetSteamguardCode() str
 }
 
 type CCredentials_LastCredentialChangeTime_Request struct {
-	XXX_unrecognized []byte `json:"-"`
+	UserChangesOnly      *bool    `protobuf:"varint,1,opt,name=user_changes_only,json=userChangesOnly" json:"user_changes_only,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCredentials_LastCredentialChangeTime_Request) Reset() {
@@ -592,14 +553,41 @@ func (m *CCredentials_LastCredentialChangeTime_Request) String() string {
 }
 func (*CCredentials_LastCredentialChangeTime_Request) ProtoMessage() {}
 func (*CCredentials_LastCredentialChangeTime_Request) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{10}
+	return fileDescriptor_50e19d183434a0ff, []int{6}
+}
+
+func (m *CCredentials_LastCredentialChangeTime_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_LastCredentialChangeTime_Request.Unmarshal(m, b)
+}
+func (m *CCredentials_LastCredentialChangeTime_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_LastCredentialChangeTime_Request.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_LastCredentialChangeTime_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_LastCredentialChangeTime_Request.Merge(m, src)
+}
+func (m *CCredentials_LastCredentialChangeTime_Request) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_LastCredentialChangeTime_Request.Size(m)
+}
+func (m *CCredentials_LastCredentialChangeTime_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_LastCredentialChangeTime_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_LastCredentialChangeTime_Request proto.InternalMessageInfo
+
+func (m *CCredentials_LastCredentialChangeTime_Request) GetUserChangesOnly() bool {
+	if m != nil && m.UserChangesOnly != nil {
+		return *m.UserChangesOnly
+	}
+	return false
 }
 
 type CCredentials_LastCredentialChangeTime_Response struct {
-	TimestampLastPasswordChange *uint32 `protobuf:"fixed32,1,opt,name=timestamp_last_password_change,json=timestampLastPasswordChange" json:"timestamp_last_password_change,omitempty"`
-	TimestampLastEmailChange    *uint32 `protobuf:"fixed32,2,opt,name=timestamp_last_email_change,json=timestampLastEmailChange" json:"timestamp_last_email_change,omitempty"`
-	TimestampLastPasswordReset  *uint32 `protobuf:"fixed32,3,opt,name=timestamp_last_password_reset,json=timestampLastPasswordReset" json:"timestamp_last_password_reset,omitempty"`
-	XXX_unrecognized            []byte  `json:"-"`
+	TimestampLastPasswordChange *uint32  `protobuf:"fixed32,1,opt,name=timestamp_last_password_change,json=timestampLastPasswordChange" json:"timestamp_last_password_change,omitempty"`
+	TimestampLastEmailChange    *uint32  `protobuf:"fixed32,2,opt,name=timestamp_last_email_change,json=timestampLastEmailChange" json:"timestamp_last_email_change,omitempty"`
+	TimestampLastPasswordReset  *uint32  `protobuf:"fixed32,3,opt,name=timestamp_last_password_reset,json=timestampLastPasswordReset" json:"timestamp_last_password_reset,omitempty"`
+	XXX_NoUnkeyedLiteral        struct{} `json:"-"`
+	XXX_unrecognized            []byte   `json:"-"`
+	XXX_sizecache               int32    `json:"-"`
 }
 
 func (m *CCredentials_LastCredentialChangeTime_Response) Reset() {
@@ -610,8 +598,26 @@ func (m *CCredentials_LastCredentialChangeTime_Response) String() string {
 }
 func (*CCredentials_LastCredentialChangeTime_Response) ProtoMessage() {}
 func (*CCredentials_LastCredentialChangeTime_Response) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{11}
+	return fileDescriptor_50e19d183434a0ff, []int{7}
 }
+
+func (m *CCredentials_LastCredentialChangeTime_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_LastCredentialChangeTime_Response.Unmarshal(m, b)
+}
+func (m *CCredentials_LastCredentialChangeTime_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_LastCredentialChangeTime_Response.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_LastCredentialChangeTime_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_LastCredentialChangeTime_Response.Merge(m, src)
+}
+func (m *CCredentials_LastCredentialChangeTime_Response) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_LastCredentialChangeTime_Response.Size(m)
+}
+func (m *CCredentials_LastCredentialChangeTime_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_LastCredentialChangeTime_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_LastCredentialChangeTime_Response proto.InternalMessageInfo
 
 func (m *CCredentials_LastCredentialChangeTime_Response) GetTimestampLastPasswordChange() uint32 {
 	if m != nil && m.TimestampLastPasswordChange != nil {
@@ -635,22 +641,46 @@ func (m *CCredentials_LastCredentialChangeTime_Response) GetTimestampLastPasswor
 }
 
 type CCredentials_GetAccountAuthSecret_Request struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCredentials_GetAccountAuthSecret_Request) Reset() {
 	*m = CCredentials_GetAccountAuthSecret_Request{}
 }
-func (m *CCredentials_GetAccountAuthSecret_Request) String() string { return proto.CompactTextString(m) }
-func (*CCredentials_GetAccountAuthSecret_Request) ProtoMessage()    {}
+func (m *CCredentials_GetAccountAuthSecret_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CCredentials_GetAccountAuthSecret_Request) ProtoMessage() {}
 func (*CCredentials_GetAccountAuthSecret_Request) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{12}
+	return fileDescriptor_50e19d183434a0ff, []int{8}
 }
 
+func (m *CCredentials_GetAccountAuthSecret_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_GetAccountAuthSecret_Request.Unmarshal(m, b)
+}
+func (m *CCredentials_GetAccountAuthSecret_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_GetAccountAuthSecret_Request.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_GetAccountAuthSecret_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_GetAccountAuthSecret_Request.Merge(m, src)
+}
+func (m *CCredentials_GetAccountAuthSecret_Request) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_GetAccountAuthSecret_Request.Size(m)
+}
+func (m *CCredentials_GetAccountAuthSecret_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_GetAccountAuthSecret_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_GetAccountAuthSecret_Request proto.InternalMessageInfo
+
 type CCredentials_GetAccountAuthSecret_Response struct {
-	SecretId         *int32 `protobuf:"varint,1,opt,name=secret_id,json=secretId" json:"secret_id,omitempty"`
-	Secret           []byte `protobuf:"bytes,2,opt,name=secret" json:"secret,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	SecretId             *int32   `protobuf:"varint,1,opt,name=secret_id,json=secretId" json:"secret_id,omitempty"`
+	Secret               []byte   `protobuf:"bytes,2,opt,name=secret" json:"secret,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCredentials_GetAccountAuthSecret_Response) Reset() {
@@ -661,8 +691,26 @@ func (m *CCredentials_GetAccountAuthSecret_Response) String() string {
 }
 func (*CCredentials_GetAccountAuthSecret_Response) ProtoMessage() {}
 func (*CCredentials_GetAccountAuthSecret_Response) Descriptor() ([]byte, []int) {
-	return credentials_fileDescriptor0, []int{13}
+	return fileDescriptor_50e19d183434a0ff, []int{9}
 }
+
+func (m *CCredentials_GetAccountAuthSecret_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCredentials_GetAccountAuthSecret_Response.Unmarshal(m, b)
+}
+func (m *CCredentials_GetAccountAuthSecret_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCredentials_GetAccountAuthSecret_Response.Marshal(b, m, deterministic)
+}
+func (m *CCredentials_GetAccountAuthSecret_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCredentials_GetAccountAuthSecret_Response.Merge(m, src)
+}
+func (m *CCredentials_GetAccountAuthSecret_Response) XXX_Size() int {
+	return xxx_messageInfo_CCredentials_GetAccountAuthSecret_Response.Size(m)
+}
+func (m *CCredentials_GetAccountAuthSecret_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCredentials_GetAccountAuthSecret_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCredentials_GetAccountAuthSecret_Response proto.InternalMessageInfo
 
 func (m *CCredentials_GetAccountAuthSecret_Response) GetSecretId() int32 {
 	if m != nil && m.SecretId != nil {
@@ -679,14 +727,9 @@ func (m *CCredentials_GetAccountAuthSecret_Response) GetSecret() []byte {
 }
 
 func init() {
-	proto.RegisterType((*CCredentials_TestAvailablePassword_Request)(nil), "CCredentials_TestAvailablePassword_Request")
-	proto.RegisterType((*CCredentials_TestAvailablePassword_Response)(nil), "CCredentials_TestAvailablePassword_Response")
 	proto.RegisterType((*CCredentials_GetSteamGuardDetails_Request)(nil), "CCredentials_GetSteamGuardDetails_Request")
 	proto.RegisterType((*CCredentials_GetSteamGuardDetails_Response)(nil), "CCredentials_GetSteamGuardDetails_Response")
-	proto.RegisterType((*CCredentials_GetSteamGuardDetails_Response_NewAuthentication)(nil), "CCredentials_GetSteamGuardDetails_Response.NewAuthentication")
 	proto.RegisterType((*CCredentials_GetSteamGuardDetails_Response_SessionData)(nil), "CCredentials_GetSteamGuardDetails_Response.SessionData")
-	proto.RegisterType((*CCredentials_NewMachineNotificationDialog_Request)(nil), "CCredentials_NewMachineNotificationDialog_Request")
-	proto.RegisterType((*CCredentials_NewMachineNotificationDialog_Response)(nil), "CCredentials_NewMachineNotificationDialog_Response")
 	proto.RegisterType((*CCredentials_ValidateEmailAddress_Request)(nil), "CCredentials_ValidateEmailAddress_Request")
 	proto.RegisterType((*CCredentials_ValidateEmailAddress_Response)(nil), "CCredentials_ValidateEmailAddress_Response")
 	proto.RegisterType((*CCredentials_SteamGuardPhishingReport_Request)(nil), "CCredentials_SteamGuardPhishingReport_Request")
@@ -697,116 +740,84 @@ func init() {
 	proto.RegisterType((*CCredentials_GetAccountAuthSecret_Response)(nil), "CCredentials_GetAccountAuthSecret_Response")
 }
 
-func init() { proto.RegisterFile("steammessages_credentials.steamclient.proto", credentials_fileDescriptor0) }
+func init() {
+	proto.RegisterFile("steammessages_credentials.steamclient.proto", fileDescriptor_50e19d183434a0ff)
+}
 
-var credentials_fileDescriptor0 = []byte{
-	// 1725 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x57, 0xcd, 0x6f, 0xdb, 0xc8,
-	0x15, 0x07, 0x63, 0x3b, 0x91, 0x9e, 0xec, 0x4d, 0x3c, 0x89, 0x1d, 0x46, 0xc9, 0xae, 0x19, 0xa6,
-	0x80, 0x9d, 0x38, 0xcb, 0xec, 0x7a, 0x93, 0x7e, 0x2d, 0xb6, 0xa8, 0x63, 0x67, 0x53, 0xb7, 0x9b,
-	0x34, 0xa5, 0xd3, 0x0d, 0xd0, 0x0b, 0x31, 0x22, 0x9f, 0xa4, 0x41, 0x48, 0x0e, 0xcb, 0x19, 0x49,
-	0xed, 0x02, 0x0b, 0xa4, 0xba, 0xb5, 0x87, 0xa2, 0xe8, 0xad, 0x68, 0x0f, 0x3d, 0xf5, 0x0f, 0x28,
-	0xa0, 0x02, 0xfd, 0x1f, 0xfa, 0x6f, 0xf4, 0xd8, 0x73, 0xaf, 0x05, 0x87, 0x23, 0x52, 0x1f, 0x94,
-	0x6d, 0x15, 0x7b, 0x23, 0xdf, 0xd7, 0xbc, 0xcf, 0xdf, 0x9b, 0x81, 0x7d, 0x21, 0x91, 0x46, 0x11,
-	0x0a, 0x41, 0x3b, 0x28, 0x3c, 0x3f, 0xc5, 0x00, 0x63, 0xc9, 0x68, 0x28, 0x1c, 0xc5, 0xf1, 0x43,
-	0x86, 0xb1, 0x74, 0x92, 0x94, 0x4b, 0xde, 0x7c, 0x38, 0x2d, 0xdc, 0x8b, 0x59, 0x9b, 0x61, 0xe0,
-	0xb5, 0xa8, 0xc0, 0x79, 0x69, 0xfb, 0xcf, 0x06, 0x3c, 0x38, 0x3a, 0x2a, 0x0d, 0x7a, 0xaf, 0x51,
-	0xc8, 0xc3, 0x3e, 0x65, 0x21, 0x6d, 0x85, 0xf8, 0x8a, 0x0a, 0x31, 0xe0, 0x69, 0xe0, 0xb9, 0xf8,
-	0xcb, 0x1e, 0x0a, 0x49, 0x9a, 0x50, 0x4b, 0x34, 0xcd, 0x34, 0x2c, 0x63, 0xaf, 0xee, 0x16, 0xff,
-	0xc4, 0x81, 0xeb, 0xa2, 0x4b, 0xbd, 0x80, 0x75, 0x50, 0x48, 0xaf, 0x10, 0xbb, 0x64, 0x19, 0x7b,
-	0xeb, 0xee, 0xa6, 0xe8, 0xd2, 0x63, 0xc5, 0x19, 0xdb, 0x24, 0x77, 0x61, 0x9d, 0xfa, 0x3e, 0xef,
-	0xc5, 0xd2, 0x8b, 0x69, 0x84, 0xe6, 0x8a, 0xb2, 0xd7, 0xd0, 0xb4, 0x97, 0x34, 0x42, 0xfb, 0x47,
-	0xb0, 0x7f, 0x21, 0xe7, 0x44, 0xc2, 0x63, 0x81, 0xe4, 0x16, 0xd4, 0x98, 0xf0, 0xfa, 0x34, 0x64,
-	0x81, 0xb2, 0x56, 0x73, 0xaf, 0x30, 0xf1, 0x65, 0xf6, 0x6b, 0xff, 0x73, 0x05, 0xee, 0x4f, 0x99,
-	0x7a, 0x8e, 0xf2, 0x34, 0xcb, 0xc6, 0xf3, 0x1e, 0x4d, 0x83, 0x63, 0x94, 0x94, 0x85, 0xa2, 0x08,
-	0xf3, 0x0f, 0x06, 0xdc, 0x66, 0xb1, 0x1f, 0xf6, 0x02, 0xf4, 0x62, 0x1c, 0x78, 0xb4, 0x27, 0xbb,
-	0x99, 0xa2, 0x4f, 0x25, 0xe3, 0xb1, 0x50, 0xa1, 0xd7, 0xbe, 0xbf, 0x2a, 0xd3, 0x1e, 0x3e, 0xfd,
-	0xf1, 0x70, 0x64, 0x7e, 0xfe, 0xa6, 0x8b, 0xb2, 0x8b, 0xa9, 0xc5, 0x53, 0x2b, 0xe6, 0xd2, 0x92,
-	0xdc, 0x4a, 0x78, 0xd2, 0x0b, 0xa9, 0x44, 0x4b, 0x76, 0xd1, 0x8a, 0x71, 0x30, 0x6d, 0xc2, 0x6a,
-	0x33, 0x0c, 0x03, 0x8b, 0xc5, 0x8a, 0x9d, 0xea, 0x00, 0xdc, 0x5b, 0xfa, 0xd0, 0x97, 0x38, 0x38,
-	0x9c, 0x3e, 0x92, 0xfc, 0xd5, 0x80, 0xfa, 0x00, 0x5b, 0x3e, 0xe7, 0x6f, 0x19, 0xaa, 0xa4, 0xd6,
-	0x9f, 0xfe, 0xc6, 0x18, 0x8e, 0xcc, 0xaf, 0x5f, 0x77, 0xd1, 0xea, 0x09, 0x4c, 0x77, 0x85, 0xa5,
-	0x22, 0xb2, 0x54, 0x48, 0x56, 0x44, 0xfd, 0x2e, 0x8b, 0xd1, 0xca, 0x0e, 0xb6, 0x72, 0x35, 0xc7,
-	0x3a, 0x69, 0x5b, 0x49, 0x8a, 0x02, 0x63, 0xf9, 0xd0, 0x62, 0x72, 0x37, 0x0c, 0xad, 0x96, 0x52,
-	0x0e, 0x32, 0x97, 0x3b, 0x28, 0x95, 0x3b, 0xda, 0xd8, 0xd8, 0xc0, 0xc9, 0xb1, 0xc5, 0xe2, 0xac,
-	0x73, 0x02, 0x8b, 0xb7, 0x95, 0xc0, 0xe1, 0x0b, 0x4b, 0xa0, 0x10, 0x8c, 0xc7, 0x8e, 0x5b, 0x3a,
-	0x45, 0xbe, 0x0b, 0xa6, 0x64, 0x11, 0x0a, 0x49, 0xa3, 0xc4, 0x8b, 0x58, 0xcc, 0xa2, 0x5e, 0xe4,
-	0x0d, 0x68, 0x2c, 0x31, 0x2f, 0xc7, 0x15, 0x77, 0xbb, 0xe0, 0xbf, 0xc8, 0xd9, 0x6f, 0x14, 0x97,
-	0xdc, 0x81, 0x3a, 0x4b, 0x68, 0x10, 0xa4, 0x28, 0x84, 0xb9, 0x6a, 0x19, 0x7b, 0x6b, 0x6e, 0x49,
-	0xb0, 0xff, 0xb5, 0x31, 0xd3, 0xa3, 0x0b, 0x6a, 0xa7, 0xbb, 0xe0, 0x00, 0xb6, 0x98, 0xf0, 0x54,
-	0xab, 0x77, 0x32, 0x01, 0x0f, 0xe3, 0xac, 0x5d, 0xf2, 0x86, 0xad, 0xb9, 0xd7, 0x99, 0x38, 0x2d,
-	0x78, 0xcf, 0x72, 0x16, 0xf9, 0x21, 0xdc, 0x29, 0x5d, 0xaf, 0x50, 0xbd, 0xa4, 0xdc, 0x6f, 0x16,
-	0x32, 0xf3, 0x16, 0xde, 0x19, 0x70, 0x27, 0xc0, 0x24, 0x45, 0x9f, 0x4a, 0x0c, 0xbc, 0xb9, 0x8a,
-	0x9b, 0x2b, 0xd6, 0xca, 0x5e, 0xe3, 0xe0, 0x33, 0xe7, 0xe2, 0x91, 0x38, 0x73, 0x6d, 0xe0, 0xde,
-	0x2e, 0x8f, 0x78, 0x39, 0x7b, 0x02, 0xf9, 0x09, 0xd8, 0x13, 0x1e, 0xe8, 0xf2, 0xa9, 0xd9, 0xf2,
-	0xb2, 0x92, 0xfa, 0x5d, 0x2e, 0x30, 0x56, 0xe9, 0xad, 0xbb, 0x3b, 0xa5, 0xe4, 0x8b, 0x5c, 0x30,
-	0x1b, 0xb8, 0x9f, 0x17, 0x62, 0x24, 0x80, 0x47, 0x13, 0xc6, 0x26, 0xea, 0xaa, 0xcd, 0x56, 0x24,
-	0x69, 0x4d, 0x25, 0x69, 0xbf, 0x54, 0x7b, 0x5d, 0x54, 0x3b, 0x57, 0x9a, 0xcf, 0xda, 0x57, 0xf0,
-	0xe9, 0xc4, 0x29, 0xd3, 0xf1, 0x78, 0xf8, 0x2b, 0x26, 0xa4, 0xf0, 0xda, 0x29, 0x8f, 0xbc, 0x0e,
-	0xf2, 0x90, 0xfb, 0x5e, 0x0b, 0xdb, 0x3c, 0xc5, 0xac, 0xb9, 0x32, 0x8f, 0xcc, 0xcb, 0xaa, 0xa2,
-	0x4f, 0x4a, 0x13, 0xd3, 0xe9, 0x7a, 0xa6, 0x0c, 0x7c, 0x9e, 0xf2, 0xe8, 0xb9, 0x52, 0x7f, 0xaa,
-	0xb4, 0x5f, 0xe4, 0xca, 0x59, 0x9f, 0x54, 0xa4, 0x8b, 0x05, 0xe6, 0x15, 0xcb, 0xd8, 0x5b, 0x75,
-	0xaf, 0xcf, 0x65, 0xe8, 0x24, 0x20, 0xbf, 0x80, 0x75, 0xdd, 0xf9, 0x5e, 0x40, 0x25, 0x35, 0x6b,
-	0xaa, 0xa8, 0xdf, 0x59, 0xa6, 0xa8, 0xa7, 0xb9, 0xfe, 0x31, 0x95, 0xd4, 0x6d, 0x88, 0xf2, 0x87,
-	0x7c, 0x04, 0x37, 0x98, 0xf0, 0xe4, 0x80, 0xb7, 0xa9, 0x2f, 0x79, 0x5a, 0xa4, 0xb5, 0xae, 0x82,
-	0x24, 0x4c, 0xbc, 0x1e, 0xb3, 0xc6, 0xd9, 0xfb, 0x01, 0xdc, 0x2e, 0x0b, 0x33, 0xaf, 0x08, 0xaa,
-	0x1e, 0xb7, 0x0a, 0x91, 0x39, 0xfd, 0x07, 0xb0, 0xc9, 0x84, 0x97, 0x74, 0x79, 0x8c, 0x5e, 0x1f,
-	0x53, 0xb5, 0x28, 0xcc, 0x86, 0x3a, 0xee, 0x2a, 0x13, 0xaf, 0x32, 0xfa, 0x97, 0x9a, 0xdc, 0xfc,
-	0xfb, 0x25, 0xd8, 0x9c, 0xeb, 0xc7, 0x73, 0xe7, 0xc6, 0x38, 0x77, 0x6e, 0x6c, 0xd8, 0x60, 0xc2,
-	0x1b, 0x60, 0xcb, 0x9b, 0x80, 0xb6, 0x9a, 0xdb, 0x60, 0xe2, 0x0d, 0xb6, 0x8e, 0x72, 0x60, 0x99,
-	0x82, 0x87, 0x95, 0x19, 0x78, 0x20, 0x3b, 0xd0, 0xd0, 0xdd, 0xc1, 0xe2, 0x36, 0xd7, 0xfd, 0x0d,
-	0x39, 0xe9, 0x24, 0x6e, 0x73, 0x72, 0x4f, 0x1d, 0x91, 0x62, 0x84, 0x51, 0x0b, 0x53, 0xdd, 0xa8,
-	0x35, 0x77, 0x9d, 0x09, 0xb7, 0xa0, 0x91, 0x4f, 0xa1, 0x39, 0x37, 0x31, 0x9e, 0xe8, 0x25, 0x49,
-	0x98, 0x25, 0xe5, 0xb2, 0x32, 0x7a, 0x33, 0x9a, 0x1e, 0x95, 0x53, 0xcd, 0x26, 0xdb, 0x70, 0x59,
-	0x48, 0x2a, 0x7b, 0x42, 0xf5, 0xce, 0x9a, 0xab, 0xff, 0x9a, 0x7f, 0x5c, 0x85, 0xc6, 0x44, 0xbd,
-	0xc9, 0xfb, 0x00, 0x13, 0x7d, 0x66, 0xa8, 0x3e, 0xab, 0x47, 0x45, 0x77, 0x7d, 0x1b, 0x6e, 0x2e,
-	0x9a, 0x5a, 0x05, 0xf8, 0xee, 0x56, 0x54, 0x39, 0xab, 0x3f, 0x85, 0x6f, 0x5d, 0x68, 0x40, 0x73,
-	0x10, 0xbe, 0x2b, 0xcf, 0x1d, 0x4b, 0x84, 0x8f, 0x96, 0x9e, 0xc5, 0x55, 0x95, 0xd4, 0x7d, 0xba,
-	0xc4, 0x04, 0xbe, 0x85, 0xcd, 0x79, 0x9c, 0x5c, 0xfb, 0x26, 0x70, 0x72, 0xde, 0x2e, 0x69, 0xc3,
-	0xc7, 0x67, 0xc4, 0x24, 0xb2, 0x7c, 0xb3, 0xa4, 0x1a, 0x60, 0x16, 0x06, 0x75, 0x4a, 0x23, 0x3c,
-	0x49, 0xa6, 0x83, 0xda, 0x81, 0x46, 0xd2, 0x6b, 0x85, 0xcc, 0xf7, 0x58, 0xd2, 0x7f, 0xac, 0x1a,
-	0x62, 0xc3, 0x85, 0x9c, 0x74, 0x92, 0xf4, 0x1f, 0xdb, 0x43, 0x03, 0x3e, 0x9e, 0x0a, 0xee, 0x25,
-	0x0e, 0xc6, 0x18, 0xcc, 0x25, 0x6b, 0xeb, 0x53, 0x8e, 0x19, 0x0d, 0x79, 0xa7, 0xb8, 0x92, 0xec,
-	0x40, 0x83, 0x09, 0x8f, 0x26, 0x49, 0xca, 0xfb, 0xc5, 0x2e, 0x03, 0x26, 0x0e, 0x35, 0x85, 0x3c,
-	0x04, 0x92, 0x0d, 0x12, 0xfb, 0x2a, 0xab, 0xb8, 0xcf, 0xa3, 0x24, 0x44, 0x39, 0x9e, 0xa6, 0x6b,
-	0x4c, 0xbc, 0x51, 0x8c, 0x23, 0x4d, 0xb7, 0x1f, 0xc3, 0xc1, 0x32, 0x3e, 0xe4, 0x89, 0xb6, 0x8f,
-	0x66, 0x2e, 0x51, 0xea, 0x6e, 0x45, 0x25, 0x3e, 0x8b, 0x28, 0x0b, 0x0f, 0xf3, 0x79, 0x2c, 0x3c,
-	0x56, 0x43, 0xc1, 0xdf, 0x62, 0xac, 0x6f, 0x8a, 0xfa, 0xcf, 0xfe, 0xd9, 0xcc, 0x36, 0x5f, 0x60,
-	0x44, 0x6f, 0xf3, 0x7b, 0xb0, 0x31, 0xa0, 0xfa, 0x52, 0x97, 0x61, 0xb1, 0x8e, 0x7c, 0x7d, 0x40,
-	0xc5, 0x58, 0x31, 0xb0, 0xbf, 0x86, 0x0f, 0xa7, 0x4c, 0x96, 0xbd, 0xf2, 0xaa, 0xcb, 0x44, 0x97,
-	0xc5, 0x1d, 0x17, 0x13, 0x9e, 0xca, 0xc2, 0xb7, 0xbb, 0xb0, 0x9e, 0xd0, 0x94, 0x46, 0x9e, 0x90,
-	0x29, 0x8b, 0x3b, 0xda, 0xc3, 0x86, 0xa2, 0x9d, 0x2a, 0x12, 0xb9, 0x0f, 0xd7, 0x0a, 0x8c, 0xf1,
-	0xa8, 0x2f, 0x7b, 0x34, 0x54, 0xd9, 0xdc, 0x70, 0xaf, 0x16, 0xf4, 0x43, 0x45, 0xb6, 0xff, 0xbd,
-	0x02, 0xce, 0x45, 0xcf, 0xd7, 0x61, 0x3d, 0x81, 0xed, 0xd2, 0x7a, 0xc8, 0x3b, 0x2c, 0xa6, 0x52,
-	0x62, 0x94, 0x48, 0xe5, 0xca, 0x86, 0xbb, 0x55, 0x70, 0xbf, 0x98, 0x60, 0x92, 0xef, 0x81, 0xa9,
-	0x6e, 0xc7, 0xe9, 0xaf, 0x15, 0x40, 0x4c, 0x29, 0xe6, 0x10, 0x71, 0x73, 0x82, 0x3f, 0xa5, 0xfa,
-	0x04, 0xb6, 0x33, 0x54, 0xc2, 0x79, 0xc5, 0xfc, 0xe2, 0xbd, 0x55, 0x70, 0xa7, 0xd4, 0x3e, 0x81,
-	0x2d, 0x9f, 0xc9, 0x8a, 0xe3, 0x72, 0x9c, 0xbd, 0x31, 0x66, 0x4e, 0x29, 0x55, 0xe5, 0x6e, 0xad,
-	0x32, 0x77, 0xe4, 0x43, 0x20, 0x93, 0x11, 0x69, 0xe1, 0x1c, 0x6f, 0x37, 0x27, 0x38, 0x5a, 0xfc,
-	0x3e, 0x5c, 0x2b, 0xa3, 0xd0, 0xc2, 0x57, 0x94, 0xf0, 0xd5, 0x82, 0xae, 0x45, 0x77, 0xe1, 0x6a,
-	0xe1, 0xb9, 0x96, 0xac, 0x29, 0xc9, 0xf7, 0xc6, 0xe4, 0x52, 0x70, 0x02, 0x2c, 0x7d, 0x1e, 0xa0,
-	0xda, 0xb9, 0x75, 0xf7, 0xbd, 0x92, 0x7c, 0xc4, 0x03, 0xb4, 0x1f, 0xcd, 0xb4, 0xd9, 0x17, 0x54,
-	0xc8, 0xf2, 0xff, 0xa8, 0x4b, 0xe3, 0x0e, 0x66, 0x77, 0x9e, 0x71, 0x9b, 0xd9, 0xff, 0x35, 0x66,
-	0x1a, 0xe3, 0x0c, 0x0d, 0xdd, 0x18, 0x47, 0xf0, 0x41, 0x89, 0xe5, 0x21, 0x9d, 0x78, 0x49, 0x79,
-	0xbe, 0x12, 0xd7, 0x3b, 0xb5, 0xdc, 0xfc, 0x99, 0xcd, 0xf1, 0x5b, 0x28, 0xb7, 0x48, 0x3e, 0x9b,
-	0xbc, 0x18, 0x28, 0x23, 0x98, 0x0d, 0xd7, 0xd8, 0x42, 0x7e, 0x9b, 0x35, 0xa7, 0x2c, 0xa8, 0xe9,
-	0xd3, 0xea, 0x87, 0xf0, 0xfe, 0x22, 0x1f, 0xb2, 0xc7, 0x83, 0xd4, 0x8b, 0xa4, 0x59, 0xe9, 0x82,
-	0x9b, 0x49, 0xd8, 0xfb, 0xf3, 0xcf, 0xad, 0xc3, 0xfc, 0x61, 0x97, 0x21, 0xf5, 0x29, 0xfa, 0x29,
-	0x16, 0xd3, 0x68, 0xd3, 0xf9, 0xfb, 0x7d, 0x95, 0xb0, 0xce, 0xd0, 0x6d, 0xa8, 0x8b, 0x9c, 0xa4,
-	0x77, 0xe8, 0x9a, 0x5b, 0xcb, 0x09, 0x27, 0xf9, 0x26, 0x56, 0xdf, 0xfa, 0xdd, 0xa9, 0xff, 0x0e,
-	0xfe, 0x53, 0x83, 0xc6, 0xc4, 0x11, 0xe4, 0xf7, 0x06, 0x6c, 0x55, 0xbe, 0x26, 0xc9, 0xbe, 0x73,
-	0xf1, 0xf7, 0x70, 0xf3, 0xa1, 0xb3, 0xc4, 0xfb, 0xd4, 0x6e, 0x0e, 0x47, 0xe6, 0x76, 0xa5, 0x8c,
-	0x43, 0x7e, 0x67, 0xc0, 0x8d, 0xaa, 0x2d, 0x47, 0x1e, 0x38, 0x17, 0x7e, 0xb7, 0x36, 0xf7, 0x97,
-	0xd8, 0x9a, 0xf6, 0xad, 0xe1, 0xc8, 0xdc, 0xaa, 0x12, 0x71, 0xc8, 0x3f, 0x0c, 0xb0, 0xcf, 0xda,
-	0x08, 0x2e, 0x8a, 0x5e, 0x28, 0xc9, 0x81, 0xb3, 0xf4, 0x1e, 0x6b, 0x7e, 0xe2, 0xfc, 0x1f, 0x7b,
-	0x67, 0x77, 0x38, 0x32, 0xef, 0x9d, 0xef, 0x90, 0x43, 0xfe, 0x62, 0xc0, 0x8d, 0xaa, 0x7d, 0x32,
-	0x9b, 0xc5, 0xb3, 0x16, 0xd7, 0x6c, 0x16, 0xcf, 0xdc, 0x4f, 0xf6, 0xfe, 0x70, 0x64, 0xee, 0x8e,
-	0x45, 0x2c, 0x1a, 0x5b, 0x6a, 0xd2, 0x2c, 0x0d, 0x72, 0x56, 0x87, 0xf5, 0x31, 0xb6, 0xa8, 0xa5,
-	0x56, 0x1f, 0xf9, 0x93, 0x01, 0xe6, 0xa2, 0xdd, 0x40, 0x1c, 0x67, 0xa9, 0x1d, 0xd6, 0x7c, 0xb4,
-	0xe4, 0xce, 0xb1, 0xef, 0x0c, 0x47, 0xe6, 0xe2, 0xe3, 0xff, 0x66, 0xc0, 0x07, 0xcf, 0xb1, 0x12,
-	0x9d, 0xc6, 0xad, 0xe8, 0x38, 0x4b, 0xc1, 0xdf, 0xac, 0x87, 0xe7, 0x82, 0x9f, 0x7d, 0x6f, 0x38,
-	0x32, 0x77, 0xce, 0x76, 0xc2, 0x21, 0xbf, 0xcd, 0x27, 0x65, 0x0e, 0x21, 0x2a, 0x26, 0x65, 0x21,
-	0xe4, 0x54, 0x4c, 0xca, 0x62, 0xc4, 0xb1, 0xcd, 0xe1, 0xc8, 0xac, 0x3c, 0xb2, 0x79, 0x73, 0x38,
-	0x32, 0xaf, 0x4f, 0x18, 0xb2, 0x04, 0xa6, 0x7d, 0xe6, 0xe3, 0xd3, 0x95, 0x77, 0x86, 0xf1, 0xbf,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0xc6, 0xcb, 0x4b, 0x2f, 0xb8, 0x13, 0x00, 0x00,
+var fileDescriptor_50e19d183434a0ff = []byte{
+	// 1180 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x56, 0x5b, 0x6f, 0x1b, 0x45,
+	0x14, 0xd6, 0xd6, 0x49, 0x13, 0x1f, 0xa7, 0x4d, 0xbb, 0x4d, 0xd2, 0xc5, 0xbd, 0xb9, 0x06, 0x09,
+	0x27, 0x21, 0x6e, 0x1b, 0x1a, 0x2e, 0x42, 0x20, 0x52, 0x37, 0x44, 0x16, 0x0d, 0x0d, 0xeb, 0x52,
+	0x24, 0x78, 0x18, 0x4d, 0x76, 0x4f, 0xec, 0x51, 0x77, 0x77, 0x96, 0x9d, 0x71, 0x4c, 0x40, 0x48,
+	0xf0, 0x13, 0x11, 0xbf, 0x80, 0x87, 0xfe, 0x06, 0x5e, 0xd1, 0xce, 0xce, 0x5e, 0x6c, 0xaf, 0xd3,
+	0xf8, 0xcd, 0x3e, 0xe7, 0x3b, 0x97, 0x39, 0xe7, 0x9b, 0x6f, 0x16, 0xb6, 0x85, 0x44, 0xea, 0xfb,
+	0x28, 0x04, 0xed, 0xa3, 0x20, 0x4e, 0x84, 0x2e, 0x06, 0x92, 0x51, 0x4f, 0xb4, 0x95, 0xc7, 0xf1,
+	0x18, 0x06, 0xb2, 0x1d, 0x46, 0x5c, 0xf2, 0xba, 0x35, 0x0e, 0x3e, 0xa1, 0x02, 0xb5, 0xe7, 0xa3,
+	0x71, 0xcf, 0x30, 0x60, 0xa7, 0x0c, 0xdd, 0x04, 0x31, 0x95, 0xa7, 0xf9, 0xd6, 0x80, 0xcd, 0x4e,
+	0x27, 0x2f, 0x45, 0x0e, 0x51, 0xf6, 0x62, 0xd4, 0xe1, 0x90, 0x46, 0xee, 0x73, 0x94, 0x94, 0x79,
+	0x82, 0xd8, 0xf8, 0xcb, 0x10, 0x85, 0x34, 0xef, 0x42, 0x75, 0x84, 0x27, 0x0e, 0xe7, 0x6f, 0x18,
+	0x5a, 0x57, 0x1a, 0x46, 0xab, 0x6a, 0xe7, 0x06, 0xf3, 0x33, 0xb0, 0x24, 0xf3, 0x51, 0x48, 0xea,
+	0x87, 0xc4, 0x67, 0x01, 0xf3, 0x87, 0x3e, 0x19, 0xd1, 0x40, 0xa2, 0x6b, 0x55, 0x1a, 0x46, 0x6b,
+	0xc9, 0xde, 0xc8, 0xfc, 0x47, 0x89, 0xfb, 0x47, 0xe5, 0x35, 0x9f, 0xc0, 0x9a, 0x8b, 0x61, 0x84,
+	0x0e, 0x95, 0xe8, 0x12, 0x16, 0x52, 0xd7, 0x8d, 0x50, 0x08, 0x6b, 0xa1, 0x61, 0xb4, 0x16, 0xed,
+	0x5b, 0xb9, 0xaf, 0x9b, 0xba, 0xcc, 0x1d, 0x00, 0x16, 0x92, 0x14, 0xb8, 0xd8, 0x30, 0x5a, 0xb5,
+	0xdd, 0xeb, 0xed, 0xce, 0x91, 0xe8, 0x77, 0x8f, 0xf7, 0x13, 0xab, 0x5d, 0x65, 0xa1, 0xfe, 0xd9,
+	0xfc, 0xa7, 0x0a, 0x5b, 0x97, 0x39, 0xa7, 0x08, 0x79, 0x20, 0xd0, 0xdc, 0x85, 0x75, 0x26, 0x88,
+	0x1a, 0x57, 0x3f, 0x06, 0x10, 0x0c, 0xe8, 0x89, 0x87, 0xae, 0x65, 0x34, 0x8c, 0xd6, 0xb2, 0x7d,
+	0x8b, 0x89, 0x5e, 0xe6, 0x3b, 0x48, 0x5c, 0xe6, 0xd7, 0x70, 0x37, 0x3f, 0x7e, 0x49, 0xe8, 0x15,
+	0x35, 0x82, 0x7a, 0x86, 0x99, 0xce, 0xf0, 0x2d, 0x34, 0x0b, 0x63, 0xf0, 0xa9, 0x33, 0x60, 0x01,
+	0x92, 0x80, 0xfa, 0x48, 0x86, 0x02, 0x23, 0x67, 0xc0, 0x05, 0x06, 0x6a, 0x28, 0x55, 0xfb, 0x41,
+	0x8e, 0x3c, 0x4a, 0x80, 0xdf, 0x51, 0x1f, 0x7f, 0xc8, 0x60, 0xa6, 0x0b, 0x8f, 0x0a, 0xc9, 0x0a,
+	0x8b, 0xd1, 0x69, 0x4b, 0x3a, 0x5c, 0x54, 0x1d, 0x6e, 0xe7, 0x61, 0xaf, 0xb2, 0x75, 0x25, 0x41,
+	0xd3, 0x2d, 0xff, 0x06, 0x5f, 0x14, 0xaa, 0xd0, 0xa1, 0x1c, 0xc4, 0x03, 0x76, 0xa8, 0x64, 0x3c,
+	0x20, 0xf8, 0x2b, 0x13, 0x52, 0x90, 0xd3, 0x88, 0xfb, 0xa4, 0x8f, 0xdc, 0xe3, 0x0e, 0x39, 0xc1,
+	0x53, 0x1e, 0x61, 0xcc, 0x8e, 0xb8, 0x23, 0xeb, 0xaa, 0x1a, 0xe7, 0x5e, 0x9e, 0x62, 0x7f, 0x2c,
+	0xc3, 0x81, 0x4a, 0xf0, 0x4d, 0xc4, 0xfd, 0x43, 0x15, 0xfe, 0x4c, 0x45, 0x1f, 0x25, 0xc1, 0xf1,
+	0x92, 0x4a, 0xc6, 0xc5, 0x5c, 0x6b, 0xa9, 0x61, 0xb4, 0x16, 0x8a, 0xb4, 0xd1, 0xed, 0x77, 0x5d,
+	0xf3, 0x27, 0x58, 0x11, 0x28, 0x44, 0xdc, 0x9d, 0x4b, 0x25, 0xb5, 0x96, 0x1b, 0x95, 0x56, 0x6d,
+	0xf7, 0xd3, 0xf6, 0xe5, 0xb9, 0xd1, 0xee, 0x25, 0xf1, 0xcf, 0xa9, 0xa4, 0x76, 0x4d, 0xe4, 0x7f,
+	0xcc, 0xc7, 0xb0, 0xc6, 0x04, 0x91, 0x23, 0x7e, 0x4a, 0x1d, 0xc9, 0xa3, 0x6c, 0xac, 0x55, 0x75,
+	0x48, 0x93, 0x89, 0x57, 0xa9, 0x2b, 0x9d, 0xde, 0x57, 0x70, 0x27, 0x5f, 0xcc, 0x74, 0x20, 0xa8,
+	0x7d, 0xbc, 0x97, 0x41, 0xa6, 0xe2, 0xb7, 0xe0, 0x26, 0x13, 0x24, 0x1c, 0xf0, 0x00, 0xc9, 0x19,
+	0x46, 0xea, 0xa6, 0x5b, 0x35, 0x55, 0x6e, 0x95, 0x89, 0xe3, 0xd8, 0xfe, 0x5a, 0x9b, 0xeb, 0x7f,
+	0x57, 0xa0, 0x56, 0x68, 0xdd, 0xbc, 0x07, 0x50, 0x18, 0x99, 0xa1, 0x46, 0x56, 0xf5, 0xb3, 0x41,
+	0x7d, 0x02, 0xb7, 0x67, 0x11, 0x30, 0xb9, 0xf8, 0xeb, 0x7e, 0x29, 0xed, 0x5e, 0xc2, 0x07, 0x97,
+	0xe2, 0x5a, 0x22, 0x08, 0x0f, 0xe5, 0x3b, 0x19, 0x86, 0xf0, 0x78, 0x6e, 0x5a, 0x2d, 0xa8, 0x11,
+	0x6c, 0xd3, 0x39, 0xc8, 0x74, 0x0a, 0x4f, 0x2e, 0x28, 0x23, 0xe2, 0x11, 0xb0, 0xb0, 0x9c, 0xbe,
+	0x33, 0xeb, 0xf4, 0xa8, 0x8f, 0xdd, 0x70, 0xbc, 0xce, 0x03, 0xa8, 0x85, 0xc3, 0x13, 0x8f, 0x39,
+	0x84, 0x85, 0x67, 0x4f, 0x15, 0x55, 0xaf, 0xd9, 0x90, 0x98, 0xba, 0xe1, 0xd9, 0xd3, 0x78, 0xa7,
+	0x19, 0x20, 0xd3, 0xb7, 0x65, 0x35, 0xf2, 0xd5, 0x14, 0x96, 0xaa, 0x5a, 0x67, 0x42, 0xbc, 0x5f,
+	0x53, 0x8f, 0xb9, 0x54, 0xe2, 0x81, 0x4f, 0x99, 0xa7, 0x41, 0x99, 0x78, 0x6f, 0xc0, 0x55, 0x21,
+	0xf9, 0x1b, 0x0c, 0xd4, 0xb2, 0xab, 0xb6, 0xfe, 0xd7, 0xfc, 0x7e, 0x42, 0x19, 0x67, 0x24, 0xd1,
+	0xca, 0xf8, 0x3e, 0x5c, 0x1b, 0x51, 0x41, 0xce, 0x34, 0x28, 0x55, 0xc4, 0x95, 0x11, 0x15, 0x69,
+	0xa0, 0xdb, 0xfc, 0x03, 0x76, 0xc6, 0x52, 0xe6, 0xb7, 0xe9, 0x78, 0xc0, 0xc4, 0x80, 0x05, 0x7d,
+	0x1b, 0x43, 0x1e, 0xc9, 0xac, 0xb7, 0x87, 0xb0, 0x12, 0xd2, 0x88, 0xfa, 0x44, 0xc8, 0x88, 0x05,
+	0x7d, 0xdd, 0x61, 0x4d, 0xd9, 0x7a, 0xca, 0x64, 0x6e, 0xc2, 0x8d, 0xec, 0x61, 0x20, 0xd4, 0x91,
+	0x43, 0xea, 0x69, 0x26, 0xae, 0x66, 0xf6, 0x7d, 0x65, 0x6e, 0xbe, 0xad, 0x40, 0xfb, 0xb2, 0xf5,
+	0xf5, 0xb1, 0xf6, 0x60, 0x23, 0xcf, 0xee, 0xf1, 0x3e, 0x0b, 0xa8, 0x94, 0xe8, 0x87, 0x52, 0xb7,
+	0xb2, 0x9e, 0x79, 0x5f, 0x14, 0x9c, 0xe6, 0xe7, 0x60, 0x39, 0x7c, 0x18, 0xc8, 0xe8, 0x5c, 0x5d,
+	0x92, 0xb1, 0xc0, 0xa4, 0xb9, 0xdb, 0x05, 0xff, 0x58, 0xe8, 0x1e, 0x6c, 0x08, 0x49, 0x25, 0x4e,
+	0x07, 0x56, 0x92, 0x8a, 0x99, 0x77, 0x2c, 0xec, 0x63, 0x58, 0x77, 0x98, 0x2c, 0x29, 0x97, 0x3c,
+	0x0b, 0x6b, 0xa9, 0x73, 0x2c, 0xa8, 0x6c, 0x76, 0x8b, 0xa5, 0xb3, 0x33, 0x77, 0xc0, 0x2c, 0x9e,
+	0x48, 0x83, 0xaf, 0x2a, 0xf0, 0xcd, 0x82, 0x47, 0xc3, 0x37, 0xe1, 0x46, 0x7e, 0x0a, 0x0d, 0x5e,
+	0x4a, 0x32, 0x67, 0x76, 0x0d, 0xfd, 0x10, 0x56, 0xb3, 0xce, 0x35, 0x32, 0xa1, 0xf5, 0xf5, 0xd4,
+	0x9c, 0x03, 0x0b, 0x82, 0xe1, 0x70, 0x17, 0x95, 0x84, 0x56, 0xed, 0xeb, 0xb9, 0xb9, 0xc3, 0x5d,
+	0x6c, 0xfe, 0x3c, 0x41, 0xb3, 0x17, 0x54, 0xc8, 0xfc, 0x7f, 0x67, 0x40, 0x83, 0x3e, 0xc6, 0x4f,
+	0x58, 0x46, 0xb3, 0x2d, 0xb8, 0x19, 0xeb, 0x18, 0x71, 0x94, 0x4b, 0x10, 0x1e, 0x78, 0xe7, 0x9a,
+	0xc0, 0xab, 0xb1, 0x23, 0x09, 0x11, 0x2f, 0x03, 0xef, 0xbc, 0xf9, 0x9f, 0x31, 0x41, 0xa2, 0x0b,
+	0xb2, 0x6b, 0x12, 0x75, 0xe0, 0x7e, 0xae, 0x7d, 0x1e, 0x15, 0x92, 0x84, 0x54, 0x88, 0x11, 0x8f,
+	0x4f, 0xa1, 0xe0, 0xaa, 0xd6, 0x92, 0x9d, 0x8b, 0x7e, 0x9c, 0xf3, 0x58, 0x63, 0x92, 0x8c, 0xe6,
+	0x97, 0xc5, 0x37, 0x41, 0x25, 0xc1, 0xf8, 0x22, 0xa6, 0x19, 0x92, 0xaf, 0x08, 0x6b, 0x2c, 0x83,
+	0xba, 0xa9, 0x3a, 0x7c, 0x1f, 0xee, 0xcd, 0xea, 0x21, 0x42, 0x81, 0x52, 0x0b, 0x6f, 0xbd, 0xb4,
+	0x05, 0x3b, 0x46, 0x34, 0xb7, 0xa7, 0x3f, 0x09, 0xf7, 0x1d, 0xb5, 0xfa, 0xf8, 0x75, 0xee, 0xa1,
+	0x13, 0x61, 0x76, 0x73, 0x9b, 0x74, 0xfa, 0xbb, 0xaa, 0x0c, 0xac, 0x27, 0x74, 0x07, 0xaa, 0x22,
+	0x31, 0xe9, 0x37, 0x67, 0xd1, 0x5e, 0x4e, 0x0c, 0x5d, 0x57, 0x09, 0x94, 0xfa, 0xad, 0x0e, 0xb9,
+	0x62, 0xeb, 0x7f, 0xbb, 0xff, 0x2e, 0x40, 0xad, 0x50, 0xc2, 0xe4, 0xb0, 0x56, 0xf6, 0x42, 0x9b,
+	0x5b, 0xed, 0x4b, 0x7f, 0xc9, 0xd6, 0xb7, 0xe7, 0x78, 0xf1, 0xe3, 0x82, 0x65, 0xa2, 0x38, 0x59,
+	0xf0, 0x22, 0xf5, 0x9d, 0x2c, 0x78, 0xb1, 0xc8, 0xfe, 0x0e, 0xd6, 0x2c, 0xc9, 0x32, 0xdb, 0xed,
+	0xb9, 0xa4, 0xb5, 0xfe, 0x68, 0x5e, 0x29, 0xfc, 0xcb, 0x80, 0xfb, 0x87, 0x58, 0x4a, 0xf5, 0x74,
+	0xd2, 0xed, 0xf6, 0x5c, 0xf7, 0x6e, 0xb2, 0x87, 0x77, 0xdf, 0xa4, 0x64, 0xc5, 0x53, 0x44, 0x2a,
+	0x59, 0xf1, 0x4c, 0x66, 0x96, 0xac, 0x78, 0x36, 0x31, 0x9f, 0x55, 0xfe, 0x34, 0x8c, 0xff, 0x03,
+	0x00, 0x00, 0xff, 0xff, 0x9a, 0x1d, 0x65, 0x2d, 0x82, 0x0d, 0x00, 0x00,
 }

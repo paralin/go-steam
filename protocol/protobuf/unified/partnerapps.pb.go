@@ -3,9 +3,12 @@
 
 package unified
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	_ "github.com/paralin/go-steam/protocol/protobuf"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -13,15 +16,17 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package unified is being compiled against.
+// is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
-// proto package unified to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type CPartnerApps_RequestUploadToken_Request struct {
-	Filename         *string `protobuf:"bytes,1,opt,name=filename" json:"filename,omitempty"`
-	Appid            *uint32 `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Filename             *string  `protobuf:"bytes,1,opt,name=filename" json:"filename,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_RequestUploadToken_Request) Reset() {
@@ -30,8 +35,26 @@ func (m *CPartnerApps_RequestUploadToken_Request) Reset() {
 func (m *CPartnerApps_RequestUploadToken_Request) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_RequestUploadToken_Request) ProtoMessage()    {}
 func (*CPartnerApps_RequestUploadToken_Request) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{0}
+	return fileDescriptor_18861c697d22f598, []int{0}
 }
+
+func (m *CPartnerApps_RequestUploadToken_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_RequestUploadToken_Request.Unmarshal(m, b)
+}
+func (m *CPartnerApps_RequestUploadToken_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_RequestUploadToken_Request.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_RequestUploadToken_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_RequestUploadToken_Request.Merge(m, src)
+}
+func (m *CPartnerApps_RequestUploadToken_Request) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_RequestUploadToken_Request.Size(m)
+}
+func (m *CPartnerApps_RequestUploadToken_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_RequestUploadToken_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_RequestUploadToken_Request proto.InternalMessageInfo
 
 func (m *CPartnerApps_RequestUploadToken_Request) GetFilename() string {
 	if m != nil && m.Filename != nil {
@@ -48,10 +71,12 @@ func (m *CPartnerApps_RequestUploadToken_Request) GetAppid() uint32 {
 }
 
 type CPartnerApps_RequestUploadToken_Response struct {
-	UploadToken      *uint64 `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
-	Location         *string `protobuf:"bytes,2,opt,name=location" json:"location,omitempty"`
-	RoutingId        *uint64 `protobuf:"varint,3,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	UploadToken          *uint64  `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
+	Location             *string  `protobuf:"bytes,2,opt,name=location" json:"location,omitempty"`
+	RoutingId            *uint64  `protobuf:"varint,3,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_RequestUploadToken_Response) Reset() {
@@ -60,8 +85,26 @@ func (m *CPartnerApps_RequestUploadToken_Response) Reset() {
 func (m *CPartnerApps_RequestUploadToken_Response) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_RequestUploadToken_Response) ProtoMessage()    {}
 func (*CPartnerApps_RequestUploadToken_Response) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{1}
+	return fileDescriptor_18861c697d22f598, []int{1}
 }
+
+func (m *CPartnerApps_RequestUploadToken_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_RequestUploadToken_Response.Unmarshal(m, b)
+}
+func (m *CPartnerApps_RequestUploadToken_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_RequestUploadToken_Response.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_RequestUploadToken_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_RequestUploadToken_Response.Merge(m, src)
+}
+func (m *CPartnerApps_RequestUploadToken_Response) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_RequestUploadToken_Response.Size(m)
+}
+func (m *CPartnerApps_RequestUploadToken_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_RequestUploadToken_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_RequestUploadToken_Response proto.InternalMessageInfo
 
 func (m *CPartnerApps_RequestUploadToken_Response) GetUploadToken() uint64 {
 	if m != nil && m.UploadToken != nil {
@@ -85,18 +128,38 @@ func (m *CPartnerApps_RequestUploadToken_Response) GetRoutingId() uint64 {
 }
 
 type CPartnerApps_FinishUpload_Request struct {
-	UploadToken      *uint64 `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
-	RoutingId        *uint64 `protobuf:"varint,2,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
-	AppId            *uint32 `protobuf:"varint,3,opt,name=app_id,json=appId" json:"app_id,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	UploadToken          *uint64  `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
+	RoutingId            *uint64  `protobuf:"varint,2,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
+	AppId                *uint32  `protobuf:"varint,3,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_FinishUpload_Request) Reset()         { *m = CPartnerApps_FinishUpload_Request{} }
 func (m *CPartnerApps_FinishUpload_Request) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_FinishUpload_Request) ProtoMessage()    {}
 func (*CPartnerApps_FinishUpload_Request) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{2}
+	return fileDescriptor_18861c697d22f598, []int{2}
 }
+
+func (m *CPartnerApps_FinishUpload_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_FinishUpload_Request.Unmarshal(m, b)
+}
+func (m *CPartnerApps_FinishUpload_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_FinishUpload_Request.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_FinishUpload_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_FinishUpload_Request.Merge(m, src)
+}
+func (m *CPartnerApps_FinishUpload_Request) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_FinishUpload_Request.Size(m)
+}
+func (m *CPartnerApps_FinishUpload_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_FinishUpload_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_FinishUpload_Request proto.InternalMessageInfo
 
 func (m *CPartnerApps_FinishUpload_Request) GetUploadToken() uint64 {
 	if m != nil && m.UploadToken != nil {
@@ -120,8 +183,10 @@ func (m *CPartnerApps_FinishUpload_Request) GetAppId() uint32 {
 }
 
 type CPartnerApps_FinishUploadKVSign_Response struct {
-	SignedInstallscript *string `protobuf:"bytes,1,opt,name=signed_installscript,json=signedInstallscript" json:"signed_installscript,omitempty"`
-	XXX_unrecognized    []byte  `json:"-"`
+	SignedInstallscript  *string  `protobuf:"bytes,1,opt,name=signed_installscript,json=signedInstallscript" json:"signed_installscript,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_FinishUploadKVSign_Response) Reset() {
@@ -130,8 +195,26 @@ func (m *CPartnerApps_FinishUploadKVSign_Response) Reset() {
 func (m *CPartnerApps_FinishUploadKVSign_Response) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_FinishUploadKVSign_Response) ProtoMessage()    {}
 func (*CPartnerApps_FinishUploadKVSign_Response) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{3}
+	return fileDescriptor_18861c697d22f598, []int{3}
 }
+
+func (m *CPartnerApps_FinishUploadKVSign_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_FinishUploadKVSign_Response.Unmarshal(m, b)
+}
+func (m *CPartnerApps_FinishUploadKVSign_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_FinishUploadKVSign_Response.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_FinishUploadKVSign_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_FinishUploadKVSign_Response.Merge(m, src)
+}
+func (m *CPartnerApps_FinishUploadKVSign_Response) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_FinishUploadKVSign_Response.Size(m)
+}
+func (m *CPartnerApps_FinishUploadKVSign_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_FinishUploadKVSign_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_FinishUploadKVSign_Response proto.InternalMessageInfo
 
 func (m *CPartnerApps_FinishUploadKVSign_Response) GetSignedInstallscript() string {
 	if m != nil && m.SignedInstallscript != nil {
@@ -141,12 +224,15 @@ func (m *CPartnerApps_FinishUploadKVSign_Response) GetSignedInstallscript() stri
 }
 
 type CPartnerApps_FinishUploadLegacyDRM_Request struct {
-	UploadToken      *uint64 `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
-	RoutingId        *uint64 `protobuf:"varint,2,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
-	AppId            *uint32 `protobuf:"varint,3,opt,name=app_id,json=appId" json:"app_id,omitempty"`
-	Flags            *uint32 `protobuf:"varint,4,opt,name=flags" json:"flags,omitempty"`
-	ToolName         *string `protobuf:"bytes,5,opt,name=tool_name,json=toolName" json:"tool_name,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	UploadToken          *uint64  `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
+	RoutingId            *uint64  `protobuf:"varint,2,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
+	AppId                *uint32  `protobuf:"varint,3,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	Flags                *uint32  `protobuf:"varint,4,opt,name=flags" json:"flags,omitempty"`
+	ToolName             *string  `protobuf:"bytes,5,opt,name=tool_name,json=toolName" json:"tool_name,omitempty"`
+	UseCloud             *bool    `protobuf:"varint,6,opt,name=use_cloud,json=useCloud,def=0" json:"use_cloud,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_FinishUploadLegacyDRM_Request) Reset() {
@@ -157,8 +243,28 @@ func (m *CPartnerApps_FinishUploadLegacyDRM_Request) String() string {
 }
 func (*CPartnerApps_FinishUploadLegacyDRM_Request) ProtoMessage() {}
 func (*CPartnerApps_FinishUploadLegacyDRM_Request) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{4}
+	return fileDescriptor_18861c697d22f598, []int{4}
 }
+
+func (m *CPartnerApps_FinishUploadLegacyDRM_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Request.Unmarshal(m, b)
+}
+func (m *CPartnerApps_FinishUploadLegacyDRM_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Request.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_FinishUploadLegacyDRM_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Request.Merge(m, src)
+}
+func (m *CPartnerApps_FinishUploadLegacyDRM_Request) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Request.Size(m)
+}
+func (m *CPartnerApps_FinishUploadLegacyDRM_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Request proto.InternalMessageInfo
+
+const Default_CPartnerApps_FinishUploadLegacyDRM_Request_UseCloud bool = false
 
 func (m *CPartnerApps_FinishUploadLegacyDRM_Request) GetUploadToken() uint64 {
 	if m != nil && m.UploadToken != nil {
@@ -195,9 +301,18 @@ func (m *CPartnerApps_FinishUploadLegacyDRM_Request) GetToolName() string {
 	return ""
 }
 
+func (m *CPartnerApps_FinishUploadLegacyDRM_Request) GetUseCloud() bool {
+	if m != nil && m.UseCloud != nil {
+		return *m.UseCloud
+	}
+	return Default_CPartnerApps_FinishUploadLegacyDRM_Request_UseCloud
+}
+
 type CPartnerApps_FinishUploadLegacyDRM_Response struct {
-	FileId           *string `protobuf:"bytes,1,opt,name=file_id,json=fileId" json:"file_id,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	FileId               *string  `protobuf:"bytes,1,opt,name=file_id,json=fileId" json:"file_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_FinishUploadLegacyDRM_Response) Reset() {
@@ -208,8 +323,26 @@ func (m *CPartnerApps_FinishUploadLegacyDRM_Response) String() string {
 }
 func (*CPartnerApps_FinishUploadLegacyDRM_Response) ProtoMessage() {}
 func (*CPartnerApps_FinishUploadLegacyDRM_Response) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{5}
+	return fileDescriptor_18861c697d22f598, []int{5}
 }
+
+func (m *CPartnerApps_FinishUploadLegacyDRM_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Response.Unmarshal(m, b)
+}
+func (m *CPartnerApps_FinishUploadLegacyDRM_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Response.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_FinishUploadLegacyDRM_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Response.Merge(m, src)
+}
+func (m *CPartnerApps_FinishUploadLegacyDRM_Response) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Response.Size(m)
+}
+func (m *CPartnerApps_FinishUploadLegacyDRM_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_FinishUploadLegacyDRM_Response proto.InternalMessageInfo
 
 func (m *CPartnerApps_FinishUploadLegacyDRM_Response) GetFileId() string {
 	if m != nil && m.FileId != nil {
@@ -219,23 +352,45 @@ func (m *CPartnerApps_FinishUploadLegacyDRM_Response) GetFileId() string {
 }
 
 type CPartnerApps_FinishUpload_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_FinishUpload_Response) Reset()         { *m = CPartnerApps_FinishUpload_Response{} }
 func (m *CPartnerApps_FinishUpload_Response) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_FinishUpload_Response) ProtoMessage()    {}
 func (*CPartnerApps_FinishUpload_Response) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{6}
+	return fileDescriptor_18861c697d22f598, []int{6}
 }
 
+func (m *CPartnerApps_FinishUpload_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_FinishUpload_Response.Unmarshal(m, b)
+}
+func (m *CPartnerApps_FinishUpload_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_FinishUpload_Response.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_FinishUpload_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_FinishUpload_Response.Merge(m, src)
+}
+func (m *CPartnerApps_FinishUpload_Response) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_FinishUpload_Response.Size(m)
+}
+func (m *CPartnerApps_FinishUpload_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_FinishUpload_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_FinishUpload_Response proto.InternalMessageInfo
+
 type CPartnerApps_FinishUploadDepot_Request struct {
-	UploadToken      *uint64 `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
-	RoutingId        *uint64 `protobuf:"varint,2,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
-	AppId            *uint32 `protobuf:"varint,3,opt,name=app_id,json=appId" json:"app_id,omitempty"`
-	DepotId          *uint32 `protobuf:"varint,4,opt,name=depot_id,json=depotId" json:"depot_id,omitempty"`
-	BuildFlags       *uint32 `protobuf:"varint,5,opt,name=build_flags,json=buildFlags" json:"build_flags,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	UploadToken          *uint64  `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
+	RoutingId            *uint64  `protobuf:"varint,2,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
+	AppId                *uint32  `protobuf:"varint,3,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	DepotId              *uint32  `protobuf:"varint,4,opt,name=depot_id,json=depotId" json:"depot_id,omitempty"`
+	BuildFlags           *uint32  `protobuf:"varint,5,opt,name=build_flags,json=buildFlags" json:"build_flags,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_FinishUploadDepot_Request) Reset() {
@@ -244,8 +399,26 @@ func (m *CPartnerApps_FinishUploadDepot_Request) Reset() {
 func (m *CPartnerApps_FinishUploadDepot_Request) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_FinishUploadDepot_Request) ProtoMessage()    {}
 func (*CPartnerApps_FinishUploadDepot_Request) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{7}
+	return fileDescriptor_18861c697d22f598, []int{7}
 }
+
+func (m *CPartnerApps_FinishUploadDepot_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_FinishUploadDepot_Request.Unmarshal(m, b)
+}
+func (m *CPartnerApps_FinishUploadDepot_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_FinishUploadDepot_Request.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_FinishUploadDepot_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_FinishUploadDepot_Request.Merge(m, src)
+}
+func (m *CPartnerApps_FinishUploadDepot_Request) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_FinishUploadDepot_Request.Size(m)
+}
+func (m *CPartnerApps_FinishUploadDepot_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_FinishUploadDepot_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_FinishUploadDepot_Request proto.InternalMessageInfo
 
 func (m *CPartnerApps_FinishUploadDepot_Request) GetUploadToken() uint64 {
 	if m != nil && m.UploadToken != nil {
@@ -283,7 +456,10 @@ func (m *CPartnerApps_FinishUploadDepot_Request) GetBuildFlags() uint32 {
 }
 
 type CPartnerApps_FinishUploadDepot_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	BuildRoutingId       *uint64  `protobuf:"varint,1,opt,name=build_routing_id,json=buildRoutingId" json:"build_routing_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_FinishUploadDepot_Response) Reset() {
@@ -292,13 +468,40 @@ func (m *CPartnerApps_FinishUploadDepot_Response) Reset() {
 func (m *CPartnerApps_FinishUploadDepot_Response) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_FinishUploadDepot_Response) ProtoMessage()    {}
 func (*CPartnerApps_FinishUploadDepot_Response) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{8}
+	return fileDescriptor_18861c697d22f598, []int{8}
+}
+
+func (m *CPartnerApps_FinishUploadDepot_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_FinishUploadDepot_Response.Unmarshal(m, b)
+}
+func (m *CPartnerApps_FinishUploadDepot_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_FinishUploadDepot_Response.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_FinishUploadDepot_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_FinishUploadDepot_Response.Merge(m, src)
+}
+func (m *CPartnerApps_FinishUploadDepot_Response) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_FinishUploadDepot_Response.Size(m)
+}
+func (m *CPartnerApps_FinishUploadDepot_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_FinishUploadDepot_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_FinishUploadDepot_Response proto.InternalMessageInfo
+
+func (m *CPartnerApps_FinishUploadDepot_Response) GetBuildRoutingId() uint64 {
+	if m != nil && m.BuildRoutingId != nil {
+		return *m.BuildRoutingId
+	}
+	return 0
 }
 
 type CPartnerApps_GetDepotBuildResult_Request struct {
-	UploadToken      *uint64 `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
-	RoutingId        *uint64 `protobuf:"varint,2,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	UploadToken          *uint64  `protobuf:"varint,1,opt,name=upload_token,json=uploadToken" json:"upload_token,omitempty"`
+	RoutingId            *uint64  `protobuf:"varint,2,opt,name=routing_id,json=routingId" json:"routing_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_GetDepotBuildResult_Request) Reset() {
@@ -307,8 +510,26 @@ func (m *CPartnerApps_GetDepotBuildResult_Request) Reset() {
 func (m *CPartnerApps_GetDepotBuildResult_Request) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_GetDepotBuildResult_Request) ProtoMessage()    {}
 func (*CPartnerApps_GetDepotBuildResult_Request) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{9}
+	return fileDescriptor_18861c697d22f598, []int{9}
 }
+
+func (m *CPartnerApps_GetDepotBuildResult_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Request.Unmarshal(m, b)
+}
+func (m *CPartnerApps_GetDepotBuildResult_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Request.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_GetDepotBuildResult_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Request.Merge(m, src)
+}
+func (m *CPartnerApps_GetDepotBuildResult_Request) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Request.Size(m)
+}
+func (m *CPartnerApps_GetDepotBuildResult_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Request proto.InternalMessageInfo
 
 func (m *CPartnerApps_GetDepotBuildResult_Request) GetUploadToken() uint64 {
 	if m != nil && m.UploadToken != nil {
@@ -325,19 +546,41 @@ func (m *CPartnerApps_GetDepotBuildResult_Request) GetRoutingId() uint64 {
 }
 
 type CPartnerApps_GetDepotBuildResult_Response struct {
-	ManifestId       *uint64 `protobuf:"varint,1,opt,name=manifest_id,json=manifestId" json:"manifest_id,omitempty"`
-	ErrorMsg         *string `protobuf:"bytes,2,opt,name=error_msg,json=errorMsg" json:"error_msg,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	ManifestId           *uint64  `protobuf:"varint,1,opt,name=manifest_id,json=manifestId" json:"manifest_id,omitempty"`
+	ErrorMsg             *string  `protobuf:"bytes,2,opt,name=error_msg,json=errorMsg" json:"error_msg,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_GetDepotBuildResult_Response) Reset() {
 	*m = CPartnerApps_GetDepotBuildResult_Response{}
 }
-func (m *CPartnerApps_GetDepotBuildResult_Response) String() string { return proto.CompactTextString(m) }
-func (*CPartnerApps_GetDepotBuildResult_Response) ProtoMessage()    {}
-func (*CPartnerApps_GetDepotBuildResult_Response) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{10}
+func (m *CPartnerApps_GetDepotBuildResult_Response) String() string {
+	return proto.CompactTextString(m)
 }
+func (*CPartnerApps_GetDepotBuildResult_Response) ProtoMessage() {}
+func (*CPartnerApps_GetDepotBuildResult_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_18861c697d22f598, []int{10}
+}
+
+func (m *CPartnerApps_GetDepotBuildResult_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Response.Unmarshal(m, b)
+}
+func (m *CPartnerApps_GetDepotBuildResult_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Response.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_GetDepotBuildResult_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Response.Merge(m, src)
+}
+func (m *CPartnerApps_GetDepotBuildResult_Response) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Response.Size(m)
+}
+func (m *CPartnerApps_GetDepotBuildResult_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_GetDepotBuildResult_Response proto.InternalMessageInfo
 
 func (m *CPartnerApps_GetDepotBuildResult_Response) GetManifestId() uint64 {
 	if m != nil && m.ManifestId != nil {
@@ -354,16 +597,36 @@ func (m *CPartnerApps_GetDepotBuildResult_Response) GetErrorMsg() string {
 }
 
 type CPartnerApps_FindDRMUploads_Request struct {
-	AppId            *int32 `protobuf:"varint,1,opt,name=app_id,json=appId" json:"app_id,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	AppId                *int32   `protobuf:"varint,1,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPartnerApps_FindDRMUploads_Request) Reset()         { *m = CPartnerApps_FindDRMUploads_Request{} }
 func (m *CPartnerApps_FindDRMUploads_Request) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_FindDRMUploads_Request) ProtoMessage()    {}
 func (*CPartnerApps_FindDRMUploads_Request) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{11}
+	return fileDescriptor_18861c697d22f598, []int{11}
 }
+
+func (m *CPartnerApps_FindDRMUploads_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_FindDRMUploads_Request.Unmarshal(m, b)
+}
+func (m *CPartnerApps_FindDRMUploads_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_FindDRMUploads_Request.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_FindDRMUploads_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_FindDRMUploads_Request.Merge(m, src)
+}
+func (m *CPartnerApps_FindDRMUploads_Request) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_FindDRMUploads_Request.Size(m)
+}
+func (m *CPartnerApps_FindDRMUploads_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_FindDRMUploads_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_FindDRMUploads_Request proto.InternalMessageInfo
 
 func (m *CPartnerApps_FindDRMUploads_Request) GetAppId() int32 {
 	if m != nil && m.AppId != nil {
@@ -373,21 +636,43 @@ func (m *CPartnerApps_FindDRMUploads_Request) GetAppId() int32 {
 }
 
 type CPartnerApps_ExistingDRMUpload struct {
-	FileId           *string `protobuf:"bytes,1,opt,name=file_id,json=fileId" json:"file_id,omitempty"`
-	AppId            *uint32 `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
-	ActorId          *int32  `protobuf:"varint,3,opt,name=actor_id,json=actorId" json:"actor_id,omitempty"`
-	SuppliedName     *string `protobuf:"bytes,5,opt,name=supplied_name,json=suppliedName" json:"supplied_name,omitempty"`
-	Flags            *uint32 `protobuf:"varint,6,opt,name=flags" json:"flags,omitempty"`
-	ModType          *string `protobuf:"bytes,7,opt,name=mod_type,json=modType" json:"mod_type,omitempty"`
-	Timestamp        *uint32 `protobuf:"fixed32,8,opt,name=timestamp" json:"timestamp,omitempty"`
-	OrigFileId       *string `protobuf:"bytes,9,opt,name=orig_file_id,json=origFileId" json:"orig_file_id,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	FileId               *string  `protobuf:"bytes,1,opt,name=file_id,json=fileId" json:"file_id,omitempty"`
+	AppId                *uint32  `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	ActorId              *int32   `protobuf:"varint,3,opt,name=actor_id,json=actorId" json:"actor_id,omitempty"`
+	SuppliedName         *string  `protobuf:"bytes,5,opt,name=supplied_name,json=suppliedName" json:"supplied_name,omitempty"`
+	Flags                *uint32  `protobuf:"varint,6,opt,name=flags" json:"flags,omitempty"`
+	ModType              *string  `protobuf:"bytes,7,opt,name=mod_type,json=modType" json:"mod_type,omitempty"`
+	Timestamp            *uint32  `protobuf:"fixed32,8,opt,name=timestamp" json:"timestamp,omitempty"`
+	OrigFileId           *string  `protobuf:"bytes,9,opt,name=orig_file_id,json=origFileId" json:"orig_file_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CPartnerApps_ExistingDRMUpload) Reset()                    { *m = CPartnerApps_ExistingDRMUpload{} }
-func (m *CPartnerApps_ExistingDRMUpload) String() string            { return proto.CompactTextString(m) }
-func (*CPartnerApps_ExistingDRMUpload) ProtoMessage()               {}
-func (*CPartnerApps_ExistingDRMUpload) Descriptor() ([]byte, []int) { return partnerapps_fileDescriptor0, []int{12} }
+func (m *CPartnerApps_ExistingDRMUpload) Reset()         { *m = CPartnerApps_ExistingDRMUpload{} }
+func (m *CPartnerApps_ExistingDRMUpload) String() string { return proto.CompactTextString(m) }
+func (*CPartnerApps_ExistingDRMUpload) ProtoMessage()    {}
+func (*CPartnerApps_ExistingDRMUpload) Descriptor() ([]byte, []int) {
+	return fileDescriptor_18861c697d22f598, []int{12}
+}
+
+func (m *CPartnerApps_ExistingDRMUpload) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_ExistingDRMUpload.Unmarshal(m, b)
+}
+func (m *CPartnerApps_ExistingDRMUpload) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_ExistingDRMUpload.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_ExistingDRMUpload) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_ExistingDRMUpload.Merge(m, src)
+}
+func (m *CPartnerApps_ExistingDRMUpload) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_ExistingDRMUpload.Size(m)
+}
+func (m *CPartnerApps_ExistingDRMUpload) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_ExistingDRMUpload.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_ExistingDRMUpload proto.InternalMessageInfo
 
 func (m *CPartnerApps_ExistingDRMUpload) GetFileId() string {
 	if m != nil && m.FileId != nil {
@@ -446,16 +731,36 @@ func (m *CPartnerApps_ExistingDRMUpload) GetOrigFileId() string {
 }
 
 type CPartnerApps_FindDRMUploads_Response struct {
-	Uploads          []*CPartnerApps_ExistingDRMUpload `protobuf:"bytes,1,rep,name=uploads" json:"uploads,omitempty"`
-	XXX_unrecognized []byte                            `json:"-"`
+	Uploads              []*CPartnerApps_ExistingDRMUpload `protobuf:"bytes,1,rep,name=uploads" json:"uploads,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
 }
 
 func (m *CPartnerApps_FindDRMUploads_Response) Reset()         { *m = CPartnerApps_FindDRMUploads_Response{} }
 func (m *CPartnerApps_FindDRMUploads_Response) String() string { return proto.CompactTextString(m) }
 func (*CPartnerApps_FindDRMUploads_Response) ProtoMessage()    {}
 func (*CPartnerApps_FindDRMUploads_Response) Descriptor() ([]byte, []int) {
-	return partnerapps_fileDescriptor0, []int{13}
+	return fileDescriptor_18861c697d22f598, []int{13}
 }
+
+func (m *CPartnerApps_FindDRMUploads_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_FindDRMUploads_Response.Unmarshal(m, b)
+}
+func (m *CPartnerApps_FindDRMUploads_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_FindDRMUploads_Response.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_FindDRMUploads_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_FindDRMUploads_Response.Merge(m, src)
+}
+func (m *CPartnerApps_FindDRMUploads_Response) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_FindDRMUploads_Response.Size(m)
+}
+func (m *CPartnerApps_FindDRMUploads_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_FindDRMUploads_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_FindDRMUploads_Response proto.InternalMessageInfo
 
 func (m *CPartnerApps_FindDRMUploads_Response) GetUploads() []*CPartnerApps_ExistingDRMUpload {
 	if m != nil {
@@ -465,15 +770,37 @@ func (m *CPartnerApps_FindDRMUploads_Response) GetUploads() []*CPartnerApps_Exis
 }
 
 type CPartnerApps_Download_Request struct {
-	FileId           *string `protobuf:"bytes,1,opt,name=file_id,json=fileId" json:"file_id,omitempty"`
-	AppId            *int32  `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	FileId               *string  `protobuf:"bytes,1,opt,name=file_id,json=fileId" json:"file_id,omitempty"`
+	AppId                *int32   `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CPartnerApps_Download_Request) Reset()                    { *m = CPartnerApps_Download_Request{} }
-func (m *CPartnerApps_Download_Request) String() string            { return proto.CompactTextString(m) }
-func (*CPartnerApps_Download_Request) ProtoMessage()               {}
-func (*CPartnerApps_Download_Request) Descriptor() ([]byte, []int) { return partnerapps_fileDescriptor0, []int{14} }
+func (m *CPartnerApps_Download_Request) Reset()         { *m = CPartnerApps_Download_Request{} }
+func (m *CPartnerApps_Download_Request) String() string { return proto.CompactTextString(m) }
+func (*CPartnerApps_Download_Request) ProtoMessage()    {}
+func (*CPartnerApps_Download_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_18861c697d22f598, []int{14}
+}
+
+func (m *CPartnerApps_Download_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_Download_Request.Unmarshal(m, b)
+}
+func (m *CPartnerApps_Download_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_Download_Request.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_Download_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_Download_Request.Merge(m, src)
+}
+func (m *CPartnerApps_Download_Request) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_Download_Request.Size(m)
+}
+func (m *CPartnerApps_Download_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_Download_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_Download_Request proto.InternalMessageInfo
 
 func (m *CPartnerApps_Download_Request) GetFileId() string {
 	if m != nil && m.FileId != nil {
@@ -490,15 +817,37 @@ func (m *CPartnerApps_Download_Request) GetAppId() int32 {
 }
 
 type CPartnerApps_Download_Response struct {
-	DownloadUrl      *string `protobuf:"bytes,1,opt,name=download_url,json=downloadUrl" json:"download_url,omitempty"`
-	AppId            *int32  `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	DownloadUrl          *string  `protobuf:"bytes,1,opt,name=download_url,json=downloadUrl" json:"download_url,omitempty"`
+	AppId                *int32   `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CPartnerApps_Download_Response) Reset()                    { *m = CPartnerApps_Download_Response{} }
-func (m *CPartnerApps_Download_Response) String() string            { return proto.CompactTextString(m) }
-func (*CPartnerApps_Download_Response) ProtoMessage()               {}
-func (*CPartnerApps_Download_Response) Descriptor() ([]byte, []int) { return partnerapps_fileDescriptor0, []int{15} }
+func (m *CPartnerApps_Download_Response) Reset()         { *m = CPartnerApps_Download_Response{} }
+func (m *CPartnerApps_Download_Response) String() string { return proto.CompactTextString(m) }
+func (*CPartnerApps_Download_Response) ProtoMessage()    {}
+func (*CPartnerApps_Download_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_18861c697d22f598, []int{15}
+}
+
+func (m *CPartnerApps_Download_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPartnerApps_Download_Response.Unmarshal(m, b)
+}
+func (m *CPartnerApps_Download_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPartnerApps_Download_Response.Marshal(b, m, deterministic)
+}
+func (m *CPartnerApps_Download_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPartnerApps_Download_Response.Merge(m, src)
+}
+func (m *CPartnerApps_Download_Response) XXX_Size() int {
+	return xxx_messageInfo_CPartnerApps_Download_Response.Size(m)
+}
+func (m *CPartnerApps_Download_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPartnerApps_Download_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPartnerApps_Download_Response proto.InternalMessageInfo
 
 func (m *CPartnerApps_Download_Response) GetDownloadUrl() string {
 	if m != nil && m.DownloadUrl != nil {
@@ -533,79 +882,67 @@ func init() {
 	proto.RegisterType((*CPartnerApps_Download_Response)(nil), "CPartnerApps_Download_Response")
 }
 
-func init() { proto.RegisterFile("steammessages_partnerapps.steamclient.proto", partnerapps_fileDescriptor0) }
+func init() {
+	proto.RegisterFile("steammessages_partnerapps.steamclient.proto", fileDescriptor_18861c697d22f598)
+}
 
-var partnerapps_fileDescriptor0 = []byte{
-	// 1124 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x57, 0xcf, 0x6f, 0xdc, 0x44,
-	0x14, 0x96, 0xd3, 0x24, 0x9b, 0x7d, 0x9b, 0xf6, 0x30, 0x6d, 0x14, 0x77, 0xa1, 0xcd, 0xd4, 0x09,
-	0x74, 0xf3, 0x43, 0x2e, 0xa4, 0x12, 0x08, 0xa9, 0x07, 0x48, 0xd2, 0x44, 0xab, 0x92, 0x50, 0xb9,
-	0x2d, 0x87, 0x22, 0xb4, 0x9a, 0xac, 0x67, 0xb7, 0x23, 0x6c, 0xcf, 0xe0, 0x19, 0x97, 0xae, 0xc4,
-	0x01, 0xf6, 0xc4, 0x85, 0x3f, 0x80, 0x23, 0xa2, 0x9c, 0x90, 0x90, 0x38, 0xac, 0xc4, 0x85, 0xff,
-	0x0d, 0xcd, 0xd8, 0xde, 0x78, 0x9d, 0xec, 0xd6, 0x20, 0x22, 0x8e, 0xf3, 0xe6, 0xf9, 0xbd, 0x6f,
-	0xbe, 0xf7, 0x66, 0xde, 0x67, 0xd8, 0x96, 0x8a, 0x92, 0x30, 0xa4, 0x52, 0x92, 0x3e, 0x95, 0x1d,
-	0x41, 0x62, 0x15, 0xd1, 0x98, 0x08, 0x21, 0x5d, 0xb3, 0xd3, 0x0d, 0x18, 0x8d, 0x94, 0x2b, 0x62,
-	0xae, 0x78, 0x73, 0x67, 0xd2, 0x39, 0x89, 0x58, 0x8f, 0x51, 0xbf, 0x73, 0x4a, 0x24, 0x3d, 0xef,
-	0xed, 0x7c, 0x01, 0x77, 0xf7, 0x1f, 0xa7, 0xf1, 0x3e, 0x11, 0x42, 0x76, 0x3c, 0xfa, 0x75, 0x42,
-	0xa5, 0x7a, 0x26, 0x02, 0x4e, 0xfc, 0xa7, 0xfc, 0x2b, 0x1a, 0xe5, 0x26, 0xd4, 0x84, 0xa5, 0x1e,
-	0x0b, 0x68, 0x44, 0x42, 0x6a, 0x5b, 0xd8, 0x6a, 0xd5, 0xbd, 0xf1, 0x1a, 0xdd, 0x80, 0x05, 0x22,
-	0x04, 0xf3, 0xed, 0x39, 0x6c, 0xb5, 0xae, 0x7a, 0xe9, 0xc2, 0xf9, 0xc1, 0x82, 0xd6, 0x9b, 0xa3,
-	0x4b, 0xc1, 0x23, 0x49, 0xd1, 0x1d, 0x58, 0x4e, 0x8c, 0xbd, 0xa3, 0xf4, 0x86, 0x49, 0x31, 0xef,
-	0x35, 0x92, 0x33, 0x5f, 0x8d, 0x20, 0xe0, 0x5d, 0xa2, 0x18, 0x8f, 0x4c, 0xa2, 0xba, 0x37, 0x5e,
-	0xa3, 0x5b, 0x00, 0x31, 0x4f, 0x14, 0x8b, 0xfa, 0x1d, 0xe6, 0xdb, 0x57, 0xcc, 0xc7, 0xf5, 0xcc,
-	0xd2, 0xf6, 0x9d, 0x6f, 0xe1, 0xce, 0x04, 0x92, 0x43, 0x16, 0x31, 0xf9, 0x22, 0x05, 0x32, 0x3e,
-	0x61, 0x05, 0x08, 0x93, 0x69, 0xe6, 0x4a, 0x69, 0xd0, 0x0a, 0x2c, 0x12, 0x21, 0x72, 0x04, 0x29,
-	0x11, 0x6d, 0xdf, 0xf9, 0xb2, 0xc4, 0x43, 0x31, 0xfb, 0xa3, 0xcf, 0x9f, 0xb0, 0x7e, 0x81, 0x87,
-	0xf7, 0xe1, 0x86, 0x64, 0xfd, 0x88, 0xfa, 0x1d, 0x16, 0x49, 0x45, 0x82, 0x40, 0x76, 0x63, 0x26,
-	0x54, 0x46, 0xf9, 0xf5, 0x74, 0xaf, 0x5d, 0xdc, 0x72, 0xfe, 0xb4, 0x60, 0x6b, 0x6a, 0xfc, 0x4f,
-	0x69, 0x9f, 0x74, 0x07, 0x07, 0xde, 0xf1, 0xa5, 0x1f, 0x53, 0x77, 0x41, 0x2f, 0x20, 0x7d, 0x69,
-	0xcf, 0xa7, 0x56, 0xb3, 0x40, 0x6f, 0x41, 0x5d, 0x71, 0x1e, 0x74, 0x4c, 0xe3, 0x2c, 0xa4, 0x65,
-	0xd3, 0x86, 0x13, 0x12, 0x52, 0xe7, 0x10, 0xb6, 0x2b, 0x21, 0xcf, 0xc8, 0x59, 0x85, 0x9a, 0xee,
-	0x39, 0x9d, 0x39, 0xe5, 0x63, 0x51, 0x2f, 0xdb, 0xbe, 0xb3, 0x01, 0xce, 0xac, 0xfa, 0xa6, 0x9f,
-	0x3b, 0x7f, 0x59, 0xf0, 0xee, 0x54, 0xb7, 0x03, 0x2a, 0xb8, 0xba, 0x7c, 0x92, 0x6e, 0xc2, 0x92,
-	0x6f, 0x32, 0x31, 0x3f, 0xe3, 0xa9, 0x66, 0xd6, 0x6d, 0x1f, 0xad, 0x41, 0xe3, 0x34, 0x61, 0x81,
-	0xdf, 0x49, 0x59, 0x5c, 0x30, 0xbb, 0x60, 0x4c, 0x87, 0xda, 0xe2, 0x6c, 0x96, 0x6e, 0xeb, 0x45,
-	0xf0, 0xb3, 0xa3, 0x06, 0xa5, 0x96, 0x3b, 0xa2, 0xca, 0x78, 0xec, 0xe9, 0x68, 0x1e, 0x95, 0x49,
-	0xf0, 0x1f, 0x9e, 0xd5, 0x61, 0xb0, 0x59, 0x21, 0x5b, 0x56, 0xc4, 0x35, 0x68, 0x84, 0x24, 0x62,
-	0x3d, 0x2a, 0x55, 0x5e, 0xc8, 0x79, 0x0f, 0x72, 0x53, 0xdb, 0xd7, 0x1d, 0x43, 0xe3, 0x98, 0xc7,
-	0x9d, 0x50, 0xf6, 0xf3, 0x8b, 0x6e, 0x0c, 0xc7, 0xb2, 0xef, 0x3c, 0x80, 0xf5, 0x32, 0x07, 0xfe,
-	0x81, 0x77, 0x9c, 0x92, 0x30, 0x7e, 0x62, 0x0a, 0xec, 0xeb, 0xf8, 0x0b, 0xf9, 0x4d, 0xfc, 0x7e,
-	0x0e, 0x6e, 0x4f, 0x7c, 0xfe, 0xf0, 0x15, 0x93, 0xfa, 0x10, 0xe3, 0x10, 0x53, 0x7b, 0xac, 0x10,
-	0x72, 0xae, 0x54, 0x50, 0xd2, 0x55, 0x3c, 0xce, 0x2b, 0xbd, 0xe0, 0xd5, 0xcc, 0xba, 0xed, 0xa3,
-	0x75, 0xb8, 0x2a, 0x13, 0x21, 0x02, 0xfd, 0x00, 0x17, 0xda, 0x7f, 0x39, 0x37, 0x9e, 0x64, 0x6f,
-	0x67, 0x5a, 0xef, 0xc5, 0xe2, 0xad, 0xb9, 0x09, 0x4b, 0x21, 0xf7, 0x3b, 0x6a, 0x20, 0xa8, 0x5d,
-	0x33, 0x5f, 0xd5, 0x42, 0xee, 0x3f, 0x1d, 0x08, 0x8a, 0xde, 0x86, 0xba, 0x62, 0x21, 0x95, 0x8a,
-	0x84, 0xc2, 0x5e, 0xc2, 0x56, 0xab, 0xe6, 0x9d, 0x19, 0x10, 0x86, 0x65, 0x1e, 0xb3, 0x7e, 0x27,
-	0x3f, 0x43, 0xdd, 0x7c, 0x0c, 0xda, 0x76, 0x98, 0xde, 0x15, 0x02, 0x1b, 0xb3, 0x19, 0xcc, 0xea,
-	0xf4, 0x11, 0xd4, 0xd2, 0x16, 0x90, 0xb6, 0x85, 0xaf, 0xb4, 0x1a, 0xbb, 0x6b, 0xee, 0x6c, 0xea,
-	0xbc, 0xdc, 0xdf, 0xf9, 0x0c, 0x6e, 0x4d, 0xb8, 0x1e, 0xf0, 0x6f, 0xa2, 0x89, 0xa7, 0xb6, 0x22,
-	0xc9, 0xe3, 0xba, 0x3d, 0x2f, 0x95, 0xad, 0x10, 0xf0, 0x6c, 0x7e, 0xf8, 0xb9, 0x31, 0x89, 0x83,
-	0x2c, 0x6c, 0x23, 0xb7, 0x3d, 0x8b, 0x83, 0x29, 0xb1, 0x77, 0x7f, 0xbe, 0x06, 0x8d, 0x42, 0x6c,
-	0xf4, 0x87, 0x05, 0x76, 0x86, 0x33, 0x7d, 0x9c, 0x0b, 0xf3, 0x0a, 0xb5, 0xdc, 0x8a, 0xf3, 0xb2,
-	0xb9, 0xe9, 0x56, 0x9d, 0x7d, 0xce, 0xc7, 0xc3, 0x91, 0xfd, 0x20, 0x73, 0xc0, 0x29, 0x87, 0xd8,
-	0x5c, 0x45, 0xdc, 0xe3, 0x31, 0x9e, 0x98, 0x03, 0x58, 0xf3, 0x94, 0xfb, 0xdc, 0xc3, 0x7a, 0x1c,
-	0xb0, 0xa8, 0x8f, 0x7e, 0xb7, 0x60, 0x25, 0x0b, 0x30, 0x2e, 0xc7, 0xff, 0x06, 0x98, 0xbe, 0xa2,
-	0xdd, 0x44, 0x91, 0xd3, 0x80, 0x96, 0xd0, 0x8a, 0x98, 0x77, 0xa9, 0x94, 0x1a, 0xf0, 0xe8, 0x0c,
-	0xf0, 0xfe, 0xc3, 0xa3, 0x4b, 0x07, 0x7c, 0x34, 0x1c, 0xd9, 0xfb, 0x53, 0x01, 0x77, 0x13, 0xa9,
-	0x78, 0x58, 0x09, 0xf7, 0x2f, 0x16, 0xac, 0xe6, 0x44, 0xeb, 0x17, 0xee, 0xd2, 0x91, 0xdf, 0x1f,
-	0x8e, 0xec, 0x7b, 0x53, 0x91, 0x1b, 0x45, 0x27, 0x98, 0xa0, 0xd8, 0x0c, 0x91, 0xcc, 0x01, 0xfd,
-	0x66, 0x01, 0x3a, 0x2f, 0x32, 0x90, 0xe3, 0xbe, 0x51, 0x04, 0x95, 0xa1, 0xcd, 0x90, 0x2a, 0xce,
-	0xe1, 0x70, 0x64, 0xef, 0xed, 0xf3, 0x30, 0x64, 0x0a, 0x87, 0x54, 0xbd, 0xe0, 0x1a, 0x99, 0x69,
-	0x49, 0x4c, 0xa2, 0x52, 0xdb, 0x92, 0x9e, 0xa2, 0xb1, 0x36, 0x67, 0x47, 0x60, 0x12, 0x77, 0x79,
-	0x28, 0x02, 0xaa, 0x28, 0x7a, 0x6d, 0xc1, 0xca, 0xc4, 0x28, 0x1b, 0xbf, 0xc5, 0xdb, 0x6e, 0x75,
-	0x5d, 0xd3, 0xdc, 0x71, 0xff, 0x81, 0x94, 0x70, 0xde, 0x1b, 0x8e, 0xec, 0x9d, 0x49, 0xf0, 0x17,
-	0xf5, 0x6e, 0xa1, 0xf4, 0x3f, 0x95, 0x60, 0x8e, 0xfb, 0xb6, 0x12, 0xaf, 0xeb, 0x6e, 0x05, 0x81,
-	0xf2, 0xe1, 0x70, 0x64, 0xdf, 0x3f, 0x0f, 0x6a, 0x4a, 0x7f, 0x16, 0xb0, 0xfd, 0x6a, 0xc1, 0xea,
-	0x39, 0x35, 0x90, 0xa1, 0xbb, 0xeb, 0x56, 0xd3, 0x3c, 0xcd, 0x96, 0x5b, 0x55, 0x5d, 0xfc, 0x6b,
-	0x9c, 0xaf, 0x2d, 0xb8, 0x7e, 0x81, 0x38, 0x40, 0xa5, 0xae, 0x9b, 0xa1, 0x56, 0x9a, 0x5b, 0x6e,
-	0x65, 0xa9, 0xe1, 0x7c, 0x30, 0x1c, 0xd9, 0xbb, 0x47, 0x54, 0x61, 0x23, 0xa2, 0xb0, 0x54, 0x44,
-	0x25, 0xd2, 0x40, 0x15, 0x31, 0x7d, 0xc9, 0x78, 0x22, 0x83, 0x41, 0xd6, 0x91, 0xd4, 0xcf, 0xae,
-	0xd0, 0xf3, 0xf6, 0x63, 0xf4, 0xa3, 0x05, 0xd7, 0x26, 0xc7, 0x22, 0xda, 0x70, 0x2b, 0xc8, 0x8e,
-	0xe6, 0x3b, 0x6e, 0x95, 0xd1, 0xea, 0xb8, 0xc3, 0x91, 0xbd, 0xa5, 0x37, 0x25, 0x3e, 0xc1, 0x21,
-	0x97, 0x0a, 0xc7, 0xb4, 0x4b, 0x23, 0x85, 0x45, 0xcc, 0x78, 0x9c, 0x21, 0x92, 0xf8, 0x74, 0x80,
-	0xcd, 0x9f, 0x14, 0x7a, 0x04, 0x4b, 0xf9, 0xc4, 0x43, 0xb7, 0xdd, 0x99, 0xa3, 0xb5, 0xb9, 0xe6,
-	0xce, 0x9e, 0x94, 0xcd, 0xdd, 0xe1, 0xc8, 0x76, 0x9f, 0xd0, 0xf8, 0x25, 0xeb, 0xd2, 0xac, 0x7a,
-	0x29, 0x27, 0x44, 0x08, 0x1c, 0x92, 0x88, 0xf4, 0x69, 0xa8, 0xb1, 0x9c, 0x0e, 0x70, 0xf6, 0xab,
-	0x29, 0xf7, 0xae, 0x7c, 0x67, 0x59, 0x7f, 0x07, 0x00, 0x00, 0xff, 0xff, 0xa6, 0x63, 0xc8, 0x49,
-	0x88, 0x0e, 0x00, 0x00,
+var fileDescriptor_18861c697d22f598 = []byte{
+	// 897 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x56, 0x4f, 0x6f, 0xdc, 0x44,
+	0x14, 0x97, 0x93, 0x6e, 0x76, 0xf7, 0x6d, 0x5a, 0xa1, 0x69, 0xa3, 0xb8, 0x0b, 0x6d, 0xb6, 0x4e,
+	0xa0, 0x6e, 0x53, 0x59, 0xa2, 0x37, 0x10, 0x17, 0x9a, 0x34, 0xd5, 0xaa, 0xa4, 0x20, 0xb7, 0xe5,
+	0x00, 0xaa, 0xcc, 0x74, 0x67, 0xd6, 0x8c, 0x18, 0x7b, 0x06, 0xcf, 0x58, 0x10, 0x89, 0x03, 0xdc,
+	0xb8, 0xf0, 0x91, 0xf8, 0x26, 0x7c, 0x18, 0xe4, 0x19, 0xdb, 0xb1, 0x9d, 0x66, 0x63, 0x24, 0xb6,
+	0xc7, 0xf9, 0xbd, 0xf1, 0xfb, 0xf3, 0x7b, 0x6f, 0xde, 0xcf, 0x70, 0xa8, 0x34, 0xc5, 0x49, 0x42,
+	0x95, 0xc2, 0x31, 0x55, 0x91, 0xc4, 0x99, 0x4e, 0x69, 0x86, 0xa5, 0x54, 0x81, 0xb1, 0x2c, 0x38,
+	0xa3, 0xa9, 0x0e, 0x64, 0x26, 0xb4, 0x98, 0xba, 0xed, 0xcb, 0x6f, 0xb1, 0xa2, 0xa5, 0xe5, 0x51,
+	0xdb, 0x92, 0xa7, 0x6c, 0xc9, 0x28, 0xb1, 0x37, 0x2e, 0xf8, 0xf1, 0xbe, 0x87, 0xfb, 0x47, 0xdf,
+	0xd8, 0x48, 0x5f, 0x4a, 0xa9, 0xa2, 0x90, 0xfe, 0x9c, 0x53, 0xa5, 0x5f, 0x4b, 0x2e, 0x30, 0x79,
+	0x25, 0x7e, 0xa2, 0x69, 0x05, 0xa1, 0x29, 0x8c, 0x96, 0x8c, 0xd3, 0x14, 0x27, 0xd4, 0x75, 0x66,
+	0x8e, 0x3f, 0x0e, 0xeb, 0x33, 0xba, 0x05, 0x03, 0x2c, 0x25, 0x23, 0xee, 0xc6, 0xcc, 0xf1, 0xaf,
+	0x87, 0xf6, 0xe0, 0xfd, 0xe9, 0x80, 0x7f, 0xb5, 0x77, 0x25, 0x45, 0xaa, 0x28, 0xba, 0x07, 0xdb,
+	0xb9, 0xc1, 0x23, 0x5d, 0x18, 0x4c, 0x88, 0x6b, 0xe1, 0x24, 0x3f, 0xbf, 0x5b, 0x64, 0xc0, 0xc5,
+	0x02, 0x6b, 0x26, 0x52, 0x13, 0x68, 0x1c, 0xd6, 0x67, 0x74, 0x07, 0x20, 0x13, 0xb9, 0x66, 0x69,
+	0x1c, 0x31, 0xe2, 0x6e, 0x9a, 0x8f, 0xc7, 0x25, 0x32, 0x27, 0xde, 0x6f, 0x70, 0xaf, 0x95, 0xc9,
+	0x09, 0x4b, 0x99, 0xfa, 0xd1, 0x26, 0x52, 0x57, 0xd8, 0x23, 0x85, 0x76, 0x98, 0x8d, 0x4e, 0x18,
+	0xb4, 0x03, 0x5b, 0x58, 0xca, 0x2a, 0x03, 0x4b, 0xc4, 0x9c, 0x78, 0x6f, 0x3a, 0x3c, 0x34, 0xa3,
+	0x3f, 0xff, 0xf6, 0x25, 0x8b, 0x1b, 0x3c, 0x7c, 0x0a, 0xb7, 0x14, 0x8b, 0x53, 0x4a, 0x22, 0x96,
+	0x2a, 0x8d, 0x39, 0x57, 0x8b, 0x8c, 0x49, 0x5d, 0x52, 0x7e, 0xd3, 0xda, 0xe6, 0x4d, 0x93, 0xf7,
+	0x8f, 0x03, 0x0f, 0x2f, 0xf5, 0xff, 0x15, 0x8d, 0xf1, 0xe2, 0xec, 0x38, 0x3c, 0x5d, 0x7b, 0x99,
+	0xc5, 0x14, 0x2c, 0x39, 0x8e, 0x95, 0x7b, 0xcd, 0xa2, 0xe6, 0x80, 0x3e, 0x84, 0xb1, 0x16, 0x82,
+	0x47, 0x66, 0x70, 0x06, 0xb6, 0x6d, 0x05, 0xf0, 0xa2, 0x18, 0x1c, 0x0f, 0xc6, 0xb9, 0xa2, 0xd1,
+	0x82, 0x8b, 0x9c, 0xb8, 0x5b, 0x33, 0xc7, 0x1f, 0x7d, 0x3e, 0x58, 0x62, 0xae, 0x68, 0x38, 0xca,
+	0x15, 0x3d, 0x2a, 0x60, 0xef, 0x04, 0x0e, 0x7b, 0x55, 0x57, 0x12, 0xb8, 0x0b, 0xc3, 0x62, 0x2e,
+	0x8b, 0xec, 0x2c, 0x67, 0x5b, 0xc5, 0x71, 0x4e, 0xbc, 0x03, 0xf0, 0x56, 0xcd, 0x80, 0xfd, 0xdc,
+	0xfb, 0xdb, 0x81, 0x4f, 0x2e, 0xbd, 0x76, 0x4c, 0xa5, 0xd0, 0xeb, 0x27, 0xf2, 0x36, 0x8c, 0x88,
+	0x89, 0xc4, 0x48, 0xc9, 0xe5, 0xd0, 0x9c, 0xe7, 0x04, 0xed, 0xc1, 0xe4, 0x6d, 0xce, 0x38, 0x89,
+	0x2c, 0xd3, 0x03, 0x63, 0x05, 0x03, 0x9d, 0x14, 0x88, 0xf7, 0xb2, 0xf3, 0xa2, 0xdf, 0x95, 0x7e,
+	0xc9, 0x94, 0x0f, 0x1f, 0x58, 0x5f, 0x8d, 0x14, 0x6d, 0x0d, 0x37, 0x0c, 0x1e, 0xd6, 0xcf, 0x87,
+	0x77, 0x06, 0xf8, 0x19, 0xd5, 0xc6, 0xd7, 0x13, 0x73, 0x8d, 0xaa, 0x9c, 0xff, 0x8f, 0xac, 0x78,
+	0x0c, 0x1e, 0xf4, 0x88, 0x56, 0x16, 0xb1, 0x07, 0x93, 0x04, 0xa7, 0x6c, 0x49, 0x95, 0x3e, 0xcf,
+	0x1f, 0x2a, 0x68, 0x4e, 0x8a, 0xf9, 0xa3, 0x59, 0x26, 0xb2, 0x28, 0x51, 0x71, 0xb5, 0x36, 0x0c,
+	0x70, 0xaa, 0x62, 0xef, 0x0b, 0xd8, 0xef, 0xb2, 0x45, 0x8e, 0xc3, 0x53, 0x4b, 0x57, 0xbd, 0xb0,
+	0x1a, 0x7d, 0x2a, 0xfc, 0x0f, 0xaa, 0x77, 0xfd, 0xc7, 0x06, 0xdc, 0x6d, 0x7d, 0xfe, 0xf4, 0x57,
+	0xa6, 0x8a, 0x22, 0x6a, 0x17, 0x97, 0x4e, 0x63, 0xc3, 0xe5, 0x46, 0xa7, 0xf5, 0x78, 0xa1, 0x45,
+	0x56, 0xcd, 0xc4, 0x20, 0x1c, 0x9a, 0xf3, 0x9c, 0xa0, 0x7d, 0xb8, 0xae, 0x72, 0x29, 0x79, 0xb1,
+	0xce, 0x1b, 0x8f, 0x69, 0xbb, 0x02, 0x5f, 0x94, 0x9b, 0xd8, 0x4e, 0xc6, 0x56, 0xf3, 0x0d, 0xde,
+	0x86, 0x51, 0x22, 0x48, 0xa4, 0xcf, 0x24, 0x75, 0x87, 0xe6, 0xab, 0x61, 0x22, 0xc8, 0xab, 0x33,
+	0x49, 0xd1, 0x47, 0x30, 0xd6, 0x2c, 0xa1, 0x4a, 0xe3, 0x44, 0xba, 0xa3, 0x99, 0xe3, 0x0f, 0xc3,
+	0x73, 0x00, 0xcd, 0x60, 0x5b, 0x64, 0x2c, 0x8e, 0xaa, 0x1a, 0xc6, 0xe6, 0x63, 0x28, 0xb0, 0x13,
+	0xfb, 0xaa, 0x30, 0x1c, 0xac, 0x66, 0xb0, 0xec, 0xd3, 0x67, 0x30, 0xb4, 0x23, 0xa0, 0x5c, 0x67,
+	0xb6, 0xe9, 0x4f, 0x1e, 0xef, 0x05, 0xab, 0xa9, 0x0b, 0xab, 0xfb, 0xde, 0xd7, 0x70, 0xa7, 0x75,
+	0xf5, 0x58, 0xfc, 0x92, 0xb6, 0x16, 0x77, 0x4f, 0x92, 0xeb, 0xbe, 0x7d, 0xd7, 0x69, 0x5b, 0xc3,
+	0xe1, 0xb9, 0x1a, 0x91, 0x0a, 0xcc, 0x33, 0x5e, 0xba, 0x9d, 0x54, 0xd8, 0xeb, 0x8c, 0x5f, 0xe2,
+	0xfb, 0xf1, 0x5f, 0x63, 0x98, 0x34, 0x7c, 0x23, 0x01, 0x6e, 0x99, 0xa6, 0xdd, 0xf4, 0x0d, 0xf1,
+	0x43, 0x7e, 0xd0, 0x53, 0x7c, 0xa7, 0x0f, 0x82, 0xde, 0x42, 0xca, 0x61, 0xa7, 0x34, 0xd7, 0x54,
+	0xbe, 0x97, 0x68, 0x47, 0x4f, 0x9f, 0xad, 0x3d, 0x5a, 0x0a, 0xbb, 0x55, 0x6d, 0xc5, 0x42, 0x58,
+	0x7b, 0xbc, 0x05, 0xa0, 0x8b, 0x5a, 0x8d, 0xbc, 0xe0, 0xca, 0x7f, 0x89, 0x6e, 0x90, 0x55, 0x8a,
+	0x9f, 0xc1, 0x4e, 0x6b, 0x49, 0xd7, 0xbb, 0xe3, 0x30, 0xe8, 0xaf, 0xea, 0xd3, 0x47, 0xc1, 0x7f,
+	0x11, 0xc9, 0x1f, 0xda, 0x31, 0xeb, 0xde, 0xf5, 0xaa, 0x6d, 0x3f, 0xb8, 0x5a, 0x47, 0x11, 0x87,
+	0xdd, 0x0b, 0xd2, 0x53, 0xc6, 0xb8, 0x1f, 0xf4, 0x13, 0xd8, 0xa9, 0x1f, 0xf4, 0x95, 0x32, 0x0e,
+	0x37, 0xdf, 0xa1, 0x12, 0xa8, 0xd3, 0x85, 0x15, 0xb2, 0x35, 0x7d, 0x18, 0xf4, 0xd7, 0x9c, 0x37,
+	0x70, 0xa3, 0xbd, 0xe6, 0xd0, 0x41, 0xd0, 0x43, 0x46, 0xa6, 0x1f, 0x07, 0xbd, 0x56, 0xe5, 0x73,
+	0x18, 0x55, 0x1b, 0x09, 0xdd, 0x0d, 0x56, 0xae, 0xbe, 0xe9, 0x5e, 0xb0, 0x7a, 0x93, 0x3d, 0xd9,
+	0xfc, 0xdd, 0x71, 0xfe, 0x0d, 0x00, 0x00, 0xff, 0xff, 0x73, 0x55, 0x83, 0xdf, 0x5c, 0x0c, 0x00,
+	0x00,
 }

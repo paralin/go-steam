@@ -3,9 +3,11 @@
 
 package protobuf
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -13,24 +15,46 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package protobuf is being compiled against.
+// is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
-// proto package protobuf to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type EncryptedAppTicket struct {
-	TicketVersionNo               *uint32 `protobuf:"varint,1,opt,name=ticket_version_no,json=ticketVersionNo" json:"ticket_version_no,omitempty"`
-	CrcEncryptedticket            *uint32 `protobuf:"varint,2,opt,name=crc_encryptedticket,json=crcEncryptedticket" json:"crc_encryptedticket,omitempty"`
-	CbEncrypteduserdata           *uint32 `protobuf:"varint,3,opt,name=cb_encrypteduserdata,json=cbEncrypteduserdata" json:"cb_encrypteduserdata,omitempty"`
-	CbEncryptedAppownershipticket *uint32 `protobuf:"varint,4,opt,name=cb_encrypted_appownershipticket,json=cbEncryptedAppownershipticket" json:"cb_encrypted_appownershipticket,omitempty"`
-	EncryptedTicket               []byte  `protobuf:"bytes,5,opt,name=encrypted_ticket,json=encryptedTicket" json:"encrypted_ticket,omitempty"`
-	XXX_unrecognized              []byte  `json:"-"`
+	TicketVersionNo               *uint32  `protobuf:"varint,1,opt,name=ticket_version_no,json=ticketVersionNo" json:"ticket_version_no,omitempty"`
+	CrcEncryptedticket            *uint32  `protobuf:"varint,2,opt,name=crc_encryptedticket,json=crcEncryptedticket" json:"crc_encryptedticket,omitempty"`
+	CbEncrypteduserdata           *uint32  `protobuf:"varint,3,opt,name=cb_encrypteduserdata,json=cbEncrypteduserdata" json:"cb_encrypteduserdata,omitempty"`
+	CbEncryptedAppownershipticket *uint32  `protobuf:"varint,4,opt,name=cb_encrypted_appownershipticket,json=cbEncryptedAppownershipticket" json:"cb_encrypted_appownershipticket,omitempty"`
+	EncryptedTicket               []byte   `protobuf:"bytes,5,opt,name=encrypted_ticket,json=encryptedTicket" json:"encrypted_ticket,omitempty"`
+	XXX_NoUnkeyedLiteral          struct{} `json:"-"`
+	XXX_unrecognized              []byte   `json:"-"`
+	XXX_sizecache                 int32    `json:"-"`
 }
 
-func (m *EncryptedAppTicket) Reset()                    { *m = EncryptedAppTicket{} }
-func (m *EncryptedAppTicket) String() string            { return proto.CompactTextString(m) }
-func (*EncryptedAppTicket) ProtoMessage()               {}
-func (*EncryptedAppTicket) Descriptor() ([]byte, []int) { return app_ticket_fileDescriptor0, []int{0} }
+func (m *EncryptedAppTicket) Reset()         { *m = EncryptedAppTicket{} }
+func (m *EncryptedAppTicket) String() string { return proto.CompactTextString(m) }
+func (*EncryptedAppTicket) ProtoMessage()    {}
+func (*EncryptedAppTicket) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c6d69fd1cac4e8d5, []int{0}
+}
+
+func (m *EncryptedAppTicket) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_EncryptedAppTicket.Unmarshal(m, b)
+}
+func (m *EncryptedAppTicket) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_EncryptedAppTicket.Marshal(b, m, deterministic)
+}
+func (m *EncryptedAppTicket) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EncryptedAppTicket.Merge(m, src)
+}
+func (m *EncryptedAppTicket) XXX_Size() int {
+	return xxx_messageInfo_EncryptedAppTicket.Size(m)
+}
+func (m *EncryptedAppTicket) XXX_DiscardUnknown() {
+	xxx_messageInfo_EncryptedAppTicket.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EncryptedAppTicket proto.InternalMessageInfo
 
 func (m *EncryptedAppTicket) GetTicketVersionNo() uint32 {
 	if m != nil && m.TicketVersionNo != nil {
@@ -71,9 +95,11 @@ func init() {
 	proto.RegisterType((*EncryptedAppTicket)(nil), "EncryptedAppTicket")
 }
 
-func init() { proto.RegisterFile("encrypted_app_ticket.proto", app_ticket_fileDescriptor0) }
+func init() {
+	proto.RegisterFile("encrypted_app_ticket.proto", fileDescriptor_c6d69fd1cac4e8d5)
+}
 
-var app_ticket_fileDescriptor0 = []byte{
+var fileDescriptor_c6d69fd1cac4e8d5 = []byte{
 	// 202 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x92, 0x4a, 0xcd, 0x4b, 0x2e,
 	0xaa, 0x2c, 0x28, 0x49, 0x4d, 0x89, 0x4f, 0x2c, 0x28, 0x88, 0x2f, 0xc9, 0x4c, 0xce, 0x4e, 0x2d,

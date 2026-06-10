@@ -3,9 +3,12 @@
 
 package unified
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	_ "github.com/paralin/go-steam/protocol/protobuf"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -13,21 +16,43 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package unified is being compiled against.
+// is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
-// proto package unified to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type CGameNotifications_Variable struct {
-	Key              *string `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
-	Value            *string `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Key                  *string  `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
+	Value                *string  `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CGameNotifications_Variable) Reset()                    { *m = CGameNotifications_Variable{} }
-func (m *CGameNotifications_Variable) String() string            { return proto.CompactTextString(m) }
-func (*CGameNotifications_Variable) ProtoMessage()               {}
-func (*CGameNotifications_Variable) Descriptor() ([]byte, []int) { return gamenotifications_fileDescriptor0, []int{0} }
+func (m *CGameNotifications_Variable) Reset()         { *m = CGameNotifications_Variable{} }
+func (m *CGameNotifications_Variable) String() string { return proto.CompactTextString(m) }
+func (*CGameNotifications_Variable) ProtoMessage()    {}
+func (*CGameNotifications_Variable) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d73f3ce78278ce26, []int{0}
+}
+
+func (m *CGameNotifications_Variable) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_Variable.Unmarshal(m, b)
+}
+func (m *CGameNotifications_Variable) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_Variable.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_Variable) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_Variable.Merge(m, src)
+}
+func (m *CGameNotifications_Variable) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_Variable.Size(m)
+}
+func (m *CGameNotifications_Variable) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_Variable.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_Variable proto.InternalMessageInfo
 
 func (m *CGameNotifications_Variable) GetKey() string {
 	if m != nil && m.Key != nil {
@@ -44,18 +69,38 @@ func (m *CGameNotifications_Variable) GetValue() string {
 }
 
 type CGameNotifications_LocalizedText struct {
-	Token            *string                        `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
-	Variables        []*CGameNotifications_Variable `protobuf:"bytes,2,rep,name=variables" json:"variables,omitempty"`
-	RenderedText     *string                        `protobuf:"bytes,3,opt,name=rendered_text,json=renderedText" json:"rendered_text,omitempty"`
-	XXX_unrecognized []byte                         `json:"-"`
+	Token                *string                        `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
+	Variables            []*CGameNotifications_Variable `protobuf:"bytes,2,rep,name=variables" json:"variables,omitempty"`
+	RenderedText         *string                        `protobuf:"bytes,3,opt,name=rendered_text,json=renderedText" json:"rendered_text,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
+	XXX_unrecognized     []byte                         `json:"-"`
+	XXX_sizecache        int32                          `json:"-"`
 }
 
 func (m *CGameNotifications_LocalizedText) Reset()         { *m = CGameNotifications_LocalizedText{} }
 func (m *CGameNotifications_LocalizedText) String() string { return proto.CompactTextString(m) }
 func (*CGameNotifications_LocalizedText) ProtoMessage()    {}
 func (*CGameNotifications_LocalizedText) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{1}
+	return fileDescriptor_d73f3ce78278ce26, []int{1}
 }
+
+func (m *CGameNotifications_LocalizedText) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_LocalizedText.Unmarshal(m, b)
+}
+func (m *CGameNotifications_LocalizedText) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_LocalizedText.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_LocalizedText) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_LocalizedText.Merge(m, src)
+}
+func (m *CGameNotifications_LocalizedText) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_LocalizedText.Size(m)
+}
+func (m *CGameNotifications_LocalizedText) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_LocalizedText.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_LocalizedText proto.InternalMessageInfo
 
 func (m *CGameNotifications_LocalizedText) GetToken() string {
 	if m != nil && m.Token != nil {
@@ -79,17 +124,39 @@ func (m *CGameNotifications_LocalizedText) GetRenderedText() string {
 }
 
 type CGameNotifications_UserStatus struct {
-	Steamid          *uint64                           `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
-	State            *string                           `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
-	Title            *CGameNotifications_LocalizedText `protobuf:"bytes,3,opt,name=title" json:"title,omitempty"`
-	Message          *CGameNotifications_LocalizedText `protobuf:"bytes,4,opt,name=message" json:"message,omitempty"`
-	XXX_unrecognized []byte                            `json:"-"`
+	Steamid              *uint64                           `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
+	State                *string                           `protobuf:"bytes,2,opt,name=state" json:"state,omitempty"`
+	Title                *CGameNotifications_LocalizedText `protobuf:"bytes,3,opt,name=title" json:"title,omitempty"`
+	Message              *CGameNotifications_LocalizedText `protobuf:"bytes,4,opt,name=message" json:"message,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
 }
 
-func (m *CGameNotifications_UserStatus) Reset()                    { *m = CGameNotifications_UserStatus{} }
-func (m *CGameNotifications_UserStatus) String() string            { return proto.CompactTextString(m) }
-func (*CGameNotifications_UserStatus) ProtoMessage()               {}
-func (*CGameNotifications_UserStatus) Descriptor() ([]byte, []int) { return gamenotifications_fileDescriptor0, []int{2} }
+func (m *CGameNotifications_UserStatus) Reset()         { *m = CGameNotifications_UserStatus{} }
+func (m *CGameNotifications_UserStatus) String() string { return proto.CompactTextString(m) }
+func (*CGameNotifications_UserStatus) ProtoMessage()    {}
+func (*CGameNotifications_UserStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d73f3ce78278ce26, []int{2}
+}
+
+func (m *CGameNotifications_UserStatus) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_UserStatus.Unmarshal(m, b)
+}
+func (m *CGameNotifications_UserStatus) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_UserStatus.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_UserStatus) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_UserStatus.Merge(m, src)
+}
+func (m *CGameNotifications_UserStatus) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_UserStatus.Size(m)
+}
+func (m *CGameNotifications_UserStatus) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_UserStatus.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_UserStatus proto.InternalMessageInfo
 
 func (m *CGameNotifications_UserStatus) GetSteamid() uint64 {
 	if m != nil && m.Steamid != nil {
@@ -120,12 +187,14 @@ func (m *CGameNotifications_UserStatus) GetMessage() *CGameNotifications_Localiz
 }
 
 type CGameNotifications_CreateSession_Request struct {
-	Appid            *uint32                           `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	Context          *uint64                           `protobuf:"varint,2,opt,name=context" json:"context,omitempty"`
-	Title            *CGameNotifications_LocalizedText `protobuf:"bytes,3,opt,name=title" json:"title,omitempty"`
-	Users            []*CGameNotifications_UserStatus  `protobuf:"bytes,4,rep,name=users" json:"users,omitempty"`
-	Steamid          *uint64                           `protobuf:"fixed64,5,opt,name=steamid" json:"steamid,omitempty"`
-	XXX_unrecognized []byte                            `json:"-"`
+	Appid                *uint32                           `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Context              *uint64                           `protobuf:"varint,2,opt,name=context" json:"context,omitempty"`
+	Title                *CGameNotifications_LocalizedText `protobuf:"bytes,3,opt,name=title" json:"title,omitempty"`
+	Users                []*CGameNotifications_UserStatus  `protobuf:"bytes,4,rep,name=users" json:"users,omitempty"`
+	Steamid              *uint64                           `protobuf:"fixed64,5,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
 }
 
 func (m *CGameNotifications_CreateSession_Request) Reset() {
@@ -134,8 +203,26 @@ func (m *CGameNotifications_CreateSession_Request) Reset() {
 func (m *CGameNotifications_CreateSession_Request) String() string { return proto.CompactTextString(m) }
 func (*CGameNotifications_CreateSession_Request) ProtoMessage()    {}
 func (*CGameNotifications_CreateSession_Request) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{3}
+	return fileDescriptor_d73f3ce78278ce26, []int{3}
 }
+
+func (m *CGameNotifications_CreateSession_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_CreateSession_Request.Unmarshal(m, b)
+}
+func (m *CGameNotifications_CreateSession_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_CreateSession_Request.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_CreateSession_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_CreateSession_Request.Merge(m, src)
+}
+func (m *CGameNotifications_CreateSession_Request) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_CreateSession_Request.Size(m)
+}
+func (m *CGameNotifications_CreateSession_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_CreateSession_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_CreateSession_Request proto.InternalMessageInfo
 
 func (m *CGameNotifications_CreateSession_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -173,18 +260,40 @@ func (m *CGameNotifications_CreateSession_Request) GetSteamid() uint64 {
 }
 
 type CGameNotifications_CreateSession_Response struct {
-	Sessionid        *uint64 `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Sessionid            *uint64  `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CGameNotifications_CreateSession_Response) Reset() {
 	*m = CGameNotifications_CreateSession_Response{}
 }
-func (m *CGameNotifications_CreateSession_Response) String() string { return proto.CompactTextString(m) }
-func (*CGameNotifications_CreateSession_Response) ProtoMessage()    {}
-func (*CGameNotifications_CreateSession_Response) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{4}
+func (m *CGameNotifications_CreateSession_Response) String() string {
+	return proto.CompactTextString(m)
 }
+func (*CGameNotifications_CreateSession_Response) ProtoMessage() {}
+func (*CGameNotifications_CreateSession_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d73f3ce78278ce26, []int{4}
+}
+
+func (m *CGameNotifications_CreateSession_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_CreateSession_Response.Unmarshal(m, b)
+}
+func (m *CGameNotifications_CreateSession_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_CreateSession_Response.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_CreateSession_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_CreateSession_Response.Merge(m, src)
+}
+func (m *CGameNotifications_CreateSession_Response) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_CreateSession_Response.Size(m)
+}
+func (m *CGameNotifications_CreateSession_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_CreateSession_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_CreateSession_Response proto.InternalMessageInfo
 
 func (m *CGameNotifications_CreateSession_Response) GetSessionid() uint64 {
 	if m != nil && m.Sessionid != nil {
@@ -194,10 +303,12 @@ func (m *CGameNotifications_CreateSession_Response) GetSessionid() uint64 {
 }
 
 type CGameNotifications_DeleteSession_Request struct {
-	Sessionid        *uint64 `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
-	Appid            *uint32 `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	Steamid          *uint64 `protobuf:"fixed64,3,opt,name=steamid" json:"steamid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Sessionid            *uint64  `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	Steamid              *uint64  `protobuf:"fixed64,3,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CGameNotifications_DeleteSession_Request) Reset() {
@@ -206,8 +317,26 @@ func (m *CGameNotifications_DeleteSession_Request) Reset() {
 func (m *CGameNotifications_DeleteSession_Request) String() string { return proto.CompactTextString(m) }
 func (*CGameNotifications_DeleteSession_Request) ProtoMessage()    {}
 func (*CGameNotifications_DeleteSession_Request) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{5}
+	return fileDescriptor_d73f3ce78278ce26, []int{5}
 }
+
+func (m *CGameNotifications_DeleteSession_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_DeleteSession_Request.Unmarshal(m, b)
+}
+func (m *CGameNotifications_DeleteSession_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_DeleteSession_Request.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_DeleteSession_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_DeleteSession_Request.Merge(m, src)
+}
+func (m *CGameNotifications_DeleteSession_Request) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_DeleteSession_Request.Size(m)
+}
+func (m *CGameNotifications_DeleteSession_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_DeleteSession_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_DeleteSession_Request proto.InternalMessageInfo
 
 func (m *CGameNotifications_DeleteSession_Request) GetSessionid() uint64 {
 	if m != nil && m.Sessionid != nil {
@@ -231,25 +360,49 @@ func (m *CGameNotifications_DeleteSession_Request) GetSteamid() uint64 {
 }
 
 type CGameNotifications_DeleteSession_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CGameNotifications_DeleteSession_Response) Reset() {
 	*m = CGameNotifications_DeleteSession_Response{}
 }
-func (m *CGameNotifications_DeleteSession_Response) String() string { return proto.CompactTextString(m) }
-func (*CGameNotifications_DeleteSession_Response) ProtoMessage()    {}
+func (m *CGameNotifications_DeleteSession_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CGameNotifications_DeleteSession_Response) ProtoMessage() {}
 func (*CGameNotifications_DeleteSession_Response) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{6}
+	return fileDescriptor_d73f3ce78278ce26, []int{6}
 }
 
+func (m *CGameNotifications_DeleteSession_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_DeleteSession_Response.Unmarshal(m, b)
+}
+func (m *CGameNotifications_DeleteSession_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_DeleteSession_Response.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_DeleteSession_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_DeleteSession_Response.Merge(m, src)
+}
+func (m *CGameNotifications_DeleteSession_Response) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_DeleteSession_Response.Size(m)
+}
+func (m *CGameNotifications_DeleteSession_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_DeleteSession_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_DeleteSession_Response proto.InternalMessageInfo
+
 type CGameNotifications_UpdateSession_Request struct {
-	Sessionid        *uint64                           `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
-	Appid            *uint32                           `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	Title            *CGameNotifications_LocalizedText `protobuf:"bytes,3,opt,name=title" json:"title,omitempty"`
-	Users            []*CGameNotifications_UserStatus  `protobuf:"bytes,4,rep,name=users" json:"users,omitempty"`
-	Steamid          *uint64                           `protobuf:"fixed64,6,opt,name=steamid" json:"steamid,omitempty"`
-	XXX_unrecognized []byte                            `json:"-"`
+	Sessionid            *uint64                           `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
+	Appid                *uint32                           `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	Title                *CGameNotifications_LocalizedText `protobuf:"bytes,3,opt,name=title" json:"title,omitempty"`
+	Users                []*CGameNotifications_UserStatus  `protobuf:"bytes,4,rep,name=users" json:"users,omitempty"`
+	Steamid              *uint64                           `protobuf:"fixed64,6,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
 }
 
 func (m *CGameNotifications_UpdateSession_Request) Reset() {
@@ -258,8 +411,26 @@ func (m *CGameNotifications_UpdateSession_Request) Reset() {
 func (m *CGameNotifications_UpdateSession_Request) String() string { return proto.CompactTextString(m) }
 func (*CGameNotifications_UpdateSession_Request) ProtoMessage()    {}
 func (*CGameNotifications_UpdateSession_Request) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{7}
+	return fileDescriptor_d73f3ce78278ce26, []int{7}
 }
+
+func (m *CGameNotifications_UpdateSession_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_UpdateSession_Request.Unmarshal(m, b)
+}
+func (m *CGameNotifications_UpdateSession_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_UpdateSession_Request.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_UpdateSession_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_UpdateSession_Request.Merge(m, src)
+}
+func (m *CGameNotifications_UpdateSession_Request) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_UpdateSession_Request.Size(m)
+}
+func (m *CGameNotifications_UpdateSession_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_UpdateSession_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_UpdateSession_Request proto.InternalMessageInfo
 
 func (m *CGameNotifications_UpdateSession_Request) GetSessionid() uint64 {
 	if m != nil && m.Sessionid != nil {
@@ -297,24 +468,48 @@ func (m *CGameNotifications_UpdateSession_Request) GetSteamid() uint64 {
 }
 
 type CGameNotifications_UpdateSession_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CGameNotifications_UpdateSession_Response) Reset() {
 	*m = CGameNotifications_UpdateSession_Response{}
 }
-func (m *CGameNotifications_UpdateSession_Response) String() string { return proto.CompactTextString(m) }
-func (*CGameNotifications_UpdateSession_Response) ProtoMessage()    {}
+func (m *CGameNotifications_UpdateSession_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CGameNotifications_UpdateSession_Response) ProtoMessage() {}
 func (*CGameNotifications_UpdateSession_Response) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{8}
+	return fileDescriptor_d73f3ce78278ce26, []int{8}
 }
 
+func (m *CGameNotifications_UpdateSession_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_UpdateSession_Response.Unmarshal(m, b)
+}
+func (m *CGameNotifications_UpdateSession_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_UpdateSession_Response.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_UpdateSession_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_UpdateSession_Response.Merge(m, src)
+}
+func (m *CGameNotifications_UpdateSession_Response) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_UpdateSession_Response.Size(m)
+}
+func (m *CGameNotifications_UpdateSession_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_UpdateSession_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_UpdateSession_Response proto.InternalMessageInfo
+
 type CGameNotifications_EnumerateSessions_Request struct {
-	Appid                  *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	IncludeAllUserMessages *bool   `protobuf:"varint,3,opt,name=include_all_user_messages,json=includeAllUserMessages" json:"include_all_user_messages,omitempty"`
-	IncludeAuthUserMessage *bool   `protobuf:"varint,4,opt,name=include_auth_user_message,json=includeAuthUserMessage" json:"include_auth_user_message,omitempty"`
-	Language               *string `protobuf:"bytes,5,opt,name=language" json:"language,omitempty"`
-	XXX_unrecognized       []byte  `json:"-"`
+	Appid                  *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	IncludeAllUserMessages *bool    `protobuf:"varint,3,opt,name=include_all_user_messages,json=includeAllUserMessages" json:"include_all_user_messages,omitempty"`
+	IncludeAuthUserMessage *bool    `protobuf:"varint,4,opt,name=include_auth_user_message,json=includeAuthUserMessage" json:"include_auth_user_message,omitempty"`
+	Language               *string  `protobuf:"bytes,5,opt,name=language" json:"language,omitempty"`
+	XXX_NoUnkeyedLiteral   struct{} `json:"-"`
+	XXX_unrecognized       []byte   `json:"-"`
+	XXX_sizecache          int32    `json:"-"`
 }
 
 func (m *CGameNotifications_EnumerateSessions_Request) Reset() {
@@ -325,8 +520,26 @@ func (m *CGameNotifications_EnumerateSessions_Request) String() string {
 }
 func (*CGameNotifications_EnumerateSessions_Request) ProtoMessage() {}
 func (*CGameNotifications_EnumerateSessions_Request) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{9}
+	return fileDescriptor_d73f3ce78278ce26, []int{9}
 }
+
+func (m *CGameNotifications_EnumerateSessions_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_EnumerateSessions_Request.Unmarshal(m, b)
+}
+func (m *CGameNotifications_EnumerateSessions_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_EnumerateSessions_Request.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_EnumerateSessions_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_EnumerateSessions_Request.Merge(m, src)
+}
+func (m *CGameNotifications_EnumerateSessions_Request) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_EnumerateSessions_Request.Size(m)
+}
+func (m *CGameNotifications_EnumerateSessions_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_EnumerateSessions_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_EnumerateSessions_Request proto.InternalMessageInfo
 
 func (m *CGameNotifications_EnumerateSessions_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -357,20 +570,42 @@ func (m *CGameNotifications_EnumerateSessions_Request) GetLanguage() string {
 }
 
 type CGameNotifications_Session struct {
-	Sessionid        *uint64                           `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
-	Appid            *uint64                           `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	Context          *uint64                           `protobuf:"varint,3,opt,name=context" json:"context,omitempty"`
-	Title            *CGameNotifications_LocalizedText `protobuf:"bytes,4,opt,name=title" json:"title,omitempty"`
-	TimeCreated      *uint32                           `protobuf:"varint,5,opt,name=time_created,json=timeCreated" json:"time_created,omitempty"`
-	TimeUpdated      *uint32                           `protobuf:"varint,6,opt,name=time_updated,json=timeUpdated" json:"time_updated,omitempty"`
-	UserStatus       []*CGameNotifications_UserStatus  `protobuf:"bytes,7,rep,name=user_status,json=userStatus" json:"user_status,omitempty"`
-	XXX_unrecognized []byte                            `json:"-"`
+	Sessionid            *uint64                           `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
+	Appid                *uint64                           `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	Context              *uint64                           `protobuf:"varint,3,opt,name=context" json:"context,omitempty"`
+	Title                *CGameNotifications_LocalizedText `protobuf:"bytes,4,opt,name=title" json:"title,omitempty"`
+	TimeCreated          *uint32                           `protobuf:"varint,5,opt,name=time_created,json=timeCreated" json:"time_created,omitempty"`
+	TimeUpdated          *uint32                           `protobuf:"varint,6,opt,name=time_updated,json=timeUpdated" json:"time_updated,omitempty"`
+	UserStatus           []*CGameNotifications_UserStatus  `protobuf:"bytes,7,rep,name=user_status,json=userStatus" json:"user_status,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                          `json:"-"`
+	XXX_unrecognized     []byte                            `json:"-"`
+	XXX_sizecache        int32                             `json:"-"`
 }
 
-func (m *CGameNotifications_Session) Reset()                    { *m = CGameNotifications_Session{} }
-func (m *CGameNotifications_Session) String() string            { return proto.CompactTextString(m) }
-func (*CGameNotifications_Session) ProtoMessage()               {}
-func (*CGameNotifications_Session) Descriptor() ([]byte, []int) { return gamenotifications_fileDescriptor0, []int{10} }
+func (m *CGameNotifications_Session) Reset()         { *m = CGameNotifications_Session{} }
+func (m *CGameNotifications_Session) String() string { return proto.CompactTextString(m) }
+func (*CGameNotifications_Session) ProtoMessage()    {}
+func (*CGameNotifications_Session) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d73f3ce78278ce26, []int{10}
+}
+
+func (m *CGameNotifications_Session) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_Session.Unmarshal(m, b)
+}
+func (m *CGameNotifications_Session) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_Session.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_Session) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_Session.Merge(m, src)
+}
+func (m *CGameNotifications_Session) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_Session.Size(m)
+}
+func (m *CGameNotifications_Session) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_Session.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_Session proto.InternalMessageInfo
 
 func (m *CGameNotifications_Session) GetSessionid() uint64 {
 	if m != nil && m.Sessionid != nil {
@@ -422,8 +657,10 @@ func (m *CGameNotifications_Session) GetUserStatus() []*CGameNotifications_UserS
 }
 
 type CGameNotifications_EnumerateSessions_Response struct {
-	Sessions         []*CGameNotifications_Session `protobuf:"bytes,1,rep,name=sessions" json:"sessions,omitempty"`
-	XXX_unrecognized []byte                        `json:"-"`
+	Sessions             []*CGameNotifications_Session `protobuf:"bytes,1,rep,name=sessions" json:"sessions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
+	XXX_unrecognized     []byte                        `json:"-"`
+	XXX_sizecache        int32                         `json:"-"`
 }
 
 func (m *CGameNotifications_EnumerateSessions_Response) Reset() {
@@ -434,8 +671,26 @@ func (m *CGameNotifications_EnumerateSessions_Response) String() string {
 }
 func (*CGameNotifications_EnumerateSessions_Response) ProtoMessage() {}
 func (*CGameNotifications_EnumerateSessions_Response) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{11}
+	return fileDescriptor_d73f3ce78278ce26, []int{11}
 }
+
+func (m *CGameNotifications_EnumerateSessions_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_EnumerateSessions_Response.Unmarshal(m, b)
+}
+func (m *CGameNotifications_EnumerateSessions_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_EnumerateSessions_Response.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_EnumerateSessions_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_EnumerateSessions_Response.Merge(m, src)
+}
+func (m *CGameNotifications_EnumerateSessions_Response) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_EnumerateSessions_Response.Size(m)
+}
+func (m *CGameNotifications_EnumerateSessions_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_EnumerateSessions_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_EnumerateSessions_Response proto.InternalMessageInfo
 
 func (m *CGameNotifications_EnumerateSessions_Response) GetSessions() []*CGameNotifications_Session {
 	if m != nil {
@@ -445,10 +700,12 @@ func (m *CGameNotifications_EnumerateSessions_Response) GetSessions() []*CGameNo
 }
 
 type CGameNotifications_GetSessionDetails_Request struct {
-	Sessions         []*CGameNotifications_GetSessionDetails_Request_RequestedSession `protobuf:"bytes,1,rep,name=sessions" json:"sessions,omitempty"`
-	Appid            *uint32                                                          `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	Language         *string                                                          `protobuf:"bytes,3,opt,name=language" json:"language,omitempty"`
-	XXX_unrecognized []byte                                                           `json:"-"`
+	Sessions             []*CGameNotifications_GetSessionDetails_Request_RequestedSession `protobuf:"bytes,1,rep,name=sessions" json:"sessions,omitempty"`
+	Appid                *uint32                                                          `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	Language             *string                                                          `protobuf:"bytes,3,opt,name=language" json:"language,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                         `json:"-"`
+	XXX_unrecognized     []byte                                                           `json:"-"`
+	XXX_sizecache        int32                                                            `json:"-"`
 }
 
 func (m *CGameNotifications_GetSessionDetails_Request) Reset() {
@@ -459,8 +716,26 @@ func (m *CGameNotifications_GetSessionDetails_Request) String() string {
 }
 func (*CGameNotifications_GetSessionDetails_Request) ProtoMessage() {}
 func (*CGameNotifications_GetSessionDetails_Request) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{12}
+	return fileDescriptor_d73f3ce78278ce26, []int{12}
 }
+
+func (m *CGameNotifications_GetSessionDetails_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_GetSessionDetails_Request.Unmarshal(m, b)
+}
+func (m *CGameNotifications_GetSessionDetails_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_GetSessionDetails_Request.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_GetSessionDetails_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_GetSessionDetails_Request.Merge(m, src)
+}
+func (m *CGameNotifications_GetSessionDetails_Request) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_GetSessionDetails_Request.Size(m)
+}
+func (m *CGameNotifications_GetSessionDetails_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_GetSessionDetails_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_GetSessionDetails_Request proto.InternalMessageInfo
 
 func (m *CGameNotifications_GetSessionDetails_Request) GetSessions() []*CGameNotifications_GetSessionDetails_Request_RequestedSession {
 	if m != nil {
@@ -484,9 +759,11 @@ func (m *CGameNotifications_GetSessionDetails_Request) GetLanguage() string {
 }
 
 type CGameNotifications_GetSessionDetails_Request_RequestedSession struct {
-	Sessionid              *uint64 `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
-	IncludeAuthUserMessage *bool   `protobuf:"varint,3,opt,name=include_auth_user_message,json=includeAuthUserMessage" json:"include_auth_user_message,omitempty"`
-	XXX_unrecognized       []byte  `json:"-"`
+	Sessionid              *uint64  `protobuf:"varint,1,opt,name=sessionid" json:"sessionid,omitempty"`
+	IncludeAuthUserMessage *bool    `protobuf:"varint,3,opt,name=include_auth_user_message,json=includeAuthUserMessage" json:"include_auth_user_message,omitempty"`
+	XXX_NoUnkeyedLiteral   struct{} `json:"-"`
+	XXX_unrecognized       []byte   `json:"-"`
+	XXX_sizecache          int32    `json:"-"`
 }
 
 func (m *CGameNotifications_GetSessionDetails_Request_RequestedSession) Reset() {
@@ -497,8 +774,26 @@ func (m *CGameNotifications_GetSessionDetails_Request_RequestedSession) String()
 }
 func (*CGameNotifications_GetSessionDetails_Request_RequestedSession) ProtoMessage() {}
 func (*CGameNotifications_GetSessionDetails_Request_RequestedSession) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{12, 0}
+	return fileDescriptor_d73f3ce78278ce26, []int{12, 0}
 }
+
+func (m *CGameNotifications_GetSessionDetails_Request_RequestedSession) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_GetSessionDetails_Request_RequestedSession.Unmarshal(m, b)
+}
+func (m *CGameNotifications_GetSessionDetails_Request_RequestedSession) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_GetSessionDetails_Request_RequestedSession.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_GetSessionDetails_Request_RequestedSession) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_GetSessionDetails_Request_RequestedSession.Merge(m, src)
+}
+func (m *CGameNotifications_GetSessionDetails_Request_RequestedSession) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_GetSessionDetails_Request_RequestedSession.Size(m)
+}
+func (m *CGameNotifications_GetSessionDetails_Request_RequestedSession) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_GetSessionDetails_Request_RequestedSession.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_GetSessionDetails_Request_RequestedSession proto.InternalMessageInfo
 
 func (m *CGameNotifications_GetSessionDetails_Request_RequestedSession) GetSessionid() uint64 {
 	if m != nil && m.Sessionid != nil {
@@ -515,8 +810,10 @@ func (m *CGameNotifications_GetSessionDetails_Request_RequestedSession) GetInclu
 }
 
 type CGameNotifications_GetSessionDetails_Response struct {
-	Sessions         []*CGameNotifications_Session `protobuf:"bytes,1,rep,name=sessions" json:"sessions,omitempty"`
-	XXX_unrecognized []byte                        `json:"-"`
+	Sessions             []*CGameNotifications_Session `protobuf:"bytes,1,rep,name=sessions" json:"sessions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                      `json:"-"`
+	XXX_unrecognized     []byte                        `json:"-"`
+	XXX_sizecache        int32                         `json:"-"`
 }
 
 func (m *CGameNotifications_GetSessionDetails_Response) Reset() {
@@ -527,8 +824,26 @@ func (m *CGameNotifications_GetSessionDetails_Response) String() string {
 }
 func (*CGameNotifications_GetSessionDetails_Response) ProtoMessage() {}
 func (*CGameNotifications_GetSessionDetails_Response) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{13}
+	return fileDescriptor_d73f3ce78278ce26, []int{13}
 }
+
+func (m *CGameNotifications_GetSessionDetails_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_GetSessionDetails_Response.Unmarshal(m, b)
+}
+func (m *CGameNotifications_GetSessionDetails_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_GetSessionDetails_Response.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_GetSessionDetails_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_GetSessionDetails_Response.Merge(m, src)
+}
+func (m *CGameNotifications_GetSessionDetails_Response) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_GetSessionDetails_Response.Size(m)
+}
+func (m *CGameNotifications_GetSessionDetails_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_GetSessionDetails_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_GetSessionDetails_Response proto.InternalMessageInfo
 
 func (m *CGameNotifications_GetSessionDetails_Response) GetSessions() []*CGameNotifications_Session {
 	if m != nil {
@@ -538,15 +853,37 @@ func (m *CGameNotifications_GetSessionDetails_Response) GetSessions() []*CGameNo
 }
 
 type GameNotificationSettings struct {
-	Appid              *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	AllowNotifications *bool   `protobuf:"varint,2,opt,name=allow_notifications,json=allowNotifications" json:"allow_notifications,omitempty"`
-	XXX_unrecognized   []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	AllowNotifications   *bool    `protobuf:"varint,2,opt,name=allow_notifications,json=allowNotifications" json:"allow_notifications,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GameNotificationSettings) Reset()                    { *m = GameNotificationSettings{} }
-func (m *GameNotificationSettings) String() string            { return proto.CompactTextString(m) }
-func (*GameNotificationSettings) ProtoMessage()               {}
-func (*GameNotificationSettings) Descriptor() ([]byte, []int) { return gamenotifications_fileDescriptor0, []int{14} }
+func (m *GameNotificationSettings) Reset()         { *m = GameNotificationSettings{} }
+func (m *GameNotificationSettings) String() string { return proto.CompactTextString(m) }
+func (*GameNotificationSettings) ProtoMessage()    {}
+func (*GameNotificationSettings) Descriptor() ([]byte, []int) {
+	return fileDescriptor_d73f3ce78278ce26, []int{14}
+}
+
+func (m *GameNotificationSettings) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GameNotificationSettings.Unmarshal(m, b)
+}
+func (m *GameNotificationSettings) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GameNotificationSettings.Marshal(b, m, deterministic)
+}
+func (m *GameNotificationSettings) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GameNotificationSettings.Merge(m, src)
+}
+func (m *GameNotificationSettings) XXX_Size() int {
+	return xxx_messageInfo_GameNotificationSettings.Size(m)
+}
+func (m *GameNotificationSettings) XXX_DiscardUnknown() {
+	xxx_messageInfo_GameNotificationSettings.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GameNotificationSettings proto.InternalMessageInfo
 
 func (m *GameNotificationSettings) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -564,7 +901,9 @@ func (m *GameNotificationSettings) GetAllowNotifications() bool {
 
 type CGameNotifications_UpdateNotificationSettings_Request struct {
 	GameNotificationSettings []*GameNotificationSettings `protobuf:"bytes,1,rep,name=game_notification_settings,json=gameNotificationSettings" json:"game_notification_settings,omitempty"`
+	XXX_NoUnkeyedLiteral     struct{}                    `json:"-"`
 	XXX_unrecognized         []byte                      `json:"-"`
+	XXX_sizecache            int32                       `json:"-"`
 }
 
 func (m *CGameNotifications_UpdateNotificationSettings_Request) Reset() {
@@ -575,8 +914,26 @@ func (m *CGameNotifications_UpdateNotificationSettings_Request) String() string 
 }
 func (*CGameNotifications_UpdateNotificationSettings_Request) ProtoMessage() {}
 func (*CGameNotifications_UpdateNotificationSettings_Request) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{15}
+	return fileDescriptor_d73f3ce78278ce26, []int{15}
 }
+
+func (m *CGameNotifications_UpdateNotificationSettings_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Request.Unmarshal(m, b)
+}
+func (m *CGameNotifications_UpdateNotificationSettings_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Request.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_UpdateNotificationSettings_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Request.Merge(m, src)
+}
+func (m *CGameNotifications_UpdateNotificationSettings_Request) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Request.Size(m)
+}
+func (m *CGameNotifications_UpdateNotificationSettings_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Request proto.InternalMessageInfo
 
 func (m *CGameNotifications_UpdateNotificationSettings_Request) GetGameNotificationSettings() []*GameNotificationSettings {
 	if m != nil {
@@ -586,7 +943,9 @@ func (m *CGameNotifications_UpdateNotificationSettings_Request) GetGameNotificat
 }
 
 type CGameNotifications_UpdateNotificationSettings_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CGameNotifications_UpdateNotificationSettings_Response) Reset() {
@@ -597,13 +956,33 @@ func (m *CGameNotifications_UpdateNotificationSettings_Response) String() string
 }
 func (*CGameNotifications_UpdateNotificationSettings_Response) ProtoMessage() {}
 func (*CGameNotifications_UpdateNotificationSettings_Response) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{16}
+	return fileDescriptor_d73f3ce78278ce26, []int{16}
 }
 
+func (m *CGameNotifications_UpdateNotificationSettings_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Response.Unmarshal(m, b)
+}
+func (m *CGameNotifications_UpdateNotificationSettings_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Response.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_UpdateNotificationSettings_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Response.Merge(m, src)
+}
+func (m *CGameNotifications_UpdateNotificationSettings_Response) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Response.Size(m)
+}
+func (m *CGameNotifications_UpdateNotificationSettings_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_UpdateNotificationSettings_Response proto.InternalMessageInfo
+
 type CGameNotifications_OnNotificationsRequested_Notification struct {
-	Steamid          *uint64 `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
-	Appid            *uint32 `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Steamid              *uint64  `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CGameNotifications_OnNotificationsRequested_Notification) Reset() {
@@ -614,8 +993,26 @@ func (m *CGameNotifications_OnNotificationsRequested_Notification) String() stri
 }
 func (*CGameNotifications_OnNotificationsRequested_Notification) ProtoMessage() {}
 func (*CGameNotifications_OnNotificationsRequested_Notification) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{17}
+	return fileDescriptor_d73f3ce78278ce26, []int{17}
 }
+
+func (m *CGameNotifications_OnNotificationsRequested_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_OnNotificationsRequested_Notification.Unmarshal(m, b)
+}
+func (m *CGameNotifications_OnNotificationsRequested_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_OnNotificationsRequested_Notification.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_OnNotificationsRequested_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_OnNotificationsRequested_Notification.Merge(m, src)
+}
+func (m *CGameNotifications_OnNotificationsRequested_Notification) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_OnNotificationsRequested_Notification.Size(m)
+}
+func (m *CGameNotifications_OnNotificationsRequested_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_OnNotificationsRequested_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_OnNotificationsRequested_Notification proto.InternalMessageInfo
 
 func (m *CGameNotifications_OnNotificationsRequested_Notification) GetSteamid() uint64 {
 	if m != nil && m.Steamid != nil {
@@ -632,12 +1029,14 @@ func (m *CGameNotifications_OnNotificationsRequested_Notification) GetAppid() ui
 }
 
 type CGameNotifications_OnUserStatusChanged_Notification struct {
-	Steamid          *uint64                        `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
-	Sessionid        *uint64                        `protobuf:"varint,2,opt,name=sessionid" json:"sessionid,omitempty"`
-	Appid            *uint32                        `protobuf:"varint,3,opt,name=appid" json:"appid,omitempty"`
-	Status           *CGameNotifications_UserStatus `protobuf:"bytes,4,opt,name=status" json:"status,omitempty"`
-	Removed          *bool                          `protobuf:"varint,5,opt,name=removed" json:"removed,omitempty"`
-	XXX_unrecognized []byte                         `json:"-"`
+	Steamid              *uint64                        `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
+	Sessionid            *uint64                        `protobuf:"varint,2,opt,name=sessionid" json:"sessionid,omitempty"`
+	Appid                *uint32                        `protobuf:"varint,3,opt,name=appid" json:"appid,omitempty"`
+	Status               *CGameNotifications_UserStatus `protobuf:"bytes,4,opt,name=status" json:"status,omitempty"`
+	Removed              *bool                          `protobuf:"varint,5,opt,name=removed" json:"removed,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
+	XXX_unrecognized     []byte                         `json:"-"`
+	XXX_sizecache        int32                          `json:"-"`
 }
 
 func (m *CGameNotifications_OnUserStatusChanged_Notification) Reset() {
@@ -648,8 +1047,26 @@ func (m *CGameNotifications_OnUserStatusChanged_Notification) String() string {
 }
 func (*CGameNotifications_OnUserStatusChanged_Notification) ProtoMessage() {}
 func (*CGameNotifications_OnUserStatusChanged_Notification) Descriptor() ([]byte, []int) {
-	return gamenotifications_fileDescriptor0, []int{18}
+	return fileDescriptor_d73f3ce78278ce26, []int{18}
 }
+
+func (m *CGameNotifications_OnUserStatusChanged_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CGameNotifications_OnUserStatusChanged_Notification.Unmarshal(m, b)
+}
+func (m *CGameNotifications_OnUserStatusChanged_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CGameNotifications_OnUserStatusChanged_Notification.Marshal(b, m, deterministic)
+}
+func (m *CGameNotifications_OnUserStatusChanged_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CGameNotifications_OnUserStatusChanged_Notification.Merge(m, src)
+}
+func (m *CGameNotifications_OnUserStatusChanged_Notification) XXX_Size() int {
+	return xxx_messageInfo_CGameNotifications_OnUserStatusChanged_Notification.Size(m)
+}
+func (m *CGameNotifications_OnUserStatusChanged_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CGameNotifications_OnUserStatusChanged_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CGameNotifications_OnUserStatusChanged_Notification proto.InternalMessageInfo
 
 func (m *CGameNotifications_OnUserStatusChanged_Notification) GetSteamid() uint64 {
 	if m != nil && m.Steamid != nil {
@@ -709,158 +1126,72 @@ func init() {
 	proto.RegisterType((*CGameNotifications_OnUserStatusChanged_Notification)(nil), "CGameNotifications_OnUserStatusChanged_Notification")
 }
 
-func init() { proto.RegisterFile("steammessages_gamenotifications.steamclient.proto", gamenotifications_fileDescriptor0) }
+func init() {
+	proto.RegisterFile("steammessages_gamenotifications.steamclient.proto", fileDescriptor_d73f3ce78278ce26)
+}
 
-var gamenotifications_fileDescriptor0 = []byte{
-	// 2393 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x59, 0xcb, 0x8f, 0x1c, 0x47,
-	0x19, 0x57, 0xef, 0xc3, 0x5e, 0x97, 0x63, 0x09, 0x77, 0x10, 0x54, 0xc6, 0x8e, 0x53, 0x9e, 0xe0,
-	0xd8, 0x8e, 0x77, 0x3b, 0x64, 0x13, 0x9b, 0x38, 0x52, 0x22, 0xed, 0xac, 0xa3, 0x25, 0x92, 0x1f,
-	0x61, 0xec, 0xe0, 0x28, 0xa0, 0x8c, 0x6a, 0xbb, 0xbf, 0x99, 0xa9, 0x6c, 0x4f, 0xf7, 0xd0, 0x55,
-	0xbd, 0xe3, 0xe5, 0x84, 0x1a, 0x21, 0x5e, 0x89, 0x40, 0xc2, 0x88, 0x20, 0x24, 0xdf, 0xc8, 0x25,
-	0x5c, 0x10, 0xea, 0x13, 0x17, 0x24, 0xae, 0x5c, 0xc9, 0x95, 0x03, 0x12, 0x07, 0xc4, 0x1f, 0x81,
-	0xea, 0xd5, 0x8f, 0x99, 0x1e, 0x7b, 0xc7, 0x96, 0x78, 0x5c, 0x56, 0x9a, 0xae, 0xfa, 0xbe, 0xfa,
-	0x7d, 0xaf, 0xdf, 0xf7, 0x55, 0x2d, 0x7a, 0x99, 0x0b, 0xa0, 0xa3, 0x11, 0x70, 0x4e, 0x07, 0xc0,
-	0x7b, 0x03, 0x3a, 0x82, 0x28, 0x16, 0xac, 0xcf, 0x7c, 0x2a, 0x58, 0x1c, 0x71, 0x4f, 0xad, 0xfb,
-	0x21, 0x83, 0x48, 0x78, 0xe3, 0x24, 0x16, 0x71, 0x6b, 0xbd, 0x2e, 0x92, 0x46, 0xac, 0xcf, 0x20,
-	0xe8, 0xed, 0x52, 0x0e, 0xb3, 0xbb, 0xdb, 0xff, 0x5a, 0x42, 0xa7, 0xb6, 0x77, 0xe8, 0x08, 0x6e,
-	0x56, 0xd5, 0xf6, 0xbe, 0x49, 0x13, 0x46, 0x77, 0x43, 0x70, 0x3f, 0x73, 0xd0, 0xf2, 0x1e, 0x1c,
-	0x60, 0x87, 0x38, 0x17, 0x8e, 0x75, 0x3e, 0x71, 0xb2, 0x1c, 0xff, 0xc2, 0xb9, 0x33, 0x04, 0x12,
-	0xd1, 0x11, 0x90, 0xb8, 0x4f, 0xc4, 0x10, 0xc8, 0xbe, 0xd9, 0x4d, 0x58, 0xa4, 0x7e, 0x87, 0xb1,
-	0x4f, 0x43, 0xf6, 0x5d, 0x08, 0x88, 0x80, 0x7b, 0x82, 0x6c, 0x6c, 0x10, 0x1a, 0x1d, 0x4c, 0x86,
-	0x90, 0x00, 0x11, 0x43, 0x2a, 0xc8, 0x39, 0x2b, 0x20, 0x95, 0x9c, 0x23, 0x8c, 0x93, 0x7e, 0x9c,
-	0x46, 0x01, 0x99, 0x30, 0x31, 0x34, 0x2a, 0x94, 0x20, 0x13, 0x64, 0xc2, 0xc2, 0x90, 0xec, 0x02,
-	0xe1, 0xe9, 0x2e, 0x17, 0x4c, 0xa4, 0x01, 0xe8, 0x6d, 0x6a, 0xd3, 0x80, 0xed, 0x43, 0x44, 0xf6,
-	0x69, 0x98, 0x42, 0x57, 0xa2, 0x74, 0x1f, 0x38, 0x68, 0x55, 0xfd, 0xc4, 0x4b, 0x0a, 0xef, 0x0f,
-	0x25, 0xde, 0x4c, 0xe1, 0x55, 0x9f, 0x67, 0x00, 0x8b, 0xb8, 0xd0, 0x2c, 0xe6, 0xc1, 0x67, 0x11,
-	0x19, 0x87, 0xd4, 0x2f, 0x84, 0xed, 0xa9, 0x5a, 0x85, 0x47, 0xc8, 0x36, 0x8d, 0x08, 0x13, 0x1c,
-	0xc2, 0xbe, 0x44, 0x4a, 0xad, 0xbc, 0x72, 0x25, 0x11, 0xf1, 0x1e, 0x44, 0x5e, 0x57, 0xc3, 0x6a,
-	0xff, 0x76, 0x19, 0x91, 0x06, 0x77, 0x5f, 0xb7, 0x27, 0xde, 0x81, 0x7b, 0xc2, 0xbd, 0x85, 0x56,
-	0x95, 0x94, 0x71, 0xfa, 0xd5, 0x2c, 0xc7, 0x97, 0xb7, 0x1a, 0xb4, 0x6a, 0x67, 0x8e, 0xe8, 0x98,
-	0x4b, 0x3b, 0x24, 0xb4, 0x00, 0x38, 0x4b, 0x20, 0x20, 0x5c, 0x24, 0x2c, 0x1a, 0x78, 0x5d, 0xad,
-	0xc7, 0xfd, 0xc4, 0x41, 0xc7, 0x2c, 0x5e, 0x8e, 0x97, 0xc8, 0xf2, 0x85, 0xe3, 0x9b, 0xa7, 0xbd,
-	0x87, 0x84, 0xbd, 0xf3, 0xed, 0x2c, 0xc7, 0xef, 0x6d, 0x91, 0x90, 0x71, 0x21, 0xcd, 0x2e, 0x84,
-	0xb5, 0x1b, 0xf9, 0xac, 0xdf, 0x68, 0x74, 0x50, 0xd9, 0xa5, 0xc3, 0x39, 0xe3, 0x4e, 0x0b, 0xab,
-	0x04, 0xe3, 0xde, 0x77, 0xd0, 0x89, 0x04, 0xa2, 0x00, 0x12, 0x08, 0x7a, 0xd2, 0xdd, 0x78, 0x59,
-	0x19, 0x1d, 0x67, 0x39, 0xde, 0x93, 0xde, 0x20, 0x76, 0xd5, 0xaa, 0x4b, 0xe0, 0x3b, 0x29, 0x70,
-	0x01, 0x01, 0x09, 0x69, 0x34, 0x48, 0xe9, 0x00, 0xd6, 0x89, 0x1f, 0x8f, 0xc6, 0x21, 0x08, 0xd0,
-	0xa9, 0x51, 0x44, 0xb7, 0x80, 0x28, 0x8d, 0x5b, 0x27, 0xac, 0x2f, 0x83, 0x63, 0x84, 0xc8, 0x84,
-	0x72, 0xc2, 0xc7, 0xe0, 0xab, 0xf2, 0xf0, 0xba, 0x4f, 0xd9, 0x73, 0xe4, 0xa1, 0xed, 0x7c, 0x05,
-	0x3d, 0xdb, 0xe0, 0x9f, 0x77, 0x39, 0x24, 0xb7, 0x05, 0x15, 0x29, 0x77, 0x5f, 0x47, 0x47, 0x55,
-	0x35, 0xb1, 0x40, 0x85, 0xe9, 0x48, 0x87, 0x64, 0x39, 0x3e, 0x2d, 0x33, 0xcd, 0x28, 0xf5, 0x49,
-	0xca, 0x21, 0x39, 0xcf, 0x89, 0xd9, 0xe6, 0x75, 0xad, 0x80, 0x2c, 0xaa, 0x55, 0x2e, 0xa8, 0xb0,
-	0x69, 0x7a, 0x5f, 0xa6, 0xe9, 0xcf, 0x54, 0x9a, 0x16, 0x32, 0x54, 0xc8, 0xd4, 0x4a, 0x80, 0x06,
-	0x07, 0xb2, 0x80, 0x84, 0x59, 0x93, 0xc5, 0xa2, 0x3f, 0x8a, 0x58, 0xa6, 0xe5, 0x81, 0x47, 0xc8,
-	0x84, 0x32, 0xc1, 0xa2, 0x81, 0xdc, 0x26, 0x55, 0x48, 0x92, 0x90, 0xdb, 0xec, 0xe7, 0x58, 0x46,
-	0x87, 0x50, 0x5f, 0x25, 0x4e, 0x3f, 0x89, 0x47, 0x85, 0x32, 0xaf, 0x70, 0x5c, 0xb0, 0xae, 0x53,
-	0xdb, 0x88, 0xc6, 0xfb, 0x90, 0x78, 0x5d, 0x8d, 0xd1, 0xfd, 0xa9, 0x83, 0x56, 0x05, 0x13, 0x21,
-	0xa8, 0xd0, 0x1c, 0xdf, 0x3c, 0xeb, 0x3d, 0x2a, 0x83, 0x3b, 0xdd, 0x2c, 0xc7, 0x37, 0xef, 0x48,
-	0x19, 0x5b, 0x34, 0x1c, 0x38, 0xd7, 0x89, 0x4b, 0x02, 0xc6, 0x25, 0x70, 0x9d, 0xb3, 0x8c, 0x1b,
-	0xb3, 0x54, 0x70, 0x59, 0x52, 0xa4, 0x9c, 0xc4, 0xbb, 0x5f, 0xc8, 0x71, 0x99, 0xcb, 0x52, 0x9f,
-	0xfb, 0x1b, 0x07, 0x1d, 0x35, 0xe4, 0x86, 0x57, 0x0e, 0x8b, 0xe7, 0x83, 0x2c, 0xc7, 0xef, 0xdf,
-	0x4e, 0x77, 0xc5, 0x22, 0x90, 0xd4, 0x9f, 0x92, 0x92, 0x1e, 0x86, 0xcd, 0x22, 0x6a, 0xff, 0x71,
-	0x15, 0x5d, 0x68, 0x40, 0xb3, 0x9d, 0x00, 0x15, 0x70, 0x5b, 0xef, 0xef, 0x75, 0x75, 0x06, 0xbb,
-	0x6f, 0xa2, 0x55, 0x3a, 0x1e, 0x9b, 0x04, 0x3a, 0xd1, 0xb9, 0x90, 0xe5, 0xf8, 0x2b, 0x32, 0x80,
-	0xea, 0xa3, 0xc4, 0xe2, 0x2b, 0xb1, 0x1a, 0xd8, 0x7e, 0x2c, 0x03, 0xa3, 0x76, 0xb8, 0x3f, 0x72,
-	0xd0, 0x51, 0x3f, 0x8e, 0x54, 0xd5, 0xc8, 0x44, 0x5a, 0xe9, 0x44, 0x59, 0x8e, 0x3f, 0x94, 0xc7,
-	0x6f, 0x14, 0x99, 0x4d, 0xcc, 0x0e, 0x43, 0x80, 0x45, 0x94, 0x7d, 0x1a, 0x49, 0x0b, 0xd5, 0x39,
-	0x94, 0xf3, 0xd8, 0x67, 0xd3, 0x47, 0xa9, 0x5a, 0xe2, 0xb1, 0xa4, 0xf9, 0xdd, 0x0f, 0xc1, 0x17,
-	0x32, 0x91, 0xb4, 0x1f, 0x76, 0xa9, 0xbf, 0x07, 0x91, 0xcc, 0x68, 0xa3, 0xdc, 0xfd, 0xc9, 0xe2,
-	0x39, 0xf2, 0x8d, 0x2c, 0xc7, 0x37, 0xa4, 0xb9, 0xf3, 0x82, 0xb2, 0x0b, 0x36, 0x2e, 0x50, 0xb4,
-	0x06, 0xa0, 0xfe, 0xd0, 0xd6, 0x88, 0x8d, 0xc6, 0x4c, 0x8a, 0x0c, 0xd1, 0xaa, 0xdc, 0xc2, 0xf1,
-	0x8a, 0x62, 0xba, 0x33, 0xde, 0x43, 0x2b, 0xb9, 0xb3, 0x99, 0xe5, 0xd8, 0x93, 0x40, 0x58, 0xc4,
-	0x04, 0xa3, 0xa1, 0x2e, 0x3e, 0x15, 0xe7, 0x30, 0x54, 0x87, 0x71, 0xcb, 0x3d, 0xe6, 0x28, 0xaf,
-	0xab, 0x0f, 0x70, 0xff, 0xe2, 0x94, 0x2c, 0xb0, 0xaa, 0x58, 0xe0, 0xf7, 0xb2, 0x94, 0x7f, 0xe7,
-	0x5c, 0xb8, 0x35, 0x96, 0xe7, 0xd0, 0xf0, 0xa2, 0x2d, 0x7f, 0x69, 0xd1, 0x88, 0xee, 0x41, 0x95,
-	0xc3, 0xa4, 0x47, 0x77, 0x61, 0x48, 0xc3, 0xbe, 0x3c, 0x6d, 0x63, 0x43, 0x32, 0x54, 0x11, 0xb8,
-	0xf5, 0xb2, 0xe6, 0x47, 0x29, 0x17, 0xd2, 0x1d, 0x75, 0x14, 0x84, 0x46, 0x41, 0x05, 0xe2, 0x2e,
-	0xc8, 0x62, 0xa7, 0x41, 0xa0, 0x63, 0x5a, 0xdd, 0x68, 0xe5, 0xfb, 0x09, 0x83, 0x28, 0xe0, 0x65,
-	0x03, 0x55, 0x24, 0x50, 0xf0, 0x52, 0x5b, 0xa0, 0x8b, 0x87, 0x48, 0x5e, 0x3e, 0x8e, 0x23, 0x0e,
-	0xee, 0x0e, 0x3a, 0x66, 0xf4, 0x9b, 0x0c, 0x5e, 0xe9, 0x5c, 0xcc, 0x72, 0x7c, 0xee, 0x4e, 0x79,
-	0x30, 0x0b, 0x6c, 0x58, 0x75, 0x26, 0x07, 0xa5, 0x03, 0x4b, 0xd9, 0xf6, 0x67, 0x4b, 0x8d, 0x35,
-	0x73, 0x0d, 0x24, 0x31, 0x4d, 0xd7, 0xcc, 0xeb, 0xb3, 0xa7, 0x9e, 0xce, 0x72, 0x8c, 0xeb, 0xa7,
-	0xca, 0x92, 0x56, 0xe2, 0xd5, 0x83, 0xdc, 0x37, 0x6c, 0xbd, 0x2d, 0xa9, 0x7a, 0x3b, 0x9f, 0xe5,
-	0xf8, 0xf9, 0xb2, 0xde, 0x1a, 0x58, 0xc1, 0xa8, 0x30, 0xe5, 0xf6, 0xfd, 0x4a, 0xb0, 0x97, 0x55,
-	0xb0, 0x59, 0x96, 0x63, 0xf8, 0x4f, 0x84, 0xba, 0x12, 0xa3, 0x4b, 0x8d, 0x31, 0x9a, 0x76, 0x96,
-	0x8e, 0x51, 0xfb, 0x1f, 0xcd, 0x74, 0xf4, 0xee, 0x38, 0xa0, 0x4f, 0xe0, 0xda, 0x54, 0x89, 0x3f,
-	0x91, 0x6b, 0xad, 0x0a, 0xe3, 0xda, 0x5f, 0x2d, 0x4e, 0x1f, 0x8a, 0xd2, 0x2b, 0xbe, 0x57, 0x33,
-	0x29, 0x4c, 0x1a, 0xd9, 0xc4, 0x23, 0xe4, 0xed, 0x3e, 0x89, 0x62, 0x31, 0xed, 0x72, 0xbd, 0x59,
-	0xcd, 0x98, 0x72, 0x75, 0x17, 0x88, 0x3f, 0xa4, 0xd1, 0x40, 0xce, 0x03, 0x86, 0x4b, 0xfe, 0xea,
-	0x2c, 0x46, 0x26, 0x0f, 0x64, 0xfd, 0xff, 0xba, 0x5a, 0xff, 0xe5, 0x14, 0xa5, 0xeb, 0x74, 0x32,
-	0x8c, 0x39, 0x18, 0x8e, 0xb1, 0xd3, 0xad, 0x76, 0x87, 0x72, 0x6e, 0x02, 0xfd, 0x50, 0x92, 0x6d,
-	0x39, 0x69, 0x9a, 0x59, 0xe0, 0xed, 0x7e, 0x91, 0x25, 0x9c, 0xd0, 0x04, 0x14, 0x62, 0x1a, 0xea,
-	0x61, 0xa0, 0x9e, 0x2e, 0xca, 0xb8, 0x83, 0x42, 0x7b, 0xc1, 0x09, 0x4c, 0x34, 0x32, 0xd7, 0x91,
-	0xff, 0x7f, 0xe6, 0x6a, 0xae, 0x8a, 0xe9, 0x3c, 0x37, 0x55, 0xf1, 0xf7, 0x15, 0xb4, 0xde, 0xb0,
-	0xfb, 0xad, 0x28, 0x1d, 0x41, 0x52, 0x0a, 0xf0, 0xa2, 0x32, 0x7e, 0xe0, 0xd4, 0x3b, 0xb5, 0x1e,
-	0x4e, 0xa7, 0xcb, 0xc2, 0xba, 0x26, 0x00, 0x41, 0x59, 0xc8, 0x55, 0xab, 0x26, 0xd6, 0x9b, 0x5e,
-	0x43, 0x06, 0x4a, 0x0f, 0x88, 0xca, 0xcc, 0x67, 0x8e, 0x2d, 0xe2, 0x96, 0x80, 0x48, 0x93, 0x48,
-	0x25, 0xa3, 0x2e, 0x93, 0x4f, 0x1d, 0xf4, 0x0c, 0x8b, 0xfc, 0x30, 0x0d, 0xa0, 0x47, 0xc3, 0xb0,
-	0x27, 0x05, 0x7b, 0xf6, 0xa6, 0xa7, 0x4a, 0x67, 0xad, 0xb3, 0x97, 0xe5, 0x78, 0x50, 0x09, 0x62,
-	0x27, 0x8e, 0x43, 0xa0, 0x91, 0x44, 0x05, 0xc9, 0x88, 0x45, 0xd2, 0xd5, 0x93, 0x21, 0x88, 0x21,
-	0x24, 0xea, 0x70, 0x23, 0x2e, 0xd1, 0x56, 0x42, 0xc2, 0x87, 0x71, 0x1a, 0x06, 0x3a, 0x72, 0xea,
-	0xbc, 0xc0, 0x23, 0xd7, 0xa0, 0x4f, 0xd3, 0x50, 0xa8, 0xe1, 0xbf, 0x4f, 0x43, 0x0e, 0x5e, 0xf7,
-	0x4b, 0x66, 0x75, 0x2b, 0x0c, 0x65, 0x0d, 0xdc, 0x30, 0x50, 0xdc, 0x3f, 0x54, 0x81, 0xa6, 0x62,
-	0x58, 0x43, 0xaa, 0xc6, 0xb6, 0xb5, 0xce, 0xbd, 0x2c, 0xc7, 0xe2, 0x31, 0x81, 0xca, 0xdf, 0x52,
-	0x2f, 0x44, 0x42, 0x86, 0x0f, 0x02, 0x9d, 0x6d, 0x8b, 0xa2, 0x4e, 0xc5, 0xb0, 0x02, 0xdb, 0xbd,
-	0x8e, 0xd6, 0xec, 0xed, 0x40, 0x75, 0xf3, 0x63, 0x9d, 0xaf, 0x66, 0x39, 0x5e, 0xaf, 0x60, 0xbc,
-	0x6e, 0x2f, 0x0f, 0x22, 0x2e, 0xae, 0x35, 0x95, 0xeb, 0x6a, 0xe4, 0x75, 0x0b, 0x0d, 0xed, 0x8f,
-	0x56, 0x51, 0xab, 0x21, 0xcb, 0x4c, 0x72, 0xb9, 0x5b, 0xb3, 0x6c, 0xfb, 0x7c, 0x96, 0xe3, 0xe7,
-	0xea, 0x69, 0xa5, 0x8d, 0x65, 0xbc, 0xa9, 0x71, 0xba, 0xaf, 0x56, 0x49, 0x77, 0xa5, 0x73, 0x26,
-	0xcb, 0x71, 0xab, 0x24, 0x5d, 0xeb, 0xa7, 0x72, 0x66, 0x99, 0x9d, 0x1a, 0x97, 0xff, 0xbb, 0x53,
-	0x63, 0xcf, 0xb2, 0xfe, 0xa1, 0x07, 0xf9, 0x17, 0xb2, 0x1c, 0xb7, 0xa5, 0x8d, 0x7e, 0x9a, 0x24,
-	0x10, 0x09, 0xc3, 0xe0, 0xb3, 0xb6, 0x6a, 0xf6, 0xfe, 0x3a, 0x7a, 0x4a, 0xb0, 0x11, 0xf4, 0xcc,
-	0xf8, 0xa1, 0xa2, 0x7a, 0xa2, 0x73, 0x2e, 0xcb, 0xf1, 0x59, 0x3d, 0x79, 0x8e, 0xa6, 0xc0, 0x53,
-	0x6e, 0x47, 0x15, 0xaf, 0x7b, 0x5c, 0x2e, 0xeb, 0xe1, 0x27, 0x70, 0x6f, 0x18, 0x4d, 0x86, 0xa9,
-	0x15, 0x67, 0x9e, 0xe8, 0xbc, 0x98, 0xe5, 0xf8, 0x05, 0xa9, 0x29, 0xa4, 0x5c, 0x34, 0xab, 0x33,
-	0x02, 0x46, 0x9d, 0x66, 0xa4, 0xc0, 0x1d, 0xa3, 0xe3, 0xaa, 0x24, 0xb8, 0xea, 0x1a, 0xf8, 0xe8,
-	0xa1, 0x7a, 0xcb, 0x4b, 0x59, 0x8e, 0x2f, 0xa9, 0xfc, 0x50, 0xbf, 0xed, 0x84, 0x5a, 0x76, 0x85,
-	0xe9, 0xa1, 0x01, 0xa5, 0x85, 0x70, 0xfb, 0x23, 0x07, 0x6d, 0x1c, 0x92, 0xf4, 0xcc, 0x80, 0xf7,
-	0x2d, 0xb4, 0x66, 0x29, 0x09, 0x3b, 0x0a, 0xe0, 0x29, 0x6f, 0x7e, 0x42, 0x77, 0xda, 0x59, 0x8e,
-	0xcf, 0x94, 0xcd, 0xae, 0x81, 0xd8, 0xbc, 0x6e, 0xa1, 0xb0, 0x7d, 0xbf, 0x99, 0x83, 0x77, 0x40,
-	0x18, 0x7d, 0xd7, 0x34, 0x8b, 0x16, 0x1c, 0xfc, 0xfe, 0x0c, 0x9a, 0x37, 0xbd, 0x45, 0x14, 0x78,
-	0x5d, 0xfb, 0x6e, 0x60, 0xd6, 0x4b, 0x30, 0xee, 0xe5, 0xfa, 0xf4, 0xf2, 0x5c, 0x96, 0xe3, 0x53,
-	0x73, 0x0b, 0x89, 0x17, 0x95, 0xb4, 0x55, 0xe1, 0x0b, 0xfd, 0x6a, 0xa1, 0x32, 0x6b, 0x01, 0x92,
-	0x68, 0x7d, 0xbc, 0x84, 0xbe, 0x30, 0x0d, 0xcc, 0xdd, 0x9e, 0xa5, 0x86, 0x22, 0x65, 0x6b, 0x1d,
-	0x67, 0x00, 0xf5, 0x6e, 0x53, 0x25, 0x87, 0x87, 0x53, 0xf0, 0xf2, 0xff, 0x26, 0x05, 0xb7, 0x7f,
-	0xdc, 0x9c, 0xa5, 0x4d, 0x51, 0x35, 0x59, 0xfa, 0xde, 0x62, 0x59, 0x5a, 0xc4, 0xd6, 0xfa, 0x6d,
-	0x6a, 0x52, 0xac, 0xa4, 0xe8, 0x9f, 0x1d, 0x84, 0xa7, 0x15, 0xdd, 0x06, 0x21, 0x58, 0x34, 0xe0,
-	0x4f, 0x7c, 0x77, 0x1f, 0xa0, 0xa7, 0x69, 0x18, 0xc6, 0x93, 0x5e, 0xed, 0x39, 0x57, 0x25, 0xe0,
-	0x5a, 0xe7, 0x4a, 0x96, 0xe3, 0xcd, 0xbb, 0x15, 0xc7, 0x2b, 0xd7, 0xaa, 0xfd, 0x9c, 0x54, 0x05,
-	0xca, 0xfe, 0x40, 0xc7, 0x63, 0xaf, 0xeb, 0xaa, 0x2d, 0x35, 0xc3, 0xdb, 0x3f, 0x77, 0xd0, 0xe5,
-	0xb9, 0xa3, 0x51, 0x93, 0x69, 0x45, 0xc5, 0xdd, 0x45, 0x2d, 0xc9, 0xf9, 0x35, 0x84, 0x3d, 0x6e,
-	0x76, 0x19, 0x5f, 0x3f, 0xe3, 0xcd, 0xf3, 0x50, 0x17, 0x0f, 0xe6, 0xac, 0xb4, 0x5f, 0x43, 0x57,
-	0x16, 0x45, 0x64, 0x26, 0xb7, 0xcf, 0x1d, 0xf4, 0x5a, 0x83, 0xe8, 0xad, 0xa8, 0xf6, 0xbb, 0x28,
-	0xa8, 0x5e, 0xf5, 0xb3, 0x7b, 0x77, 0xfa, 0xc5, 0xee, 0x8d, 0x2c, 0xc7, 0x57, 0xed, 0x90, 0x5b,
-	0xa1, 0x2c, 0x39, 0xa2, 0xd7, 0xdc, 0xcc, 0xc9, 0x04, 0x92, 0xea, 0xcb, 0xa3, 0x8a, 0x64, 0xf1,
-	0x9c, 0xb7, 0x55, 0xa7, 0x8f, 0x4b, 0x59, 0x8e, 0xcf, 0x57, 0x72, 0x61, 0x48, 0x45, 0x45, 0xb4,
-	0xfe, 0x7c, 0x6f, 0xd2, 0xa1, 0xfd, 0xcf, 0x65, 0xf4, 0x4a, 0xa3, 0x61, 0x25, 0xfd, 0x6f, 0xeb,
-	0x9b, 0x49, 0xdd, 0xa6, 0x9d, 0x69, 0x9b, 0x36, 0xb2, 0x1c, 0x5f, 0x9c, 0x63, 0x13, 0x2f, 0x3a,
-	0x47, 0x71, 0xcb, 0x29, 0x6c, 0xf0, 0xab, 0x9c, 0xa3, 0xe7, 0x89, 0xb7, 0xb2, 0x1c, 0x6f, 0x35,
-	0xde, 0xe6, 0x8b, 0xfe, 0x66, 0x9e, 0xf4, 0x6b, 0xcf, 0x96, 0x29, 0xd7, 0x6d, 0xd4, 0x1e, 0x51,
-	0xe1, 0xa4, 0xdb, 0xd6, 0x51, 0xcb, 0xca, 0x51, 0xca, 0xff, 0x73, 0x6f, 0x89, 0xf3, 0x94, 0x97,
-	0x37, 0x34, 0x5d, 0x49, 0x1f, 0xa0, 0x23, 0xa6, 0x8b, 0xea, 0x29, 0xe2, 0x51, 0x5d, 0x54, 0x8d,
-	0x10, 0x15, 0xd2, 0xbb, 0x09, 0x93, 0x4a, 0x43, 0x2d, 0xef, 0x16, 0x46, 0xab, 0xfb, 0x0e, 0x3a,
-	0x9a, 0xc0, 0x28, 0xde, 0x37, 0xe3, 0x83, 0xa9, 0xce, 0x8a, 0x02, 0xa9, 0x9b, 0x0c, 0xa9, 0xbc,
-	0xc7, 0x40, 0x44, 0xcc, 0xde, 0xf2, 0xa1, 0xb5, 0xbc, 0xc2, 0x9b, 0xa5, 0xcd, 0x4f, 0xd7, 0xd0,
-	0xc9, 0x19, 0x88, 0xee, 0xc7, 0x0e, 0x3a, 0x29, 0x55, 0xd5, 0x9e, 0x5b, 0xdc, 0x8b, 0xde, 0x61,
-	0x9f, 0x13, 0x5b, 0x2f, 0x7a, 0x87, 0x7e, 0xbc, 0x69, 0x9f, 0xcd, 0x72, 0xfc, 0xac, 0x5e, 0xe3,
-	0xea, 0x75, 0x98, 0x1f, 0x44, 0xbe, 0x1e, 0xf1, 0x0c, 0xde, 0x02, 0x4f, 0xed, 0x69, 0xa1, 0x19,
-	0x4f, 0xe3, 0x53, 0x4d, 0x33, 0x9e, 0x39, 0x0f, 0x15, 0x0a, 0x8f, 0x5e, 0x7b, 0x14, 0x9e, 0xda,
-	0xa5, 0xae, 0x19, 0x4f, 0xe3, 0xfb, 0x46, 0x33, 0x9e, 0x39, 0x57, 0x44, 0x85, 0x47, 0xaf, 0xcd,
-	0xc3, 0x73, 0xdf, 0x41, 0x27, 0x67, 0xa6, 0x27, 0x77, 0xc3, 0x5b, 0xe4, 0x66, 0xd9, 0xf2, 0xbc,
-	0x85, 0x66, 0xb2, 0xb6, 0xfa, 0x27, 0x43, 0xb1, 0xce, 0x09, 0x9d, 0x9e, 0xb1, 0xdc, 0x07, 0x0e,
-	0x3a, 0x39, 0xd3, 0x2e, 0x9b, 0x61, 0xcd, 0x9d, 0x95, 0x9a, 0x61, 0xcd, 0x6f, 0xc2, 0x6d, 0x35,
-	0x07, 0xef, 0x80, 0x30, 0xff, 0x84, 0x2a, 0x26, 0x12, 0x42, 0xcb, 0xff, 0x86, 0x58, 0xbf, 0x7d,
-	0xee, 0xa0, 0xd6, 0x7c, 0xae, 0x77, 0xaf, 0x78, 0x8f, 0xd5, 0xad, 0x5a, 0x5f, 0xf3, 0x1e, 0xb3,
-	0xa7, 0xec, 0x64, 0x39, 0xde, 0xb6, 0xa1, 0xb6, 0xd3, 0x0e, 0xad, 0xb5, 0x5c, 0x15, 0xf7, 0x7a,
-	0x43, 0x98, 0x32, 0x8e, 0x8e, 0xc7, 0xad, 0x77, 0xb2, 0x1c, 0x5f, 0xdf, 0x22, 0x1c, 0x92, 0x7d,
-	0xe6, 0xeb, 0x21, 0xa9, 0x9f, 0x46, 0xbe, 0xde, 0x9f, 0x40, 0x68, 0x5f, 0x78, 0xd4, 0xe4, 0x24,
-	0xf3, 0x29, 0x89, 0xa3, 0x38, 0x6d, 0xd0, 0xae, 0x54, 0x40, 0xe2, 0x6d, 0xfe, 0x6d, 0x09, 0x7d,
-	0x79, 0xc6, 0xa8, 0x6d, 0xf5, 0xef, 0x5b, 0xf7, 0x97, 0x0e, 0xc2, 0xf3, 0xfa, 0x9e, 0x7b, 0xd5,
-	0x7b, 0xdc, 0x2e, 0xd9, 0x3a, 0xee, 0xdd, 0x8c, 0x0b, 0xdf, 0xbc, 0x9c, 0xe5, 0x78, 0xc3, 0x6c,
-	0xe4, 0xba, 0x93, 0x15, 0x0d, 0x25, 0x1e, 0xcb, 0x61, 0x56, 0x4c, 0x75, 0x4a, 0x59, 0xa6, 0x4f,
-	0x37, 0xb4, 0x2d, 0xf7, 0x55, 0xef, 0x31, 0xfa, 0x5b, 0x1d, 0xcd, 0x2b, 0x59, 0x8e, 0x5f, 0xaa,
-	0x2e, 0xd7, 0x11, 0x95, 0x2d, 0x62, 0x58, 0xf6, 0x9f, 0xd6, 0xe9, 0x2c, 0xc7, 0x5f, 0xd4, 0x3e,
-	0xab, 0x23, 0xfd, 0x53, 0x8e, 0x97, 0x3a, 0xcb, 0xdf, 0x73, 0x9c, 0x7f, 0x07, 0x00, 0x00, 0xff,
-	0xff, 0x04, 0x15, 0x7e, 0x0f, 0x65, 0x1f, 0x00, 0x00,
+var fileDescriptor_d73f3ce78278ce26 = []byte{
+	// 977 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x57, 0x4f, 0x6f, 0xdc, 0x44,
+	0x14, 0x97, 0xd7, 0xbb, 0xc9, 0xe6, 0x6d, 0x23, 0x35, 0x53, 0x04, 0xae, 0x5b, 0x50, 0x6a, 0x2e,
+	0x29, 0xb4, 0x83, 0x08, 0x25, 0x69, 0x41, 0x02, 0x41, 0x5a, 0x55, 0x48, 0x50, 0x24, 0x87, 0x02,
+	0xe2, 0x62, 0x4d, 0xd6, 0xaf, 0x1b, 0x27, 0x5e, 0x7b, 0xf1, 0x8c, 0x43, 0xe0, 0xc4, 0x17, 0x40,
+	0xe2, 0xca, 0x47, 0x80, 0x3b, 0x77, 0x2e, 0x9c, 0x39, 0xc1, 0x8d, 0x13, 0x07, 0xbe, 0x06, 0xf2,
+	0x78, 0xf6, 0xcf, 0xac, 0xc7, 0xbb, 0xde, 0x05, 0x89, 0x53, 0x76, 0x66, 0xde, 0x7b, 0xbf, 0xf7,
+	0xf7, 0xe7, 0x17, 0x78, 0x9d, 0x0b, 0x64, 0xc3, 0x21, 0x72, 0xce, 0x06, 0xc8, 0x83, 0x01, 0x1b,
+	0x62, 0x92, 0x8a, 0xe8, 0x59, 0xd4, 0x67, 0x22, 0x4a, 0x13, 0x4e, 0xe5, 0x7b, 0x3f, 0x8e, 0x30,
+	0x11, 0x74, 0x94, 0xa5, 0x22, 0x75, 0x1d, 0x5d, 0xe5, 0x84, 0x71, 0x54, 0x2f, 0x77, 0xf4, 0x97,
+	0x3c, 0x89, 0x9e, 0x45, 0x18, 0x96, 0x12, 0x15, 0x3b, 0xde, 0x23, 0xb8, 0x71, 0xf4, 0x98, 0x0d,
+	0xf1, 0xc9, 0x2c, 0x5e, 0xf0, 0x29, 0xcb, 0x22, 0x76, 0x12, 0x23, 0xb9, 0x0a, 0xf6, 0x39, 0x7e,
+	0xed, 0x58, 0xbb, 0xd6, 0xde, 0x96, 0x5f, 0xfc, 0x24, 0xcf, 0x41, 0xe7, 0x82, 0xc5, 0x39, 0x3a,
+	0x2d, 0x79, 0x57, 0x1e, 0xbc, 0x1f, 0x2c, 0xd8, 0x35, 0xd8, 0xf9, 0x30, 0xed, 0xb3, 0x38, 0xfa,
+	0x06, 0xc3, 0x4f, 0xf0, 0x52, 0x14, 0xaa, 0x22, 0x3d, 0xc7, 0x44, 0x99, 0x2b, 0x0f, 0xe4, 0x2d,
+	0xd8, 0xba, 0x50, 0x70, 0xdc, 0x69, 0xed, 0xda, 0x7b, 0xbd, 0xfd, 0x9b, 0x74, 0x81, 0x4f, 0xfe,
+	0x54, 0x9c, 0xbc, 0x0c, 0xdb, 0x19, 0x26, 0x21, 0x66, 0x18, 0x06, 0x02, 0x2f, 0x85, 0x63, 0x4b,
+	0xcb, 0x57, 0xc6, 0x97, 0x05, 0xac, 0xf7, 0xab, 0x05, 0x2f, 0x1a, 0xec, 0x3d, 0xe5, 0x98, 0x1d,
+	0x0b, 0x26, 0x72, 0x4e, 0x1c, 0xd8, 0x94, 0x99, 0x89, 0x42, 0xe9, 0xda, 0x86, 0x3f, 0x3e, 0x16,
+	0x2e, 0x73, 0xc1, 0xc4, 0x24, 0x5a, 0x79, 0x20, 0x87, 0xd0, 0x11, 0x91, 0x88, 0x51, 0xc2, 0xf5,
+	0xf6, 0x6f, 0xd1, 0x65, 0xa1, 0xfb, 0xa5, 0x3c, 0x79, 0x1b, 0x36, 0x55, 0x61, 0x9c, 0x76, 0x53,
+	0xd5, 0xb1, 0x86, 0xf7, 0x97, 0x05, 0x7b, 0x06, 0xe9, 0xa3, 0x0c, 0x99, 0xc0, 0x63, 0xe4, 0x3c,
+	0x4a, 0x93, 0xc0, 0xc7, 0x2f, 0x73, 0xe4, 0x32, 0xd7, 0x6c, 0x34, 0x52, 0x01, 0x6d, 0xfb, 0xe5,
+	0xa1, 0x08, 0xb4, 0x9f, 0x26, 0x32, 0x53, 0x45, 0x40, 0x6d, 0x7f, 0x7c, 0x5c, 0x3f, 0xa4, 0x7b,
+	0xd0, 0xc9, 0x39, 0x66, 0xdc, 0x69, 0xcb, 0xd2, 0xbd, 0x44, 0x17, 0xa6, 0xda, 0x2f, 0x85, 0x67,
+	0x33, 0xde, 0xd1, 0x32, 0xee, 0x7d, 0x00, 0xb7, 0x1b, 0x04, 0xc9, 0x47, 0x69, 0xc2, 0x91, 0xdc,
+	0x84, 0x2d, 0x5e, 0xde, 0xa9, 0x48, 0xdb, 0xfe, 0xf4, 0xc2, 0xbb, 0x34, 0xe6, 0xeb, 0x21, 0xc6,
+	0x58, 0xcd, 0xd7, 0x42, 0x4b, 0xd3, 0x6c, 0xb6, 0xe6, 0xb2, 0x39, 0x0e, 0xc2, 0xd6, 0x83, 0x78,
+	0xd5, 0x18, 0xc4, 0x3c, 0x72, 0x19, 0x84, 0xf7, 0xb7, 0xb9, 0xae, 0x4f, 0x47, 0x21, 0xfb, 0x6f,
+	0xfc, 0xfc, 0xff, 0x6a, 0xbb, 0xd1, 0x24, 0x2d, 0xf3, 0x81, 0xaa, 0xb4, 0xfc, 0x61, 0xc1, 0x1d,
+	0x83, 0xf4, 0xa3, 0x24, 0x1f, 0x62, 0x36, 0x55, 0xe0, 0x4b, 0x5a, 0xfe, 0x01, 0x5c, 0x8f, 0x92,
+	0x7e, 0x9c, 0x87, 0x18, 0xb0, 0x38, 0x0e, 0x0a, 0x17, 0x83, 0x31, 0x39, 0xca, 0x84, 0x74, 0xfd,
+	0xe7, 0x95, 0xc0, 0x7b, 0x71, 0x5c, 0x44, 0xf3, 0x91, 0x7a, 0xd5, 0x54, 0x73, 0x71, 0xaa, 0xe9,
+	0xca, 0xf9, 0x9d, 0x51, 0xcd, 0xc5, 0xe9, 0x8c, 0x2e, 0x71, 0xa1, 0x1b, 0xb3, 0x64, 0x90, 0x17,
+	0x92, 0x1d, 0x49, 0x1d, 0x93, 0xb3, 0xf7, 0x53, 0x0b, 0x5c, 0x43, 0x60, 0x2a, 0x9e, 0x55, 0x2a,
+	0xdc, 0x36, 0xcc, 0xb5, 0x5d, 0x33, 0xd7, 0xed, 0x15, 0x6b, 0x7f, 0x0b, 0xae, 0x88, 0x68, 0x88,
+	0x41, 0x5f, 0x4e, 0x5e, 0x39, 0xa6, 0xdb, 0x7e, 0xaf, 0xb8, 0x2b, 0x87, 0x31, 0x9c, 0x88, 0xe4,
+	0xb2, 0x80, 0x65, 0xb5, 0x95, 0x48, 0x59, 0xd3, 0x90, 0xbc, 0x0b, 0x3d, 0x99, 0x35, 0x2e, 0x3b,
+	0xc4, 0xd9, 0x6c, 0xd4, 0x47, 0x90, 0x4f, 0x7e, 0x7b, 0xa7, 0x70, 0xb7, 0x61, 0x13, 0x28, 0x4a,
+	0x38, 0x84, 0xae, 0xca, 0x16, 0x77, 0x2c, 0x09, 0x77, 0x83, 0xd6, 0x67, 0xdb, 0x9f, 0x08, 0x7b,
+	0x3f, 0xb6, 0x8c, 0xfd, 0xf6, 0x18, 0x85, 0x92, 0x7d, 0x88, 0x82, 0x45, 0xf1, 0xb4, 0xdf, 0xbe,
+	0xa8, 0x20, 0xbd, 0x43, 0x57, 0x31, 0x40, 0xd5, 0x5f, 0x0c, 0x2b, 0xce, 0xd4, 0x0c, 0xf2, 0x6c,
+	0x57, 0xd9, 0x7a, 0x57, 0xb9, 0xe7, 0x70, 0x75, 0xde, 0xde, 0x92, 0x56, 0x5a, 0xd8, 0xde, 0xf6,
+	0xa2, 0xf6, 0xae, 0xa9, 0x8a, 0x29, 0xd2, 0x7f, 0x5b, 0x15, 0x06, 0xce, 0xbc, 0xd8, 0x31, 0x0a,
+	0x11, 0x25, 0x03, 0x5e, 0x33, 0xf0, 0xaf, 0xc1, 0x35, 0x16, 0xc7, 0xe9, 0x57, 0x81, 0xb6, 0x42,
+	0xc9, 0x44, 0x76, 0x7d, 0x22, 0x9f, 0x34, 0x50, 0xef, 0x7b, 0x0b, 0xde, 0xac, 0xa5, 0x25, 0x13,
+	0xf0, 0xa4, 0x03, 0x3e, 0x03, 0xb7, 0xd8, 0xd5, 0x34, 0xa4, 0x80, 0x2b, 0x29, 0x15, 0xe7, 0x75,
+	0x5a, 0xe7, 0xbf, 0xef, 0x0c, 0x6a, 0x5e, 0xbc, 0xfb, 0x70, 0xb0, 0xaa, 0x47, 0x8a, 0x35, 0xcf,
+	0xe0, 0xbe, 0x41, 0xf3, 0xe3, 0x44, 0x3b, 0x4f, 0x1a, 0x25, 0x98, 0xbd, 0x5e, 0xbc, 0x06, 0x55,
+	0xdb, 0xd1, 0xfb, 0xdd, 0x82, 0x37, 0x8c, 0x60, 0xd3, 0x59, 0x3e, 0x3a, 0x65, 0xc9, 0xa0, 0x39,
+	0x8e, 0xd6, 0xb0, 0xad, 0x5a, 0xee, 0xb3, 0x67, 0xeb, 0x7d, 0x00, 0x1b, 0x8a, 0x5d, 0x4a, 0x8a,
+	0x5b, 0xc6, 0x2e, 0x4a, 0xba, 0xf0, 0x22, 0xc3, 0x61, 0x7a, 0xa1, 0xb8, 0xad, 0xeb, 0x8f, 0x8f,
+	0xfb, 0xbf, 0x75, 0x60, 0xa7, 0x62, 0x82, 0x9c, 0xc1, 0x4e, 0x61, 0x45, 0xdb, 0x44, 0xc8, 0x6d,
+	0xda, 0x74, 0x23, 0x73, 0x5f, 0xa1, 0xcd, 0xf7, 0x1a, 0x85, 0xa5, 0x2d, 0x0c, 0x66, 0x2c, 0xe3,
+	0x36, 0x63, 0xc6, 0x32, 0xaf, 0x1f, 0x63, 0x2c, 0xed, 0x2b, 0x6c, 0xc6, 0x32, 0x6e, 0x24, 0x66,
+	0x2c, 0xf3, 0x37, 0x9d, 0x64, 0xb0, 0x53, 0xa1, 0x6e, 0x72, 0x97, 0xae, 0xf2, 0x99, 0x77, 0x29,
+	0x5d, 0xed, 0x83, 0x90, 0xc1, 0x4e, 0x85, 0x98, 0xcc, 0x98, 0xb5, 0x4c, 0x6d, 0xc6, 0x5c, 0x40,
+	0x77, 0xdf, 0x59, 0xe0, 0xd6, 0x4f, 0x2b, 0x39, 0xa0, 0x6b, 0xf1, 0x8d, 0x7b, 0x48, 0xd7, 0x63,
+	0x85, 0xfd, 0x3f, 0x2d, 0x78, 0xa1, 0xa2, 0x79, 0x24, 0xff, 0x0f, 0x24, 0x27, 0xe0, 0xd4, 0xd1,
+	0x03, 0x79, 0x40, 0xd7, 0x25, 0x13, 0xb7, 0x47, 0x9f, 0xa4, 0x93, 0x7c, 0x7c, 0x0e, 0xd7, 0x0c,
+	0xac, 0x40, 0xee, 0xd1, 0x35, 0xe8, 0x43, 0xb3, 0xec, 0xb6, 0x7f, 0xf9, 0xd9, 0x69, 0xbd, 0x6f,
+	0x7f, 0x6b, 0x59, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0x53, 0xf8, 0xc8, 0x7e, 0x46, 0x0f, 0x00,
+	0x00,
 }

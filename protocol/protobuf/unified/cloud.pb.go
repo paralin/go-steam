@@ -3,9 +3,12 @@
 
 package unified
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	_ "github.com/paralin/go-steam/protocol/protobuf"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -13,47 +16,101 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package unified is being compiled against.
+// is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
-// proto package unified to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type CCloud_GetUploadServerInfo_Request struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+type CCloud_ClientLogUploadCheck_Notification struct {
+	ClientId             *uint64  `protobuf:"varint,1,opt,name=client_id,json=clientId" json:"client_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CCloud_GetUploadServerInfo_Request) Reset()         { *m = CCloud_GetUploadServerInfo_Request{} }
-func (m *CCloud_GetUploadServerInfo_Request) String() string { return proto.CompactTextString(m) }
-func (*CCloud_GetUploadServerInfo_Request) ProtoMessage()    {}
-func (*CCloud_GetUploadServerInfo_Request) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{0}
+func (m *CCloud_ClientLogUploadCheck_Notification) Reset() {
+	*m = CCloud_ClientLogUploadCheck_Notification{}
+}
+func (m *CCloud_ClientLogUploadCheck_Notification) String() string { return proto.CompactTextString(m) }
+func (*CCloud_ClientLogUploadCheck_Notification) ProtoMessage()    {}
+func (*CCloud_ClientLogUploadCheck_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{0}
 }
 
-func (m *CCloud_GetUploadServerInfo_Request) GetAppid() uint32 {
-	if m != nil && m.Appid != nil {
-		return *m.Appid
+func (m *CCloud_ClientLogUploadCheck_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientLogUploadCheck_Notification.Unmarshal(m, b)
+}
+func (m *CCloud_ClientLogUploadCheck_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientLogUploadCheck_Notification.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientLogUploadCheck_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientLogUploadCheck_Notification.Merge(m, src)
+}
+func (m *CCloud_ClientLogUploadCheck_Notification) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientLogUploadCheck_Notification.Size(m)
+}
+func (m *CCloud_ClientLogUploadCheck_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientLogUploadCheck_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientLogUploadCheck_Notification proto.InternalMessageInfo
+
+func (m *CCloud_ClientLogUploadCheck_Notification) GetClientId() uint64 {
+	if m != nil && m.ClientId != nil {
+		return *m.ClientId
 	}
 	return 0
 }
 
-type CCloud_GetUploadServerInfo_Response struct {
-	ServerUrl        *string `protobuf:"bytes,1,opt,name=server_url,json=serverUrl" json:"server_url,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+type CCloud_ClientLogUploadComplete_Notification struct {
+	ClientId             *uint64  `protobuf:"varint,1,opt,name=client_id,json=clientId" json:"client_id,omitempty"`
+	RequestId            *uint64  `protobuf:"varint,2,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CCloud_GetUploadServerInfo_Response) Reset()         { *m = CCloud_GetUploadServerInfo_Response{} }
-func (m *CCloud_GetUploadServerInfo_Response) String() string { return proto.CompactTextString(m) }
-func (*CCloud_GetUploadServerInfo_Response) ProtoMessage()    {}
-func (*CCloud_GetUploadServerInfo_Response) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{1}
+func (m *CCloud_ClientLogUploadComplete_Notification) Reset() {
+	*m = CCloud_ClientLogUploadComplete_Notification{}
+}
+func (m *CCloud_ClientLogUploadComplete_Notification) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CCloud_ClientLogUploadComplete_Notification) ProtoMessage() {}
+func (*CCloud_ClientLogUploadComplete_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{1}
 }
 
-func (m *CCloud_GetUploadServerInfo_Response) GetServerUrl() string {
-	if m != nil && m.ServerUrl != nil {
-		return *m.ServerUrl
+func (m *CCloud_ClientLogUploadComplete_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientLogUploadComplete_Notification.Unmarshal(m, b)
+}
+func (m *CCloud_ClientLogUploadComplete_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientLogUploadComplete_Notification.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientLogUploadComplete_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientLogUploadComplete_Notification.Merge(m, src)
+}
+func (m *CCloud_ClientLogUploadComplete_Notification) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientLogUploadComplete_Notification.Size(m)
+}
+func (m *CCloud_ClientLogUploadComplete_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientLogUploadComplete_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientLogUploadComplete_Notification proto.InternalMessageInfo
+
+func (m *CCloud_ClientLogUploadComplete_Notification) GetClientId() uint64 {
+	if m != nil && m.ClientId != nil {
+		return *m.ClientId
 	}
-	return ""
+	return 0
+}
+
+func (m *CCloud_ClientLogUploadComplete_Notification) GetRequestId() uint64 {
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
+	}
+	return 0
 }
 
 type CCloud_BeginHTTPUpload_Request struct {
@@ -65,13 +122,36 @@ type CCloud_BeginHTTPUpload_Request struct {
 	PlatformsToSync      []string `protobuf:"bytes,6,rep,name=platforms_to_sync,json=platformsToSync" json:"platforms_to_sync,omitempty"`
 	RequestHeadersNames  []string `protobuf:"bytes,7,rep,name=request_headers_names,json=requestHeadersNames" json:"request_headers_names,omitempty"`
 	RequestHeadersValues []string `protobuf:"bytes,8,rep,name=request_headers_values,json=requestHeadersValues" json:"request_headers_values,omitempty"`
+	UploadBatchId        *uint64  `protobuf:"varint,9,opt,name=upload_batch_id,json=uploadBatchId" json:"upload_batch_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CCloud_BeginHTTPUpload_Request) Reset()                    { *m = CCloud_BeginHTTPUpload_Request{} }
-func (m *CCloud_BeginHTTPUpload_Request) String() string            { return proto.CompactTextString(m) }
-func (*CCloud_BeginHTTPUpload_Request) ProtoMessage()               {}
-func (*CCloud_BeginHTTPUpload_Request) Descriptor() ([]byte, []int) { return cloud_fileDescriptor0, []int{2} }
+func (m *CCloud_BeginHTTPUpload_Request) Reset()         { *m = CCloud_BeginHTTPUpload_Request{} }
+func (m *CCloud_BeginHTTPUpload_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_BeginHTTPUpload_Request) ProtoMessage()    {}
+func (*CCloud_BeginHTTPUpload_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{2}
+}
+
+func (m *CCloud_BeginHTTPUpload_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_BeginHTTPUpload_Request.Unmarshal(m, b)
+}
+func (m *CCloud_BeginHTTPUpload_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_BeginHTTPUpload_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_BeginHTTPUpload_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_BeginHTTPUpload_Request.Merge(m, src)
+}
+func (m *CCloud_BeginHTTPUpload_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_BeginHTTPUpload_Request.Size(m)
+}
+func (m *CCloud_BeginHTTPUpload_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_BeginHTTPUpload_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_BeginHTTPUpload_Request proto.InternalMessageInfo
 
 func (m *CCloud_BeginHTTPUpload_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -129,20 +209,49 @@ func (m *CCloud_BeginHTTPUpload_Request) GetRequestHeadersValues() []string {
 	return nil
 }
 
-type CCloud_BeginHTTPUpload_Response struct {
-	Ugcid            *uint64                                        `protobuf:"fixed64,1,opt,name=ugcid" json:"ugcid,omitempty"`
-	Timestamp        *uint32                                        `protobuf:"fixed32,2,opt,name=timestamp" json:"timestamp,omitempty"`
-	UrlHost          *string                                        `protobuf:"bytes,3,opt,name=url_host,json=urlHost" json:"url_host,omitempty"`
-	UrlPath          *string                                        `protobuf:"bytes,4,opt,name=url_path,json=urlPath" json:"url_path,omitempty"`
-	UseHttps         *bool                                          `protobuf:"varint,5,opt,name=use_https,json=useHttps" json:"use_https,omitempty"`
-	RequestHeaders   []*CCloud_BeginHTTPUpload_Response_HTTPHeaders `protobuf:"bytes,6,rep,name=request_headers,json=requestHeaders" json:"request_headers,omitempty"`
-	XXX_unrecognized []byte                                         `json:"-"`
+func (m *CCloud_BeginHTTPUpload_Request) GetUploadBatchId() uint64 {
+	if m != nil && m.UploadBatchId != nil {
+		return *m.UploadBatchId
+	}
+	return 0
 }
 
-func (m *CCloud_BeginHTTPUpload_Response) Reset()                    { *m = CCloud_BeginHTTPUpload_Response{} }
-func (m *CCloud_BeginHTTPUpload_Response) String() string            { return proto.CompactTextString(m) }
-func (*CCloud_BeginHTTPUpload_Response) ProtoMessage()               {}
-func (*CCloud_BeginHTTPUpload_Response) Descriptor() ([]byte, []int) { return cloud_fileDescriptor0, []int{3} }
+type CCloud_BeginHTTPUpload_Response struct {
+	Ugcid                *uint64                                        `protobuf:"fixed64,1,opt,name=ugcid" json:"ugcid,omitempty"`
+	Timestamp            *uint32                                        `protobuf:"fixed32,2,opt,name=timestamp" json:"timestamp,omitempty"`
+	UrlHost              *string                                        `protobuf:"bytes,3,opt,name=url_host,json=urlHost" json:"url_host,omitempty"`
+	UrlPath              *string                                        `protobuf:"bytes,4,opt,name=url_path,json=urlPath" json:"url_path,omitempty"`
+	UseHttps             *bool                                          `protobuf:"varint,5,opt,name=use_https,json=useHttps" json:"use_https,omitempty"`
+	RequestHeaders       []*CCloud_BeginHTTPUpload_Response_HTTPHeaders `protobuf:"bytes,6,rep,name=request_headers,json=requestHeaders" json:"request_headers,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                       `json:"-"`
+	XXX_unrecognized     []byte                                         `json:"-"`
+	XXX_sizecache        int32                                          `json:"-"`
+}
+
+func (m *CCloud_BeginHTTPUpload_Response) Reset()         { *m = CCloud_BeginHTTPUpload_Response{} }
+func (m *CCloud_BeginHTTPUpload_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_BeginHTTPUpload_Response) ProtoMessage()    {}
+func (*CCloud_BeginHTTPUpload_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{3}
+}
+
+func (m *CCloud_BeginHTTPUpload_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_BeginHTTPUpload_Response.Unmarshal(m, b)
+}
+func (m *CCloud_BeginHTTPUpload_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_BeginHTTPUpload_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_BeginHTTPUpload_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_BeginHTTPUpload_Response.Merge(m, src)
+}
+func (m *CCloud_BeginHTTPUpload_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_BeginHTTPUpload_Response.Size(m)
+}
+func (m *CCloud_BeginHTTPUpload_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_BeginHTTPUpload_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_BeginHTTPUpload_Response proto.InternalMessageInfo
 
 func (m *CCloud_BeginHTTPUpload_Response) GetUgcid() uint64 {
 	if m != nil && m.Ugcid != nil {
@@ -187,9 +296,11 @@ func (m *CCloud_BeginHTTPUpload_Response) GetRequestHeaders() []*CCloud_BeginHTT
 }
 
 type CCloud_BeginHTTPUpload_Response_HTTPHeaders struct {
-	Name             *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-	Value            *string `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Name                 *string  `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Value                *string  `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_BeginHTTPUpload_Response_HTTPHeaders) Reset() {
@@ -200,8 +311,26 @@ func (m *CCloud_BeginHTTPUpload_Response_HTTPHeaders) String() string {
 }
 func (*CCloud_BeginHTTPUpload_Response_HTTPHeaders) ProtoMessage() {}
 func (*CCloud_BeginHTTPUpload_Response_HTTPHeaders) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{3, 0}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{3, 0}
 }
+
+func (m *CCloud_BeginHTTPUpload_Response_HTTPHeaders) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_BeginHTTPUpload_Response_HTTPHeaders.Unmarshal(m, b)
+}
+func (m *CCloud_BeginHTTPUpload_Response_HTTPHeaders) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_BeginHTTPUpload_Response_HTTPHeaders.Marshal(b, m, deterministic)
+}
+func (m *CCloud_BeginHTTPUpload_Response_HTTPHeaders) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_BeginHTTPUpload_Response_HTTPHeaders.Merge(m, src)
+}
+func (m *CCloud_BeginHTTPUpload_Response_HTTPHeaders) XXX_Size() int {
+	return xxx_messageInfo_CCloud_BeginHTTPUpload_Response_HTTPHeaders.Size(m)
+}
+func (m *CCloud_BeginHTTPUpload_Response_HTTPHeaders) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_BeginHTTPUpload_Response_HTTPHeaders.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_BeginHTTPUpload_Response_HTTPHeaders proto.InternalMessageInfo
 
 func (m *CCloud_BeginHTTPUpload_Response_HTTPHeaders) GetName() string {
 	if m != nil && m.Name != nil {
@@ -218,17 +347,39 @@ func (m *CCloud_BeginHTTPUpload_Response_HTTPHeaders) GetValue() string {
 }
 
 type CCloud_CommitHTTPUpload_Request struct {
-	TransferSucceeded *bool   `protobuf:"varint,1,opt,name=transfer_succeeded,json=transferSucceeded" json:"transfer_succeeded,omitempty"`
-	Appid             *uint32 `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	FileSha           *string `protobuf:"bytes,3,opt,name=file_sha,json=fileSha" json:"file_sha,omitempty"`
-	Filename          *string `protobuf:"bytes,4,opt,name=filename" json:"filename,omitempty"`
-	XXX_unrecognized  []byte  `json:"-"`
+	TransferSucceeded    *bool    `protobuf:"varint,1,opt,name=transfer_succeeded,json=transferSucceeded" json:"transfer_succeeded,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	FileSha              *string  `protobuf:"bytes,3,opt,name=file_sha,json=fileSha" json:"file_sha,omitempty"`
+	Filename             *string  `protobuf:"bytes,4,opt,name=filename" json:"filename,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CCloud_CommitHTTPUpload_Request) Reset()                    { *m = CCloud_CommitHTTPUpload_Request{} }
-func (m *CCloud_CommitHTTPUpload_Request) String() string            { return proto.CompactTextString(m) }
-func (*CCloud_CommitHTTPUpload_Request) ProtoMessage()               {}
-func (*CCloud_CommitHTTPUpload_Request) Descriptor() ([]byte, []int) { return cloud_fileDescriptor0, []int{4} }
+func (m *CCloud_CommitHTTPUpload_Request) Reset()         { *m = CCloud_CommitHTTPUpload_Request{} }
+func (m *CCloud_CommitHTTPUpload_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_CommitHTTPUpload_Request) ProtoMessage()    {}
+func (*CCloud_CommitHTTPUpload_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{4}
+}
+
+func (m *CCloud_CommitHTTPUpload_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_CommitHTTPUpload_Request.Unmarshal(m, b)
+}
+func (m *CCloud_CommitHTTPUpload_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_CommitHTTPUpload_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_CommitHTTPUpload_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_CommitHTTPUpload_Request.Merge(m, src)
+}
+func (m *CCloud_CommitHTTPUpload_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_CommitHTTPUpload_Request.Size(m)
+}
+func (m *CCloud_CommitHTTPUpload_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_CommitHTTPUpload_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_CommitHTTPUpload_Request proto.InternalMessageInfo
 
 func (m *CCloud_CommitHTTPUpload_Request) GetTransferSucceeded() bool {
 	if m != nil && m.TransferSucceeded != nil {
@@ -259,16 +410,36 @@ func (m *CCloud_CommitHTTPUpload_Request) GetFilename() string {
 }
 
 type CCloud_CommitHTTPUpload_Response struct {
-	FileCommitted    *bool  `protobuf:"varint,1,opt,name=file_committed,json=fileCommitted" json:"file_committed,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	FileCommitted        *bool    `protobuf:"varint,1,opt,name=file_committed,json=fileCommitted" json:"file_committed,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_CommitHTTPUpload_Response) Reset()         { *m = CCloud_CommitHTTPUpload_Response{} }
 func (m *CCloud_CommitHTTPUpload_Response) String() string { return proto.CompactTextString(m) }
 func (*CCloud_CommitHTTPUpload_Response) ProtoMessage()    {}
 func (*CCloud_CommitHTTPUpload_Response) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{5}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{5}
 }
+
+func (m *CCloud_CommitHTTPUpload_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_CommitHTTPUpload_Response.Unmarshal(m, b)
+}
+func (m *CCloud_CommitHTTPUpload_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_CommitHTTPUpload_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_CommitHTTPUpload_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_CommitHTTPUpload_Response.Merge(m, src)
+}
+func (m *CCloud_CommitHTTPUpload_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_CommitHTTPUpload_Response.Size(m)
+}
+func (m *CCloud_CommitHTTPUpload_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_CommitHTTPUpload_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_CommitHTTPUpload_Response proto.InternalMessageInfo
 
 func (m *CCloud_CommitHTTPUpload_Response) GetFileCommitted() bool {
 	if m != nil && m.FileCommitted != nil {
@@ -277,16 +448,343 @@ func (m *CCloud_CommitHTTPUpload_Response) GetFileCommitted() bool {
 	return false
 }
 
-type CCloud_GetFileDetails_Request struct {
-	Ugcid            *uint64 `protobuf:"varint,1,opt,name=ugcid" json:"ugcid,omitempty"`
-	Appid            *uint32 `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+type CCloud_BeginUGCUpload_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	FileSize             *uint32  `protobuf:"varint,2,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
+	Filename             *string  `protobuf:"bytes,3,opt,name=filename" json:"filename,omitempty"`
+	FileSha              *string  `protobuf:"bytes,4,opt,name=file_sha,json=fileSha" json:"file_sha,omitempty"`
+	ContentType          *string  `protobuf:"bytes,5,opt,name=content_type,json=contentType" json:"content_type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CCloud_GetFileDetails_Request) Reset()                    { *m = CCloud_GetFileDetails_Request{} }
-func (m *CCloud_GetFileDetails_Request) String() string            { return proto.CompactTextString(m) }
-func (*CCloud_GetFileDetails_Request) ProtoMessage()               {}
-func (*CCloud_GetFileDetails_Request) Descriptor() ([]byte, []int) { return cloud_fileDescriptor0, []int{6} }
+func (m *CCloud_BeginUGCUpload_Request) Reset()         { *m = CCloud_BeginUGCUpload_Request{} }
+func (m *CCloud_BeginUGCUpload_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_BeginUGCUpload_Request) ProtoMessage()    {}
+func (*CCloud_BeginUGCUpload_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{6}
+}
+
+func (m *CCloud_BeginUGCUpload_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_BeginUGCUpload_Request.Unmarshal(m, b)
+}
+func (m *CCloud_BeginUGCUpload_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_BeginUGCUpload_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_BeginUGCUpload_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_BeginUGCUpload_Request.Merge(m, src)
+}
+func (m *CCloud_BeginUGCUpload_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_BeginUGCUpload_Request.Size(m)
+}
+func (m *CCloud_BeginUGCUpload_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_BeginUGCUpload_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_BeginUGCUpload_Request proto.InternalMessageInfo
+
+func (m *CCloud_BeginUGCUpload_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_BeginUGCUpload_Request) GetFileSize() uint32 {
+	if m != nil && m.FileSize != nil {
+		return *m.FileSize
+	}
+	return 0
+}
+
+func (m *CCloud_BeginUGCUpload_Request) GetFilename() string {
+	if m != nil && m.Filename != nil {
+		return *m.Filename
+	}
+	return ""
+}
+
+func (m *CCloud_BeginUGCUpload_Request) GetFileSha() string {
+	if m != nil && m.FileSha != nil {
+		return *m.FileSha
+	}
+	return ""
+}
+
+func (m *CCloud_BeginUGCUpload_Request) GetContentType() string {
+	if m != nil && m.ContentType != nil {
+		return *m.ContentType
+	}
+	return ""
+}
+
+type CCloud_BeginUGCUpload_Response struct {
+	StorageSystem        *EPublishedFileStorageSystem                  `protobuf:"varint,1,opt,name=storage_system,json=storageSystem,enum=EPublishedFileStorageSystem,def=0" json:"storage_system,omitempty"`
+	Ugcid                *uint64                                       `protobuf:"fixed64,2,opt,name=ugcid" json:"ugcid,omitempty"`
+	Timestamp            *uint32                                       `protobuf:"fixed32,3,opt,name=timestamp" json:"timestamp,omitempty"`
+	UrlHost              *string                                       `protobuf:"bytes,4,opt,name=url_host,json=urlHost" json:"url_host,omitempty"`
+	UrlPath              *string                                       `protobuf:"bytes,5,opt,name=url_path,json=urlPath" json:"url_path,omitempty"`
+	UseHttps             *bool                                         `protobuf:"varint,6,opt,name=use_https,json=useHttps" json:"use_https,omitempty"`
+	RequestHeaders       []*CCloud_BeginUGCUpload_Response_HTTPHeaders `protobuf:"bytes,7,rep,name=request_headers,json=requestHeaders" json:"request_headers,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                      `json:"-"`
+	XXX_unrecognized     []byte                                        `json:"-"`
+	XXX_sizecache        int32                                         `json:"-"`
+}
+
+func (m *CCloud_BeginUGCUpload_Response) Reset()         { *m = CCloud_BeginUGCUpload_Response{} }
+func (m *CCloud_BeginUGCUpload_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_BeginUGCUpload_Response) ProtoMessage()    {}
+func (*CCloud_BeginUGCUpload_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{7}
+}
+
+func (m *CCloud_BeginUGCUpload_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_BeginUGCUpload_Response.Unmarshal(m, b)
+}
+func (m *CCloud_BeginUGCUpload_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_BeginUGCUpload_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_BeginUGCUpload_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_BeginUGCUpload_Response.Merge(m, src)
+}
+func (m *CCloud_BeginUGCUpload_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_BeginUGCUpload_Response.Size(m)
+}
+func (m *CCloud_BeginUGCUpload_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_BeginUGCUpload_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_BeginUGCUpload_Response proto.InternalMessageInfo
+
+const Default_CCloud_BeginUGCUpload_Response_StorageSystem EPublishedFileStorageSystem = EPublishedFileStorageSystem_k_EPublishedFileStorageSystemInvalid
+
+func (m *CCloud_BeginUGCUpload_Response) GetStorageSystem() EPublishedFileStorageSystem {
+	if m != nil && m.StorageSystem != nil {
+		return *m.StorageSystem
+	}
+	return Default_CCloud_BeginUGCUpload_Response_StorageSystem
+}
+
+func (m *CCloud_BeginUGCUpload_Response) GetUgcid() uint64 {
+	if m != nil && m.Ugcid != nil {
+		return *m.Ugcid
+	}
+	return 0
+}
+
+func (m *CCloud_BeginUGCUpload_Response) GetTimestamp() uint32 {
+	if m != nil && m.Timestamp != nil {
+		return *m.Timestamp
+	}
+	return 0
+}
+
+func (m *CCloud_BeginUGCUpload_Response) GetUrlHost() string {
+	if m != nil && m.UrlHost != nil {
+		return *m.UrlHost
+	}
+	return ""
+}
+
+func (m *CCloud_BeginUGCUpload_Response) GetUrlPath() string {
+	if m != nil && m.UrlPath != nil {
+		return *m.UrlPath
+	}
+	return ""
+}
+
+func (m *CCloud_BeginUGCUpload_Response) GetUseHttps() bool {
+	if m != nil && m.UseHttps != nil {
+		return *m.UseHttps
+	}
+	return false
+}
+
+func (m *CCloud_BeginUGCUpload_Response) GetRequestHeaders() []*CCloud_BeginUGCUpload_Response_HTTPHeaders {
+	if m != nil {
+		return m.RequestHeaders
+	}
+	return nil
+}
+
+type CCloud_BeginUGCUpload_Response_HTTPHeaders struct {
+	Name                 *string  `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Value                *string  `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_BeginUGCUpload_Response_HTTPHeaders) Reset() {
+	*m = CCloud_BeginUGCUpload_Response_HTTPHeaders{}
+}
+func (m *CCloud_BeginUGCUpload_Response_HTTPHeaders) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CCloud_BeginUGCUpload_Response_HTTPHeaders) ProtoMessage() {}
+func (*CCloud_BeginUGCUpload_Response_HTTPHeaders) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{7, 0}
+}
+
+func (m *CCloud_BeginUGCUpload_Response_HTTPHeaders) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_BeginUGCUpload_Response_HTTPHeaders.Unmarshal(m, b)
+}
+func (m *CCloud_BeginUGCUpload_Response_HTTPHeaders) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_BeginUGCUpload_Response_HTTPHeaders.Marshal(b, m, deterministic)
+}
+func (m *CCloud_BeginUGCUpload_Response_HTTPHeaders) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_BeginUGCUpload_Response_HTTPHeaders.Merge(m, src)
+}
+func (m *CCloud_BeginUGCUpload_Response_HTTPHeaders) XXX_Size() int {
+	return xxx_messageInfo_CCloud_BeginUGCUpload_Response_HTTPHeaders.Size(m)
+}
+func (m *CCloud_BeginUGCUpload_Response_HTTPHeaders) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_BeginUGCUpload_Response_HTTPHeaders.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_BeginUGCUpload_Response_HTTPHeaders proto.InternalMessageInfo
+
+func (m *CCloud_BeginUGCUpload_Response_HTTPHeaders) GetName() string {
+	if m != nil && m.Name != nil {
+		return *m.Name
+	}
+	return ""
+}
+
+func (m *CCloud_BeginUGCUpload_Response_HTTPHeaders) GetValue() string {
+	if m != nil && m.Value != nil {
+		return *m.Value
+	}
+	return ""
+}
+
+type CCloud_CommitUGCUpload_Request struct {
+	TransferSucceeded    *bool    `protobuf:"varint,1,opt,name=transfer_succeeded,json=transferSucceeded" json:"transfer_succeeded,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	Ugcid                *uint64  `protobuf:"fixed64,3,opt,name=ugcid" json:"ugcid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_CommitUGCUpload_Request) Reset()         { *m = CCloud_CommitUGCUpload_Request{} }
+func (m *CCloud_CommitUGCUpload_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_CommitUGCUpload_Request) ProtoMessage()    {}
+func (*CCloud_CommitUGCUpload_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{8}
+}
+
+func (m *CCloud_CommitUGCUpload_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_CommitUGCUpload_Request.Unmarshal(m, b)
+}
+func (m *CCloud_CommitUGCUpload_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_CommitUGCUpload_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_CommitUGCUpload_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_CommitUGCUpload_Request.Merge(m, src)
+}
+func (m *CCloud_CommitUGCUpload_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_CommitUGCUpload_Request.Size(m)
+}
+func (m *CCloud_CommitUGCUpload_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_CommitUGCUpload_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_CommitUGCUpload_Request proto.InternalMessageInfo
+
+func (m *CCloud_CommitUGCUpload_Request) GetTransferSucceeded() bool {
+	if m != nil && m.TransferSucceeded != nil {
+		return *m.TransferSucceeded
+	}
+	return false
+}
+
+func (m *CCloud_CommitUGCUpload_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_CommitUGCUpload_Request) GetUgcid() uint64 {
+	if m != nil && m.Ugcid != nil {
+		return *m.Ugcid
+	}
+	return 0
+}
+
+type CCloud_CommitUGCUpload_Response struct {
+	FileCommitted        *bool    `protobuf:"varint,1,opt,name=file_committed,json=fileCommitted" json:"file_committed,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_CommitUGCUpload_Response) Reset()         { *m = CCloud_CommitUGCUpload_Response{} }
+func (m *CCloud_CommitUGCUpload_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_CommitUGCUpload_Response) ProtoMessage()    {}
+func (*CCloud_CommitUGCUpload_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{9}
+}
+
+func (m *CCloud_CommitUGCUpload_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_CommitUGCUpload_Response.Unmarshal(m, b)
+}
+func (m *CCloud_CommitUGCUpload_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_CommitUGCUpload_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_CommitUGCUpload_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_CommitUGCUpload_Response.Merge(m, src)
+}
+func (m *CCloud_CommitUGCUpload_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_CommitUGCUpload_Response.Size(m)
+}
+func (m *CCloud_CommitUGCUpload_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_CommitUGCUpload_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_CommitUGCUpload_Response proto.InternalMessageInfo
+
+func (m *CCloud_CommitUGCUpload_Response) GetFileCommitted() bool {
+	if m != nil && m.FileCommitted != nil {
+		return *m.FileCommitted
+	}
+	return false
+}
+
+type CCloud_GetFileDetails_Request struct {
+	Ugcid                *uint64  `protobuf:"varint,1,opt,name=ugcid" json:"ugcid,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_GetFileDetails_Request) Reset()         { *m = CCloud_GetFileDetails_Request{} }
+func (m *CCloud_GetFileDetails_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_GetFileDetails_Request) ProtoMessage()    {}
+func (*CCloud_GetFileDetails_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{10}
+}
+
+func (m *CCloud_GetFileDetails_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_GetFileDetails_Request.Unmarshal(m, b)
+}
+func (m *CCloud_GetFileDetails_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_GetFileDetails_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_GetFileDetails_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_GetFileDetails_Request.Merge(m, src)
+}
+func (m *CCloud_GetFileDetails_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_GetFileDetails_Request.Size(m)
+}
+func (m *CCloud_GetFileDetails_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_GetFileDetails_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_GetFileDetails_Request proto.InternalMessageInfo
 
 func (m *CCloud_GetFileDetails_Request) GetUgcid() uint64 {
 	if m != nil && m.Ugcid != nil {
@@ -303,20 +801,46 @@ func (m *CCloud_GetFileDetails_Request) GetAppid() uint32 {
 }
 
 type CCloud_UserFile struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	Ugcid            *uint64 `protobuf:"varint,2,opt,name=ugcid" json:"ugcid,omitempty"`
-	Filename         *string `protobuf:"bytes,3,opt,name=filename" json:"filename,omitempty"`
-	Timestamp        *uint64 `protobuf:"varint,4,opt,name=timestamp" json:"timestamp,omitempty"`
-	FileSize         *uint32 `protobuf:"varint,5,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
-	Url              *string `protobuf:"bytes,6,opt,name=url" json:"url,omitempty"`
-	SteamidCreator   *uint64 `protobuf:"fixed64,7,opt,name=steamid_creator,json=steamidCreator" json:"steamid_creator,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Ugcid                *uint64  `protobuf:"varint,2,opt,name=ugcid" json:"ugcid,omitempty"`
+	Filename             *string  `protobuf:"bytes,3,opt,name=filename" json:"filename,omitempty"`
+	Timestamp            *uint64  `protobuf:"varint,4,opt,name=timestamp" json:"timestamp,omitempty"`
+	FileSize             *uint32  `protobuf:"varint,5,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
+	Url                  *string  `protobuf:"bytes,6,opt,name=url" json:"url,omitempty"`
+	SteamidCreator       *uint64  `protobuf:"fixed64,7,opt,name=steamid_creator,json=steamidCreator" json:"steamid_creator,omitempty"`
+	Flags                *uint32  `protobuf:"varint,8,opt,name=flags" json:"flags,omitempty"`
+	PlatformsToSync      []string `protobuf:"bytes,9,rep,name=platforms_to_sync,json=platformsToSync" json:"platforms_to_sync,omitempty"`
+	FileSha              *string  `protobuf:"bytes,10,opt,name=file_sha,json=fileSha" json:"file_sha,omitempty"`
+	CompressedFileSize   *uint32  `protobuf:"varint,11,opt,name=compressed_file_size,json=compressedFileSize" json:"compressed_file_size,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CCloud_UserFile) Reset()                    { *m = CCloud_UserFile{} }
-func (m *CCloud_UserFile) String() string            { return proto.CompactTextString(m) }
-func (*CCloud_UserFile) ProtoMessage()               {}
-func (*CCloud_UserFile) Descriptor() ([]byte, []int) { return cloud_fileDescriptor0, []int{7} }
+func (m *CCloud_UserFile) Reset()         { *m = CCloud_UserFile{} }
+func (m *CCloud_UserFile) String() string { return proto.CompactTextString(m) }
+func (*CCloud_UserFile) ProtoMessage()    {}
+func (*CCloud_UserFile) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{11}
+}
+
+func (m *CCloud_UserFile) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_UserFile.Unmarshal(m, b)
+}
+func (m *CCloud_UserFile) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_UserFile.Marshal(b, m, deterministic)
+}
+func (m *CCloud_UserFile) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_UserFile.Merge(m, src)
+}
+func (m *CCloud_UserFile) XXX_Size() int {
+	return xxx_messageInfo_CCloud_UserFile.Size(m)
+}
+func (m *CCloud_UserFile) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_UserFile.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_UserFile proto.InternalMessageInfo
 
 func (m *CCloud_UserFile) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -367,15 +891,66 @@ func (m *CCloud_UserFile) GetSteamidCreator() uint64 {
 	return 0
 }
 
-type CCloud_GetFileDetails_Response struct {
-	Details          *CCloud_UserFile `protobuf:"bytes,1,opt,name=details" json:"details,omitempty"`
-	XXX_unrecognized []byte           `json:"-"`
+func (m *CCloud_UserFile) GetFlags() uint32 {
+	if m != nil && m.Flags != nil {
+		return *m.Flags
+	}
+	return 0
 }
 
-func (m *CCloud_GetFileDetails_Response) Reset()                    { *m = CCloud_GetFileDetails_Response{} }
-func (m *CCloud_GetFileDetails_Response) String() string            { return proto.CompactTextString(m) }
-func (*CCloud_GetFileDetails_Response) ProtoMessage()               {}
-func (*CCloud_GetFileDetails_Response) Descriptor() ([]byte, []int) { return cloud_fileDescriptor0, []int{8} }
+func (m *CCloud_UserFile) GetPlatformsToSync() []string {
+	if m != nil {
+		return m.PlatformsToSync
+	}
+	return nil
+}
+
+func (m *CCloud_UserFile) GetFileSha() string {
+	if m != nil && m.FileSha != nil {
+		return *m.FileSha
+	}
+	return ""
+}
+
+func (m *CCloud_UserFile) GetCompressedFileSize() uint32 {
+	if m != nil && m.CompressedFileSize != nil {
+		return *m.CompressedFileSize
+	}
+	return 0
+}
+
+type CCloud_GetFileDetails_Response struct {
+	Details              *CCloud_UserFile `protobuf:"bytes,1,opt,name=details" json:"details,omitempty"`
+	RangecheckHost       *string          `protobuf:"bytes,2,opt,name=rangecheck_host,json=rangecheckHost" json:"rangecheck_host,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
+}
+
+func (m *CCloud_GetFileDetails_Response) Reset()         { *m = CCloud_GetFileDetails_Response{} }
+func (m *CCloud_GetFileDetails_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_GetFileDetails_Response) ProtoMessage()    {}
+func (*CCloud_GetFileDetails_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{12}
+}
+
+func (m *CCloud_GetFileDetails_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_GetFileDetails_Response.Unmarshal(m, b)
+}
+func (m *CCloud_GetFileDetails_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_GetFileDetails_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_GetFileDetails_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_GetFileDetails_Response.Merge(m, src)
+}
+func (m *CCloud_GetFileDetails_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_GetFileDetails_Response.Size(m)
+}
+func (m *CCloud_GetFileDetails_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_GetFileDetails_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_GetFileDetails_Response proto.InternalMessageInfo
 
 func (m *CCloud_GetFileDetails_Response) GetDetails() *CCloud_UserFile {
 	if m != nil {
@@ -384,20 +959,261 @@ func (m *CCloud_GetFileDetails_Response) GetDetails() *CCloud_UserFile {
 	return nil
 }
 
+func (m *CCloud_GetFileDetails_Response) GetRangecheckHost() string {
+	if m != nil && m.RangecheckHost != nil {
+		return *m.RangecheckHost
+	}
+	return ""
+}
+
+type CCloud_GetSingleFileInfo_Request struct {
+	AppId                *uint32  `protobuf:"varint,1,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	FileName             *string  `protobuf:"bytes,2,opt,name=file_name,json=fileName" json:"file_name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_GetSingleFileInfo_Request) Reset()         { *m = CCloud_GetSingleFileInfo_Request{} }
+func (m *CCloud_GetSingleFileInfo_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_GetSingleFileInfo_Request) ProtoMessage()    {}
+func (*CCloud_GetSingleFileInfo_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{13}
+}
+
+func (m *CCloud_GetSingleFileInfo_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_GetSingleFileInfo_Request.Unmarshal(m, b)
+}
+func (m *CCloud_GetSingleFileInfo_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_GetSingleFileInfo_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_GetSingleFileInfo_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_GetSingleFileInfo_Request.Merge(m, src)
+}
+func (m *CCloud_GetSingleFileInfo_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_GetSingleFileInfo_Request.Size(m)
+}
+func (m *CCloud_GetSingleFileInfo_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_GetSingleFileInfo_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_GetSingleFileInfo_Request proto.InternalMessageInfo
+
+func (m *CCloud_GetSingleFileInfo_Request) GetAppId() uint32 {
+	if m != nil && m.AppId != nil {
+		return *m.AppId
+	}
+	return 0
+}
+
+func (m *CCloud_GetSingleFileInfo_Request) GetFileName() string {
+	if m != nil && m.FileName != nil {
+		return *m.FileName
+	}
+	return ""
+}
+
+type CCloud_GetSingleFileInfo_Response struct {
+	AppId                *uint32  `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	FileName             *string  `protobuf:"bytes,3,opt,name=file_name,json=fileName" json:"file_name,omitempty"`
+	ShaFile              []byte   `protobuf:"bytes,4,opt,name=sha_file,json=shaFile" json:"sha_file,omitempty"`
+	TimeStamp            *uint64  `protobuf:"varint,5,opt,name=time_stamp,json=timeStamp" json:"time_stamp,omitempty"`
+	RawFileSize          *uint32  `protobuf:"varint,6,opt,name=raw_file_size,json=rawFileSize" json:"raw_file_size,omitempty"`
+	IsExplicitDelete     *bool    `protobuf:"varint,7,opt,name=is_explicit_delete,json=isExplicitDelete" json:"is_explicit_delete,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_GetSingleFileInfo_Response) Reset()         { *m = CCloud_GetSingleFileInfo_Response{} }
+func (m *CCloud_GetSingleFileInfo_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_GetSingleFileInfo_Response) ProtoMessage()    {}
+func (*CCloud_GetSingleFileInfo_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{14}
+}
+
+func (m *CCloud_GetSingleFileInfo_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_GetSingleFileInfo_Response.Unmarshal(m, b)
+}
+func (m *CCloud_GetSingleFileInfo_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_GetSingleFileInfo_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_GetSingleFileInfo_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_GetSingleFileInfo_Response.Merge(m, src)
+}
+func (m *CCloud_GetSingleFileInfo_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_GetSingleFileInfo_Response.Size(m)
+}
+func (m *CCloud_GetSingleFileInfo_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_GetSingleFileInfo_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_GetSingleFileInfo_Response proto.InternalMessageInfo
+
+func (m *CCloud_GetSingleFileInfo_Response) GetAppId() uint32 {
+	if m != nil && m.AppId != nil {
+		return *m.AppId
+	}
+	return 0
+}
+
+func (m *CCloud_GetSingleFileInfo_Response) GetFileName() string {
+	if m != nil && m.FileName != nil {
+		return *m.FileName
+	}
+	return ""
+}
+
+func (m *CCloud_GetSingleFileInfo_Response) GetShaFile() []byte {
+	if m != nil {
+		return m.ShaFile
+	}
+	return nil
+}
+
+func (m *CCloud_GetSingleFileInfo_Response) GetTimeStamp() uint64 {
+	if m != nil && m.TimeStamp != nil {
+		return *m.TimeStamp
+	}
+	return 0
+}
+
+func (m *CCloud_GetSingleFileInfo_Response) GetRawFileSize() uint32 {
+	if m != nil && m.RawFileSize != nil {
+		return *m.RawFileSize
+	}
+	return 0
+}
+
+func (m *CCloud_GetSingleFileInfo_Response) GetIsExplicitDelete() bool {
+	if m != nil && m.IsExplicitDelete != nil {
+		return *m.IsExplicitDelete
+	}
+	return false
+}
+
+type CCloud_ShareFile_Request struct {
+	AppId                *uint32  `protobuf:"varint,1,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	FileName             *string  `protobuf:"bytes,2,opt,name=file_name,json=fileName" json:"file_name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_ShareFile_Request) Reset()         { *m = CCloud_ShareFile_Request{} }
+func (m *CCloud_ShareFile_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_ShareFile_Request) ProtoMessage()    {}
+func (*CCloud_ShareFile_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{15}
+}
+
+func (m *CCloud_ShareFile_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ShareFile_Request.Unmarshal(m, b)
+}
+func (m *CCloud_ShareFile_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ShareFile_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ShareFile_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ShareFile_Request.Merge(m, src)
+}
+func (m *CCloud_ShareFile_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ShareFile_Request.Size(m)
+}
+func (m *CCloud_ShareFile_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ShareFile_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ShareFile_Request proto.InternalMessageInfo
+
+func (m *CCloud_ShareFile_Request) GetAppId() uint32 {
+	if m != nil && m.AppId != nil {
+		return *m.AppId
+	}
+	return 0
+}
+
+func (m *CCloud_ShareFile_Request) GetFileName() string {
+	if m != nil && m.FileName != nil {
+		return *m.FileName
+	}
+	return ""
+}
+
+type CCloud_ShareFile_Response struct {
+	Hcontent             *uint64  `protobuf:"fixed64,1,opt,name=hcontent,def=18446744073709551615" json:"hcontent,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_ShareFile_Response) Reset()         { *m = CCloud_ShareFile_Response{} }
+func (m *CCloud_ShareFile_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_ShareFile_Response) ProtoMessage()    {}
+func (*CCloud_ShareFile_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{16}
+}
+
+func (m *CCloud_ShareFile_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ShareFile_Response.Unmarshal(m, b)
+}
+func (m *CCloud_ShareFile_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ShareFile_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ShareFile_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ShareFile_Response.Merge(m, src)
+}
+func (m *CCloud_ShareFile_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ShareFile_Response.Size(m)
+}
+func (m *CCloud_ShareFile_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ShareFile_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ShareFile_Response proto.InternalMessageInfo
+
+const Default_CCloud_ShareFile_Response_Hcontent uint64 = 18446744073709551615
+
+func (m *CCloud_ShareFile_Response) GetHcontent() uint64 {
+	if m != nil && m.Hcontent != nil {
+		return *m.Hcontent
+	}
+	return Default_CCloud_ShareFile_Response_Hcontent
+}
+
 type CCloud_EnumerateUserFiles_Request struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	ExtendedDetails  *bool   `protobuf:"varint,2,opt,name=extended_details,json=extendedDetails" json:"extended_details,omitempty"`
-	Count            *uint32 `protobuf:"varint,3,opt,name=count" json:"count,omitempty"`
-	StartIndex       *uint32 `protobuf:"varint,4,opt,name=start_index,json=startIndex" json:"start_index,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	ExtendedDetails      *bool    `protobuf:"varint,2,opt,name=extended_details,json=extendedDetails" json:"extended_details,omitempty"`
+	Count                *uint32  `protobuf:"varint,3,opt,name=count" json:"count,omitempty"`
+	StartIndex           *uint32  `protobuf:"varint,4,opt,name=start_index,json=startIndex" json:"start_index,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_EnumerateUserFiles_Request) Reset()         { *m = CCloud_EnumerateUserFiles_Request{} }
 func (m *CCloud_EnumerateUserFiles_Request) String() string { return proto.CompactTextString(m) }
 func (*CCloud_EnumerateUserFiles_Request) ProtoMessage()    {}
 func (*CCloud_EnumerateUserFiles_Request) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{9}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{17}
 }
+
+func (m *CCloud_EnumerateUserFiles_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_EnumerateUserFiles_Request.Unmarshal(m, b)
+}
+func (m *CCloud_EnumerateUserFiles_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_EnumerateUserFiles_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_EnumerateUserFiles_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_EnumerateUserFiles_Request.Merge(m, src)
+}
+func (m *CCloud_EnumerateUserFiles_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_EnumerateUserFiles_Request.Size(m)
+}
+func (m *CCloud_EnumerateUserFiles_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_EnumerateUserFiles_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_EnumerateUserFiles_Request proto.InternalMessageInfo
 
 func (m *CCloud_EnumerateUserFiles_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -428,17 +1244,37 @@ func (m *CCloud_EnumerateUserFiles_Request) GetStartIndex() uint32 {
 }
 
 type CCloud_EnumerateUserFiles_Response struct {
-	Files            []*CCloud_UserFile `protobuf:"bytes,1,rep,name=files" json:"files,omitempty"`
-	TotalFiles       *uint32            `protobuf:"varint,2,opt,name=total_files,json=totalFiles" json:"total_files,omitempty"`
-	XXX_unrecognized []byte             `json:"-"`
+	Files                []*CCloud_UserFile `protobuf:"bytes,1,rep,name=files" json:"files,omitempty"`
+	TotalFiles           *uint32            `protobuf:"varint,2,opt,name=total_files,json=totalFiles" json:"total_files,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}           `json:"-"`
+	XXX_unrecognized     []byte             `json:"-"`
+	XXX_sizecache        int32              `json:"-"`
 }
 
 func (m *CCloud_EnumerateUserFiles_Response) Reset()         { *m = CCloud_EnumerateUserFiles_Response{} }
 func (m *CCloud_EnumerateUserFiles_Response) String() string { return proto.CompactTextString(m) }
 func (*CCloud_EnumerateUserFiles_Response) ProtoMessage()    {}
 func (*CCloud_EnumerateUserFiles_Response) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{10}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{18}
 }
+
+func (m *CCloud_EnumerateUserFiles_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_EnumerateUserFiles_Response.Unmarshal(m, b)
+}
+func (m *CCloud_EnumerateUserFiles_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_EnumerateUserFiles_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_EnumerateUserFiles_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_EnumerateUserFiles_Response.Merge(m, src)
+}
+func (m *CCloud_EnumerateUserFiles_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_EnumerateUserFiles_Response.Size(m)
+}
+func (m *CCloud_EnumerateUserFiles_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_EnumerateUserFiles_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_EnumerateUserFiles_Response proto.InternalMessageInfo
 
 func (m *CCloud_EnumerateUserFiles_Response) GetFiles() []*CCloud_UserFile {
 	if m != nil {
@@ -455,15 +1291,38 @@ func (m *CCloud_EnumerateUserFiles_Response) GetTotalFiles() uint32 {
 }
 
 type CCloud_Delete_Request struct {
-	Filename         *string `protobuf:"bytes,1,opt,name=filename" json:"filename,omitempty"`
-	Appid            *uint32 `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Filename             *string  `protobuf:"bytes,1,opt,name=filename" json:"filename,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	UploadBatchId        *uint64  `protobuf:"varint,3,opt,name=upload_batch_id,json=uploadBatchId" json:"upload_batch_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CCloud_Delete_Request) Reset()                    { *m = CCloud_Delete_Request{} }
-func (m *CCloud_Delete_Request) String() string            { return proto.CompactTextString(m) }
-func (*CCloud_Delete_Request) ProtoMessage()               {}
-func (*CCloud_Delete_Request) Descriptor() ([]byte, []int) { return cloud_fileDescriptor0, []int{11} }
+func (m *CCloud_Delete_Request) Reset()         { *m = CCloud_Delete_Request{} }
+func (m *CCloud_Delete_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_Delete_Request) ProtoMessage()    {}
+func (*CCloud_Delete_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{19}
+}
+
+func (m *CCloud_Delete_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_Delete_Request.Unmarshal(m, b)
+}
+func (m *CCloud_Delete_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_Delete_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_Delete_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_Delete_Request.Merge(m, src)
+}
+func (m *CCloud_Delete_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_Delete_Request.Size(m)
+}
+func (m *CCloud_Delete_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_Delete_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_Delete_Request proto.InternalMessageInfo
 
 func (m *CCloud_Delete_Request) GetFilename() string {
 	if m != nil && m.Filename != nil {
@@ -479,30 +1338,81 @@ func (m *CCloud_Delete_Request) GetAppid() uint32 {
 	return 0
 }
 
-type CCloud_Delete_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+func (m *CCloud_Delete_Request) GetUploadBatchId() uint64 {
+	if m != nil && m.UploadBatchId != nil {
+		return *m.UploadBatchId
+	}
+	return 0
 }
 
-func (m *CCloud_Delete_Response) Reset()                    { *m = CCloud_Delete_Response{} }
-func (m *CCloud_Delete_Response) String() string            { return proto.CompactTextString(m) }
-func (*CCloud_Delete_Response) ProtoMessage()               {}
-func (*CCloud_Delete_Response) Descriptor() ([]byte, []int) { return cloud_fileDescriptor0, []int{12} }
+type CCloud_Delete_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_Delete_Response) Reset()         { *m = CCloud_Delete_Response{} }
+func (m *CCloud_Delete_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_Delete_Response) ProtoMessage()    {}
+func (*CCloud_Delete_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{20}
+}
+
+func (m *CCloud_Delete_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_Delete_Response.Unmarshal(m, b)
+}
+func (m *CCloud_Delete_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_Delete_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_Delete_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_Delete_Response.Merge(m, src)
+}
+func (m *CCloud_Delete_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_Delete_Response.Size(m)
+}
+func (m *CCloud_Delete_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_Delete_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_Delete_Response proto.InternalMessageInfo
 
 type CCloud_GetClientEncryptionKey_Request struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_GetClientEncryptionKey_Request) Reset()         { *m = CCloud_GetClientEncryptionKey_Request{} }
 func (m *CCloud_GetClientEncryptionKey_Request) String() string { return proto.CompactTextString(m) }
 func (*CCloud_GetClientEncryptionKey_Request) ProtoMessage()    {}
 func (*CCloud_GetClientEncryptionKey_Request) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{13}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{21}
 }
 
+func (m *CCloud_GetClientEncryptionKey_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_GetClientEncryptionKey_Request.Unmarshal(m, b)
+}
+func (m *CCloud_GetClientEncryptionKey_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_GetClientEncryptionKey_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_GetClientEncryptionKey_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_GetClientEncryptionKey_Request.Merge(m, src)
+}
+func (m *CCloud_GetClientEncryptionKey_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_GetClientEncryptionKey_Request.Size(m)
+}
+func (m *CCloud_GetClientEncryptionKey_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_GetClientEncryptionKey_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_GetClientEncryptionKey_Request proto.InternalMessageInfo
+
 type CCloud_GetClientEncryptionKey_Response struct {
-	Key              []byte `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
-	Crc              *int32 `protobuf:"varint,2,opt,name=crc" json:"crc,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	Key                  []byte   `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
+	Crc                  *int32   `protobuf:"varint,2,opt,name=crc" json:"crc,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_GetClientEncryptionKey_Response) Reset() {
@@ -511,8 +1421,26 @@ func (m *CCloud_GetClientEncryptionKey_Response) Reset() {
 func (m *CCloud_GetClientEncryptionKey_Response) String() string { return proto.CompactTextString(m) }
 func (*CCloud_GetClientEncryptionKey_Response) ProtoMessage()    {}
 func (*CCloud_GetClientEncryptionKey_Response) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{14}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{22}
 }
+
+func (m *CCloud_GetClientEncryptionKey_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_GetClientEncryptionKey_Response.Unmarshal(m, b)
+}
+func (m *CCloud_GetClientEncryptionKey_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_GetClientEncryptionKey_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_GetClientEncryptionKey_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_GetClientEncryptionKey_Response.Merge(m, src)
+}
+func (m *CCloud_GetClientEncryptionKey_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_GetClientEncryptionKey_Response.Size(m)
+}
+func (m *CCloud_GetClientEncryptionKey_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_GetClientEncryptionKey_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_GetClientEncryptionKey_Response proto.InternalMessageInfo
 
 func (m *CCloud_GetClientEncryptionKey_Response) GetKey() []byte {
 	if m != nil {
@@ -529,20 +1457,42 @@ func (m *CCloud_GetClientEncryptionKey_Response) GetCrc() int32 {
 }
 
 type CCloud_CDNReport_Notification struct {
-	Steamid          *uint64 `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
-	Url              *string `protobuf:"bytes,2,opt,name=url" json:"url,omitempty"`
-	Success          *bool   `protobuf:"varint,3,opt,name=success" json:"success,omitempty"`
-	HttpStatusCode   *uint32 `protobuf:"varint,4,opt,name=http_status_code,json=httpStatusCode" json:"http_status_code,omitempty"`
-	ExpectedBytes    *uint64 `protobuf:"varint,5,opt,name=expected_bytes,json=expectedBytes" json:"expected_bytes,omitempty"`
-	ReceivedBytes    *uint64 `protobuf:"varint,6,opt,name=received_bytes,json=receivedBytes" json:"received_bytes,omitempty"`
-	Duration         *uint32 `protobuf:"varint,7,opt,name=duration" json:"duration,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Steamid              *uint64  `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
+	Url                  *string  `protobuf:"bytes,2,opt,name=url" json:"url,omitempty"`
+	Success              *bool    `protobuf:"varint,3,opt,name=success" json:"success,omitempty"`
+	HttpStatusCode       *uint32  `protobuf:"varint,4,opt,name=http_status_code,json=httpStatusCode" json:"http_status_code,omitempty"`
+	ExpectedBytes        *uint64  `protobuf:"varint,5,opt,name=expected_bytes,json=expectedBytes" json:"expected_bytes,omitempty"`
+	ReceivedBytes        *uint64  `protobuf:"varint,6,opt,name=received_bytes,json=receivedBytes" json:"received_bytes,omitempty"`
+	Duration             *uint32  `protobuf:"varint,7,opt,name=duration" json:"duration,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CCloud_CDNReport_Notification) Reset()                    { *m = CCloud_CDNReport_Notification{} }
-func (m *CCloud_CDNReport_Notification) String() string            { return proto.CompactTextString(m) }
-func (*CCloud_CDNReport_Notification) ProtoMessage()               {}
-func (*CCloud_CDNReport_Notification) Descriptor() ([]byte, []int) { return cloud_fileDescriptor0, []int{15} }
+func (m *CCloud_CDNReport_Notification) Reset()         { *m = CCloud_CDNReport_Notification{} }
+func (m *CCloud_CDNReport_Notification) String() string { return proto.CompactTextString(m) }
+func (*CCloud_CDNReport_Notification) ProtoMessage()    {}
+func (*CCloud_CDNReport_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{23}
+}
+
+func (m *CCloud_CDNReport_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_CDNReport_Notification.Unmarshal(m, b)
+}
+func (m *CCloud_CDNReport_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_CDNReport_Notification.Marshal(b, m, deterministic)
+}
+func (m *CCloud_CDNReport_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_CDNReport_Notification.Merge(m, src)
+}
+func (m *CCloud_CDNReport_Notification) XXX_Size() int {
+	return xxx_messageInfo_CCloud_CDNReport_Notification.Size(m)
+}
+func (m *CCloud_CDNReport_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_CDNReport_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_CDNReport_Notification proto.InternalMessageInfo
 
 func (m *CCloud_CDNReport_Notification) GetSteamid() uint64 {
 	if m != nil && m.Steamid != nil {
@@ -594,16 +1544,25 @@ func (m *CCloud_CDNReport_Notification) GetDuration() uint32 {
 }
 
 type CCloud_ExternalStorageTransferReport_Notification struct {
-	Host             *string `protobuf:"bytes,1,opt,name=host" json:"host,omitempty"`
-	Path             *string `protobuf:"bytes,2,opt,name=path" json:"path,omitempty"`
-	IsUpload         *bool   `protobuf:"varint,3,opt,name=is_upload,json=isUpload" json:"is_upload,omitempty"`
-	Success          *bool   `protobuf:"varint,4,opt,name=success" json:"success,omitempty"`
-	HttpStatusCode   *uint32 `protobuf:"varint,5,opt,name=http_status_code,json=httpStatusCode" json:"http_status_code,omitempty"`
-	BytesExpected    *uint64 `protobuf:"varint,6,opt,name=bytes_expected,json=bytesExpected" json:"bytes_expected,omitempty"`
-	BytesActual      *uint64 `protobuf:"varint,7,opt,name=bytes_actual,json=bytesActual" json:"bytes_actual,omitempty"`
-	DurationMs       *uint32 `protobuf:"varint,8,opt,name=duration_ms,json=durationMs" json:"duration_ms,omitempty"`
-	Cellid           *uint32 `protobuf:"varint,9,opt,name=cellid" json:"cellid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Host                 *string  `protobuf:"bytes,1,opt,name=host" json:"host,omitempty"`
+	Path                 *string  `protobuf:"bytes,2,opt,name=path" json:"path,omitempty"`
+	IsUpload             *bool    `protobuf:"varint,3,opt,name=is_upload,json=isUpload" json:"is_upload,omitempty"`
+	Success              *bool    `protobuf:"varint,4,opt,name=success" json:"success,omitempty"`
+	HttpStatusCode       *uint32  `protobuf:"varint,5,opt,name=http_status_code,json=httpStatusCode" json:"http_status_code,omitempty"`
+	BytesExpected        *uint64  `protobuf:"varint,6,opt,name=bytes_expected,json=bytesExpected" json:"bytes_expected,omitempty"`
+	BytesActual          *uint64  `protobuf:"varint,7,opt,name=bytes_actual,json=bytesActual" json:"bytes_actual,omitempty"`
+	DurationMs           *uint32  `protobuf:"varint,8,opt,name=duration_ms,json=durationMs" json:"duration_ms,omitempty"`
+	Cellid               *uint32  `protobuf:"varint,9,opt,name=cellid" json:"cellid,omitempty"`
+	Proxied              *bool    `protobuf:"varint,10,opt,name=proxied" json:"proxied,omitempty"`
+	Ipv6Local            *bool    `protobuf:"varint,11,opt,name=ipv6_local,json=ipv6Local" json:"ipv6_local,omitempty"`
+	Ipv6Remote           *bool    `protobuf:"varint,12,opt,name=ipv6_remote,json=ipv6Remote" json:"ipv6_remote,omitempty"`
+	TimeToConnectMs      *uint32  `protobuf:"varint,13,opt,name=time_to_connect_ms,json=timeToConnectMs" json:"time_to_connect_ms,omitempty"`
+	TimeToSendReqMs      *uint32  `protobuf:"varint,14,opt,name=time_to_send_req_ms,json=timeToSendReqMs" json:"time_to_send_req_ms,omitempty"`
+	TimeToFirstByteMs    *uint32  `protobuf:"varint,15,opt,name=time_to_first_byte_ms,json=timeToFirstByteMs" json:"time_to_first_byte_ms,omitempty"`
+	TimeToLastByteMs     *uint32  `protobuf:"varint,16,opt,name=time_to_last_byte_ms,json=timeToLastByteMs" json:"time_to_last_byte_ms,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_ExternalStorageTransferReport_Notification) Reset() {
@@ -614,8 +1573,26 @@ func (m *CCloud_ExternalStorageTransferReport_Notification) String() string {
 }
 func (*CCloud_ExternalStorageTransferReport_Notification) ProtoMessage() {}
 func (*CCloud_ExternalStorageTransferReport_Notification) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{16}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{24}
 }
+
+func (m *CCloud_ExternalStorageTransferReport_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ExternalStorageTransferReport_Notification.Unmarshal(m, b)
+}
+func (m *CCloud_ExternalStorageTransferReport_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ExternalStorageTransferReport_Notification.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ExternalStorageTransferReport_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ExternalStorageTransferReport_Notification.Merge(m, src)
+}
+func (m *CCloud_ExternalStorageTransferReport_Notification) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ExternalStorageTransferReport_Notification.Size(m)
+}
+func (m *CCloud_ExternalStorageTransferReport_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ExternalStorageTransferReport_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ExternalStorageTransferReport_Notification proto.InternalMessageInfo
 
 func (m *CCloud_ExternalStorageTransferReport_Notification) GetHost() string {
 	if m != nil && m.Host != nil {
@@ -680,26 +1657,370 @@ func (m *CCloud_ExternalStorageTransferReport_Notification) GetCellid() uint32 {
 	return 0
 }
 
+func (m *CCloud_ExternalStorageTransferReport_Notification) GetProxied() bool {
+	if m != nil && m.Proxied != nil {
+		return *m.Proxied
+	}
+	return false
+}
+
+func (m *CCloud_ExternalStorageTransferReport_Notification) GetIpv6Local() bool {
+	if m != nil && m.Ipv6Local != nil {
+		return *m.Ipv6Local
+	}
+	return false
+}
+
+func (m *CCloud_ExternalStorageTransferReport_Notification) GetIpv6Remote() bool {
+	if m != nil && m.Ipv6Remote != nil {
+		return *m.Ipv6Remote
+	}
+	return false
+}
+
+func (m *CCloud_ExternalStorageTransferReport_Notification) GetTimeToConnectMs() uint32 {
+	if m != nil && m.TimeToConnectMs != nil {
+		return *m.TimeToConnectMs
+	}
+	return 0
+}
+
+func (m *CCloud_ExternalStorageTransferReport_Notification) GetTimeToSendReqMs() uint32 {
+	if m != nil && m.TimeToSendReqMs != nil {
+		return *m.TimeToSendReqMs
+	}
+	return 0
+}
+
+func (m *CCloud_ExternalStorageTransferReport_Notification) GetTimeToFirstByteMs() uint32 {
+	if m != nil && m.TimeToFirstByteMs != nil {
+		return *m.TimeToFirstByteMs
+	}
+	return 0
+}
+
+func (m *CCloud_ExternalStorageTransferReport_Notification) GetTimeToLastByteMs() uint32 {
+	if m != nil && m.TimeToLastByteMs != nil {
+		return *m.TimeToLastByteMs
+	}
+	return 0
+}
+
+type CCloud_BeginAppUploadBatch_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	MachineName          *string  `protobuf:"bytes,2,opt,name=machine_name,json=machineName" json:"machine_name,omitempty"`
+	FilesToUpload        []string `protobuf:"bytes,3,rep,name=files_to_upload,json=filesToUpload" json:"files_to_upload,omitempty"`
+	FilesToDelete        []string `protobuf:"bytes,4,rep,name=files_to_delete,json=filesToDelete" json:"files_to_delete,omitempty"`
+	ClientId             *uint64  `protobuf:"varint,5,opt,name=client_id,json=clientId" json:"client_id,omitempty"`
+	AppBuildId           *uint64  `protobuf:"varint,6,opt,name=app_build_id,json=appBuildId" json:"app_build_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_BeginAppUploadBatch_Request) Reset()         { *m = CCloud_BeginAppUploadBatch_Request{} }
+func (m *CCloud_BeginAppUploadBatch_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_BeginAppUploadBatch_Request) ProtoMessage()    {}
+func (*CCloud_BeginAppUploadBatch_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{25}
+}
+
+func (m *CCloud_BeginAppUploadBatch_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_BeginAppUploadBatch_Request.Unmarshal(m, b)
+}
+func (m *CCloud_BeginAppUploadBatch_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_BeginAppUploadBatch_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_BeginAppUploadBatch_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_BeginAppUploadBatch_Request.Merge(m, src)
+}
+func (m *CCloud_BeginAppUploadBatch_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_BeginAppUploadBatch_Request.Size(m)
+}
+func (m *CCloud_BeginAppUploadBatch_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_BeginAppUploadBatch_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_BeginAppUploadBatch_Request proto.InternalMessageInfo
+
+func (m *CCloud_BeginAppUploadBatch_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_BeginAppUploadBatch_Request) GetMachineName() string {
+	if m != nil && m.MachineName != nil {
+		return *m.MachineName
+	}
+	return ""
+}
+
+func (m *CCloud_BeginAppUploadBatch_Request) GetFilesToUpload() []string {
+	if m != nil {
+		return m.FilesToUpload
+	}
+	return nil
+}
+
+func (m *CCloud_BeginAppUploadBatch_Request) GetFilesToDelete() []string {
+	if m != nil {
+		return m.FilesToDelete
+	}
+	return nil
+}
+
+func (m *CCloud_BeginAppUploadBatch_Request) GetClientId() uint64 {
+	if m != nil && m.ClientId != nil {
+		return *m.ClientId
+	}
+	return 0
+}
+
+func (m *CCloud_BeginAppUploadBatch_Request) GetAppBuildId() uint64 {
+	if m != nil && m.AppBuildId != nil {
+		return *m.AppBuildId
+	}
+	return 0
+}
+
+type CCloud_BeginAppUploadBatch_Response struct {
+	BatchId              *uint64  `protobuf:"varint,1,opt,name=batch_id,json=batchId" json:"batch_id,omitempty"`
+	AppChangeNumber      *uint64  `protobuf:"varint,4,opt,name=app_change_number,json=appChangeNumber" json:"app_change_number,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_BeginAppUploadBatch_Response) Reset()         { *m = CCloud_BeginAppUploadBatch_Response{} }
+func (m *CCloud_BeginAppUploadBatch_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_BeginAppUploadBatch_Response) ProtoMessage()    {}
+func (*CCloud_BeginAppUploadBatch_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{26}
+}
+
+func (m *CCloud_BeginAppUploadBatch_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_BeginAppUploadBatch_Response.Unmarshal(m, b)
+}
+func (m *CCloud_BeginAppUploadBatch_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_BeginAppUploadBatch_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_BeginAppUploadBatch_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_BeginAppUploadBatch_Response.Merge(m, src)
+}
+func (m *CCloud_BeginAppUploadBatch_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_BeginAppUploadBatch_Response.Size(m)
+}
+func (m *CCloud_BeginAppUploadBatch_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_BeginAppUploadBatch_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_BeginAppUploadBatch_Response proto.InternalMessageInfo
+
+func (m *CCloud_BeginAppUploadBatch_Response) GetBatchId() uint64 {
+	if m != nil && m.BatchId != nil {
+		return *m.BatchId
+	}
+	return 0
+}
+
+func (m *CCloud_BeginAppUploadBatch_Response) GetAppChangeNumber() uint64 {
+	if m != nil && m.AppChangeNumber != nil {
+		return *m.AppChangeNumber
+	}
+	return 0
+}
+
+type CCloud_CompleteAppUploadBatch_Notification struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	BatchId              *uint64  `protobuf:"varint,2,opt,name=batch_id,json=batchId" json:"batch_id,omitempty"`
+	BatchEresult         *uint32  `protobuf:"varint,3,opt,name=batch_eresult,json=batchEresult" json:"batch_eresult,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Notification) Reset() {
+	*m = CCloud_CompleteAppUploadBatch_Notification{}
+}
+func (m *CCloud_CompleteAppUploadBatch_Notification) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CCloud_CompleteAppUploadBatch_Notification) ProtoMessage() {}
+func (*CCloud_CompleteAppUploadBatch_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{27}
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_CompleteAppUploadBatch_Notification.Unmarshal(m, b)
+}
+func (m *CCloud_CompleteAppUploadBatch_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_CompleteAppUploadBatch_Notification.Marshal(b, m, deterministic)
+}
+func (m *CCloud_CompleteAppUploadBatch_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_CompleteAppUploadBatch_Notification.Merge(m, src)
+}
+func (m *CCloud_CompleteAppUploadBatch_Notification) XXX_Size() int {
+	return xxx_messageInfo_CCloud_CompleteAppUploadBatch_Notification.Size(m)
+}
+func (m *CCloud_CompleteAppUploadBatch_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_CompleteAppUploadBatch_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_CompleteAppUploadBatch_Notification proto.InternalMessageInfo
+
+func (m *CCloud_CompleteAppUploadBatch_Notification) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Notification) GetBatchId() uint64 {
+	if m != nil && m.BatchId != nil {
+		return *m.BatchId
+	}
+	return 0
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Notification) GetBatchEresult() uint32 {
+	if m != nil && m.BatchEresult != nil {
+		return *m.BatchEresult
+	}
+	return 0
+}
+
+type CCloud_CompleteAppUploadBatch_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	BatchId              *uint64  `protobuf:"varint,2,opt,name=batch_id,json=batchId" json:"batch_id,omitempty"`
+	BatchEresult         *uint32  `protobuf:"varint,3,opt,name=batch_eresult,json=batchEresult" json:"batch_eresult,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Request) Reset()         { *m = CCloud_CompleteAppUploadBatch_Request{} }
+func (m *CCloud_CompleteAppUploadBatch_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_CompleteAppUploadBatch_Request) ProtoMessage()    {}
+func (*CCloud_CompleteAppUploadBatch_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{28}
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_CompleteAppUploadBatch_Request.Unmarshal(m, b)
+}
+func (m *CCloud_CompleteAppUploadBatch_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_CompleteAppUploadBatch_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_CompleteAppUploadBatch_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_CompleteAppUploadBatch_Request.Merge(m, src)
+}
+func (m *CCloud_CompleteAppUploadBatch_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_CompleteAppUploadBatch_Request.Size(m)
+}
+func (m *CCloud_CompleteAppUploadBatch_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_CompleteAppUploadBatch_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_CompleteAppUploadBatch_Request proto.InternalMessageInfo
+
+func (m *CCloud_CompleteAppUploadBatch_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Request) GetBatchId() uint64 {
+	if m != nil && m.BatchId != nil {
+		return *m.BatchId
+	}
+	return 0
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Request) GetBatchEresult() uint32 {
+	if m != nil && m.BatchEresult != nil {
+		return *m.BatchEresult
+	}
+	return 0
+}
+
+type CCloud_CompleteAppUploadBatch_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Response) Reset() {
+	*m = CCloud_CompleteAppUploadBatch_Response{}
+}
+func (m *CCloud_CompleteAppUploadBatch_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_CompleteAppUploadBatch_Response) ProtoMessage()    {}
+func (*CCloud_CompleteAppUploadBatch_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{29}
+}
+
+func (m *CCloud_CompleteAppUploadBatch_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_CompleteAppUploadBatch_Response.Unmarshal(m, b)
+}
+func (m *CCloud_CompleteAppUploadBatch_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_CompleteAppUploadBatch_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_CompleteAppUploadBatch_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_CompleteAppUploadBatch_Response.Merge(m, src)
+}
+func (m *CCloud_CompleteAppUploadBatch_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_CompleteAppUploadBatch_Response.Size(m)
+}
+func (m *CCloud_CompleteAppUploadBatch_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_CompleteAppUploadBatch_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_CompleteAppUploadBatch_Response proto.InternalMessageInfo
+
 type CCloud_ClientBeginFileUpload_Request struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	FileSize         *uint32 `protobuf:"varint,2,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
-	RawFileSize      *uint32 `protobuf:"varint,3,opt,name=raw_file_size,json=rawFileSize" json:"raw_file_size,omitempty"`
-	FileSha          []byte  `protobuf:"bytes,4,opt,name=file_sha,json=fileSha" json:"file_sha,omitempty"`
-	TimeStamp        *uint64 `protobuf:"varint,5,opt,name=time_stamp,json=timeStamp" json:"time_stamp,omitempty"`
-	Filename         *string `protobuf:"bytes,6,opt,name=filename" json:"filename,omitempty"`
-	PlatformsToSync  *uint32 `protobuf:"varint,7,opt,name=platforms_to_sync,json=platformsToSync,def=4294967295" json:"platforms_to_sync,omitempty"`
-	CellId           *uint32 `protobuf:"varint,9,opt,name=cell_id,json=cellId" json:"cell_id,omitempty"`
-	CanEncrypt       *bool   `protobuf:"varint,10,opt,name=can_encrypt,json=canEncrypt" json:"can_encrypt,omitempty"`
-	IsSharedFile     *bool   `protobuf:"varint,11,opt,name=is_shared_file,json=isSharedFile" json:"is_shared_file,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	FileSize             *uint32  `protobuf:"varint,2,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
+	RawFileSize          *uint32  `protobuf:"varint,3,opt,name=raw_file_size,json=rawFileSize" json:"raw_file_size,omitempty"`
+	FileSha              []byte   `protobuf:"bytes,4,opt,name=file_sha,json=fileSha" json:"file_sha,omitempty"`
+	TimeStamp            *uint64  `protobuf:"varint,5,opt,name=time_stamp,json=timeStamp" json:"time_stamp,omitempty"`
+	Filename             *string  `protobuf:"bytes,6,opt,name=filename" json:"filename,omitempty"`
+	PlatformsToSync      *uint32  `protobuf:"varint,7,opt,name=platforms_to_sync,json=platformsToSync,def=4294967295" json:"platforms_to_sync,omitempty"`
+	CellId               *uint32  `protobuf:"varint,9,opt,name=cell_id,json=cellId" json:"cell_id,omitempty"`
+	CanEncrypt           *bool    `protobuf:"varint,10,opt,name=can_encrypt,json=canEncrypt" json:"can_encrypt,omitempty"`
+	IsSharedFile         *bool    `protobuf:"varint,11,opt,name=is_shared_file,json=isSharedFile" json:"is_shared_file,omitempty"`
+	DeprecatedRealm      *uint32  `protobuf:"varint,12,opt,name=deprecated_realm,json=deprecatedRealm" json:"deprecated_realm,omitempty"`
+	UploadBatchId        *uint64  `protobuf:"varint,13,opt,name=upload_batch_id,json=uploadBatchId" json:"upload_batch_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_ClientBeginFileUpload_Request) Reset()         { *m = CCloud_ClientBeginFileUpload_Request{} }
 func (m *CCloud_ClientBeginFileUpload_Request) String() string { return proto.CompactTextString(m) }
 func (*CCloud_ClientBeginFileUpload_Request) ProtoMessage()    {}
 func (*CCloud_ClientBeginFileUpload_Request) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{17}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{30}
 }
+
+func (m *CCloud_ClientBeginFileUpload_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientBeginFileUpload_Request.Unmarshal(m, b)
+}
+func (m *CCloud_ClientBeginFileUpload_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientBeginFileUpload_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientBeginFileUpload_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientBeginFileUpload_Request.Merge(m, src)
+}
+func (m *CCloud_ClientBeginFileUpload_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientBeginFileUpload_Request.Size(m)
+}
+func (m *CCloud_ClientBeginFileUpload_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientBeginFileUpload_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientBeginFileUpload_Request proto.InternalMessageInfo
 
 const Default_CCloud_ClientBeginFileUpload_Request_PlatformsToSync uint32 = 4294967295
 
@@ -773,25 +2094,59 @@ func (m *CCloud_ClientBeginFileUpload_Request) GetIsSharedFile() bool {
 	return false
 }
 
+func (m *CCloud_ClientBeginFileUpload_Request) GetDeprecatedRealm() uint32 {
+	if m != nil && m.DeprecatedRealm != nil {
+		return *m.DeprecatedRealm
+	}
+	return 0
+}
+
+func (m *CCloud_ClientBeginFileUpload_Request) GetUploadBatchId() uint64 {
+	if m != nil && m.UploadBatchId != nil {
+		return *m.UploadBatchId
+	}
+	return 0
+}
+
 type ClientCloudFileUploadBlockDetails struct {
-	UrlHost          *string                                          `protobuf:"bytes,1,opt,name=url_host,json=urlHost" json:"url_host,omitempty"`
-	UrlPath          *string                                          `protobuf:"bytes,2,opt,name=url_path,json=urlPath" json:"url_path,omitempty"`
-	UseHttps         *bool                                            `protobuf:"varint,3,opt,name=use_https,json=useHttps" json:"use_https,omitempty"`
-	HttpMethod       *int32                                           `protobuf:"varint,4,opt,name=http_method,json=httpMethod" json:"http_method,omitempty"`
-	RequestHeaders   []*ClientCloudFileUploadBlockDetails_HTTPHeaders `protobuf:"bytes,5,rep,name=request_headers,json=requestHeaders" json:"request_headers,omitempty"`
-	BlockOffset      *uint64                                          `protobuf:"varint,6,opt,name=block_offset,json=blockOffset" json:"block_offset,omitempty"`
-	BlockLength      *uint32                                          `protobuf:"varint,7,opt,name=block_length,json=blockLength" json:"block_length,omitempty"`
-	ExplicitBodyData []byte                                           `protobuf:"bytes,8,opt,name=explicit_body_data,json=explicitBodyData" json:"explicit_body_data,omitempty"`
-	MayParallelize   *bool                                            `protobuf:"varint,9,opt,name=may_parallelize,json=mayParallelize" json:"may_parallelize,omitempty"`
-	XXX_unrecognized []byte                                           `json:"-"`
+	UrlHost              *string                                          `protobuf:"bytes,1,opt,name=url_host,json=urlHost" json:"url_host,omitempty"`
+	UrlPath              *string                                          `protobuf:"bytes,2,opt,name=url_path,json=urlPath" json:"url_path,omitempty"`
+	UseHttps             *bool                                            `protobuf:"varint,3,opt,name=use_https,json=useHttps" json:"use_https,omitempty"`
+	HttpMethod           *int32                                           `protobuf:"varint,4,opt,name=http_method,json=httpMethod" json:"http_method,omitempty"`
+	RequestHeaders       []*ClientCloudFileUploadBlockDetails_HTTPHeaders `protobuf:"bytes,5,rep,name=request_headers,json=requestHeaders" json:"request_headers,omitempty"`
+	BlockOffset          *uint64                                          `protobuf:"varint,6,opt,name=block_offset,json=blockOffset" json:"block_offset,omitempty"`
+	BlockLength          *uint32                                          `protobuf:"varint,7,opt,name=block_length,json=blockLength" json:"block_length,omitempty"`
+	ExplicitBodyData     []byte                                           `protobuf:"bytes,8,opt,name=explicit_body_data,json=explicitBodyData" json:"explicit_body_data,omitempty"`
+	MayParallelize       *bool                                            `protobuf:"varint,9,opt,name=may_parallelize,json=mayParallelize" json:"may_parallelize,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                         `json:"-"`
+	XXX_unrecognized     []byte                                           `json:"-"`
+	XXX_sizecache        int32                                            `json:"-"`
 }
 
 func (m *ClientCloudFileUploadBlockDetails) Reset()         { *m = ClientCloudFileUploadBlockDetails{} }
 func (m *ClientCloudFileUploadBlockDetails) String() string { return proto.CompactTextString(m) }
 func (*ClientCloudFileUploadBlockDetails) ProtoMessage()    {}
 func (*ClientCloudFileUploadBlockDetails) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{18}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{31}
 }
+
+func (m *ClientCloudFileUploadBlockDetails) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ClientCloudFileUploadBlockDetails.Unmarshal(m, b)
+}
+func (m *ClientCloudFileUploadBlockDetails) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ClientCloudFileUploadBlockDetails.Marshal(b, m, deterministic)
+}
+func (m *ClientCloudFileUploadBlockDetails) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ClientCloudFileUploadBlockDetails.Merge(m, src)
+}
+func (m *ClientCloudFileUploadBlockDetails) XXX_Size() int {
+	return xxx_messageInfo_ClientCloudFileUploadBlockDetails.Size(m)
+}
+func (m *ClientCloudFileUploadBlockDetails) XXX_DiscardUnknown() {
+	xxx_messageInfo_ClientCloudFileUploadBlockDetails.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ClientCloudFileUploadBlockDetails proto.InternalMessageInfo
 
 func (m *ClientCloudFileUploadBlockDetails) GetUrlHost() string {
 	if m != nil && m.UrlHost != nil {
@@ -857,9 +2212,11 @@ func (m *ClientCloudFileUploadBlockDetails) GetMayParallelize() bool {
 }
 
 type ClientCloudFileUploadBlockDetails_HTTPHeaders struct {
-	Name             *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-	Value            *string `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Name                 *string  `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Value                *string  `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *ClientCloudFileUploadBlockDetails_HTTPHeaders) Reset() {
@@ -870,8 +2227,26 @@ func (m *ClientCloudFileUploadBlockDetails_HTTPHeaders) String() string {
 }
 func (*ClientCloudFileUploadBlockDetails_HTTPHeaders) ProtoMessage() {}
 func (*ClientCloudFileUploadBlockDetails_HTTPHeaders) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{18, 0}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{31, 0}
 }
+
+func (m *ClientCloudFileUploadBlockDetails_HTTPHeaders) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ClientCloudFileUploadBlockDetails_HTTPHeaders.Unmarshal(m, b)
+}
+func (m *ClientCloudFileUploadBlockDetails_HTTPHeaders) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ClientCloudFileUploadBlockDetails_HTTPHeaders.Marshal(b, m, deterministic)
+}
+func (m *ClientCloudFileUploadBlockDetails_HTTPHeaders) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ClientCloudFileUploadBlockDetails_HTTPHeaders.Merge(m, src)
+}
+func (m *ClientCloudFileUploadBlockDetails_HTTPHeaders) XXX_Size() int {
+	return xxx_messageInfo_ClientCloudFileUploadBlockDetails_HTTPHeaders.Size(m)
+}
+func (m *ClientCloudFileUploadBlockDetails_HTTPHeaders) XXX_DiscardUnknown() {
+	xxx_messageInfo_ClientCloudFileUploadBlockDetails_HTTPHeaders.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ClientCloudFileUploadBlockDetails_HTTPHeaders proto.InternalMessageInfo
 
 func (m *ClientCloudFileUploadBlockDetails_HTTPHeaders) GetName() string {
 	if m != nil && m.Name != nil {
@@ -888,17 +2263,37 @@ func (m *ClientCloudFileUploadBlockDetails_HTTPHeaders) GetValue() string {
 }
 
 type CCloud_ClientBeginFileUpload_Response struct {
-	EncryptFile      *bool                                `protobuf:"varint,1,opt,name=encrypt_file,json=encryptFile" json:"encrypt_file,omitempty"`
-	BlockRequests    []*ClientCloudFileUploadBlockDetails `protobuf:"bytes,2,rep,name=block_requests,json=blockRequests" json:"block_requests,omitempty"`
-	XXX_unrecognized []byte                               `json:"-"`
+	EncryptFile          *bool                                `protobuf:"varint,1,opt,name=encrypt_file,json=encryptFile" json:"encrypt_file,omitempty"`
+	BlockRequests        []*ClientCloudFileUploadBlockDetails `protobuf:"bytes,2,rep,name=block_requests,json=blockRequests" json:"block_requests,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                             `json:"-"`
+	XXX_unrecognized     []byte                               `json:"-"`
+	XXX_sizecache        int32                                `json:"-"`
 }
 
 func (m *CCloud_ClientBeginFileUpload_Response) Reset()         { *m = CCloud_ClientBeginFileUpload_Response{} }
 func (m *CCloud_ClientBeginFileUpload_Response) String() string { return proto.CompactTextString(m) }
 func (*CCloud_ClientBeginFileUpload_Response) ProtoMessage()    {}
 func (*CCloud_ClientBeginFileUpload_Response) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{19}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{32}
 }
+
+func (m *CCloud_ClientBeginFileUpload_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientBeginFileUpload_Response.Unmarshal(m, b)
+}
+func (m *CCloud_ClientBeginFileUpload_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientBeginFileUpload_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientBeginFileUpload_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientBeginFileUpload_Response.Merge(m, src)
+}
+func (m *CCloud_ClientBeginFileUpload_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientBeginFileUpload_Response.Size(m)
+}
+func (m *CCloud_ClientBeginFileUpload_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientBeginFileUpload_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientBeginFileUpload_Response proto.InternalMessageInfo
 
 func (m *CCloud_ClientBeginFileUpload_Response) GetEncryptFile() bool {
 	if m != nil && m.EncryptFile != nil {
@@ -915,19 +2310,39 @@ func (m *CCloud_ClientBeginFileUpload_Response) GetBlockRequests() []*ClientClou
 }
 
 type CCloud_ClientCommitFileUpload_Request struct {
-	TransferSucceeded *bool   `protobuf:"varint,1,opt,name=transfer_succeeded,json=transferSucceeded" json:"transfer_succeeded,omitempty"`
-	Appid             *uint32 `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	FileSha           []byte  `protobuf:"bytes,3,opt,name=file_sha,json=fileSha" json:"file_sha,omitempty"`
-	Filename          *string `protobuf:"bytes,4,opt,name=filename" json:"filename,omitempty"`
-	XXX_unrecognized  []byte  `json:"-"`
+	TransferSucceeded    *bool    `protobuf:"varint,1,opt,name=transfer_succeeded,json=transferSucceeded" json:"transfer_succeeded,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	FileSha              []byte   `protobuf:"bytes,3,opt,name=file_sha,json=fileSha" json:"file_sha,omitempty"`
+	Filename             *string  `protobuf:"bytes,4,opt,name=filename" json:"filename,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_ClientCommitFileUpload_Request) Reset()         { *m = CCloud_ClientCommitFileUpload_Request{} }
 func (m *CCloud_ClientCommitFileUpload_Request) String() string { return proto.CompactTextString(m) }
 func (*CCloud_ClientCommitFileUpload_Request) ProtoMessage()    {}
 func (*CCloud_ClientCommitFileUpload_Request) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{20}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{33}
 }
+
+func (m *CCloud_ClientCommitFileUpload_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientCommitFileUpload_Request.Unmarshal(m, b)
+}
+func (m *CCloud_ClientCommitFileUpload_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientCommitFileUpload_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientCommitFileUpload_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientCommitFileUpload_Request.Merge(m, src)
+}
+func (m *CCloud_ClientCommitFileUpload_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientCommitFileUpload_Request.Size(m)
+}
+func (m *CCloud_ClientCommitFileUpload_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientCommitFileUpload_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientCommitFileUpload_Request proto.InternalMessageInfo
 
 func (m *CCloud_ClientCommitFileUpload_Request) GetTransferSucceeded() bool {
 	if m != nil && m.TransferSucceeded != nil {
@@ -958,8 +2373,10 @@ func (m *CCloud_ClientCommitFileUpload_Request) GetFilename() string {
 }
 
 type CCloud_ClientCommitFileUpload_Response struct {
-	FileCommitted    *bool  `protobuf:"varint,1,opt,name=file_committed,json=fileCommitted" json:"file_committed,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	FileCommitted        *bool    `protobuf:"varint,1,opt,name=file_committed,json=fileCommitted" json:"file_committed,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_ClientCommitFileUpload_Response) Reset() {
@@ -968,8 +2385,26 @@ func (m *CCloud_ClientCommitFileUpload_Response) Reset() {
 func (m *CCloud_ClientCommitFileUpload_Response) String() string { return proto.CompactTextString(m) }
 func (*CCloud_ClientCommitFileUpload_Response) ProtoMessage()    {}
 func (*CCloud_ClientCommitFileUpload_Response) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{21}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{34}
 }
+
+func (m *CCloud_ClientCommitFileUpload_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientCommitFileUpload_Response.Unmarshal(m, b)
+}
+func (m *CCloud_ClientCommitFileUpload_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientCommitFileUpload_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientCommitFileUpload_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientCommitFileUpload_Response.Merge(m, src)
+}
+func (m *CCloud_ClientCommitFileUpload_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientCommitFileUpload_Response.Size(m)
+}
+func (m *CCloud_ClientCommitFileUpload_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientCommitFileUpload_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientCommitFileUpload_Response proto.InternalMessageInfo
 
 func (m *CCloud_ClientCommitFileUpload_Response) GetFileCommitted() bool {
 	if m != nil && m.FileCommitted != nil {
@@ -979,17 +2414,39 @@ func (m *CCloud_ClientCommitFileUpload_Response) GetFileCommitted() bool {
 }
 
 type CCloud_ClientFileDownload_Request struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	Filename         *string `protobuf:"bytes,2,opt,name=filename" json:"filename,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Filename             *string  `protobuf:"bytes,2,opt,name=filename" json:"filename,omitempty"`
+	Realm                *uint32  `protobuf:"varint,3,opt,name=realm" json:"realm,omitempty"`
+	ForceProxy           *bool    `protobuf:"varint,4,opt,name=force_proxy,json=forceProxy" json:"force_proxy,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_ClientFileDownload_Request) Reset()         { *m = CCloud_ClientFileDownload_Request{} }
 func (m *CCloud_ClientFileDownload_Request) String() string { return proto.CompactTextString(m) }
 func (*CCloud_ClientFileDownload_Request) ProtoMessage()    {}
 func (*CCloud_ClientFileDownload_Request) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{22}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{35}
 }
+
+func (m *CCloud_ClientFileDownload_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientFileDownload_Request.Unmarshal(m, b)
+}
+func (m *CCloud_ClientFileDownload_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientFileDownload_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientFileDownload_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientFileDownload_Request.Merge(m, src)
+}
+func (m *CCloud_ClientFileDownload_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientFileDownload_Request.Size(m)
+}
+func (m *CCloud_ClientFileDownload_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientFileDownload_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientFileDownload_Request proto.InternalMessageInfo
 
 func (m *CCloud_ClientFileDownload_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -1005,27 +2462,61 @@ func (m *CCloud_ClientFileDownload_Request) GetFilename() string {
 	return ""
 }
 
+func (m *CCloud_ClientFileDownload_Request) GetRealm() uint32 {
+	if m != nil && m.Realm != nil {
+		return *m.Realm
+	}
+	return 0
+}
+
+func (m *CCloud_ClientFileDownload_Request) GetForceProxy() bool {
+	if m != nil && m.ForceProxy != nil {
+		return *m.ForceProxy
+	}
+	return false
+}
+
 type CCloud_ClientFileDownload_Response struct {
-	Appid            *uint32                                           `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	FileSize         *uint32                                           `protobuf:"varint,2,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
-	RawFileSize      *uint32                                           `protobuf:"varint,3,opt,name=raw_file_size,json=rawFileSize" json:"raw_file_size,omitempty"`
-	ShaFile          []byte                                            `protobuf:"bytes,4,opt,name=sha_file,json=shaFile" json:"sha_file,omitempty"`
-	TimeStamp        *uint64                                           `protobuf:"varint,5,opt,name=time_stamp,json=timeStamp" json:"time_stamp,omitempty"`
-	IsExplicitDelete *bool                                             `protobuf:"varint,6,opt,name=is_explicit_delete,json=isExplicitDelete" json:"is_explicit_delete,omitempty"`
-	UrlHost          *string                                           `protobuf:"bytes,7,opt,name=url_host,json=urlHost" json:"url_host,omitempty"`
-	UrlPath          *string                                           `protobuf:"bytes,8,opt,name=url_path,json=urlPath" json:"url_path,omitempty"`
-	UseHttps         *bool                                             `protobuf:"varint,9,opt,name=use_https,json=useHttps" json:"use_https,omitempty"`
-	RequestHeaders   []*CCloud_ClientFileDownload_Response_HTTPHeaders `protobuf:"bytes,10,rep,name=request_headers,json=requestHeaders" json:"request_headers,omitempty"`
-	Encrypted        *bool                                             `protobuf:"varint,11,opt,name=encrypted" json:"encrypted,omitempty"`
-	XXX_unrecognized []byte                                            `json:"-"`
+	Appid                *uint32                                           `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	FileSize             *uint32                                           `protobuf:"varint,2,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
+	RawFileSize          *uint32                                           `protobuf:"varint,3,opt,name=raw_file_size,json=rawFileSize" json:"raw_file_size,omitempty"`
+	ShaFile              []byte                                            `protobuf:"bytes,4,opt,name=sha_file,json=shaFile" json:"sha_file,omitempty"`
+	TimeStamp            *uint64                                           `protobuf:"varint,5,opt,name=time_stamp,json=timeStamp" json:"time_stamp,omitempty"`
+	IsExplicitDelete     *bool                                             `protobuf:"varint,6,opt,name=is_explicit_delete,json=isExplicitDelete" json:"is_explicit_delete,omitempty"`
+	UrlHost              *string                                           `protobuf:"bytes,7,opt,name=url_host,json=urlHost" json:"url_host,omitempty"`
+	UrlPath              *string                                           `protobuf:"bytes,8,opt,name=url_path,json=urlPath" json:"url_path,omitempty"`
+	UseHttps             *bool                                             `protobuf:"varint,9,opt,name=use_https,json=useHttps" json:"use_https,omitempty"`
+	RequestHeaders       []*CCloud_ClientFileDownload_Response_HTTPHeaders `protobuf:"bytes,10,rep,name=request_headers,json=requestHeaders" json:"request_headers,omitempty"`
+	Encrypted            *bool                                             `protobuf:"varint,11,opt,name=encrypted" json:"encrypted,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                          `json:"-"`
+	XXX_unrecognized     []byte                                            `json:"-"`
+	XXX_sizecache        int32                                             `json:"-"`
 }
 
 func (m *CCloud_ClientFileDownload_Response) Reset()         { *m = CCloud_ClientFileDownload_Response{} }
 func (m *CCloud_ClientFileDownload_Response) String() string { return proto.CompactTextString(m) }
 func (*CCloud_ClientFileDownload_Response) ProtoMessage()    {}
 func (*CCloud_ClientFileDownload_Response) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{23}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{36}
 }
+
+func (m *CCloud_ClientFileDownload_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientFileDownload_Response.Unmarshal(m, b)
+}
+func (m *CCloud_ClientFileDownload_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientFileDownload_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientFileDownload_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientFileDownload_Response.Merge(m, src)
+}
+func (m *CCloud_ClientFileDownload_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientFileDownload_Response.Size(m)
+}
+func (m *CCloud_ClientFileDownload_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientFileDownload_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientFileDownload_Response proto.InternalMessageInfo
 
 func (m *CCloud_ClientFileDownload_Response) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -1105,9 +2596,11 @@ func (m *CCloud_ClientFileDownload_Response) GetEncrypted() bool {
 }
 
 type CCloud_ClientFileDownload_Response_HTTPHeaders struct {
-	Name             *string `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-	Value            *string `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Name                 *string  `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
+	Value                *string  `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_ClientFileDownload_Response_HTTPHeaders) Reset() {
@@ -1118,8 +2611,26 @@ func (m *CCloud_ClientFileDownload_Response_HTTPHeaders) String() string {
 }
 func (*CCloud_ClientFileDownload_Response_HTTPHeaders) ProtoMessage() {}
 func (*CCloud_ClientFileDownload_Response_HTTPHeaders) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{23, 0}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{36, 0}
 }
+
+func (m *CCloud_ClientFileDownload_Response_HTTPHeaders) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientFileDownload_Response_HTTPHeaders.Unmarshal(m, b)
+}
+func (m *CCloud_ClientFileDownload_Response_HTTPHeaders) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientFileDownload_Response_HTTPHeaders.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientFileDownload_Response_HTTPHeaders) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientFileDownload_Response_HTTPHeaders.Merge(m, src)
+}
+func (m *CCloud_ClientFileDownload_Response_HTTPHeaders) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientFileDownload_Response_HTTPHeaders.Size(m)
+}
+func (m *CCloud_ClientFileDownload_Response_HTTPHeaders) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientFileDownload_Response_HTTPHeaders.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientFileDownload_Response_HTTPHeaders proto.InternalMessageInfo
 
 func (m *CCloud_ClientFileDownload_Response_HTTPHeaders) GetName() string {
 	if m != nil && m.Name != nil {
@@ -1136,18 +2647,39 @@ func (m *CCloud_ClientFileDownload_Response_HTTPHeaders) GetValue() string {
 }
 
 type CCloud_ClientDeleteFile_Request struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	Filename         *string `protobuf:"bytes,2,opt,name=filename" json:"filename,omitempty"`
-	IsExplicitDelete *bool   `protobuf:"varint,3,opt,name=is_explicit_delete,json=isExplicitDelete" json:"is_explicit_delete,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Filename             *string  `protobuf:"bytes,2,opt,name=filename" json:"filename,omitempty"`
+	IsExplicitDelete     *bool    `protobuf:"varint,3,opt,name=is_explicit_delete,json=isExplicitDelete" json:"is_explicit_delete,omitempty"`
+	UploadBatchId        *uint64  `protobuf:"varint,4,opt,name=upload_batch_id,json=uploadBatchId" json:"upload_batch_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_ClientDeleteFile_Request) Reset()         { *m = CCloud_ClientDeleteFile_Request{} }
 func (m *CCloud_ClientDeleteFile_Request) String() string { return proto.CompactTextString(m) }
 func (*CCloud_ClientDeleteFile_Request) ProtoMessage()    {}
 func (*CCloud_ClientDeleteFile_Request) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{24}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{37}
 }
+
+func (m *CCloud_ClientDeleteFile_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientDeleteFile_Request.Unmarshal(m, b)
+}
+func (m *CCloud_ClientDeleteFile_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientDeleteFile_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientDeleteFile_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientDeleteFile_Request.Merge(m, src)
+}
+func (m *CCloud_ClientDeleteFile_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientDeleteFile_Request.Size(m)
+}
+func (m *CCloud_ClientDeleteFile_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientDeleteFile_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientDeleteFile_Request proto.InternalMessageInfo
 
 func (m *CCloud_ClientDeleteFile_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -1170,21 +2702,50 @@ func (m *CCloud_ClientDeleteFile_Request) GetIsExplicitDelete() bool {
 	return false
 }
 
+func (m *CCloud_ClientDeleteFile_Request) GetUploadBatchId() uint64 {
+	if m != nil && m.UploadBatchId != nil {
+		return *m.UploadBatchId
+	}
+	return 0
+}
+
 type CCloud_ClientDeleteFile_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_ClientDeleteFile_Response) Reset()         { *m = CCloud_ClientDeleteFile_Response{} }
 func (m *CCloud_ClientDeleteFile_Response) String() string { return proto.CompactTextString(m) }
 func (*CCloud_ClientDeleteFile_Response) ProtoMessage()    {}
 func (*CCloud_ClientDeleteFile_Response) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{25}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{38}
 }
 
+func (m *CCloud_ClientDeleteFile_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientDeleteFile_Response.Unmarshal(m, b)
+}
+func (m *CCloud_ClientDeleteFile_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientDeleteFile_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientDeleteFile_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientDeleteFile_Response.Merge(m, src)
+}
+func (m *CCloud_ClientDeleteFile_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientDeleteFile_Response.Size(m)
+}
+func (m *CCloud_ClientDeleteFile_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientDeleteFile_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientDeleteFile_Response proto.InternalMessageInfo
+
 type CCloud_ClientConflictResolution_Notification struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	ChoseLocalFiles  *bool   `protobuf:"varint,2,opt,name=chose_local_files,json=choseLocalFiles" json:"chose_local_files,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	ChoseLocalFiles      *bool    `protobuf:"varint,2,opt,name=chose_local_files,json=choseLocalFiles" json:"chose_local_files,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CCloud_ClientConflictResolution_Notification) Reset() {
@@ -1195,8 +2756,26 @@ func (m *CCloud_ClientConflictResolution_Notification) String() string {
 }
 func (*CCloud_ClientConflictResolution_Notification) ProtoMessage() {}
 func (*CCloud_ClientConflictResolution_Notification) Descriptor() ([]byte, []int) {
-	return cloud_fileDescriptor0, []int{26}
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{39}
 }
+
+func (m *CCloud_ClientConflictResolution_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientConflictResolution_Notification.Unmarshal(m, b)
+}
+func (m *CCloud_ClientConflictResolution_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientConflictResolution_Notification.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientConflictResolution_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientConflictResolution_Notification.Merge(m, src)
+}
+func (m *CCloud_ClientConflictResolution_Notification) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientConflictResolution_Notification.Size(m)
+}
+func (m *CCloud_ClientConflictResolution_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientConflictResolution_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientConflictResolution_Notification proto.InternalMessageInfo
 
 func (m *CCloud_ClientConflictResolution_Notification) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -1212,17 +2791,806 @@ func (m *CCloud_ClientConflictResolution_Notification) GetChoseLocalFiles() bool
 	return false
 }
 
+type CCloud_GetAppFileChangelist_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	SyncedChangeNumber   *uint64  `protobuf:"varint,2,opt,name=synced_change_number,json=syncedChangeNumber" json:"synced_change_number,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_GetAppFileChangelist_Request) Reset()         { *m = CCloud_GetAppFileChangelist_Request{} }
+func (m *CCloud_GetAppFileChangelist_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_GetAppFileChangelist_Request) ProtoMessage()    {}
+func (*CCloud_GetAppFileChangelist_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{40}
+}
+
+func (m *CCloud_GetAppFileChangelist_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_GetAppFileChangelist_Request.Unmarshal(m, b)
+}
+func (m *CCloud_GetAppFileChangelist_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_GetAppFileChangelist_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_GetAppFileChangelist_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_GetAppFileChangelist_Request.Merge(m, src)
+}
+func (m *CCloud_GetAppFileChangelist_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_GetAppFileChangelist_Request.Size(m)
+}
+func (m *CCloud_GetAppFileChangelist_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_GetAppFileChangelist_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_GetAppFileChangelist_Request proto.InternalMessageInfo
+
+func (m *CCloud_GetAppFileChangelist_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_GetAppFileChangelist_Request) GetSyncedChangeNumber() uint64 {
+	if m != nil && m.SyncedChangeNumber != nil {
+		return *m.SyncedChangeNumber
+	}
+	return 0
+}
+
+type CCloud_AppFileInfo struct {
+	FileName             *string                    `protobuf:"bytes,1,opt,name=file_name,json=fileName" json:"file_name,omitempty"`
+	ShaFile              []byte                     `protobuf:"bytes,2,opt,name=sha_file,json=shaFile" json:"sha_file,omitempty"`
+	TimeStamp            *uint64                    `protobuf:"varint,3,opt,name=time_stamp,json=timeStamp" json:"time_stamp,omitempty"`
+	RawFileSize          *uint32                    `protobuf:"varint,4,opt,name=raw_file_size,json=rawFileSize" json:"raw_file_size,omitempty"`
+	PersistState         *ECloudStoragePersistState `protobuf:"varint,5,opt,name=persist_state,json=persistState,enum=ECloudStoragePersistState,def=0" json:"persist_state,omitempty"`
+	PlatformsToSync      *uint32                    `protobuf:"varint,6,opt,name=platforms_to_sync,json=platformsToSync" json:"platforms_to_sync,omitempty"`
+	PathPrefixIndex      *uint32                    `protobuf:"varint,7,opt,name=path_prefix_index,json=pathPrefixIndex" json:"path_prefix_index,omitempty"`
+	MachineNameIndex     *uint32                    `protobuf:"varint,8,opt,name=machine_name_index,json=machineNameIndex" json:"machine_name_index,omitempty"`
+	ReuploadRequested    *bool                      `protobuf:"varint,9,opt,name=reupload_requested,json=reuploadRequested" json:"reupload_requested,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                   `json:"-"`
+	XXX_unrecognized     []byte                     `json:"-"`
+	XXX_sizecache        int32                      `json:"-"`
+}
+
+func (m *CCloud_AppFileInfo) Reset()         { *m = CCloud_AppFileInfo{} }
+func (m *CCloud_AppFileInfo) String() string { return proto.CompactTextString(m) }
+func (*CCloud_AppFileInfo) ProtoMessage()    {}
+func (*CCloud_AppFileInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{41}
+}
+
+func (m *CCloud_AppFileInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_AppFileInfo.Unmarshal(m, b)
+}
+func (m *CCloud_AppFileInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_AppFileInfo.Marshal(b, m, deterministic)
+}
+func (m *CCloud_AppFileInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_AppFileInfo.Merge(m, src)
+}
+func (m *CCloud_AppFileInfo) XXX_Size() int {
+	return xxx_messageInfo_CCloud_AppFileInfo.Size(m)
+}
+func (m *CCloud_AppFileInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_AppFileInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_AppFileInfo proto.InternalMessageInfo
+
+const Default_CCloud_AppFileInfo_PersistState ECloudStoragePersistState = ECloudStoragePersistState_k_ECloudStoragePersistStatePersisted
+
+func (m *CCloud_AppFileInfo) GetFileName() string {
+	if m != nil && m.FileName != nil {
+		return *m.FileName
+	}
+	return ""
+}
+
+func (m *CCloud_AppFileInfo) GetShaFile() []byte {
+	if m != nil {
+		return m.ShaFile
+	}
+	return nil
+}
+
+func (m *CCloud_AppFileInfo) GetTimeStamp() uint64 {
+	if m != nil && m.TimeStamp != nil {
+		return *m.TimeStamp
+	}
+	return 0
+}
+
+func (m *CCloud_AppFileInfo) GetRawFileSize() uint32 {
+	if m != nil && m.RawFileSize != nil {
+		return *m.RawFileSize
+	}
+	return 0
+}
+
+func (m *CCloud_AppFileInfo) GetPersistState() ECloudStoragePersistState {
+	if m != nil && m.PersistState != nil {
+		return *m.PersistState
+	}
+	return Default_CCloud_AppFileInfo_PersistState
+}
+
+func (m *CCloud_AppFileInfo) GetPlatformsToSync() uint32 {
+	if m != nil && m.PlatformsToSync != nil {
+		return *m.PlatformsToSync
+	}
+	return 0
+}
+
+func (m *CCloud_AppFileInfo) GetPathPrefixIndex() uint32 {
+	if m != nil && m.PathPrefixIndex != nil {
+		return *m.PathPrefixIndex
+	}
+	return 0
+}
+
+func (m *CCloud_AppFileInfo) GetMachineNameIndex() uint32 {
+	if m != nil && m.MachineNameIndex != nil {
+		return *m.MachineNameIndex
+	}
+	return 0
+}
+
+func (m *CCloud_AppFileInfo) GetReuploadRequested() bool {
+	if m != nil && m.ReuploadRequested != nil {
+		return *m.ReuploadRequested
+	}
+	return false
+}
+
+type CCloud_GetAppFileChangelist_Response struct {
+	CurrentChangeNumber  *uint64               `protobuf:"varint,1,opt,name=current_change_number,json=currentChangeNumber" json:"current_change_number,omitempty"`
+	Files                []*CCloud_AppFileInfo `protobuf:"bytes,2,rep,name=files" json:"files,omitempty"`
+	IsOnlyDelta          *bool                 `protobuf:"varint,3,opt,name=is_only_delta,json=isOnlyDelta" json:"is_only_delta,omitempty"`
+	PathPrefixes         []string              `protobuf:"bytes,4,rep,name=path_prefixes,json=pathPrefixes" json:"path_prefixes,omitempty"`
+	MachineNames         []string              `protobuf:"bytes,5,rep,name=machine_names,json=machineNames" json:"machine_names,omitempty"`
+	AppBuildidHwm        *uint64               `protobuf:"varint,6,opt,name=app_buildid_hwm,json=appBuildidHwm" json:"app_buildid_hwm,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *CCloud_GetAppFileChangelist_Response) Reset()         { *m = CCloud_GetAppFileChangelist_Response{} }
+func (m *CCloud_GetAppFileChangelist_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_GetAppFileChangelist_Response) ProtoMessage()    {}
+func (*CCloud_GetAppFileChangelist_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{42}
+}
+
+func (m *CCloud_GetAppFileChangelist_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_GetAppFileChangelist_Response.Unmarshal(m, b)
+}
+func (m *CCloud_GetAppFileChangelist_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_GetAppFileChangelist_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_GetAppFileChangelist_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_GetAppFileChangelist_Response.Merge(m, src)
+}
+func (m *CCloud_GetAppFileChangelist_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_GetAppFileChangelist_Response.Size(m)
+}
+func (m *CCloud_GetAppFileChangelist_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_GetAppFileChangelist_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_GetAppFileChangelist_Response proto.InternalMessageInfo
+
+func (m *CCloud_GetAppFileChangelist_Response) GetCurrentChangeNumber() uint64 {
+	if m != nil && m.CurrentChangeNumber != nil {
+		return *m.CurrentChangeNumber
+	}
+	return 0
+}
+
+func (m *CCloud_GetAppFileChangelist_Response) GetFiles() []*CCloud_AppFileInfo {
+	if m != nil {
+		return m.Files
+	}
+	return nil
+}
+
+func (m *CCloud_GetAppFileChangelist_Response) GetIsOnlyDelta() bool {
+	if m != nil && m.IsOnlyDelta != nil {
+		return *m.IsOnlyDelta
+	}
+	return false
+}
+
+func (m *CCloud_GetAppFileChangelist_Response) GetPathPrefixes() []string {
+	if m != nil {
+		return m.PathPrefixes
+	}
+	return nil
+}
+
+func (m *CCloud_GetAppFileChangelist_Response) GetMachineNames() []string {
+	if m != nil {
+		return m.MachineNames
+	}
+	return nil
+}
+
+func (m *CCloud_GetAppFileChangelist_Response) GetAppBuildidHwm() uint64 {
+	if m != nil && m.AppBuildidHwm != nil {
+		return *m.AppBuildidHwm
+	}
+	return 0
+}
+
+type CCloud_AppSessionSuspend_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	ClientId             *uint64  `protobuf:"varint,2,opt,name=client_id,json=clientId" json:"client_id,omitempty"`
+	MachineName          *string  `protobuf:"bytes,3,opt,name=machine_name,json=machineName" json:"machine_name,omitempty"`
+	CloudSyncCompleted   *bool    `protobuf:"varint,4,opt,name=cloud_sync_completed,json=cloudSyncCompleted" json:"cloud_sync_completed,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_AppSessionSuspend_Request) Reset()         { *m = CCloud_AppSessionSuspend_Request{} }
+func (m *CCloud_AppSessionSuspend_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_AppSessionSuspend_Request) ProtoMessage()    {}
+func (*CCloud_AppSessionSuspend_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{43}
+}
+
+func (m *CCloud_AppSessionSuspend_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_AppSessionSuspend_Request.Unmarshal(m, b)
+}
+func (m *CCloud_AppSessionSuspend_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_AppSessionSuspend_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_AppSessionSuspend_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_AppSessionSuspend_Request.Merge(m, src)
+}
+func (m *CCloud_AppSessionSuspend_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_AppSessionSuspend_Request.Size(m)
+}
+func (m *CCloud_AppSessionSuspend_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_AppSessionSuspend_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_AppSessionSuspend_Request proto.InternalMessageInfo
+
+func (m *CCloud_AppSessionSuspend_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_AppSessionSuspend_Request) GetClientId() uint64 {
+	if m != nil && m.ClientId != nil {
+		return *m.ClientId
+	}
+	return 0
+}
+
+func (m *CCloud_AppSessionSuspend_Request) GetMachineName() string {
+	if m != nil && m.MachineName != nil {
+		return *m.MachineName
+	}
+	return ""
+}
+
+func (m *CCloud_AppSessionSuspend_Request) GetCloudSyncCompleted() bool {
+	if m != nil && m.CloudSyncCompleted != nil {
+		return *m.CloudSyncCompleted
+	}
+	return false
+}
+
+type CCloud_AppSessionSuspend_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_AppSessionSuspend_Response) Reset()         { *m = CCloud_AppSessionSuspend_Response{} }
+func (m *CCloud_AppSessionSuspend_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_AppSessionSuspend_Response) ProtoMessage()    {}
+func (*CCloud_AppSessionSuspend_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{44}
+}
+
+func (m *CCloud_AppSessionSuspend_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_AppSessionSuspend_Response.Unmarshal(m, b)
+}
+func (m *CCloud_AppSessionSuspend_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_AppSessionSuspend_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_AppSessionSuspend_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_AppSessionSuspend_Response.Merge(m, src)
+}
+func (m *CCloud_AppSessionSuspend_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_AppSessionSuspend_Response.Size(m)
+}
+func (m *CCloud_AppSessionSuspend_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_AppSessionSuspend_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_AppSessionSuspend_Response proto.InternalMessageInfo
+
+type CCloud_AppSessionResume_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	ClientId             *uint64  `protobuf:"varint,2,opt,name=client_id,json=clientId" json:"client_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_AppSessionResume_Request) Reset()         { *m = CCloud_AppSessionResume_Request{} }
+func (m *CCloud_AppSessionResume_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_AppSessionResume_Request) ProtoMessage()    {}
+func (*CCloud_AppSessionResume_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{45}
+}
+
+func (m *CCloud_AppSessionResume_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_AppSessionResume_Request.Unmarshal(m, b)
+}
+func (m *CCloud_AppSessionResume_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_AppSessionResume_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_AppSessionResume_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_AppSessionResume_Request.Merge(m, src)
+}
+func (m *CCloud_AppSessionResume_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_AppSessionResume_Request.Size(m)
+}
+func (m *CCloud_AppSessionResume_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_AppSessionResume_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_AppSessionResume_Request proto.InternalMessageInfo
+
+func (m *CCloud_AppSessionResume_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_AppSessionResume_Request) GetClientId() uint64 {
+	if m != nil && m.ClientId != nil {
+		return *m.ClientId
+	}
+	return 0
+}
+
+type CCloud_AppSessionResume_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_AppSessionResume_Response) Reset()         { *m = CCloud_AppSessionResume_Response{} }
+func (m *CCloud_AppSessionResume_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_AppSessionResume_Response) ProtoMessage()    {}
+func (*CCloud_AppSessionResume_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{46}
+}
+
+func (m *CCloud_AppSessionResume_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_AppSessionResume_Response.Unmarshal(m, b)
+}
+func (m *CCloud_AppSessionResume_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_AppSessionResume_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_AppSessionResume_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_AppSessionResume_Response.Merge(m, src)
+}
+func (m *CCloud_AppSessionResume_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_AppSessionResume_Response.Size(m)
+}
+func (m *CCloud_AppSessionResume_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_AppSessionResume_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_AppSessionResume_Response proto.InternalMessageInfo
+
+type CCloud_AppLaunchIntent_Request struct {
+	Appid                   *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	ClientId                *uint64  `protobuf:"varint,2,opt,name=client_id,json=clientId" json:"client_id,omitempty"`
+	MachineName             *string  `protobuf:"bytes,3,opt,name=machine_name,json=machineName" json:"machine_name,omitempty"`
+	IgnorePendingOperations *bool    `protobuf:"varint,4,opt,name=ignore_pending_operations,json=ignorePendingOperations" json:"ignore_pending_operations,omitempty"`
+	OsType                  *int32   `protobuf:"varint,5,opt,name=os_type,json=osType" json:"os_type,omitempty"`
+	DeviceType              *int32   `protobuf:"varint,6,opt,name=device_type,json=deviceType" json:"device_type,omitempty"`
+	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
+	XXX_unrecognized        []byte   `json:"-"`
+	XXX_sizecache           int32    `json:"-"`
+}
+
+func (m *CCloud_AppLaunchIntent_Request) Reset()         { *m = CCloud_AppLaunchIntent_Request{} }
+func (m *CCloud_AppLaunchIntent_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_AppLaunchIntent_Request) ProtoMessage()    {}
+func (*CCloud_AppLaunchIntent_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{47}
+}
+
+func (m *CCloud_AppLaunchIntent_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_AppLaunchIntent_Request.Unmarshal(m, b)
+}
+func (m *CCloud_AppLaunchIntent_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_AppLaunchIntent_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_AppLaunchIntent_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_AppLaunchIntent_Request.Merge(m, src)
+}
+func (m *CCloud_AppLaunchIntent_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_AppLaunchIntent_Request.Size(m)
+}
+func (m *CCloud_AppLaunchIntent_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_AppLaunchIntent_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_AppLaunchIntent_Request proto.InternalMessageInfo
+
+func (m *CCloud_AppLaunchIntent_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_AppLaunchIntent_Request) GetClientId() uint64 {
+	if m != nil && m.ClientId != nil {
+		return *m.ClientId
+	}
+	return 0
+}
+
+func (m *CCloud_AppLaunchIntent_Request) GetMachineName() string {
+	if m != nil && m.MachineName != nil {
+		return *m.MachineName
+	}
+	return ""
+}
+
+func (m *CCloud_AppLaunchIntent_Request) GetIgnorePendingOperations() bool {
+	if m != nil && m.IgnorePendingOperations != nil {
+		return *m.IgnorePendingOperations
+	}
+	return false
+}
+
+func (m *CCloud_AppLaunchIntent_Request) GetOsType() int32 {
+	if m != nil && m.OsType != nil {
+		return *m.OsType
+	}
+	return 0
+}
+
+func (m *CCloud_AppLaunchIntent_Request) GetDeviceType() int32 {
+	if m != nil && m.DeviceType != nil {
+		return *m.DeviceType
+	}
+	return 0
+}
+
+type CCloud_AppLaunchIntent_Response struct {
+	PendingRemoteOperations []*CCloud_PendingRemoteOperation `protobuf:"bytes,1,rep,name=pending_remote_operations,json=pendingRemoteOperations" json:"pending_remote_operations,omitempty"`
+	XXX_NoUnkeyedLiteral    struct{}                         `json:"-"`
+	XXX_unrecognized        []byte                           `json:"-"`
+	XXX_sizecache           int32                            `json:"-"`
+}
+
+func (m *CCloud_AppLaunchIntent_Response) Reset()         { *m = CCloud_AppLaunchIntent_Response{} }
+func (m *CCloud_AppLaunchIntent_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_AppLaunchIntent_Response) ProtoMessage()    {}
+func (*CCloud_AppLaunchIntent_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{48}
+}
+
+func (m *CCloud_AppLaunchIntent_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_AppLaunchIntent_Response.Unmarshal(m, b)
+}
+func (m *CCloud_AppLaunchIntent_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_AppLaunchIntent_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_AppLaunchIntent_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_AppLaunchIntent_Response.Merge(m, src)
+}
+func (m *CCloud_AppLaunchIntent_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_AppLaunchIntent_Response.Size(m)
+}
+func (m *CCloud_AppLaunchIntent_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_AppLaunchIntent_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_AppLaunchIntent_Response proto.InternalMessageInfo
+
+func (m *CCloud_AppLaunchIntent_Response) GetPendingRemoteOperations() []*CCloud_PendingRemoteOperation {
+	if m != nil {
+		return m.PendingRemoteOperations
+	}
+	return nil
+}
+
+type CCloud_AppExitSyncDone_Notification struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	ClientId             *uint64  `protobuf:"varint,2,opt,name=client_id,json=clientId" json:"client_id,omitempty"`
+	UploadsCompleted     *bool    `protobuf:"varint,3,opt,name=uploads_completed,json=uploadsCompleted" json:"uploads_completed,omitempty"`
+	UploadsRequired      *bool    `protobuf:"varint,4,opt,name=uploads_required,json=uploadsRequired" json:"uploads_required,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_AppExitSyncDone_Notification) Reset()         { *m = CCloud_AppExitSyncDone_Notification{} }
+func (m *CCloud_AppExitSyncDone_Notification) String() string { return proto.CompactTextString(m) }
+func (*CCloud_AppExitSyncDone_Notification) ProtoMessage()    {}
+func (*CCloud_AppExitSyncDone_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{49}
+}
+
+func (m *CCloud_AppExitSyncDone_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_AppExitSyncDone_Notification.Unmarshal(m, b)
+}
+func (m *CCloud_AppExitSyncDone_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_AppExitSyncDone_Notification.Marshal(b, m, deterministic)
+}
+func (m *CCloud_AppExitSyncDone_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_AppExitSyncDone_Notification.Merge(m, src)
+}
+func (m *CCloud_AppExitSyncDone_Notification) XXX_Size() int {
+	return xxx_messageInfo_CCloud_AppExitSyncDone_Notification.Size(m)
+}
+func (m *CCloud_AppExitSyncDone_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_AppExitSyncDone_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_AppExitSyncDone_Notification proto.InternalMessageInfo
+
+func (m *CCloud_AppExitSyncDone_Notification) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_AppExitSyncDone_Notification) GetClientId() uint64 {
+	if m != nil && m.ClientId != nil {
+		return *m.ClientId
+	}
+	return 0
+}
+
+func (m *CCloud_AppExitSyncDone_Notification) GetUploadsCompleted() bool {
+	if m != nil && m.UploadsCompleted != nil {
+		return *m.UploadsCompleted
+	}
+	return false
+}
+
+func (m *CCloud_AppExitSyncDone_Notification) GetUploadsRequired() bool {
+	if m != nil && m.UploadsRequired != nil {
+		return *m.UploadsRequired
+	}
+	return false
+}
+
+type CCloud_ClientGetAppQuotaUsage_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_ClientGetAppQuotaUsage_Request) Reset()         { *m = CCloud_ClientGetAppQuotaUsage_Request{} }
+func (m *CCloud_ClientGetAppQuotaUsage_Request) String() string { return proto.CompactTextString(m) }
+func (*CCloud_ClientGetAppQuotaUsage_Request) ProtoMessage()    {}
+func (*CCloud_ClientGetAppQuotaUsage_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{50}
+}
+
+func (m *CCloud_ClientGetAppQuotaUsage_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Request.Unmarshal(m, b)
+}
+func (m *CCloud_ClientGetAppQuotaUsage_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Request.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientGetAppQuotaUsage_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Request.Merge(m, src)
+}
+func (m *CCloud_ClientGetAppQuotaUsage_Request) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Request.Size(m)
+}
+func (m *CCloud_ClientGetAppQuotaUsage_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Request proto.InternalMessageInfo
+
+func (m *CCloud_ClientGetAppQuotaUsage_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+type CCloud_ClientGetAppQuotaUsage_Response struct {
+	ExistingFiles        *uint32  `protobuf:"varint,1,opt,name=existing_files,json=existingFiles" json:"existing_files,omitempty"`
+	ExistingBytes        *uint64  `protobuf:"varint,2,opt,name=existing_bytes,json=existingBytes" json:"existing_bytes,omitempty"`
+	MaxNumFiles          *uint32  `protobuf:"varint,3,opt,name=max_num_files,json=maxNumFiles" json:"max_num_files,omitempty"`
+	MaxNumBytes          *uint64  `protobuf:"varint,4,opt,name=max_num_bytes,json=maxNumBytes" json:"max_num_bytes,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_ClientGetAppQuotaUsage_Response) Reset() {
+	*m = CCloud_ClientGetAppQuotaUsage_Response{}
+}
+func (m *CCloud_ClientGetAppQuotaUsage_Response) String() string { return proto.CompactTextString(m) }
+func (*CCloud_ClientGetAppQuotaUsage_Response) ProtoMessage()    {}
+func (*CCloud_ClientGetAppQuotaUsage_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{51}
+}
+
+func (m *CCloud_ClientGetAppQuotaUsage_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Response.Unmarshal(m, b)
+}
+func (m *CCloud_ClientGetAppQuotaUsage_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Response.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientGetAppQuotaUsage_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Response.Merge(m, src)
+}
+func (m *CCloud_ClientGetAppQuotaUsage_Response) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Response.Size(m)
+}
+func (m *CCloud_ClientGetAppQuotaUsage_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientGetAppQuotaUsage_Response proto.InternalMessageInfo
+
+func (m *CCloud_ClientGetAppQuotaUsage_Response) GetExistingFiles() uint32 {
+	if m != nil && m.ExistingFiles != nil {
+		return *m.ExistingFiles
+	}
+	return 0
+}
+
+func (m *CCloud_ClientGetAppQuotaUsage_Response) GetExistingBytes() uint64 {
+	if m != nil && m.ExistingBytes != nil {
+		return *m.ExistingBytes
+	}
+	return 0
+}
+
+func (m *CCloud_ClientGetAppQuotaUsage_Response) GetMaxNumFiles() uint32 {
+	if m != nil && m.MaxNumFiles != nil {
+		return *m.MaxNumFiles
+	}
+	return 0
+}
+
+func (m *CCloud_ClientGetAppQuotaUsage_Response) GetMaxNumBytes() uint64 {
+	if m != nil && m.MaxNumBytes != nil {
+		return *m.MaxNumBytes
+	}
+	return 0
+}
+
+type CCloud_AppCloudStateChange_Notification struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	AppChangeNumber      *uint64  `protobuf:"varint,2,opt,name=app_change_number,json=appChangeNumber" json:"app_change_number,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_AppCloudStateChange_Notification) Reset() {
+	*m = CCloud_AppCloudStateChange_Notification{}
+}
+func (m *CCloud_AppCloudStateChange_Notification) String() string { return proto.CompactTextString(m) }
+func (*CCloud_AppCloudStateChange_Notification) ProtoMessage()    {}
+func (*CCloud_AppCloudStateChange_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{52}
+}
+
+func (m *CCloud_AppCloudStateChange_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_AppCloudStateChange_Notification.Unmarshal(m, b)
+}
+func (m *CCloud_AppCloudStateChange_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_AppCloudStateChange_Notification.Marshal(b, m, deterministic)
+}
+func (m *CCloud_AppCloudStateChange_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_AppCloudStateChange_Notification.Merge(m, src)
+}
+func (m *CCloud_AppCloudStateChange_Notification) XXX_Size() int {
+	return xxx_messageInfo_CCloud_AppCloudStateChange_Notification.Size(m)
+}
+func (m *CCloud_AppCloudStateChange_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_AppCloudStateChange_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_AppCloudStateChange_Notification proto.InternalMessageInfo
+
+func (m *CCloud_AppCloudStateChange_Notification) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CCloud_AppCloudStateChange_Notification) GetAppChangeNumber() uint64 {
+	if m != nil && m.AppChangeNumber != nil {
+		return *m.AppChangeNumber
+	}
+	return 0
+}
+
+type CCloud_ClientLogUploadRequest_Notification struct {
+	RequestId            *uint64  `protobuf:"varint,1,opt,name=request_id,json=requestId" json:"request_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CCloud_ClientLogUploadRequest_Notification) Reset() {
+	*m = CCloud_ClientLogUploadRequest_Notification{}
+}
+func (m *CCloud_ClientLogUploadRequest_Notification) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CCloud_ClientLogUploadRequest_Notification) ProtoMessage() {}
+func (*CCloud_ClientLogUploadRequest_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_f68a7f6c78d1a1ba, []int{53}
+}
+
+func (m *CCloud_ClientLogUploadRequest_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CCloud_ClientLogUploadRequest_Notification.Unmarshal(m, b)
+}
+func (m *CCloud_ClientLogUploadRequest_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CCloud_ClientLogUploadRequest_Notification.Marshal(b, m, deterministic)
+}
+func (m *CCloud_ClientLogUploadRequest_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CCloud_ClientLogUploadRequest_Notification.Merge(m, src)
+}
+func (m *CCloud_ClientLogUploadRequest_Notification) XXX_Size() int {
+	return xxx_messageInfo_CCloud_ClientLogUploadRequest_Notification.Size(m)
+}
+func (m *CCloud_ClientLogUploadRequest_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CCloud_ClientLogUploadRequest_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CCloud_ClientLogUploadRequest_Notification proto.InternalMessageInfo
+
+func (m *CCloud_ClientLogUploadRequest_Notification) GetRequestId() uint64 {
+	if m != nil && m.RequestId != nil {
+		return *m.RequestId
+	}
+	return 0
+}
+
 func init() {
-	proto.RegisterType((*CCloud_GetUploadServerInfo_Request)(nil), "CCloud_GetUploadServerInfo_Request")
-	proto.RegisterType((*CCloud_GetUploadServerInfo_Response)(nil), "CCloud_GetUploadServerInfo_Response")
+	proto.RegisterType((*CCloud_ClientLogUploadCheck_Notification)(nil), "CCloud_ClientLogUploadCheck_Notification")
+	proto.RegisterType((*CCloud_ClientLogUploadComplete_Notification)(nil), "CCloud_ClientLogUploadComplete_Notification")
 	proto.RegisterType((*CCloud_BeginHTTPUpload_Request)(nil), "CCloud_BeginHTTPUpload_Request")
 	proto.RegisterType((*CCloud_BeginHTTPUpload_Response)(nil), "CCloud_BeginHTTPUpload_Response")
 	proto.RegisterType((*CCloud_BeginHTTPUpload_Response_HTTPHeaders)(nil), "CCloud_BeginHTTPUpload_Response.HTTPHeaders")
 	proto.RegisterType((*CCloud_CommitHTTPUpload_Request)(nil), "CCloud_CommitHTTPUpload_Request")
 	proto.RegisterType((*CCloud_CommitHTTPUpload_Response)(nil), "CCloud_CommitHTTPUpload_Response")
+	proto.RegisterType((*CCloud_BeginUGCUpload_Request)(nil), "CCloud_BeginUGCUpload_Request")
+	proto.RegisterType((*CCloud_BeginUGCUpload_Response)(nil), "CCloud_BeginUGCUpload_Response")
+	proto.RegisterType((*CCloud_BeginUGCUpload_Response_HTTPHeaders)(nil), "CCloud_BeginUGCUpload_Response.HTTPHeaders")
+	proto.RegisterType((*CCloud_CommitUGCUpload_Request)(nil), "CCloud_CommitUGCUpload_Request")
+	proto.RegisterType((*CCloud_CommitUGCUpload_Response)(nil), "CCloud_CommitUGCUpload_Response")
 	proto.RegisterType((*CCloud_GetFileDetails_Request)(nil), "CCloud_GetFileDetails_Request")
 	proto.RegisterType((*CCloud_UserFile)(nil), "CCloud_UserFile")
 	proto.RegisterType((*CCloud_GetFileDetails_Response)(nil), "CCloud_GetFileDetails_Response")
+	proto.RegisterType((*CCloud_GetSingleFileInfo_Request)(nil), "CCloud_GetSingleFileInfo_Request")
+	proto.RegisterType((*CCloud_GetSingleFileInfo_Response)(nil), "CCloud_GetSingleFileInfo_Response")
+	proto.RegisterType((*CCloud_ShareFile_Request)(nil), "CCloud_ShareFile_Request")
+	proto.RegisterType((*CCloud_ShareFile_Response)(nil), "CCloud_ShareFile_Response")
 	proto.RegisterType((*CCloud_EnumerateUserFiles_Request)(nil), "CCloud_EnumerateUserFiles_Request")
 	proto.RegisterType((*CCloud_EnumerateUserFiles_Response)(nil), "CCloud_EnumerateUserFiles_Response")
 	proto.RegisterType((*CCloud_Delete_Request)(nil), "CCloud_Delete_Request")
@@ -1231,6 +3599,11 @@ func init() {
 	proto.RegisterType((*CCloud_GetClientEncryptionKey_Response)(nil), "CCloud_GetClientEncryptionKey_Response")
 	proto.RegisterType((*CCloud_CDNReport_Notification)(nil), "CCloud_CDNReport_Notification")
 	proto.RegisterType((*CCloud_ExternalStorageTransferReport_Notification)(nil), "CCloud_ExternalStorageTransferReport_Notification")
+	proto.RegisterType((*CCloud_BeginAppUploadBatch_Request)(nil), "CCloud_BeginAppUploadBatch_Request")
+	proto.RegisterType((*CCloud_BeginAppUploadBatch_Response)(nil), "CCloud_BeginAppUploadBatch_Response")
+	proto.RegisterType((*CCloud_CompleteAppUploadBatch_Notification)(nil), "CCloud_CompleteAppUploadBatch_Notification")
+	proto.RegisterType((*CCloud_CompleteAppUploadBatch_Request)(nil), "CCloud_CompleteAppUploadBatch_Request")
+	proto.RegisterType((*CCloud_CompleteAppUploadBatch_Response)(nil), "CCloud_CompleteAppUploadBatch_Response")
 	proto.RegisterType((*CCloud_ClientBeginFileUpload_Request)(nil), "CCloud_ClientBeginFileUpload_Request")
 	proto.RegisterType((*ClientCloudFileUploadBlockDetails)(nil), "ClientCloudFileUploadBlockDetails")
 	proto.RegisterType((*ClientCloudFileUploadBlockDetails_HTTPHeaders)(nil), "ClientCloudFileUploadBlockDetails.HTTPHeaders")
@@ -1243,254 +3616,249 @@ func init() {
 	proto.RegisterType((*CCloud_ClientDeleteFile_Request)(nil), "CCloud_ClientDeleteFile_Request")
 	proto.RegisterType((*CCloud_ClientDeleteFile_Response)(nil), "CCloud_ClientDeleteFile_Response")
 	proto.RegisterType((*CCloud_ClientConflictResolution_Notification)(nil), "CCloud_ClientConflictResolution_Notification")
+	proto.RegisterType((*CCloud_GetAppFileChangelist_Request)(nil), "CCloud_GetAppFileChangelist_Request")
+	proto.RegisterType((*CCloud_AppFileInfo)(nil), "CCloud_AppFileInfo")
+	proto.RegisterType((*CCloud_GetAppFileChangelist_Response)(nil), "CCloud_GetAppFileChangelist_Response")
+	proto.RegisterType((*CCloud_AppSessionSuspend_Request)(nil), "CCloud_AppSessionSuspend_Request")
+	proto.RegisterType((*CCloud_AppSessionSuspend_Response)(nil), "CCloud_AppSessionSuspend_Response")
+	proto.RegisterType((*CCloud_AppSessionResume_Request)(nil), "CCloud_AppSessionResume_Request")
+	proto.RegisterType((*CCloud_AppSessionResume_Response)(nil), "CCloud_AppSessionResume_Response")
+	proto.RegisterType((*CCloud_AppLaunchIntent_Request)(nil), "CCloud_AppLaunchIntent_Request")
+	proto.RegisterType((*CCloud_AppLaunchIntent_Response)(nil), "CCloud_AppLaunchIntent_Response")
+	proto.RegisterType((*CCloud_AppExitSyncDone_Notification)(nil), "CCloud_AppExitSyncDone_Notification")
+	proto.RegisterType((*CCloud_ClientGetAppQuotaUsage_Request)(nil), "CCloud_ClientGetAppQuotaUsage_Request")
+	proto.RegisterType((*CCloud_ClientGetAppQuotaUsage_Response)(nil), "CCloud_ClientGetAppQuotaUsage_Response")
+	proto.RegisterType((*CCloud_AppCloudStateChange_Notification)(nil), "CCloud_AppCloudStateChange_Notification")
+	proto.RegisterType((*CCloud_ClientLogUploadRequest_Notification)(nil), "CCloud_ClientLogUploadRequest_Notification")
 }
 
-func init() { proto.RegisterFile("steammessages_cloud.steamclient.proto", cloud_fileDescriptor0) }
+func init() {
+	proto.RegisterFile("steammessages_cloud.steamclient.proto", fileDescriptor_f68a7f6c78d1a1ba)
+}
 
-var cloud_fileDescriptor0 = []byte{
-	// 3901 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x5a, 0xcd, 0x6f, 0x1c, 0x47,
-	0x76, 0xc7, 0x48, 0xa4, 0x48, 0x16, 0x25, 0x52, 0xea, 0xb5, 0x94, 0x5e, 0xae, 0x6d, 0x95, 0xc6,
-	0x96, 0x28, 0x7b, 0x47, 0x6d, 0x49, 0x91, 0xe4, 0x95, 0x15, 0xc3, 0xe1, 0x90, 0x94, 0xc8, 0x44,
-	0x92, 0xb5, 0x3d, 0xe4, 0x6e, 0x12, 0x67, 0xd3, 0x28, 0x76, 0xd7, 0x70, 0x2a, 0xec, 0xe9, 0x1a,
-	0x57, 0x55, 0x93, 0x1c, 0x63, 0xb1, 0xeb, 0x74, 0x80, 0x38, 0x41, 0x3e, 0x80, 0x04, 0xc8, 0x61,
-	0x17, 0x41, 0x72, 0x0d, 0x90, 0xcd, 0xb1, 0x11, 0x20, 0x97, 0xfc, 0x03, 0x01, 0x82, 0x5c, 0x73,
-	0xce, 0x7f, 0x10, 0x20, 0xc0, 0xde, 0x82, 0x7a, 0x55, 0xfd, 0x31, 0xc3, 0xa1, 0x48, 0xcb, 0x76,
-	0xb0, 0x17, 0x82, 0x5d, 0xf5, 0xea, 0xd5, 0xab, 0x57, 0xef, 0xe3, 0xf7, 0x5e, 0x0d, 0xba, 0x2e,
-	0x15, 0x25, 0xfd, 0x3e, 0x95, 0x92, 0xec, 0x52, 0x19, 0x84, 0x31, 0x4f, 0x23, 0x0f, 0xc6, 0xc2,
-	0x98, 0xd1, 0x44, 0x79, 0x03, 0xc1, 0x15, 0x5f, 0x6a, 0x8d, 0x92, 0xa5, 0x09, 0xeb, 0x32, 0x1a,
-	0x05, 0x3b, 0x44, 0xd2, 0xa3, 0xd4, 0xcd, 0x3d, 0xd4, 0x5c, 0x5d, 0xd5, 0x9c, 0x82, 0x27, 0x54,
-	0x6d, 0x0f, 0x62, 0x4e, 0xa2, 0x0e, 0x15, 0xfb, 0x54, 0x6c, 0x26, 0x5d, 0x1e, 0xf8, 0xf4, 0xd3,
-	0x94, 0x4a, 0xe5, 0xac, 0xa3, 0x69, 0x32, 0x18, 0xb0, 0xc8, 0x6d, 0xe0, 0xc6, 0xcd, 0x0b, 0xed,
-	0xf7, 0xb2, 0xdc, 0xfd, 0xee, 0xca, 0x60, 0x80, 0x37, 0xd7, 0xb0, 0xe2, 0xf8, 0xa0, 0xc7, 0xc2,
-	0x1e, 0x26, 0xb8, 0xcb, 0x62, 0x8a, 0x0f, 0x58, 0x1c, 0xe3, 0x1d, 0x8a, 0x53, 0xe0, 0x45, 0x23,
-	0xac, 0xb8, 0xe7, 0x9b, 0xd5, 0xcd, 0x35, 0xf4, 0xd6, 0x4b, 0x37, 0x93, 0x03, 0x9e, 0x48, 0xea,
-	0xbc, 0x81, 0x90, 0x84, 0xe1, 0x20, 0x15, 0x31, 0x6c, 0x39, 0xe7, 0xcf, 0x99, 0x91, 0x6d, 0x11,
-	0x37, 0x3f, 0x9f, 0x41, 0x6f, 0x5a, 0x36, 0x6d, 0xba, 0xcb, 0x92, 0x8d, 0xad, 0xad, 0x17, 0x86,
-	0x59, 0x29, 0xef, 0xe3, 0x51, 0x79, 0x6f, 0x67, 0xb9, 0xdb, 0xb2, 0xf2, 0x76, 0xb9, 0xb0, 0x02,
-	0xab, 0x1e, 0x35, 0x22, 0x33, 0x89, 0x77, 0x28, 0x4b, 0x76, 0x4b, 0x99, 0x0b, 0x81, 0x9d, 0x0f,
-	0xd1, 0x9c, 0xa6, 0x08, 0x24, 0xfb, 0x8c, 0xba, 0x67, 0x80, 0x17, 0xce, 0x72, 0xf7, 0xf5, 0x8f,
-	0x05, 0xdb, 0x65, 0x09, 0x89, 0xcd, 0x7a, 0x3d, 0x8b, 0x59, 0x82, 0x77, 0x86, 0x8a, 0x4a, 0xcf,
-	0x9f, 0xd5, 0x83, 0x1d, 0xf6, 0x19, 0x75, 0x9e, 0x20, 0xf8, 0x3f, 0x21, 0x7d, 0xea, 0x9e, 0xd5,
-	0xc7, 0x68, 0x7f, 0x37, 0xcb, 0xdd, 0xe5, 0xe7, 0xa4, 0x4f, 0x31, 0xef, 0x56, 0x02, 0x28, 0x8e,
-	0xa5, 0xe2, 0x02, 0x98, 0xe8, 0x41, 0x73, 0xb5, 0x7e, 0xb9, 0xd8, 0x09, 0x0c, 0xa3, 0x40, 0xf6,
-	0x88, 0x3b, 0x05, 0x8c, 0xd6, 0xb2, 0xdc, 0xfd, 0xcd, 0x0d, 0x7a, 0x88, 0xa5, 0x12, 0x5a, 0xf4,
-	0x9b, 0xf7, 0x6e, 0xe3, 0x88, 0xed, 0x32, 0x25, 0xdf, 0xc1, 0x82, 0x0e, 0x04, 0x95, 0x34, 0x51,
-	0x7a, 0x42, 0xf3, 0xeb, 0x6c, 0xac, 0xdc, 0xd1, 0xb3, 0x54, 0xaa, 0xfa, 0xbe, 0x9e, 0x3f, 0x03,
-	0xa2, 0xf6, 0x88, 0xd3, 0x45, 0x73, 0x4c, 0x06, 0x83, 0x74, 0x27, 0x66, 0xa1, 0x3b, 0x8d, 0x1b,
-	0x37, 0x67, 0xdb, 0x9b, 0x59, 0xee, 0xae, 0x6f, 0x89, 0x94, 0x62, 0x56, 0x13, 0x55, 0xf6, 0x78,
-	0x1a, 0x47, 0xfa, 0x82, 0xfb, 0x44, 0xec, 0xd1, 0x08, 0x9b, 0x35, 0x98, 0x1b, 0xc9, 0xb7, 0x1f,
-	0x77, 0x5a, 0xb8, 0x4b, 0x62, 0x49, 0x31, 0x57, 0x3d, 0x2a, 0x0e, 0x98, 0xa4, 0x9e, 0x3f, 0xcb,
-	0xe4, 0x0b, 0x20, 0x73, 0xfe, 0xbc, 0x81, 0x2e, 0x0d, 0x62, 0xa2, 0xba, 0x5c, 0xf4, 0x65, 0xa0,
-	0x78, 0x20, 0x87, 0x49, 0xe8, 0x9e, 0xc3, 0x67, 0x6f, 0xce, 0xb5, 0x83, 0x2c, 0x77, 0x3f, 0x59,
-	0x11, 0x82, 0x0c, 0xb5, 0x90, 0xf6, 0x5c, 0x72, 0x40, 0x43, 0xd6, 0x1d, 0xea, 0x7f, 0xcd, 0xad,
-	0x95, 0xab, 0x41, 0x6b, 0xc3, 0x24, 0x7c, 0x84, 0xf7, 0x49, 0x9c, 0x52, 0xf3, 0x57, 0x7e, 0x80,
-	0x49, 0x1c, 0xb7, 0xf0, 0x01, 0x4b, 0x22, 0x7e, 0x20, 0x5b, 0x98, 0xcb, 0xc3, 0x16, 0x8e, 0x59,
-	0x92, 0x1e, 0x7a, 0xfe, 0x62, 0xb9, 0x76, 0x8b, 0x77, 0x86, 0x49, 0xe8, 0x7c, 0xd1, 0x40, 0x97,
-	0x85, 0x31, 0x99, 0xa0, 0x47, 0x49, 0x44, 0x85, 0x0c, 0xb4, 0xbe, 0xa5, 0x3b, 0x03, 0x12, 0x75,
-	0xb2, 0xdc, 0xfd, 0x58, 0xdf, 0x96, 0x04, 0xb3, 0xb1, 0x24, 0x78, 0xc8, 0xd3, 0xe5, 0x38, 0xc6,
-	0x07, 0x24, 0x51, 0x20, 0x04, 0x55, 0xfa, 0xf8, 0x43, 0x9e, 0x0a, 0x6b, 0x41, 0xd8, 0x32, 0xf5,
-	0xf0, 0x33, 0x32, 0xd4, 0xba, 0x8a, 0x69, 0x57, 0xe1, 0x9d, 0x98, 0x24, 0x7b, 0x9e, 0xff, 0x2d,
-	0x3b, 0xb9, 0x61, 0xb8, 0x01, 0x7b, 0xe7, 0x17, 0x0d, 0x74, 0x65, 0x5c, 0x12, 0x73, 0x20, 0x77,
-	0x16, 0x44, 0xd9, 0xcf, 0x72, 0x57, 0xfc, 0x00, 0x46, 0x5e, 0x55, 0x96, 0xad, 0x1e, 0xc5, 0x49,
-	0xda, 0xdf, 0xa1, 0x42, 0xeb, 0x17, 0xce, 0x89, 0xfb, 0xa9, 0x54, 0x98, 0x7e, 0x9a, 0x92, 0x18,
-	0xae, 0xaf, 0x9a, 0x36, 0x9b, 0x7b, 0xfe, 0x6b, 0xa3, 0xd2, 0x1a, 0x09, 0x9a, 0xff, 0x3d, 0x85,
-	0xae, 0x1e, 0xeb, 0x82, 0xd6, 0x8b, 0x1f, 0xa0, 0xe9, 0x74, 0x37, 0xb4, 0x3e, 0x78, 0xce, 0xf8,
-	0xcd, 0xf6, 0x93, 0x55, 0xed, 0x83, 0xd6, 0x06, 0xcb, 0x10, 0x61, 0x8c, 0xd1, 0x90, 0x3b, 0x8f,
-	0xd0, 0x9c, 0x62, 0x7d, 0x2a, 0x15, 0xe9, 0x0f, 0xc0, 0xe7, 0x66, 0xda, 0x6f, 0x64, 0xb9, 0xfb,
-	0x6d, 0x13, 0x29, 0x70, 0x39, 0xa7, 0xb9, 0x98, 0x85, 0x15, 0xbd, 0x43, 0xd0, 0x6c, 0x2a, 0xe2,
-	0xa0, 0xc7, 0xa5, 0xb2, 0x1e, 0xf7, 0x38, 0xcb, 0xdd, 0xf6, 0x06, 0x97, 0x0a, 0x4e, 0x0c, 0x96,
-	0x65, 0x19, 0x15, 0x81, 0x6b, 0xcc, 0xae, 0x4b, 0xa9, 0xf6, 0x19, 0xc1, 0xfa, 0x60, 0xf8, 0xc5,
-	0xf6, 0x96, 0xe7, 0xcf, 0xa4, 0x22, 0xd6, 0x6c, 0x9c, 0xdf, 0x31, 0x5b, 0x0c, 0x88, 0xea, 0x59,
-	0x5f, 0xfc, 0x30, 0xcb, 0xdd, 0x87, 0x3e, 0x8d, 0x89, 0x62, 0xfb, 0x14, 0xeb, 0x09, 0x7d, 0x07,
-	0xa7, 0xdc, 0xc6, 0x70, 0x7e, 0x41, 0x54, 0xcf, 0xd9, 0x40, 0x73, 0xa9, 0xa4, 0x41, 0x4f, 0xa9,
-	0x81, 0xb4, 0x4e, 0x08, 0xf1, 0x62, 0xb3, 0x8b, 0x95, 0x48, 0x69, 0x0b, 0xa7, 0x92, 0x62, 0x98,
-	0x6d, 0x55, 0xde, 0x55, 0x0e, 0x7a, 0xfe, 0x6c, 0x2a, 0xe9, 0x86, 0x9e, 0xd6, 0x6e, 0xb6, 0x38,
-	0x66, 0x4e, 0xe0, 0x64, 0xf3, 0x77, 0x5b, 0xde, 0x09, 0xf7, 0xe6, 0xe9, 0x31, 0x7b, 0xdb, 0xed,
-	0x7b, 0x59, 0xee, 0xde, 0xd6, 0x16, 0x7a, 0xcb, 0xf8, 0xd8, 0x80, 0x30, 0x01, 0x8e, 0xb7, 0x43,
-	0xb1, 0x0e, 0x30, 0x3a, 0x60, 0x15, 0x2a, 0x2a, 0x0d, 0xcd, 0x5f, 0x18, 0xb5, 0x99, 0xa5, 0xf7,
-	0xd1, 0x7c, 0x8d, 0xa9, 0xe3, 0xa0, 0x29, 0x88, 0x88, 0x26, 0xb0, 0xc3, 0xff, 0xce, 0x6b, 0x68,
-	0x1a, 0x76, 0x80, 0x0b, 0x9f, 0xf3, 0xcd, 0x47, 0xf3, 0xbf, 0x2a, 0x33, 0x5b, 0xe5, 0xfd, 0x3e,
-	0x53, 0x13, 0x42, 0xfd, 0xbf, 0x34, 0x90, 0xa3, 0x04, 0x49, 0x64, 0x97, 0x8a, 0x40, 0xa6, 0x61,
-	0x48, 0x69, 0x44, 0x8d, 0xd1, 0xcd, 0xb6, 0xbf, 0x68, 0x64, 0xb9, 0x9b, 0x35, 0xea, 0x51, 0xac,
-	0x14, 0x57, 0xf1, 0x9a, 0x11, 0xe2, 0x6d, 0xff, 0x29, 0x2e, 0x57, 0xe3, 0x9b, 0xfa, 0x73, 0x20,
-	0xf8, 0x3e, 0xd3, 0x5f, 0x2c, 0xc1, 0xc2, 0x6a, 0x47, 0xaf, 0x02, 0x81, 0xbc, 0x31, 0xfd, 0xbd,
-	0x53, 0x84, 0x3d, 0xd6, 0xd5, 0x99, 0x90, 0xb0, 0x38, 0x15, 0x14, 0xf3, 0x30, 0x4c, 0x85, 0xd0,
-	0x97, 0x7c, 0xa9, 0x90, 0xb1, 0x53, 0x6c, 0xe2, 0xfc, 0xb4, 0x48, 0x52, 0x26, 0xb1, 0xb0, 0x2c,
-	0x77, 0xe9, 0x97, 0x49, 0x52, 0xf8, 0x99, 0x76, 0xde, 0x3e, 0x51, 0x96, 0x8c, 0x98, 0xb5, 0xa5,
-	0xd8, 0xc7, 0x89, 0x5a, 0x66, 0xb7, 0xbf, 0x6f, 0xd4, 0xd2, 0x8a, 0xf1, 0x96, 0x4c, 0x2b, 0xec,
-	0x27, 0x5f, 0x35, 0xaf, 0x8c, 0x4b, 0x56, 0xa7, 0x3b, 0x85, 0x78, 0x65, 0x56, 0xfa, 0xa4, 0x96,
-	0x3f, 0x8d, 0xab, 0x7d, 0x94, 0xe5, 0xee, 0xa3, 0xc7, 0x76, 0x0c, 0x13, 0x69, 0xf3, 0x03, 0x33,
-	0xb7, 0xa4, 0xf7, 0x9a, 0xc8, 0xb3, 0xb2, 0xcd, 0x92, 0x61, 0xf3, 0x2f, 0x1a, 0x08, 0x1f, 0x6f,
-	0x5c, 0x36, 0x88, 0xf5, 0xd0, 0x02, 0x68, 0x28, 0x04, 0x0a, 0x55, 0x1a, 0xd6, 0x4a, 0x96, 0xbb,
-	0x1f, 0x1e, 0x49, 0x8e, 0x07, 0x5a, 0x20, 0x7d, 0xbf, 0x52, 0x76, 0xd3, 0x38, 0x1e, 0xe2, 0x72,
-	0xd9, 0x84, 0xa4, 0x78, 0x41, 0x2f, 0x59, 0x2d, 0x08, 0x9a, 0x3f, 0x6f, 0xa0, 0x37, 0x2a, 0x70,
-	0xa4, 0x8f, 0xb8, 0x46, 0x15, 0x61, 0xb1, 0x2c, 0x2d, 0xbd, 0x5d, 0x0f, 0xa8, 0x53, 0xed, 0x56,
-	0x96, 0xbb, 0x37, 0xab, 0x60, 0x0a, 0x4b, 0x4b, 0x38, 0xb1, 0x4b, 0x15, 0x8e, 0xcc, 0x7a, 0x6d,
-	0x4c, 0x65, 0x70, 0xbd, 0x3f, 0x6a, 0x73, 0x57, 0xb3, 0xdc, 0xfd, 0x4e, 0x01, 0xe4, 0x8a, 0x53,
-	0xec, 0xd0, 0x98, 0x27, 0xbb, 0xb2, 0x0e, 0xdc, 0xfe, 0xa3, 0x81, 0x16, 0xad, 0x70, 0xdb, 0x92,
-	0x0a, 0x2d, 0x9d, 0x76, 0xd9, 0x1a, 0xc6, 0x2a, 0x6c, 0xea, 0xb5, 0x42, 0x48, 0xbd, 0xc1, 0x54,
-	0xb1, 0xed, 0xd2, 0x38, 0x10, 0xaa, 0x61, 0x9b, 0xd7, 0xeb, 0xf1, 0x7e, 0x0a, 0x56, 0xd5, 0x02,
-	0xfa, 0x77, 0xea, 0x08, 0x6c, 0x1a, 0x76, 0xaa, 0xf0, 0xd5, 0x45, 0x74, 0x56, 0x23, 0xc4, 0x73,
-	0xc0, 0x51, 0xff, 0xeb, 0x2c, 0xa3, 0x45, 0xc0, 0xb8, 0x2c, 0x0a, 0x42, 0x41, 0x89, 0xe2, 0xc2,
-	0x9d, 0xd1, 0xe9, 0xc7, 0x5f, 0xb0, 0xc3, 0xab, 0x66, 0xb4, 0xf9, 0xb4, 0xc4, 0x90, 0x47, 0xb4,
-	0x6d, 0xaf, 0xfe, 0x5d, 0x34, 0x63, 0x35, 0x08, 0x27, 0x9c, 0xbf, 0x7b, 0xd1, 0x1b, 0x53, 0x81,
-	0x5f, 0x10, 0x34, 0xff, 0x76, 0x0a, 0x5d, 0xb3, 0x93, 0xeb, 0x49, 0xda, 0xa7, 0x82, 0x28, 0x5a,
-	0x50, 0x55, 0x17, 0xf8, 0x68, 0x14, 0x95, 0x5e, 0xcf, 0x72, 0xf7, 0x5a, 0x85, 0xa2, 0x69, 0xb1,
-	0xb0, 0xbc, 0x09, 0x89, 0x79, 0xb7, 0x74, 0xd6, 0x5f, 0x34, 0xd0, 0x45, 0x7a, 0xa8, 0x68, 0x12,
-	0xd1, 0x28, 0x28, 0x04, 0x3b, 0x03, 0xc6, 0xf8, 0xb9, 0x76, 0xda, 0x1f, 0xdf, 0xfc, 0x78, 0xa0,
-	0x18, 0x4f, 0x48, 0xfc, 0x0e, 0x7e, 0x42, 0x15, 0x2e, 0x68, 0x4b, 0x33, 0xd8, 0x21, 0xe1, 0x5e,
-	0x01, 0xd3, 0x0c, 0xf7, 0x2e, 0x4f, 0x93, 0xc8, 0xc3, 0x6b, 0xb4, 0x4b, 0xd2, 0x58, 0x41, 0x5c,
-	0xe7, 0x49, 0x3c, 0xc4, 0x82, 0xaa, 0x54, 0x24, 0xda, 0x45, 0x8b, 0xa8, 0x12, 0x61, 0x92, 0x44,
-	0x18, 0xb2, 0x77, 0x54, 0xf7, 0xf4, 0x82, 0x87, 0xbf, 0x58, 0x6c, 0x67, 0xd5, 0xe8, 0xfc, 0x71,
-	0x03, 0x4d, 0x87, 0x3c, 0x4d, 0x4c, 0x1a, 0xbe, 0xd0, 0xee, 0x67, 0xb9, 0xcb, 0x6a, 0x22, 0x3e,
-	0x23, 0x87, 0xac, 0x9f, 0xf6, 0x6b, 0x88, 0x43, 0x50, 0x59, 0x48, 0x61, 0x04, 0x30, 0xc2, 0x32,
-	0x89, 0x43, 0x12, 0xc7, 0xa3, 0x62, 0x12, 0xdc, 0xb7, 0xeb, 0x79, 0x17, 0xdf, 0xbf, 0x7d, 0xdb,
-	0x0a, 0x53, 0x08, 0xee, 0xf9, 0x66, 0x6f, 0xe7, 0x27, 0x68, 0x5e, 0x2a, 0x22, 0x54, 0xc0, 0x92,
-	0x88, 0x1e, 0x82, 0x75, 0x5d, 0x68, 0xff, 0x28, 0xcb, 0xdd, 0xdf, 0xad, 0x89, 0xd2, 0xd1, 0x14,
-	0x3a, 0xa4, 0x01, 0x91, 0xc9, 0x6e, 0xbb, 0x2c, 0x29, 0x2f, 0x84, 0xf1, 0x04, 0x13, 0x35, 0x2a,
-	0x80, 0x56, 0x00, 0x50, 0x25, 0x7a, 0xa1, 0xd5, 0x48, 0xcc, 0x74, 0x84, 0x41, 0xb0, 0xe3, 0xa6,
-	0xe6, 0xd5, 0xec, 0x97, 0xd5, 0xd5, 0x44, 0xb3, 0xb0, 0x96, 0x76, 0x03, 0x4d, 0x83, 0xfc, 0x6e,
-	0x03, 0x52, 0xf4, 0x51, 0x3b, 0x33, 0xd3, 0xce, 0x55, 0x34, 0xaf, 0xb8, 0x22, 0x71, 0x60, 0xa8,
-	0xc1, 0x85, 0x7d, 0x04, 0x43, 0xc0, 0xb1, 0xf9, 0x87, 0xe8, 0xb2, 0x5d, 0xba, 0x46, 0x63, 0xaa,
-	0x68, 0x69, 0x79, 0x75, 0xff, 0x6b, 0x8c, 0xf9, 0xdf, 0x2b, 0x86, 0x04, 0x17, 0x5d, 0x19, 0xdf,
-	0xcb, 0x1c, 0xa7, 0xb9, 0x8c, 0xae, 0x57, 0xae, 0xb5, 0x0a, 0xc5, 0xe6, 0x7a, 0x12, 0x8a, 0x21,
-	0x28, 0xfc, 0xb7, 0xe9, 0xb0, 0x90, 0xaa, 0x79, 0x88, 0x6e, 0x9c, 0x44, 0x68, 0x35, 0xd4, 0x42,
-	0x67, 0xf7, 0xe8, 0x10, 0x44, 0x3f, 0xdf, 0x5e, 0xca, 0x72, 0xf7, 0xca, 0xca, 0x7a, 0xe7, 0xd6,
-	0xdd, 0xfb, 0x0f, 0x30, 0x2d, 0x17, 0xe0, 0x3d, 0x3a, 0xf4, 0x35, 0x99, 0x83, 0xd1, 0xd9, 0x50,
-	0x84, 0x70, 0x9e, 0xe9, 0xf6, 0x42, 0x96, 0xbb, 0x68, 0xd5, 0x5f, 0xd5, 0x97, 0x04, 0x14, 0xa1,
-	0x08, 0x9b, 0xbf, 0xac, 0x82, 0xed, 0xea, 0xda, 0x73, 0x9f, 0x0e, 0xb8, 0x50, 0xc1, 0x73, 0xae,
-	0x58, 0x97, 0x85, 0x70, 0xe1, 0x8e, 0x8b, 0x66, 0x6c, 0xc4, 0x30, 0xf8, 0xd5, 0x2f, 0x3e, 0x8b,
-	0xa0, 0x73, 0xa6, 0x0a, 0x3a, 0x9a, 0xd6, 0x44, 0x7d, 0x30, 0xf6, 0x59, 0xbf, 0xf8, 0x74, 0x6e,
-	0xa2, 0x8b, 0x1a, 0x9a, 0x05, 0x52, 0x11, 0x95, 0xca, 0x20, 0xe4, 0x91, 0x49, 0x64, 0x17, 0xfc,
-	0x05, 0x3d, 0xde, 0x81, 0xe1, 0x55, 0x1e, 0x51, 0xe7, 0x3a, 0x5a, 0xa0, 0x87, 0x03, 0x1a, 0x2a,
-	0x5d, 0xaa, 0xeb, 0x3a, 0x12, 0x82, 0xdd, 0x94, 0x7f, 0xa1, 0x18, 0x6d, 0xeb, 0x41, 0x4d, 0x26,
-	0x68, 0x48, 0xd9, 0x7e, 0x49, 0x76, 0xce, 0x90, 0x15, 0xa3, 0x86, 0x6c, 0x09, 0xcd, 0x46, 0xa9,
-	0x31, 0x5d, 0x88, 0x7f, 0x17, 0xfc, 0xf2, 0xbb, 0xf9, 0x6f, 0x67, 0xd0, 0x9d, 0xc2, 0x28, 0x0f,
-	0x15, 0x15, 0x09, 0x89, 0x3b, 0x8a, 0x0b, 0xb2, 0x4b, 0xb7, 0x2c, 0x44, 0x99, 0xa4, 0x0f, 0x07,
-	0x4d, 0x01, 0xa8, 0xb6, 0xa0, 0x4d, 0xff, 0xaf, 0xc7, 0x00, 0x05, 0x1b, 0x55, 0xc0, 0xff, 0x3a,
-	0x5e, 0x33, 0x19, 0x18, 0x8c, 0x62, 0xb5, 0x31, 0xcb, 0xa4, 0x49, 0xab, 0x75, 0x45, 0x4d, 0x9d,
-	0xac, 0xa8, 0xe9, 0xe3, 0x14, 0x05, 0x07, 0x0f, 0x0a, 0xc5, 0x14, 0x1a, 0x80, 0xd1, 0x75, 0x3b,
-	0xe8, 0x5c, 0x43, 0xe7, 0x0d, 0x19, 0x09, 0x55, 0x4a, 0x62, 0xd0, 0xc2, 0x94, 0x3f, 0x0f, 0x63,
-	0x2b, 0x30, 0xa4, 0xdd, 0xa9, 0x50, 0x4a, 0xd0, 0xd7, 0x75, 0x16, 0xb8, 0x53, 0x31, 0xf4, 0x4c,
-	0x3a, 0x57, 0xd0, 0xb9, 0x90, 0xc6, 0x31, 0x8b, 0xdc, 0x39, 0x98, 0xb3, 0x5f, 0xcd, 0x7f, 0x3a,
-	0x87, 0xde, 0x2e, 0xac, 0x07, 0xac, 0x16, 0xd0, 0x86, 0x76, 0xc1, 0x6f, 0xa8, 0x0d, 0xf1, 0xfc,
-	0x68, 0x1b, 0xe2, 0x4e, 0x96, 0xbb, 0xb7, 0xaa, 0xee, 0x03, 0x91, 0x18, 0x00, 0xa6, 0x01, 0x13,
-	0x10, 0xad, 0xa1, 0xa3, 0x00, 0xb0, 0x68, 0xb5, 0xd6, 0x4e, 0x80, 0xbc, 0xf9, 0x09, 0xba, 0x20,
-	0xc8, 0x41, 0x50, 0xf1, 0x34, 0x31, 0xfa, 0xfd, 0x2c, 0x77, 0x7f, 0xbd, 0xe2, 0xb9, 0x43, 0xbb,
-	0x5c, 0x50, 0x4c, 0x12, 0xc0, 0x31, 0x1a, 0xfa, 0x49, 0x08, 0x85, 0x49, 0xf4, 0x1e, 0x17, 0x35,
-	0xc7, 0xf3, 0xfc, 0x79, 0x41, 0x0e, 0x1e, 0x17, 0xcc, 0xef, 0x8c, 0xf5, 0x2a, 0xce, 0xb7, 0xaf,
-	0x64, 0xb9, 0xeb, 0x74, 0x36, 0x56, 0x6e, 0xdd, 0x81, 0x38, 0x4f, 0x0e, 0xc6, 0xbb, 0x0f, 0xf7,
-	0x11, 0xd2, 0x19, 0x3f, 0x30, 0x18, 0x00, 0x0c, 0xdf, 0x2c, 0xda, 0x3a, 0xa6, 0xd8, 0xeb, 0x00,
-	0x36, 0xa8, 0xb7, 0x57, 0xce, 0x7d, 0x95, 0xf6, 0xca, 0x83, 0x49, 0x4d, 0x09, 0xf0, 0x9b, 0x0f,
-	0xd0, 0xbd, 0xbb, 0x0f, 0xef, 0x3d, 0x7c, 0xf0, 0xfe, 0xdd, 0x87, 0xf7, 0x8f, 0xf6, 0x0f, 0x9e,
-	0xa3, 0x19, 0x6d, 0x12, 0x41, 0x61, 0x21, 0xed, 0xfb, 0x59, 0xee, 0xde, 0x31, 0x36, 0xb1, 0x2c,
-	0xb1, 0x9e, 0xd3, 0x77, 0x2d, 0x39, 0x3e, 0xa0, 0x38, 0x24, 0x09, 0x1e, 0xb0, 0x70, 0x0f, 0x64,
-	0x21, 0xbb, 0x14, 0xc7, 0xdc, 0xf8, 0x96, 0x67, 0x0c, 0x6b, 0x33, 0x72, 0x7e, 0x84, 0xe6, 0x43,
-	0x92, 0x04, 0x56, 0xb5, 0x2e, 0x82, 0xec, 0xfe, 0x1b, 0x59, 0xee, 0x7e, 0x8f, 0x15, 0x25, 0xa0,
-	0x69, 0xde, 0x01, 0x33, 0x4b, 0x56, 0x8f, 0xd2, 0x70, 0x61, 0xc6, 0x7c, 0x20, 0xa1, 0x29, 0x1f,
-	0x85, 0x24, 0xb1, 0x41, 0xd5, 0x51, 0x68, 0x81, 0x49, 0x7d, 0x2f, 0x82, 0x46, 0x70, 0xf9, 0xee,
-	0x3c, 0xec, 0xf0, 0x3c, 0xcb, 0xdd, 0xdf, 0x2a, 0x77, 0x80, 0x94, 0xcb, 0x24, 0xde, 0xe5, 0x00,
-	0xf3, 0xa1, 0xd6, 0xd3, 0x99, 0x9f, 0x0b, 0x4c, 0xb0, 0x0c, 0x05, 0xa5, 0x89, 0xec, 0x71, 0xa5,
-	0xbf, 0x25, 0xef, 0x5b, 0x48, 0x8b, 0x0d, 0x57, 0x90, 0xc3, 0x3f, 0xcf, 0x64, 0x07, 0x3e, 0xb5,
-	0x4d, 0x34, 0xff, 0x67, 0x06, 0x5d, 0x33, 0x2a, 0x01, 0x3b, 0xac, 0xdc, 0xa4, 0x1d, 0xf3, 0x70,
-	0xaf, 0xc0, 0x0b, 0xf5, 0xc2, 0xbd, 0xf1, 0xcd, 0x17, 0xee, 0x67, 0xbe, 0xb9, 0xc2, 0xfd, 0xec,
-	0x57, 0x29, 0xdc, 0x9f, 0xa0, 0x79, 0x88, 0x83, 0x7d, 0xaa, 0x7a, 0x3c, 0x02, 0xff, 0x99, 0x6e,
-	0xdf, 0xc8, 0x72, 0xb7, 0xb9, 0xae, 0x4f, 0xf4, 0x0c, 0x86, 0xb5, 0x68, 0x7a, 0xb1, 0x8e, 0x21,
-	0x70, 0x5b, 0x3b, 0x5a, 0x93, 0x9e, 0x8f, 0xf4, 0x52, 0x43, 0xe2, 0xfc, 0xe5, 0x84, 0x0e, 0xc0,
-	0x34, 0xc0, 0x0b, 0xcf, 0x3b, 0xf1, 0x36, 0xbe, 0xfe, 0x1e, 0x80, 0xb3, 0x8e, 0xce, 0x83, 0x94,
-	0x01, 0xef, 0x76, 0x25, 0x55, 0x26, 0x68, 0xb7, 0x9b, 0x59, 0xee, 0xbe, 0x69, 0x46, 0x0a, 0x0f,
-	0x37, 0x87, 0x81, 0x23, 0x82, 0x5c, 0xfe, 0x3c, 0x0c, 0x7c, 0x0c, 0x44, 0xce, 0x67, 0x05, 0x9b,
-	0x98, 0x26, 0xbb, 0xaa, 0x67, 0x9c, 0xb4, 0xfd, 0xc3, 0x2c, 0x77, 0x3b, 0x66, 0xe4, 0x38, 0x36,
-	0xf8, 0x96, 0xae, 0xd4, 0x3e, 0xa3, 0x82, 0xb7, 0x70, 0xc2, 0xf1, 0x80, 0x88, 0x91, 0x92, 0x55,
-	0x1b, 0x7c, 0x35, 0x56, 0xa8, 0xd4, 0xee, 0xfd, 0x14, 0x38, 0x3b, 0x9f, 0x22, 0x87, 0x1e, 0x0e,
-	0x62, 0x16, 0x32, 0x15, 0xec, 0xf0, 0x68, 0x18, 0x44, 0x44, 0x11, 0x48, 0x1b, 0xe7, 0xdb, 0xab,
-	0x59, 0xee, 0x7e, 0x54, 0xcc, 0x62, 0x3d, 0x8b, 0xf5, 0xac, 0xbd, 0xa9, 0x16, 0x66, 0x89, 0x86,
-	0x0f, 0x51, 0x29, 0x9d, 0x9e, 0x6c, 0x8d, 0x5d, 0xa0, 0x7f, 0xb1, 0x60, 0xd0, 0xe6, 0xd1, 0x70,
-	0x8d, 0x28, 0xe2, 0xfc, 0x14, 0x2d, 0xf6, 0xc9, 0x30, 0x18, 0x10, 0x41, 0xe2, 0x98, 0xc6, 0x3a,
-	0x54, 0xcf, 0x81, 0x79, 0xfd, 0x20, 0xcb, 0x5d, 0x7f, 0xd4, 0x65, 0xad, 0xc2, 0x71, 0xdf, 0xb4,
-	0x1c, 0x23, 0x9e, 0x40, 0xc0, 0x2b, 0xd6, 0xe2, 0x03, 0xa6, 0xb5, 0x63, 0x9c, 0x95, 0xf5, 0x59,
-	0x4c, 0x44, 0x3c, 0xbc, 0x65, 0x9b, 0xb8, 0x76, 0xad, 0xf4, 0x17, 0xfa, 0x64, 0xf8, 0xa2, 0xda,
-	0xed, 0xd5, 0x5b, 0x37, 0x7f, 0x76, 0xa6, 0x44, 0x81, 0xc7, 0xe5, 0xc8, 0xb2, 0xc4, 0x3e, 0x6f,
-	0x23, 0x99, 0x89, 0x49, 0xa6, 0xc0, 0x5e, 0xcf, 0x72, 0x77, 0x65, 0xb3, 0x3a, 0xe0, 0x91, 0xf6,
-	0xb3, 0x5d, 0x43, 0x23, 0xbc, 0x33, 0xb4, 0x51, 0x1d, 0x22, 0xe3, 0x48, 0x10, 0xf4, 0xe7, 0x2d,
-	0x19, 0x54, 0xac, 0xfb, 0x68, 0xc1, 0x18, 0x4f, 0x71, 0x5c, 0xf7, 0x0c, 0x78, 0x44, 0xf3, 0x64,
-	0x8f, 0x30, 0xfe, 0x0c, 0x66, 0x5e, 0x2c, 0xd6, 0x77, 0xdb, 0x27, 0x7b, 0x90, 0x5e, 0x06, 0x54,
-	0xe8, 0xbc, 0x50, 0xec, 0x7a, 0xc1, 0xdc, 0xa7, 0x25, 0x6c, 0xfe, 0xef, 0xd9, 0x31, 0x5d, 0x98,
-	0xaa, 0x7f, 0x02, 0x60, 0x50, 0x2f, 0xe9, 0x65, 0x81, 0x46, 0x8a, 0x96, 0x03, 0x89, 0x63, 0x6b,
-	0xe1, 0x66, 0x4b, 0x59, 0x35, 0xaf, 0xea, 0x8d, 0xa8, 0x64, 0x68, 0x8d, 0xbc, 0x0f, 0x2d, 0xa9,
-	0x5f, 0x89, 0x46, 0x54, 0x75, 0xec, 0x12, 0xdf, 0x0c, 0xc7, 0xfa, 0x50, 0xe7, 0xdb, 0x7f, 0x90,
-	0xe5, 0xee, 0xef, 0x4d, 0x68, 0x2f, 0x95, 0xe0, 0xe1, 0x15, 0x5a, 0x4c, 0xf5, 0x8d, 0xbf, 0xae,
-	0x16, 0x53, 0xc5, 0x73, 0x52, 0x8b, 0xe9, 0x6f, 0x1a, 0x65, 0x85, 0x73, 0xec, 0xc5, 0xff, 0xbf,
-	0x37, 0x9a, 0xfe, 0xba, 0x51, 0xf6, 0x2a, 0x8c, 0x50, 0xd0, 0xfd, 0xe0, 0x07, 0xc9, 0x88, 0x25,
-	0xde, 0x1f, 0x85, 0xae, 0x13, 0xab, 0xc2, 0x2a, 0x66, 0x96, 0x37, 0x79, 0xbf, 0xa6, 0x4e, 0x93,
-	0x63, 0xbf, 0x9d, 0xe5, 0xee, 0xe5, 0x52, 0x9d, 0x23, 0xaf, 0x4f, 0x95, 0xa2, 0xbe, 0x98, 0x29,
-	0x0b, 0xe5, 0x89, 0x32, 0x59, 0x25, 0x3d, 0x1c, 0x15, 0xea, 0xad, 0x2c, 0x77, 0xaf, 0xae, 0x0c,
-	0x74, 0xcc, 0x34, 0x55, 0xfa, 0x84, 0x7a, 0xb5, 0x10, 0xec, 0xfb, 0x47, 0x21, 0x34, 0x24, 0xb6,
-	0x53, 0x42, 0xe8, 0xf2, 0xda, 0x6b, 0x28, 0x7a, 0x6b, 0x32, 0x8a, 0x06, 0x94, 0x5f, 0xb1, 0x3d,
-	0xe8, 0xd1, 0x04, 0x47, 0xb4, 0x40, 0xd0, 0x86, 0xb3, 0x06, 0xd0, 0x11, 0xb5, 0x01, 0x6c, 0x14,
-	0x3e, 0xbf, 0x8b, 0x66, 0x65, 0x8f, 0x98, 0x50, 0x68, 0xe0, 0xf3, 0x62, 0x96, 0xbb, 0xf3, 0x9d,
-	0x8d, 0x95, 0x22, 0x79, 0xf8, 0x33, 0xb2, 0x47, 0x20, 0xa0, 0xdd, 0x9b, 0x80, 0x9b, 0x2f, 0x67,
-	0xb9, 0x7b, 0xe9, 0x08, 0x6e, 0xae, 0xc3, 0xe6, 0xdf, 0x47, 0x0e, 0x83, 0xf2, 0xc9, 0xa4, 0xb2,
-	0x08, 0xca, 0x77, 0x48, 0xc8, 0xb3, 0x6d, 0x2f, 0xcb, 0xdd, 0x77, 0x2b, 0x73, 0x33, 0x48, 0x50,
-	0x63, 0x4d, 0x4b, 0x1d, 0x0f, 0xb1, 0xa1, 0xb7, 0x50, 0xef, 0x22, 0xd3, 0x25, 0x17, 0x4c, 0x99,
-	0x36, 0x80, 0xf3, 0xbd, 0x1a, 0x90, 0x9b, 0x01, 0x0b, 0x80, 0xd7, 0x1b, 0x00, 0x72, 0x8a, 0xe3,
-	0x27, 0xeb, 0x5b, 0xd5, 0x35, 0x75, 0x05, 0xef, 0x4f, 0xc6, 0x67, 0xb3, 0x15, 0x3e, 0x7b, 0x61,
-	0x61, 0x99, 0xea, 0x11, 0x85, 0x7b, 0x96, 0x8d, 0x4d, 0xaa, 0x61, 0x9c, 0x02, 0xd0, 0x85, 0x76,
-	0x3d, 0x11, 0xa4, 0x4f, 0x15, 0x15, 0xd2, 0x86, 0xbe, 0x0a, 0x9f, 0xad, 0xd4, 0xf1, 0x99, 0x49,
-	0xa0, 0x6f, 0x67, 0xb9, 0x8b, 0x37, 0x35, 0xa6, 0x54, 0x06, 0x9e, 0xe9, 0xd8, 0xde, 0x69, 0x61,
-	0x1a, 0x5b, 0x64, 0xa6, 0xbf, 0x6b, 0xc0, 0xec, 0xaf, 0x26, 0xe0, 0x29, 0x04, 0xd9, 0xe3, 0x3d,
-	0xef, 0x64, 0xcb, 0x7d, 0x35, 0x40, 0xa5, 0x75, 0x75, 0x2c, 0xa0, 0x7a, 0x1d, 0xcd, 0x95, 0x29,
-	0xd0, 0xe0, 0x78, 0xbf, 0x1a, 0x78, 0xf5, 0xbc, 0xfd, 0x27, 0x67, 0xaa, 0x27, 0x17, 0x38, 0x8f,
-	0xb9, 0x56, 0x7d, 0xaa, 0xd3, 0xfc, 0x1a, 0xe0, 0x65, 0xf9, 0xc2, 0x1a, 0x4e, 0x19, 0x2b, 0xee,
-	0x1c, 0x89, 0x15, 0x60, 0xbb, 0xf5, 0x58, 0x31, 0x16, 0x27, 0x1c, 0x36, 0xd1, 0x74, 0x0d, 0xe2,
-	0x7e, 0x94, 0xe5, 0xee, 0xfb, 0x9b, 0xe3, 0x55, 0x0c, 0xc1, 0xcb, 0x86, 0x6a, 0xf9, 0x91, 0x36,
-	0x0b, 0x08, 0x8e, 0x2d, 0xcc, 0x94, 0x9d, 0xeb, 0x72, 0xb1, 0x4b, 0xd5, 0xf2, 0x51, 0x3b, 0x6e,
-	0x36, 0xab, 0xd7, 0x81, 0xa3, 0x7a, 0xb0, 0x9d, 0xae, 0x5f, 0x36, 0x50, 0x6b, 0x2c, 0xbe, 0x27,
-	0xdd, 0x98, 0x85, 0xca, 0xa7, 0x92, 0xc7, 0x29, 0x74, 0x16, 0x46, 0xba, 0x28, 0xa7, 0xd6, 0x5c,
-	0x68, 0x19, 0x41, 0xa4, 0x17, 0x9a, 0xdb, 0x7e, 0x4d, 0x73, 0x7f, 0xd4, 0x40, 0x97, 0xc2, 0x1e,
-	0x97, 0x34, 0xd0, 0x35, 0x64, 0xbd, 0x1f, 0x38, 0xdb, 0xde, 0xce, 0x72, 0xf7, 0xfb, 0x6b, 0xcc,
-	0x34, 0x6f, 0x53, 0x49, 0x05, 0x0e, 0x7b, 0x9c, 0x9b, 0x97, 0xab, 0x3d, 0x4a, 0x07, 0xb5, 0xde,
-	0x2d, 0x2c, 0x2e, 0xba, 0x99, 0x7d, 0x12, 0xf6, 0x58, 0x02, 0xcd, 0xe7, 0x21, 0x26, 0x82, 0x6a,
-	0x97, 0x13, 0x6c, 0xb7, 0xa7, 0x70, 0xc2, 0x0f, 0x3e, 0xf2, 0x17, 0x61, 0xbf, 0xa7, 0x7a, 0x05,
-	0xf4, 0x1a, 0xef, 0xfe, 0xec, 0x12, 0x9a, 0x86, 0xa3, 0x3b, 0x7f, 0xd7, 0x40, 0xdf, 0x9a, 0xf0,
-	0x7b, 0x0e, 0xe7, 0x2d, 0xef, 0xe4, 0x5f, 0x96, 0x2c, 0xbd, 0xed, 0x9d, 0xe2, 0x17, 0x21, 0xcd,
-	0x0f, 0xb2, 0xdc, 0x7d, 0xe0, 0x43, 0x77, 0x57, 0x9a, 0xdf, 0x19, 0xf8, 0x4f, 0x8b, 0x5c, 0x32,
-	0x10, 0x7c, 0xa0, 0x4f, 0x09, 0xef, 0x1f, 0xb6, 0x76, 0xeb, 0x42, 0xb1, 0xaa, 0x4f, 0xef, 0x39,
-	0xff, 0x78, 0x06, 0x2d, 0x8e, 0x3d, 0x07, 0x39, 0x57, 0xbd, 0x97, 0xff, 0x80, 0x64, 0x09, 0x9f,
-	0xf4, 0x4c, 0xda, 0xfc, 0xcf, 0x46, 0x96, 0xbb, 0xff, 0xde, 0x80, 0x79, 0x59, 0x08, 0xa2, 0x13,
-	0xb2, 0x96, 0xab, 0x2a, 0xc1, 0x49, 0xd9, 0x82, 0xe8, 0x28, 0x4a, 0xfa, 0xd0, 0x96, 0x17, 0x09,
-	0x89, 0xcb, 0x2e, 0x80, 0x96, 0x98, 0x85, 0x54, 0x7a, 0xf8, 0xf1, 0x29, 0xca, 0xd9, 0xe2, 0xb6,
-	0xca, 0x16, 0xfd, 0xb6, 0xff, 0xb4, 0x85, 0x49, 0x57, 0xd1, 0xba, 0xf5, 0xd8, 0x92, 0x07, 0x1e,
-	0xf7, 0x77, 0xf4, 0x6d, 0x27, 0x44, 0xa3, 0x79, 0x80, 0xca, 0x04, 0xda, 0xe9, 0x00, 0x8d, 0xc6,
-	0x5e, 0xbd, 0x3c, 0xe7, 0x9f, 0x1b, 0xe8, 0xe2, 0xf8, 0xa8, 0x53, 0xaa, 0xe2, 0xb8, 0x27, 0xd8,
-	0xa5, 0x6b, 0xde, 0x49, 0xef, 0x68, 0xcd, 0xad, 0x2c, 0x77, 0x5f, 0x98, 0x69, 0x59, 0xe8, 0xc4,
-	0x4a, 0xc9, 0x12, 0xa6, 0x18, 0xb1, 0x40, 0x7e, 0xfc, 0xdd, 0x4e, 0x67, 0xe1, 0x02, 0xb0, 0x8a,
-	0xf1, 0xd2, 0xde, 0x39, 0x40, 0x0b, 0xa3, 0xaf, 0x37, 0xce, 0x9b, 0xde, 0x4b, 0xdf, 0xd0, 0x96,
-	0xae, 0x7a, 0x2f, 0x7f, 0xf5, 0x69, 0x42, 0x5e, 0x28, 0x2c, 0xad, 0x78, 0x3a, 0xe1, 0x09, 0x26,
-	0xb5, 0x07, 0x36, 0xcf, 0xf9, 0xd7, 0x06, 0x72, 0x8e, 0x76, 0xf4, 0x9d, 0xa6, 0x77, 0xe2, 0x23,
-	0xd0, 0xd2, 0x5b, 0xde, 0xc9, 0x2f, 0x02, 0xcd, 0x4f, 0xb2, 0xdc, 0xfd, 0x61, 0x49, 0x20, 0x6b,
-	0x7b, 0xcb, 0x9a, 0x6d, 0x6b, 0x4b, 0x23, 0x78, 0x97, 0xed, 0xd3, 0xc4, 0x62, 0x6e, 0xaf, 0x14,
-	0x3d, 0x1d, 0xe8, 0x2b, 0xae, 0x9e, 0x46, 0x88, 0xc2, 0x04, 0x7e, 0x3b, 0xe1, 0x39, 0x11, 0x3a,
-	0x67, 0x73, 0xf5, 0x15, 0x6f, 0xe2, 0x73, 0xc1, 0xd2, 0xaf, 0x79, 0xc7, 0xb4, 0xf6, 0xdf, 0xc9,
-	0x72, 0xf7, 0xba, 0x19, 0x2c, 0xaf, 0x51, 0x27, 0xf1, 0x32, 0xd8, 0x2c, 0x4b, 0xdb, 0x5d, 0x73,
-	0x7e, 0xd6, 0x40, 0x57, 0x26, 0xb7, 0xf5, 0x9d, 0x1b, 0xde, 0xa9, 0xde, 0x07, 0x96, 0x96, 0xbd,
-	0xd3, 0x3d, 0x0f, 0x34, 0x01, 0xb5, 0x3c, 0xa1, 0x4a, 0xd6, 0xe5, 0xa8, 0x3d, 0x88, 0x8e, 0x3e,
-	0x12, 0x78, 0x4e, 0x88, 0xe6, 0xca, 0xb6, 0x7f, 0x65, 0x32, 0x93, 0x5f, 0x02, 0x96, 0xe6, 0xbd,
-	0xe7, 0x7c, 0x54, 0x01, 0x86, 0x4a, 0x5a, 0x47, 0x94, 0x69, 0xac, 0xcc, 0x4d, 0xac, 0xae, 0x3d,
-	0x2f, 0x8d, 0xd5, 0x73, 0xfe, 0xa1, 0x81, 0xde, 0x78, 0x69, 0x83, 0xdd, 0xb9, 0xeb, 0x7d, 0xe9,
-	0x3e, 0xfc, 0xa8, 0x34, 0xb6, 0x7f, 0x35, 0x51, 0x9a, 0xa4, 0x0a, 0x35, 0x46, 0x13, 0x45, 0xc0,
-	0xa9, 0x24, 0xfc, 0xd3, 0x06, 0xba, 0x3c, 0xb1, 0x38, 0x77, 0xae, 0x7b, 0xa7, 0xe9, 0x6f, 0x2f,
-	0xdd, 0xf0, 0x4e, 0x55, 0xe2, 0x37, 0xe1, 0xb7, 0x3f, 0x9b, 0xd6, 0xcf, 0xb5, 0x68, 0xd6, 0xf5,
-	0xcb, 0xfa, 0xcc, 0xf9, 0x79, 0x03, 0x5d, 0x99, 0x5c, 0x22, 0x39, 0x63, 0x9b, 0x1c, 0x57, 0x3b,
-	0x57, 0xd6, 0x72, 0x42, 0xa9, 0xd5, 0x84, 0xac, 0x6b, 0xa6, 0x2b, 0x94, 0x62, 0x25, 0xe2, 0x02,
-	0xb3, 0x24, 0xd2, 0xca, 0xa6, 0xc5, 0x8f, 0x38, 0x3c, 0xe7, 0xc7, 0xc8, 0x39, 0x8a, 0xed, 0x2a,
-	0x67, 0x3f, 0xbe, 0x8a, 0xaa, 0x9c, 0xfd, 0x25, 0xd8, 0xb0, 0x09, 0xf8, 0xb8, 0xd2, 0x8e, 0x6d,
-	0x10, 0x59, 0x32, 0xcf, 0x49, 0xd1, 0xc5, 0x71, 0x04, 0x52, 0x8b, 0xc9, 0xc7, 0x60, 0xb4, 0x5a,
-	0x4c, 0x3e, 0x16, 0xbd, 0xbc, 0x9e, 0xe5, 0xae, 0x6b, 0x26, 0xf4, 0xb9, 0x0d, 0x14, 0xb2, 0xfb,
-	0x7b, 0x1a, 0xf0, 0xba, 0xc7, 0x81, 0x1a, 0xe7, 0x96, 0xf7, 0x65, 0x60, 0xcf, 0xa8, 0xd1, 0x3e,
-	0xc8, 0x72, 0xf7, 0xae, 0x8e, 0x79, 0xb8, 0x47, 0x24, 0x74, 0xc4, 0x75, 0x4d, 0x64, 0x40, 0x0e,
-	0xac, 0xb5, 0x11, 0xce, 0x58, 0x6d, 0x01, 0x84, 0xbc, 0x25, 0x70, 0xbd, 0x95, 0x22, 0x5f, 0x02,
-	0x91, 0x49, 0xa9, 0x86, 0x50, 0x83, 0x00, 0xd8, 0x4d, 0x7a, 0xed, 0xb3, 0x9f, 0x37, 0x1a, 0xff,
-	0x17, 0x00, 0x00, 0xff, 0xff, 0x3d, 0x84, 0x67, 0x61, 0x2f, 0x2b, 0x00, 0x00,
+var fileDescriptor_f68a7f6c78d1a1ba = []byte{
+	// 3555 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x5a, 0x49, 0x8f, 0xdc, 0xc8,
+	0x95, 0x46, 0x66, 0xd6, 0x92, 0x19, 0x99, 0x59, 0x0b, 0x55, 0x92, 0x52, 0x39, 0x2d, 0xa9, 0x8a,
+	0xda, 0xaa, 0x25, 0x35, 0x47, 0xaa, 0xd1, 0xd2, 0x12, 0x30, 0x07, 0x55, 0xa9, 0x24, 0xd5, 0xb4,
+	0x54, 0xaa, 0x66, 0x95, 0xba, 0x07, 0x02, 0x1a, 0x9c, 0x28, 0x32, 0xb2, 0x92, 0x23, 0x26, 0x49,
+	0x31, 0x82, 0x52, 0x65, 0x0f, 0x1a, 0x18, 0xcc, 0x79, 0xae, 0x3e, 0x35, 0x7c, 0x30, 0x7c, 0xf2,
+	0x72, 0xf0, 0xc5, 0x86, 0x4f, 0x0d, 0x9f, 0xfc, 0x03, 0x7c, 0xf0, 0xd1, 0x17, 0xc3, 0xf0, 0xa5,
+	0xff, 0x80, 0x6f, 0x46, 0xbc, 0x08, 0xae, 0x49, 0x66, 0xa6, 0x5a, 0x16, 0x7c, 0x23, 0xdf, 0x7b,
+	0x8c, 0xe5, 0xc5, 0x5b, 0xbe, 0xf7, 0x82, 0xe8, 0x12, 0x65, 0x04, 0x0f, 0x06, 0x84, 0x52, 0x7c,
+	0x44, 0xa8, 0x61, 0x3a, 0x5e, 0x68, 0x69, 0x40, 0x33, 0x1d, 0x9b, 0xb8, 0x4c, 0xf3, 0x03, 0x8f,
+	0x79, 0xdd, 0x4e, 0x56, 0xec, 0x10, 0x53, 0x22, 0x39, 0xd7, 0xb3, 0x9c, 0xd0, 0xb5, 0x7b, 0x36,
+	0xb1, 0x84, 0xc4, 0xe8, 0x38, 0x4d, 0xe2, 0x86, 0x03, 0x2a, 0x5f, 0xd4, 0xfc, 0xdc, 0x5c, 0xd0,
+	0xf0, 0x0e, 0xff, 0x9b, 0x98, 0x4c, 0xca, 0xa8, 0x8f, 0xd1, 0xfa, 0xd6, 0x16, 0x5f, 0x94, 0xb1,
+	0x05, 0xec, 0xa7, 0xde, 0xd1, 0x0b, 0xdf, 0xf1, 0xb0, 0xb5, 0xd5, 0x27, 0xe6, 0x2b, 0x63, 0xd7,
+	0x63, 0x76, 0xcf, 0x36, 0x31, 0xb3, 0x3d, 0x57, 0xf9, 0x17, 0xd4, 0x90, 0x63, 0xd8, 0x56, 0xa7,
+	0xb2, 0x5a, 0x59, 0x9f, 0xd1, 0xeb, 0x82, 0xb0, 0x63, 0xa9, 0x36, 0xba, 0x56, 0x32, 0x90, 0x37,
+	0xf0, 0x1d, 0xc2, 0xc8, 0xf4, 0x63, 0x29, 0x67, 0x11, 0x0a, 0xc8, 0xeb, 0x90, 0x50, 0xe0, 0x56,
+	0x81, 0xdb, 0x90, 0x94, 0x1d, 0x4b, 0xfd, 0x4b, 0x15, 0x9d, 0x93, 0x73, 0x6d, 0x92, 0x23, 0xdb,
+	0x7d, 0x72, 0x70, 0xb0, 0x27, 0xe6, 0x32, 0x74, 0x21, 0xa4, 0xac, 0xa0, 0x59, 0xec, 0xfb, 0x72,
+	0xe8, 0xb6, 0x2e, 0x5e, 0xf8, 0xa4, 0x3d, 0xdb, 0x21, 0x06, 0xb5, 0xbf, 0x26, 0x30, 0x6c, 0x5b,
+	0xaf, 0x73, 0xc2, 0xbe, 0xfd, 0x35, 0x51, 0xba, 0x08, 0x9e, 0x5d, 0x3c, 0x20, 0x9d, 0xda, 0x6a,
+	0x65, 0xbd, 0xa1, 0xc7, 0xef, 0xca, 0x19, 0xc1, 0x33, 0x68, 0x1f, 0x77, 0x66, 0x80, 0x37, 0x0f,
+	0xdf, 0xf5, 0x31, 0x1f, 0xd3, 0xa6, 0x86, 0x1f, 0x1e, 0x3a, 0xb6, 0xd9, 0x99, 0x5d, 0xad, 0xac,
+	0xd7, 0xf5, 0xba, 0x4d, 0xf7, 0xe0, 0x5d, 0xb9, 0x8a, 0x96, 0x7d, 0x07, 0xb3, 0x9e, 0x17, 0x0c,
+	0xa8, 0xc1, 0x3c, 0x83, 0x0e, 0x5d, 0xb3, 0x33, 0xb7, 0x5a, 0x5b, 0x6f, 0xe8, 0x8b, 0x31, 0xe3,
+	0xc0, 0xdb, 0x1f, 0xba, 0xa6, 0xb2, 0x81, 0x4e, 0x46, 0x9b, 0xee, 0x13, 0x6c, 0x91, 0x80, 0x1a,
+	0x7c, 0x6e, 0xda, 0x99, 0x07, 0xf9, 0x13, 0x92, 0xf9, 0x44, 0xf0, 0x76, 0x39, 0x4b, 0xb9, 0x85,
+	0x4e, 0xe5, 0xbf, 0x79, 0x83, 0x9d, 0x90, 0xd0, 0x4e, 0x1d, 0x3e, 0x5a, 0xc9, 0x7e, 0xf4, 0x05,
+	0xf0, 0x94, 0xcb, 0x68, 0x31, 0x14, 0xea, 0x3a, 0xc4, 0xcc, 0xec, 0x73, 0x1d, 0x37, 0x40, 0xc7,
+	0x6d, 0x41, 0xde, 0xe4, 0xd4, 0x1d, 0x4b, 0xfd, 0x6d, 0x15, 0x9d, 0x2f, 0xd5, 0x33, 0xf5, 0x3d,
+	0x97, 0x12, 0xae, 0xe8, 0xf0, 0xc8, 0x94, 0x8a, 0x9e, 0xd3, 0xc5, 0x8b, 0xf2, 0x11, 0x6a, 0x30,
+	0x7b, 0x40, 0x28, 0xc3, 0x03, 0x1f, 0x14, 0x3d, 0xaf, 0x27, 0x04, 0xae, 0xcd, 0x30, 0x70, 0x8c,
+	0xbe, 0x47, 0x99, 0xd4, 0xf4, 0x7c, 0x18, 0x38, 0x4f, 0x3c, 0xca, 0x22, 0x96, 0x8f, 0x59, 0x3f,
+	0x52, 0x74, 0x18, 0x38, 0x7b, 0x98, 0xf5, 0xb9, 0xa2, 0x43, 0x4a, 0x8c, 0x3e, 0x63, 0x3e, 0x8d,
+	0x14, 0x1d, 0x52, 0xf2, 0x84, 0xbf, 0x2b, 0x2f, 0xd0, 0x62, 0x4e, 0x11, 0xa0, 0xe6, 0xe6, 0xc6,
+	0x75, 0x6d, 0xc2, 0x0e, 0x34, 0x4e, 0x93, 0xfa, 0xd1, 0x17, 0xb2, 0xfa, 0xea, 0xde, 0x45, 0xcd,
+	0x14, 0x5b, 0x51, 0xd0, 0x0c, 0x98, 0x47, 0x05, 0x56, 0x06, 0xcf, 0x5c, 0x01, 0xa0, 0x72, 0xd8,
+	0x66, 0x43, 0x17, 0x2f, 0xea, 0x8f, 0x2b, 0xb1, 0xea, 0xb6, 0xbc, 0xc1, 0xc0, 0x66, 0x05, 0x36,
+	0xfa, 0x09, 0x52, 0x58, 0x80, 0x5d, 0xda, 0x23, 0x81, 0x41, 0x43, 0xd3, 0x24, 0xc4, 0x22, 0x42,
+	0x8f, 0x75, 0x7d, 0x39, 0xe2, 0xec, 0x47, 0x8c, 0xc4, 0xa4, 0xab, 0x69, 0x93, 0x4e, 0x5b, 0x66,
+	0x2d, 0x6b, 0x99, 0x69, 0x83, 0x9e, 0xc9, 0x1a, 0xb4, 0xba, 0x83, 0x56, 0xcb, 0x97, 0x27, 0x8f,
+	0xf6, 0x12, 0x5a, 0x80, 0xa1, 0x4d, 0x90, 0x60, 0xf1, 0xda, 0xda, 0x9c, 0xba, 0x15, 0x11, 0xd5,
+	0x5f, 0x56, 0xd0, 0xd9, 0xb4, 0x8e, 0x5f, 0x3c, 0xde, 0xfa, 0xa7, 0x39, 0xe3, 0x1a, 0x6a, 0x99,
+	0x9e, 0xcb, 0x78, 0x58, 0x61, 0x43, 0x9f, 0x80, 0x99, 0x34, 0xf4, 0xa6, 0xa4, 0x1d, 0x0c, 0x7d,
+	0xa2, 0xfe, 0xa4, 0x96, 0x0d, 0x1e, 0xe9, 0xe5, 0xca, 0x8d, 0xdb, 0x68, 0x81, 0x32, 0x2f, 0xc0,
+	0x47, 0xc4, 0xa0, 0x43, 0xca, 0xc8, 0x00, 0x16, 0xbe, 0xb0, 0xf1, 0x91, 0xb6, 0x0d, 0x7e, 0x4d,
+	0xfb, 0xc4, 0x7a, 0xc4, 0x67, 0x14, 0x42, 0xfb, 0x20, 0x73, 0xff, 0xe2, 0x2b, 0x63, 0x0c, 0x7b,
+	0xc7, 0x7d, 0x83, 0x1d, 0xdb, 0xd2, 0xdb, 0x34, 0x4d, 0x4d, 0xdc, 0xa7, 0x5a, 0xea, 0x3e, 0xb5,
+	0x71, 0xee, 0x33, 0x53, 0xee, 0x3e, 0xb3, 0x63, 0xdc, 0x67, 0x2e, 0xe7, 0x3e, 0x07, 0xa3, 0xee,
+	0x33, 0x0f, 0xee, 0x73, 0x4d, 0x1b, 0xaf, 0xab, 0x0f, 0xe3, 0x3d, 0xff, 0x13, 0x1f, 0x91, 0x30,
+	0xb3, 0x51, 0x93, 0xfa, 0x87, 0xf8, 0x4e, 0xac, 0xfc, 0x5a, 0x4a, 0xf9, 0xea, 0x93, 0x9c, 0xe7,
+	0x16, 0x18, 0xc8, 0x94, 0x9e, 0xf1, 0x59, 0xec, 0x18, 0x8f, 0x09, 0xe3, 0x16, 0xf1, 0x90, 0x30,
+	0x6c, 0x3b, 0x34, 0xed, 0x18, 0x49, 0xf0, 0x9c, 0x89, 0x4e, 0xbf, 0x70, 0xb1, 0xea, 0x9f, 0xaa,
+	0x68, 0x51, 0x8e, 0xf6, 0x82, 0x92, 0x80, 0x0f, 0x57, 0xe2, 0x58, 0x19, 0x9b, 0x8a, 0x47, 0x1d,
+	0xe7, 0x51, 0x19, 0x7b, 0x9b, 0x11, 0xe9, 0x36, 0xb1, 0xb7, 0x8c, 0xa3, 0xce, 0xe6, 0x1c, 0x75,
+	0x09, 0xd5, 0xc2, 0xc0, 0x01, 0x83, 0x6a, 0xe8, 0xfc, 0x51, 0xb9, 0x82, 0x16, 0x01, 0x77, 0xd8,
+	0x96, 0x61, 0x06, 0x04, 0x33, 0x2f, 0xe8, 0xcc, 0x83, 0x7e, 0x17, 0x24, 0x79, 0x4b, 0x50, 0xf9,
+	0x3a, 0x7b, 0x0e, 0x3e, 0xe2, 0xb9, 0x0a, 0x56, 0x0f, 0x2f, 0xc5, 0x29, 0xb3, 0x51, 0x9c, 0x32,
+	0xd3, 0x91, 0x00, 0x65, 0x23, 0xc1, 0x0d, 0xb4, 0x62, 0x7a, 0x03, 0x3f, 0x20, 0x94, 0x12, 0xcb,
+	0x48, 0xd6, 0xdf, 0x84, 0xb9, 0x94, 0x84, 0xf7, 0x48, 0xee, 0x44, 0x0d, 0x63, 0xa3, 0x1b, 0x39,
+	0x2d, 0x79, 0xec, 0x57, 0xd1, 0xbc, 0x25, 0x68, 0xa0, 0xf0, 0xe6, 0xc6, 0x92, 0x96, 0x3b, 0x11,
+	0x3d, 0x12, 0xe0, 0x5a, 0x08, 0xb0, 0x7b, 0x44, 0x4c, 0x80, 0x51, 0xe0, 0xab, 0xc2, 0xc4, 0x17,
+	0x12, 0x32, 0x77, 0x59, 0xf5, 0x8b, 0x38, 0x12, 0x3f, 0x26, 0x6c, 0xdf, 0x76, 0x8f, 0x1c, 0xc2,
+	0x47, 0xda, 0x71, 0x7b, 0x5e, 0x6c, 0x27, 0x27, 0xd1, 0x1c, 0xf6, 0x7d, 0x23, 0x73, 0xd0, 0x3b,
+	0x49, 0x04, 0x85, 0x33, 0xad, 0x26, 0x67, 0xca, 0xb1, 0x81, 0xfa, 0xe7, 0x0a, 0x5a, 0x1b, 0x33,
+	0xb0, 0xdc, 0x52, 0x32, 0x72, 0xb5, 0x74, 0xe4, 0x5a, 0x76, 0x64, 0xae, 0x75, 0xda, 0xc7, 0xa0,
+	0x53, 0x30, 0x96, 0x96, 0x3e, 0x4f, 0xfb, 0x18, 0x0c, 0xf2, 0x2c, 0x42, 0xdc, 0x6e, 0x0c, 0x61,
+	0x49, 0xb3, 0x89, 0x25, 0xed, 0x83, 0x25, 0xa9, 0xa8, 0x1d, 0xe0, 0xb7, 0xa9, 0xd3, 0x98, 0x83,
+	0x49, 0x9b, 0x01, 0x7e, 0x1b, 0x1d, 0x83, 0x72, 0x1d, 0x29, 0x36, 0x35, 0xc8, 0xb1, 0xef, 0xd8,
+	0xa6, 0xcd, 0x0c, 0x8b, 0x70, 0xec, 0x08, 0x16, 0x54, 0xd7, 0x97, 0x6c, 0xba, 0x2d, 0x19, 0x0f,
+	0x81, 0xae, 0xee, 0xa2, 0x8e, 0xdc, 0xe4, 0x7e, 0x1f, 0x07, 0xb0, 0xc1, 0xf7, 0xd2, 0xda, 0x33,
+	0x74, 0xa6, 0x60, 0x3c, 0xa9, 0xac, 0x1b, 0xa8, 0xde, 0x97, 0xa9, 0x44, 0xc0, 0x9d, 0xfb, 0x2b,
+	0x37, 0x3f, 0xbd, 0x75, 0xeb, 0xce, 0xdd, 0x5b, 0xb7, 0x6e, 0xdc, 0xfd, 0xb7, 0xbb, 0x37, 0xee,
+	0xdd, 0xbe, 0x7d, 0xf3, 0xce, 0xcd, 0xdb, 0x7a, 0x2c, 0xa5, 0x7e, 0x9b, 0x1c, 0xc2, 0xb6, 0x1b,
+	0x0e, 0x48, 0x80, 0x19, 0x89, 0x6c, 0x85, 0x4e, 0xc8, 0x8f, 0x1f, 0xa3, 0x25, 0x72, 0xcc, 0x88,
+	0x6b, 0x11, 0xcb, 0x88, 0xcc, 0xae, 0x0a, 0x6a, 0x58, 0x8c, 0xe8, 0xd2, 0x42, 0xf9, 0x00, 0xa6,
+	0x17, 0xba, 0x02, 0x4d, 0xb5, 0x75, 0xf1, 0xa2, 0x9c, 0x47, 0x4d, 0xca, 0x70, 0xc0, 0x0c, 0xdb,
+	0xb5, 0xc8, 0x31, 0x1c, 0x55, 0x5b, 0x47, 0x40, 0xda, 0xe1, 0x14, 0x75, 0x80, 0xd4, 0x71, 0x8b,
+	0x93, 0xbb, 0xbe, 0x8c, 0x66, 0xb9, 0x7a, 0xb8, 0xcd, 0xd7, 0x0a, 0x6d, 0x5e, 0xb0, 0xf9, 0x74,
+	0xcc, 0x63, 0xd8, 0x31, 0x84, 0xb4, 0xb0, 0x27, 0x04, 0x24, 0x18, 0x51, 0x7d, 0x8d, 0x4e, 0xca,
+	0x4f, 0xc5, 0xe1, 0xc5, 0xfb, 0x4f, 0x87, 0xa6, 0x4a, 0x2e, 0x34, 0x15, 0x47, 0xee, 0x02, 0x04,
+	0x5b, 0x2b, 0x42, 0xb0, 0x1d, 0x74, 0x2a, 0x3f, 0xa5, 0xd8, 0x95, 0x7a, 0x05, 0x5d, 0x4a, 0xbc,
+	0x43, 0x54, 0x2c, 0xdb, 0xae, 0x19, 0x0c, 0x7d, 0x5e, 0x9d, 0x7c, 0x46, 0x86, 0xd1, 0xe2, 0xd4,
+	0xa7, 0xe8, 0xf2, 0x24, 0x41, 0xa9, 0xa8, 0x25, 0x54, 0x7b, 0x45, 0x86, 0xb0, 0x83, 0x96, 0xce,
+	0x1f, 0x39, 0xc5, 0x0c, 0x4c, 0x58, 0xfa, 0xac, 0xce, 0x1f, 0xd5, 0xbf, 0x25, 0x60, 0x69, 0xeb,
+	0xe1, 0xae, 0x4e, 0x7c, 0x2f, 0x60, 0xd9, 0xc2, 0xa8, 0x83, 0xe6, 0x65, 0x9c, 0x94, 0x90, 0x3a,
+	0x7a, 0x8d, 0x42, 0x6d, 0x35, 0x09, 0xb5, 0x5c, 0x96, 0xe7, 0x38, 0x4a, 0x61, 0xfb, 0x75, 0x3d,
+	0x7a, 0x55, 0xd6, 0xd1, 0x12, 0xcf, 0xf4, 0xdc, 0x11, 0x59, 0x48, 0x0d, 0xd3, 0xb3, 0x88, 0x34,
+	0x80, 0x05, 0x4e, 0xdf, 0x07, 0xf2, 0x96, 0x67, 0x41, 0x2e, 0x23, 0xc7, 0x3e, 0x31, 0x19, 0x2f,
+	0x2a, 0x87, 0x8c, 0x50, 0xe9, 0xb6, 0xed, 0x88, 0xba, 0xc9, 0x89, 0x5c, 0x2c, 0x20, 0x26, 0xb1,
+	0xdf, 0xc4, 0x62, 0x73, 0x42, 0x2c, 0xa2, 0x0a, 0xb1, 0x2e, 0xaa, 0x5b, 0x61, 0x00, 0x3b, 0x01,
+	0x9f, 0x6d, 0xeb, 0xf1, 0xbb, 0xfa, 0xc7, 0x19, 0x74, 0x33, 0xb2, 0xb7, 0x63, 0x46, 0x02, 0x17,
+	0x3b, 0x12, 0x22, 0x1d, 0xc8, 0x84, 0x5d, 0xa4, 0x0f, 0x05, 0xcd, 0x40, 0xf4, 0x94, 0xa8, 0x81,
+	0x3f, 0x73, 0x1a, 0x40, 0x1c, 0xa1, 0x0a, 0x78, 0x96, 0x75, 0x98, 0x38, 0x7e, 0xa9, 0x8d, 0xba,
+	0x4d, 0x45, 0xe6, 0x4e, 0x2b, 0x6a, 0x66, 0xb2, 0xa2, 0x66, 0xcb, 0x14, 0x05, 0x1b, 0x37, 0x22,
+	0xc5, 0x44, 0x1a, 0x00, 0xea, 0xb6, 0x24, 0x72, 0x08, 0x2a, 0xc4, 0xb0, 0xc9, 0x42, 0xec, 0x80,
+	0x16, 0x66, 0xf4, 0x26, 0xd0, 0x1e, 0x00, 0x89, 0x7b, 0x4a, 0xa4, 0x14, 0x63, 0x10, 0xa5, 0x3f,
+	0x14, 0x91, 0x9e, 0x51, 0xe5, 0x14, 0x9a, 0x33, 0x89, 0xe3, 0xc8, 0xba, 0xac, 0xad, 0xcb, 0x37,
+	0xbe, 0x0d, 0x3f, 0xf0, 0x8e, 0x6d, 0x62, 0x41, 0xba, 0xab, 0xeb, 0xd1, 0x2b, 0x0f, 0xbc, 0xb6,
+	0xff, 0xe6, 0x8e, 0xe1, 0x78, 0x26, 0x76, 0x20, 0xc9, 0xd5, 0xf5, 0x06, 0xa7, 0x3c, 0xe5, 0x04,
+	0x3e, 0x23, 0xb0, 0x03, 0x32, 0xf0, 0x18, 0xe9, 0xb4, 0x80, 0x0f, 0x5f, 0xe8, 0x40, 0x51, 0xae,
+	0x21, 0x05, 0x02, 0x37, 0xf3, 0x0c, 0xd3, 0x73, 0x5d, 0x62, 0x32, 0xbe, 0xb2, 0x36, 0xcc, 0xbe,
+	0xc8, 0x39, 0x07, 0xde, 0x96, 0xa0, 0x3f, 0xa3, 0xca, 0x75, 0x74, 0x22, 0x12, 0xa6, 0xc4, 0xb5,
+	0x8c, 0x80, 0xbc, 0xe6, 0xd2, 0x0b, 0x69, 0xe9, 0x7d, 0xe2, 0x5a, 0x3a, 0x79, 0xfd, 0x8c, 0x2a,
+	0x37, 0xd0, 0xc9, 0x48, 0xba, 0x67, 0x07, 0x94, 0x81, 0xf9, 0x70, 0xf9, 0x45, 0x90, 0x5f, 0x16,
+	0xf2, 0x8f, 0x38, 0x8b, 0xdb, 0xd0, 0x33, 0xaa, 0x68, 0x68, 0x25, 0xfa, 0xc2, 0xc1, 0xa9, 0x0f,
+	0x96, 0xe0, 0x83, 0x25, 0xf1, 0xc1, 0x53, 0x1c, 0xc9, 0xab, 0xdf, 0x57, 0xe2, 0x40, 0x06, 0x30,
+	0xf5, 0x81, 0xef, 0xbf, 0x48, 0xc2, 0xc0, 0x84, 0x30, 0xbb, 0x86, 0x5a, 0x03, 0x6c, 0xf6, 0x6d,
+	0x37, 0x93, 0x11, 0x9a, 0x92, 0x06, 0x09, 0xef, 0x32, 0x5a, 0x84, 0x98, 0xc6, 0x17, 0x14, 0x1b,
+	0x18, 0x07, 0x24, 0x80, 0xf7, 0xe8, 0x81, 0x27, 0xad, 0x2c, 0x2d, 0x27, 0xf3, 0xd6, 0x4c, 0x46,
+	0x4e, 0x04, 0xa1, 0x6c, 0xef, 0x63, 0x36, 0xd7, 0xfb, 0x58, 0x45, 0x2d, 0x9e, 0xb5, 0x0e, 0x43,
+	0xdb, 0xb1, 0x38, 0x5f, 0x18, 0x19, 0xc2, 0xbe, 0xbf, 0xc9, 0x49, 0x3b, 0x96, 0xea, 0xa0, 0x0b,
+	0x63, 0x77, 0x2b, 0xc3, 0xd1, 0x19, 0x54, 0x8f, 0x83, 0xa3, 0xc0, 0x97, 0xf3, 0x87, 0x22, 0x2c,
+	0x72, 0x8c, 0xc5, 0xe7, 0x30, 0xfb, 0x1c, 0x8a, 0x18, 0x6e, 0x38, 0x38, 0x24, 0x81, 0xc4, 0x7d,
+	0x8b, 0xd8, 0xf7, 0xb7, 0x80, 0xbe, 0x0b, 0x64, 0xf5, 0xff, 0x2a, 0xe8, 0x6a, 0x82, 0x87, 0xa1,
+	0x93, 0x93, 0x9b, 0x31, 0xe3, 0xae, 0xc5, 0x4a, 0x4e, 0xaf, 0xa5, 0x9a, 0x5d, 0xcb, 0x05, 0xd4,
+	0x16, 0x2c, 0x12, 0x10, 0x1a, 0x3a, 0x51, 0x0e, 0x6b, 0x01, 0x71, 0x5b, 0xd0, 0xd4, 0x6f, 0xe2,
+	0x68, 0x5d, 0xb2, 0x86, 0xf1, 0x67, 0xfc, 0xbe, 0xd3, 0xaf, 0xc7, 0x39, 0xa0, 0x74, 0x7a, 0x99,
+	0x56, 0xbe, 0xab, 0xa1, 0x8b, 0x99, 0x36, 0x18, 0x1c, 0x11, 0xcf, 0x7f, 0xef, 0x5f, 0x13, 0x8f,
+	0xa0, 0xa7, 0xda, 0x28, 0x7a, 0xca, 0xd7, 0xc6, 0xad, 0x04, 0x11, 0x4f, 0xc0, 0x66, 0xe9, 0x24,
+	0x3c, 0x97, 0x4b, 0xc2, 0x77, 0x8a, 0x30, 0x39, 0x84, 0xf7, 0xfb, 0xe8, 0xd6, 0xc6, 0xbd, 0x5b,
+	0xf7, 0xee, 0xdc, 0xdd, 0xb8, 0x77, 0x7b, 0x14, 0x9f, 0x9f, 0x46, 0xf3, 0x3c, 0x72, 0x19, 0xd9,
+	0x40, 0xb6, 0x63, 0xf1, 0x78, 0x64, 0x62, 0xd7, 0x20, 0x22, 0x91, 0xca, 0x60, 0x86, 0x4c, 0xec,
+	0xca, 0xd4, 0xaa, 0x5c, 0x44, 0x0b, 0x36, 0xe5, 0xbb, 0x08, 0x24, 0x7a, 0x97, 0x31, 0xad, 0x65,
+	0x53, 0x00, 0x66, 0x00, 0xdb, 0x39, 0x44, 0xb2, 0x88, 0x1f, 0x10, 0x13, 0xf3, 0xec, 0x15, 0x10,
+	0xec, 0x0c, 0x20, 0xb6, 0xb5, 0xf5, 0xc5, 0x84, 0xae, 0x73, 0x72, 0x11, 0x62, 0x68, 0x17, 0x21,
+	0x86, 0xdf, 0xd7, 0xd0, 0x9a, 0x38, 0x39, 0x38, 0xc5, 0xe4, 0xe4, 0x36, 0x1d, 0xcf, 0x7c, 0x15,
+	0x01, 0xae, 0x74, 0x09, 0x5e, 0x29, 0x2f, 0xc1, 0xab, 0x63, 0x4a, 0xf0, 0x5a, 0xae, 0x04, 0x3f,
+	0x8f, 0x9a, 0x90, 0x88, 0x06, 0x84, 0xf5, 0x3d, 0x0b, 0x0e, 0x6f, 0x56, 0x47, 0x9c, 0xf4, 0x0c,
+	0x28, 0xca, 0x97, 0xa3, 0x35, 0xfa, 0x2c, 0x20, 0x32, 0x4d, 0x9b, 0xb8, 0xe0, 0x71, 0x65, 0x3a,
+	0x64, 0x2c, 0x2e, 0x6b, 0x78, 0xbd, 0x1e, 0x25, 0x4c, 0x46, 0x9c, 0x26, 0xd0, 0x9e, 0x03, 0x29,
+	0x11, 0x71, 0x88, 0x7b, 0xc4, 0xfa, 0x32, 0xb5, 0x0b, 0x91, 0xa7, 0x40, 0xe2, 0xb8, 0x3d, 0x06,
+	0xed, 0x87, 0x9e, 0x35, 0x34, 0x2c, 0xcc, 0x30, 0xe4, 0xb6, 0x96, 0xbe, 0x14, 0x71, 0x36, 0x3d,
+	0x6b, 0xf8, 0x10, 0x33, 0xcc, 0xcb, 0xa3, 0x01, 0x1e, 0x1a, 0x3e, 0x0e, 0xb0, 0xe3, 0x10, 0x87,
+	0x5b, 0x73, 0x03, 0x14, 0xb2, 0x30, 0xc0, 0xc3, 0xbd, 0x84, 0xfa, 0xc3, 0x7b, 0x08, 0x3f, 0xaa,
+	0x24, 0x31, 0xa3, 0xc4, 0x13, 0x65, 0xa0, 0x5c, 0x43, 0x2d, 0x69, 0x88, 0xc2, 0xd2, 0x44, 0x2d,
+	0xdf, 0x94, 0x34, 0x30, 0xb4, 0x1d, 0xb4, 0x20, 0xf6, 0x2f, 0x55, 0xc7, 0xe1, 0x2d, 0x57, 0xbd,
+	0x3a, 0x59, 0xf5, 0x7a, 0x1b, 0xbe, 0x94, 0x7e, 0x4f, 0xd5, 0x9f, 0xe6, 0xd7, 0x25, 0xfa, 0x05,
+	0x05, 0x21, 0xe2, 0x83, 0xf4, 0x07, 0x5b, 0xd3, 0xf5, 0x07, 0x9f, 0x27, 0x11, 0xaf, 0x6c, 0x91,
+	0xef, 0xd6, 0x0b, 0xf9, 0xff, 0xa4, 0x12, 0x12, 0x23, 0x42, 0x85, 0xed, 0xbd, 0x75, 0xa7, 0x88,
+	0x8a, 0xe9, 0x85, 0x56, 0x47, 0xeb, 0x03, 0xe1, 0xf7, 0xb2, 0xf4, 0x81, 0x17, 0xee, 0x4c, 0x3d,
+	0x2f, 0x30, 0x89, 0xc1, 0xf1, 0xd1, 0x50, 0x62, 0x3e, 0x04, 0xa4, 0x3d, 0x4e, 0x51, 0xff, 0x5a,
+	0x8b, 0x21, 0x43, 0xe1, 0x72, 0x92, 0xee, 0xf6, 0x07, 0x8a, 0xd2, 0x3f, 0xb0, 0x82, 0x2e, 0xae,
+	0x8e, 0xe7, 0x8a, 0xab, 0xe3, 0x4c, 0x98, 0x9a, 0x2f, 0x0f, 0x53, 0xf5, 0x31, 0x61, 0xaa, 0x91,
+	0x0b, 0x53, 0xff, 0x39, 0x1a, 0x85, 0x10, 0xb8, 0xc2, 0xbf, 0x6a, 0x93, 0xf5, 0x39, 0x36, 0x0c,
+	0x7d, 0x84, 0x1a, 0xd2, 0xe5, 0x88, 0x15, 0x21, 0xd8, 0x98, 0xf0, 0xc3, 0xe3, 0xc0, 0xcf, 0x52,
+	0x9d, 0x78, 0x58, 0x99, 0xd0, 0x4d, 0xa6, 0x53, 0xf0, 0xee, 0x66, 0x57, 0x7c, 0x0e, 0xb5, 0x92,
+	0x73, 0x28, 0x48, 0x3e, 0x33, 0x45, 0xc9, 0x47, 0x4d, 0xba, 0xf2, 0xa3, 0x4b, 0x95, 0x08, 0xc3,
+	0x47, 0xd7, 0x73, 0x9e, 0xe9, 0xf6, 0x1c, 0xdb, 0x64, 0x3a, 0xa1, 0x9e, 0x13, 0x42, 0x4d, 0x31,
+	0x05, 0x20, 0xbb, 0x8a, 0x96, 0xcd, 0xbe, 0x47, 0x89, 0x28, 0x18, 0x52, 0x25, 0x7b, 0x5d, 0x5f,
+	0x04, 0x06, 0xd4, 0x0d, 0xa2, 0x6e, 0x1f, 0xc4, 0x78, 0xf3, 0x31, 0x61, 0x0f, 0x7c, 0x9f, 0x53,
+	0x05, 0x44, 0x74, 0x6c, 0xca, 0x26, 0x28, 0xf1, 0x06, 0x5a, 0xe1, 0x68, 0x81, 0x58, 0x39, 0xb4,
+	0x29, 0x60, 0x98, 0x22, 0x78, 0x19, 0xc0, 0xf9, 0x8b, 0x1a, 0x52, 0xe4, 0x7c, 0x72, 0xb2, 0x1d,
+	0xb7, 0xe7, 0x65, 0xdb, 0x36, 0x95, 0x31, 0x2d, 0xa9, 0xea, 0x38, 0x87, 0xaa, 0x4d, 0x6c, 0x49,
+	0xcd, 0x8c, 0xba, 0x2b, 0x41, 0x6d, 0x9f, 0x04, 0x94, 0x6f, 0x96, 0x97, 0x89, 0xa2, 0x40, 0x5c,
+	0xd8, 0xe8, 0x6a, 0xdb, 0xb0, 0x4c, 0x59, 0xc4, 0xee, 0x09, 0x11, 0x5e, 0x31, 0x12, 0xb8, 0x0c,
+	0x28, 0x63, 0xca, 0x67, 0x62, 0xe9, 0x2d, 0x3f, 0x45, 0x2e, 0xbb, 0x2c, 0x04, 0x38, 0x93, 0x47,
+	0x56, 0x5c, 0x16, 0xb3, 0xbe, 0xe1, 0x07, 0xa4, 0x67, 0x1f, 0xcb, 0x0e, 0xcf, 0xbc, 0x94, 0xc5,
+	0xac, 0xbf, 0x07, 0x74, 0x68, 0xf3, 0x70, 0x5b, 0x4d, 0x57, 0x38, 0x52, 0x58, 0x54, 0x9d, 0x4b,
+	0xa9, 0x3a, 0x47, 0x48, 0x7f, 0x82, 0x94, 0x80, 0x48, 0x6b, 0x95, 0x1e, 0x4a, 0x2c, 0x19, 0x06,
+	0x96, 0x23, 0x8e, 0x1e, 0x31, 0xd4, 0x6f, 0xab, 0x31, 0xe0, 0x2d, 0xb1, 0x0e, 0x19, 0x4a, 0x37,
+	0xd0, 0x49, 0x33, 0x0c, 0x02, 0x5e, 0xf5, 0x64, 0x2d, 0x41, 0xd4, 0x26, 0x27, 0x24, 0x33, 0x6d,
+	0x0a, 0xca, 0xc7, 0x51, 0xeb, 0x49, 0x64, 0xdb, 0x13, 0xda, 0xa8, 0x5d, 0x44, 0xdd, 0x27, 0x15,
+	0xb5, 0x6d, 0x6a, 0x78, 0xae, 0x33, 0xe4, 0xce, 0xc8, 0xb0, 0xf4, 0xc5, 0xa6, 0x4d, 0x9f, 0xbb,
+	0xce, 0xf0, 0x21, 0x27, 0x71, 0xac, 0x9f, 0x52, 0x1a, 0xa1, 0xb2, 0x3a, 0x6b, 0x25, 0x0a, 0x23,
+	0x94, 0x0b, 0xa5, 0xb5, 0x25, 0x40, 0x56, 0x43, 0x6f, 0xa5, 0x14, 0x05, 0x37, 0xa8, 0x71, 0x91,
+	0x66, 0x5b, 0x46, 0xff, 0xed, 0x20, 0x6a, 0x06, 0x44, 0x75, 0x9a, 0x6d, 0x3d, 0x79, 0x3b, 0x50,
+	0x7f, 0x5e, 0x89, 0x3d, 0xfa, 0x81, 0xef, 0xef, 0x13, 0x4a, 0x6d, 0xcf, 0xdd, 0x0f, 0xa9, 0xcf,
+	0xcb, 0xe6, 0x89, 0xa5, 0x40, 0x52, 0x24, 0x56, 0x73, 0x45, 0x62, 0xbe, 0x68, 0xad, 0x8d, 0x16,
+	0xad, 0x37, 0xd0, 0x0a, 0xfc, 0x6c, 0x00, 0x66, 0xc4, 0xb3, 0x33, 0xd4, 0x2d, 0x96, 0xcc, 0x85,
+	0x0a, 0xf0, 0xb8, 0x29, 0x45, 0x15, 0x8d, 0xa5, 0x5e, 0x88, 0x33, 0x74, 0xd1, 0x5a, 0x65, 0xf8,
+	0x39, 0x88, 0xa3, 0x69, 0x22, 0xa4, 0x13, 0x1a, 0x0e, 0xc8, 0x7b, 0xec, 0x27, 0x15, 0xf8, 0x0a,
+	0x46, 0x95, 0x33, 0x7f, 0x5f, 0x89, 0x1b, 0xf4, 0x0f, 0x7c, 0xff, 0x29, 0x0e, 0x5d, 0xb3, 0xbf,
+	0x23, 0xee, 0xfa, 0x3e, 0xac, 0x26, 0xef, 0xa3, 0x33, 0xf6, 0x91, 0xeb, 0x05, 0xc4, 0xe0, 0xaa,
+	0xb0, 0xdd, 0x23, 0xc3, 0xf3, 0x89, 0xe8, 0xd5, 0x44, 0xed, 0xa4, 0xd3, 0x42, 0x60, 0x4f, 0xf0,
+	0x9f, 0xc7, 0x6c, 0x5e, 0x01, 0x79, 0x34, 0xb9, 0x8b, 0x9c, 0xd5, 0xe7, 0x3c, 0x7a, 0x30, 0xf4,
+	0x09, 0xf4, 0x80, 0xc8, 0x1b, 0xdb, 0x24, 0x82, 0x39, 0x27, 0xe0, 0xbe, 0x20, 0xc1, 0x3d, 0xe5,
+	0x37, 0x69, 0x45, 0xe7, 0x76, 0x2b, 0x5d, 0xea, 0x25, 0x3a, 0x13, 0xad, 0x48, 0x34, 0x76, 0xd2,
+	0x0b, 0x13, 0xdd, 0xda, 0x73, 0x91, 0xcb, 0xc8, 0xa5, 0x89, 0x76, 0x4f, 0xbc, 0x40, 0xfd, 0xb4,
+	0x5f, 0x48, 0xa7, 0xea, 0xaf, 0x2a, 0x71, 0xd4, 0x7f, 0xe0, 0xfb, 0xdb, 0xc7, 0x36, 0xe3, 0xc6,
+	0xf2, 0xd0, 0x73, 0xc9, 0x34, 0xe9, 0x65, 0xac, 0xca, 0xaf, 0xa1, 0x65, 0x11, 0x45, 0x68, 0xca,
+	0x2c, 0x65, 0xea, 0x94, 0x8c, 0xd8, 0x28, 0x79, 0x89, 0x17, 0x09, 0xf3, 0x68, 0x64, 0x07, 0xb1,
+	0x09, 0xcb, 0x94, 0x4a, 0x75, 0x49, 0x56, 0xff, 0x3d, 0x07, 0xac, 0x45, 0x3c, 0xfa, 0x3c, 0xf4,
+	0x18, 0x7e, 0x41, 0xf1, 0xd1, 0x04, 0x03, 0x55, 0xbf, 0xab, 0xe4, 0x30, 0x6f, 0xc1, 0xf7, 0x09,
+	0xe6, 0x25, 0xc7, 0x36, 0x65, 0x5c, 0xf3, 0x51, 0x6f, 0x9c, 0x8f, 0xd4, 0x8e, 0xa8, 0x90, 0x38,
+	0x33, 0x62, 0xa2, 0x67, 0x5a, 0x8d, 0x5a, 0xab, 0x82, 0x2a, 0x7a, 0xa6, 0x2a, 0x8f, 0x38, 0xc7,
+	0x3c, 0x1c, 0xca, 0xc1, 0x24, 0x62, 0x1c, 0xe0, 0xe3, 0xdd, 0x70, 0xf0, 0x28, 0x0a, 0x6f, 0x91,
+	0x8c, 0x18, 0x49, 0xe0, 0x07, 0x29, 0x03, 0xe3, 0xa8, 0xaf, 0xd0, 0x95, 0xe4, 0xc4, 0x64, 0xf2,
+	0xc1, 0x4c, 0x06, 0xe3, 0x29, 0x41, 0xc1, 0x68, 0x5b, 0xa8, 0x5a, 0xdc, 0x16, 0xfa, 0x2c, 0xe9,
+	0x0a, 0x65, 0x7f, 0xf7, 0x91, 0x4a, 0xce, 0xce, 0x97, 0xfd, 0xa1, 0xa7, 0x92, 0xfb, 0xa1, 0x67,
+	0xe3, 0x0f, 0x27, 0xd0, 0x2c, 0x0c, 0xa6, 0xec, 0xa2, 0x95, 0xa2, 0xff, 0x90, 0x94, 0x8f, 0xb5,
+	0x69, 0xff, 0x52, 0xea, 0x36, 0xb5, 0x5d, 0x2f, 0x3e, 0xa9, 0x03, 0x74, 0xba, 0xe4, 0x77, 0x24,
+	0xe5, 0xba, 0xf6, 0x0e, 0xff, 0x2b, 0xe5, 0x47, 0x5d, 0xcc, 0xfd, 0x4e, 0xa2, 0x9c, 0xd7, 0xc6,
+	0xff, 0x91, 0xd4, 0x5d, 0x9d, 0xf4, 0x23, 0x8a, 0xf2, 0x25, 0x5a, 0xca, 0xff, 0x8c, 0xa1, 0xc4,
+	0x5f, 0x95, 0xfd, 0x45, 0xd2, 0x5d, 0xd3, 0x26, 0xfe, 0xc8, 0xf1, 0x39, 0x5a, 0xc8, 0x5e, 0xdf,
+	0x2b, 0xe7, 0xb4, 0xb1, 0x7f, 0x6c, 0x74, 0xcf, 0x4f, 0xb8, 0xf6, 0xe7, 0x1a, 0xc8, 0xdd, 0x8e,
+	0x27, 0x1a, 0x28, 0xb9, 0xb3, 0xef, 0xae, 0x6a, 0x93, 0xee, 0xd5, 0x3f, 0x47, 0x0b, 0xd9, 0xbb,
+	0xd7, 0x64, 0xa1, 0xc5, 0x37, 0xe8, 0xc9, 0x42, 0xcb, 0xee, 0x6c, 0x5f, 0xa2, 0xe5, 0x91, 0xeb,
+	0x4f, 0x65, 0x4d, 0x9b, 0x74, 0xe5, 0xda, 0x55, 0xb5, 0xc9, 0x97, 0xa7, 0x9b, 0xa8, 0x11, 0xdf,
+	0x12, 0x2a, 0x67, 0xb4, 0xb2, 0x8b, 0xc8, 0x6e, 0x57, 0x2b, 0xbf, 0x53, 0xfc, 0x0a, 0x29, 0xa3,
+	0x97, 0x6f, 0x4a, 0x3c, 0x7b, 0xf9, 0xad, 0x61, 0xf7, 0x82, 0x36, 0xc5, 0xe5, 0xdd, 0x3d, 0x34,
+	0x27, 0x6b, 0x90, 0x53, 0x5a, 0xe1, 0xe5, 0x5b, 0xf7, 0xb4, 0x56, 0x7c, 0x43, 0xa6, 0xd8, 0xe8,
+	0x54, 0xf1, 0x8d, 0x97, 0x72, 0x59, 0x9b, 0xea, 0xea, 0xac, 0x7b, 0x45, 0x9b, 0xf2, 0xe6, 0xec,
+	0x53, 0xd4, 0x88, 0x6f, 0xc3, 0x92, 0x23, 0x2f, 0xbe, 0x20, 0xcb, 0x7a, 0xe2, 0x7f, 0xa1, 0xb3,
+	0x63, 0xef, 0x92, 0x94, 0x0d, 0xed, 0x9d, 0xaf, 0x9c, 0xf2, 0x33, 0x9c, 0x28, 0x68, 0xb3, 0x2b,
+	0x17, 0xb4, 0xc9, 0x37, 0x0e, 0xdd, 0x8b, 0xda, 0x34, 0x8d, 0x7a, 0x1d, 0x9d, 0x2a, 0x6e, 0x2b,
+	0x2b, 0xd7, 0xb4, 0xe9, 0x3b, 0xef, 0xd9, 0x55, 0xbf, 0x46, 0xe7, 0x8a, 0xbf, 0x81, 0xd6, 0x94,
+	0xed, 0x1e, 0x25, 0x87, 0x38, 0xbe, 0xa3, 0x9e, 0x1c, 0xe2, 0x84, 0xd6, 0xb7, 0xd2, 0x43, 0x27,
+	0x0b, 0x1b, 0x6d, 0xca, 0x25, 0x6d, 0x9a, 0x8e, 0x78, 0xf7, 0xb2, 0x36, 0x5d, 0xbb, 0xce, 0x46,
+	0xa7, 0x8a, 0x7b, 0x52, 0x4a, 0x6e, 0x84, 0xb2, 0xc6, 0x5a, 0x6a, 0x4b, 0x13, 0x7a, 0x5b, 0x5f,
+	0x21, 0x65, 0xb4, 0x9b, 0x91, 0x38, 0x67, 0x79, 0x23, 0x2b, 0x71, 0xce, 0x71, 0xdd, 0x25, 0x1e,
+	0xf0, 0x73, 0x75, 0x7e, 0x2a, 0xe0, 0x97, 0x34, 0x2b, 0x52, 0x01, 0xbf, 0xac, 0x47, 0xa0, 0x7c,
+	0x81, 0x3a, 0x65, 0xcd, 0x01, 0xe5, 0x13, 0xed, 0x5d, 0xda, 0x07, 0x59, 0xab, 0x32, 0xd1, 0x4a,
+	0x51, 0x91, 0xa7, 0x5c, 0xd4, 0xa6, 0x68, 0x10, 0x74, 0x2f, 0x69, 0x53, 0x15, 0x8a, 0x2f, 0xd1,
+	0xb2, 0xac, 0x3a, 0x92, 0x5a, 0x20, 0x89, 0xd8, 0xa5, 0x65, 0x54, 0x12, 0xb1, 0xcb, 0xab, 0x17,
+	0xae, 0x71, 0x51, 0x56, 0xa4, 0x86, 0x5e, 0xd5, 0x26, 0x14, 0x34, 0xdd, 0x35, 0x6d, 0x52, 0x71,
+	0xa2, 0xbc, 0x44, 0x27, 0xf7, 0xed, 0x23, 0x17, 0x3b, 0x39, 0xb0, 0x9e, 0x64, 0xc5, 0x92, 0x9a,
+	0xa5, 0xbb, 0xaa, 0x4d, 0x82, 0xf9, 0xff, 0x91, 0x1a, 0x3b, 0x0d, 0xc4, 0x13, 0xb5, 0x8f, 0x43,
+	0xe8, 0xd9, 0x13, 0x8c, 0x9d, 0x27, 0x0f, 0x6e, 0xf3, 0xce, 0x53, 0x06, 0x9e, 0xf3, 0xce, 0x53,
+	0x0a, 0x92, 0x37, 0x7e, 0x53, 0x41, 0x4d, 0x90, 0x14, 0x82, 0xca, 0x33, 0xb4, 0x02, 0xeb, 0x1a,
+	0x72, 0x2d, 0x26, 0xc0, 0x54, 0x59, 0xd7, 0xa6, 0x44, 0xad, 0xd9, 0x9d, 0xe8, 0xd1, 0x4e, 0xf2,
+	0xc8, 0x33, 0x15, 0x35, 0x27, 0x23, 0xd3, 0xcc, 0x98, 0xdd, 0x99, 0xdf, 0xfd, 0xba, 0x53, 0xdd,
+	0xac, 0xfd, 0x6f, 0xa5, 0xf2, 0xf7, 0x00, 0x00, 0x00, 0xff, 0xff, 0xd0, 0x26, 0x6e, 0xbc, 0xb8,
+	0x2f, 0x00, 0x00,
 }

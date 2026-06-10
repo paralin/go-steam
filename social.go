@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"encoding/binary"
 	"encoding/hex"
+	"github.com/golang/protobuf/proto"
 	. "github.com/paralin/go-steam/protocol"
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	. "github.com/paralin/go-steam/protocol/steamlang"
 	. "github.com/paralin/go-steam/rwu"
 	"github.com/paralin/go-steam/socialcache"
 	"github.com/paralin/go-steam/steamid"
-	"github.com/golang/protobuf/proto"
 	"io"
 	"sync"
 	"time"
@@ -367,10 +367,7 @@ func (s *Social) handlePersonaState(packet *Packet) {
 			ClanRank:               friend.GetClanRank(),
 			ClanTag:                friend.GetClanTag(),
 			OnlineSessionInstances: friend.GetOnlineSessionInstances(),
-			PublishedSessionId:     friend.GetPublishedInstanceId(),
 			PersonaSetByUser:       friend.GetPersonaSetByUser(),
-			FacebookName:           friend.GetFacebookName(),
-			FacebookId:             friend.GetFacebookId(),
 		})
 	}
 }
@@ -411,14 +408,13 @@ func (s *Social) handleClanState(packet *Packet) {
 			JustPosted: announce.GetJustPosted(),
 		})
 	}
-	flags := EClientPersonaStateFlag(body.GetMUnStatusFlags())
 	clanid := steamid.SteamId(body.GetSteamidClan())
-	if (flags & EClientPersonaStateFlag_PlayerName) == EClientPersonaStateFlag_PlayerName {
+	// CMsgClientClanState no longer carries status flags; apply the name and
+	// avatar whenever the message includes name info.
+	if body.GetNameInfo() != nil {
 		if name != "" {
 			s.Groups.SetName(clanid, name)
 		}
-	}
-	if (flags & EClientPersonaStateFlag_Presence) == EClientPersonaStateFlag_Presence {
 		if ValidAvatar(avatar) {
 			s.Groups.SetAvatar(clanid, avatar)
 		}
@@ -431,7 +427,6 @@ func (s *Social) handleClanState(packet *Packet) {
 	}
 	s.client.Emit(&ClanStateEvent{
 		ClandId:             clanid,
-		StateFlags:          EClientPersonaStateFlag(body.GetMUnStatusFlags()),
 		AccountFlags:        EAccountFlags(body.GetClanAccountFlags()),
 		ClanName:            name,
 		Avatar:              avatar,

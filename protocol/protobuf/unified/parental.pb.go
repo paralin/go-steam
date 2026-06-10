@@ -3,9 +3,12 @@
 
 package unified
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	_ "github.com/paralin/go-steam/protocol/protobuf"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -13,140 +16,20 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package unified is being compiled against.
+// is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
-// proto package unified to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
-
-type ParentalApp struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	IsAllowed        *bool   `protobuf:"varint,2,opt,name=is_allowed,json=isAllowed" json:"is_allowed,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
-}
-
-func (m *ParentalApp) Reset()                    { *m = ParentalApp{} }
-func (m *ParentalApp) String() string            { return proto.CompactTextString(m) }
-func (*ParentalApp) ProtoMessage()               {}
-func (*ParentalApp) Descriptor() ([]byte, []int) { return parental_fileDescriptor0, []int{0} }
-
-func (m *ParentalApp) GetAppid() uint32 {
-	if m != nil && m.Appid != nil {
-		return *m.Appid
-	}
-	return 0
-}
-
-func (m *ParentalApp) GetIsAllowed() bool {
-	if m != nil && m.IsAllowed != nil {
-		return *m.IsAllowed
-	}
-	return false
-}
-
-type ParentalSettings struct {
-	Steamid                *uint64        `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
-	ApplistBaseId          *uint32        `protobuf:"varint,2,opt,name=applist_base_id,json=applistBaseId" json:"applist_base_id,omitempty"`
-	ApplistBaseDescription *string        `protobuf:"bytes,3,opt,name=applist_base_description,json=applistBaseDescription" json:"applist_base_description,omitempty"`
-	ApplistBase            []*ParentalApp `protobuf:"bytes,4,rep,name=applist_base,json=applistBase" json:"applist_base,omitempty"`
-	ApplistCustom          []*ParentalApp `protobuf:"bytes,5,rep,name=applist_custom,json=applistCustom" json:"applist_custom,omitempty"`
-	Passwordhashtype       *uint32        `protobuf:"varint,6,opt,name=passwordhashtype" json:"passwordhashtype,omitempty"`
-	Salt                   []byte         `protobuf:"bytes,7,opt,name=salt" json:"salt,omitempty"`
-	Passwordhash           []byte         `protobuf:"bytes,8,opt,name=passwordhash" json:"passwordhash,omitempty"`
-	IsEnabled              *bool          `protobuf:"varint,9,opt,name=is_enabled,json=isEnabled" json:"is_enabled,omitempty"`
-	EnabledFeatures        *uint32        `protobuf:"varint,10,opt,name=enabled_features,json=enabledFeatures" json:"enabled_features,omitempty"`
-	RecoveryEmail          *string        `protobuf:"bytes,11,opt,name=recovery_email,json=recoveryEmail" json:"recovery_email,omitempty"`
-	XXX_unrecognized       []byte         `json:"-"`
-}
-
-func (m *ParentalSettings) Reset()                    { *m = ParentalSettings{} }
-func (m *ParentalSettings) String() string            { return proto.CompactTextString(m) }
-func (*ParentalSettings) ProtoMessage()               {}
-func (*ParentalSettings) Descriptor() ([]byte, []int) { return parental_fileDescriptor0, []int{1} }
-
-func (m *ParentalSettings) GetSteamid() uint64 {
-	if m != nil && m.Steamid != nil {
-		return *m.Steamid
-	}
-	return 0
-}
-
-func (m *ParentalSettings) GetApplistBaseId() uint32 {
-	if m != nil && m.ApplistBaseId != nil {
-		return *m.ApplistBaseId
-	}
-	return 0
-}
-
-func (m *ParentalSettings) GetApplistBaseDescription() string {
-	if m != nil && m.ApplistBaseDescription != nil {
-		return *m.ApplistBaseDescription
-	}
-	return ""
-}
-
-func (m *ParentalSettings) GetApplistBase() []*ParentalApp {
-	if m != nil {
-		return m.ApplistBase
-	}
-	return nil
-}
-
-func (m *ParentalSettings) GetApplistCustom() []*ParentalApp {
-	if m != nil {
-		return m.ApplistCustom
-	}
-	return nil
-}
-
-func (m *ParentalSettings) GetPasswordhashtype() uint32 {
-	if m != nil && m.Passwordhashtype != nil {
-		return *m.Passwordhashtype
-	}
-	return 0
-}
-
-func (m *ParentalSettings) GetSalt() []byte {
-	if m != nil {
-		return m.Salt
-	}
-	return nil
-}
-
-func (m *ParentalSettings) GetPasswordhash() []byte {
-	if m != nil {
-		return m.Passwordhash
-	}
-	return nil
-}
-
-func (m *ParentalSettings) GetIsEnabled() bool {
-	if m != nil && m.IsEnabled != nil {
-		return *m.IsEnabled
-	}
-	return false
-}
-
-func (m *ParentalSettings) GetEnabledFeatures() uint32 {
-	if m != nil && m.EnabledFeatures != nil {
-		return *m.EnabledFeatures
-	}
-	return 0
-}
-
-func (m *ParentalSettings) GetRecoveryEmail() string {
-	if m != nil && m.RecoveryEmail != nil {
-		return *m.RecoveryEmail
-	}
-	return ""
-}
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type CParental_EnableParentalSettings_Request struct {
-	Password         *string           `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
-	Settings         *ParentalSettings `protobuf:"bytes,2,opt,name=settings" json:"settings,omitempty"`
-	Sessionid        *string           `protobuf:"bytes,3,opt,name=sessionid" json:"sessionid,omitempty"`
-	Enablecode       *uint32           `protobuf:"varint,4,opt,name=enablecode" json:"enablecode,omitempty"`
-	Steamid          *uint64           `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
-	XXX_unrecognized []byte            `json:"-"`
+	Password             *string           `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
+	Settings             *ParentalSettings `protobuf:"bytes,2,opt,name=settings" json:"settings,omitempty"`
+	Sessionid            *string           `protobuf:"bytes,3,opt,name=sessionid" json:"sessionid,omitempty"`
+	Enablecode           *uint32           `protobuf:"varint,4,opt,name=enablecode" json:"enablecode,omitempty"`
+	Steamid              *uint64           `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *CParental_EnableParentalSettings_Request) Reset() {
@@ -155,8 +38,26 @@ func (m *CParental_EnableParentalSettings_Request) Reset() {
 func (m *CParental_EnableParentalSettings_Request) String() string { return proto.CompactTextString(m) }
 func (*CParental_EnableParentalSettings_Request) ProtoMessage()    {}
 func (*CParental_EnableParentalSettings_Request) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{2}
+	return fileDescriptor_16081bf1f772237a, []int{0}
 }
+
+func (m *CParental_EnableParentalSettings_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_EnableParentalSettings_Request.Unmarshal(m, b)
+}
+func (m *CParental_EnableParentalSettings_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_EnableParentalSettings_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_EnableParentalSettings_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_EnableParentalSettings_Request.Merge(m, src)
+}
+func (m *CParental_EnableParentalSettings_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_EnableParentalSettings_Request.Size(m)
+}
+func (m *CParental_EnableParentalSettings_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_EnableParentalSettings_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_EnableParentalSettings_Request proto.InternalMessageInfo
 
 func (m *CParental_EnableParentalSettings_Request) GetPassword() string {
 	if m != nil && m.Password != nil {
@@ -194,32 +95,76 @@ func (m *CParental_EnableParentalSettings_Request) GetSteamid() uint64 {
 }
 
 type CParental_EnableParentalSettings_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_EnableParentalSettings_Response) Reset() {
 	*m = CParental_EnableParentalSettings_Response{}
 }
-func (m *CParental_EnableParentalSettings_Response) String() string { return proto.CompactTextString(m) }
-func (*CParental_EnableParentalSettings_Response) ProtoMessage()    {}
+func (m *CParental_EnableParentalSettings_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CParental_EnableParentalSettings_Response) ProtoMessage() {}
 func (*CParental_EnableParentalSettings_Response) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{3}
+	return fileDescriptor_16081bf1f772237a, []int{1}
 }
 
+func (m *CParental_EnableParentalSettings_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_EnableParentalSettings_Response.Unmarshal(m, b)
+}
+func (m *CParental_EnableParentalSettings_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_EnableParentalSettings_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_EnableParentalSettings_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_EnableParentalSettings_Response.Merge(m, src)
+}
+func (m *CParental_EnableParentalSettings_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_EnableParentalSettings_Response.Size(m)
+}
+func (m *CParental_EnableParentalSettings_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_EnableParentalSettings_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_EnableParentalSettings_Response proto.InternalMessageInfo
+
 type CParental_DisableParentalSettings_Request struct {
-	Password         *string `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
-	Steamid          *uint64 `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Password             *string  `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
+	Steamid              *uint64  `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_DisableParentalSettings_Request) Reset() {
 	*m = CParental_DisableParentalSettings_Request{}
 }
-func (m *CParental_DisableParentalSettings_Request) String() string { return proto.CompactTextString(m) }
-func (*CParental_DisableParentalSettings_Request) ProtoMessage()    {}
-func (*CParental_DisableParentalSettings_Request) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{4}
+func (m *CParental_DisableParentalSettings_Request) String() string {
+	return proto.CompactTextString(m)
 }
+func (*CParental_DisableParentalSettings_Request) ProtoMessage() {}
+func (*CParental_DisableParentalSettings_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{2}
+}
+
+func (m *CParental_DisableParentalSettings_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_DisableParentalSettings_Request.Unmarshal(m, b)
+}
+func (m *CParental_DisableParentalSettings_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_DisableParentalSettings_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_DisableParentalSettings_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_DisableParentalSettings_Request.Merge(m, src)
+}
+func (m *CParental_DisableParentalSettings_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_DisableParentalSettings_Request.Size(m)
+}
+func (m *CParental_DisableParentalSettings_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_DisableParentalSettings_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_DisableParentalSettings_Request proto.InternalMessageInfo
 
 func (m *CParental_DisableParentalSettings_Request) GetPassword() string {
 	if m != nil && m.Password != nil {
@@ -236,7 +181,9 @@ func (m *CParental_DisableParentalSettings_Request) GetSteamid() uint64 {
 }
 
 type CParental_DisableParentalSettings_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_DisableParentalSettings_Response) Reset() {
@@ -247,20 +194,58 @@ func (m *CParental_DisableParentalSettings_Response) String() string {
 }
 func (*CParental_DisableParentalSettings_Response) ProtoMessage() {}
 func (*CParental_DisableParentalSettings_Response) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{5}
+	return fileDescriptor_16081bf1f772237a, []int{3}
 }
 
+func (m *CParental_DisableParentalSettings_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_DisableParentalSettings_Response.Unmarshal(m, b)
+}
+func (m *CParental_DisableParentalSettings_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_DisableParentalSettings_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_DisableParentalSettings_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_DisableParentalSettings_Response.Merge(m, src)
+}
+func (m *CParental_DisableParentalSettings_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_DisableParentalSettings_Response.Size(m)
+}
+func (m *CParental_DisableParentalSettings_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_DisableParentalSettings_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_DisableParentalSettings_Response proto.InternalMessageInfo
+
 type CParental_GetParentalSettings_Request struct {
-	Steamid          *uint64 `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Steamid              *uint64  `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_GetParentalSettings_Request) Reset()         { *m = CParental_GetParentalSettings_Request{} }
 func (m *CParental_GetParentalSettings_Request) String() string { return proto.CompactTextString(m) }
 func (*CParental_GetParentalSettings_Request) ProtoMessage()    {}
 func (*CParental_GetParentalSettings_Request) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{6}
+	return fileDescriptor_16081bf1f772237a, []int{4}
 }
+
+func (m *CParental_GetParentalSettings_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_GetParentalSettings_Request.Unmarshal(m, b)
+}
+func (m *CParental_GetParentalSettings_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_GetParentalSettings_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_GetParentalSettings_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_GetParentalSettings_Request.Merge(m, src)
+}
+func (m *CParental_GetParentalSettings_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_GetParentalSettings_Request.Size(m)
+}
+func (m *CParental_GetParentalSettings_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_GetParentalSettings_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_GetParentalSettings_Request proto.InternalMessageInfo
 
 func (m *CParental_GetParentalSettings_Request) GetSteamid() uint64 {
 	if m != nil && m.Steamid != nil {
@@ -270,8 +255,10 @@ func (m *CParental_GetParentalSettings_Request) GetSteamid() uint64 {
 }
 
 type CParental_GetParentalSettings_Response struct {
-	Settings         *ParentalSettings `protobuf:"bytes,1,opt,name=settings" json:"settings,omitempty"`
-	XXX_unrecognized []byte            `json:"-"`
+	Settings             *ParentalSettings `protobuf:"bytes,1,opt,name=settings" json:"settings,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *CParental_GetParentalSettings_Response) Reset() {
@@ -280,8 +267,26 @@ func (m *CParental_GetParentalSettings_Response) Reset() {
 func (m *CParental_GetParentalSettings_Response) String() string { return proto.CompactTextString(m) }
 func (*CParental_GetParentalSettings_Response) ProtoMessage()    {}
 func (*CParental_GetParentalSettings_Response) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{7}
+	return fileDescriptor_16081bf1f772237a, []int{5}
 }
+
+func (m *CParental_GetParentalSettings_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_GetParentalSettings_Response.Unmarshal(m, b)
+}
+func (m *CParental_GetParentalSettings_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_GetParentalSettings_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_GetParentalSettings_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_GetParentalSettings_Response.Merge(m, src)
+}
+func (m *CParental_GetParentalSettings_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_GetParentalSettings_Response.Size(m)
+}
+func (m *CParental_GetParentalSettings_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_GetParentalSettings_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_GetParentalSettings_Response proto.InternalMessageInfo
 
 func (m *CParental_GetParentalSettings_Response) GetSettings() *ParentalSettings {
 	if m != nil {
@@ -291,8 +296,10 @@ func (m *CParental_GetParentalSettings_Response) GetSettings() *ParentalSettings
 }
 
 type CParental_GetSignedParentalSettings_Request struct {
-	Priority         *uint32 `protobuf:"varint,1,opt,name=priority" json:"priority,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Priority             *uint32  `protobuf:"varint,1,opt,name=priority" json:"priority,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_GetSignedParentalSettings_Request) Reset() {
@@ -303,8 +310,26 @@ func (m *CParental_GetSignedParentalSettings_Request) String() string {
 }
 func (*CParental_GetSignedParentalSettings_Request) ProtoMessage() {}
 func (*CParental_GetSignedParentalSettings_Request) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{8}
+	return fileDescriptor_16081bf1f772237a, []int{6}
 }
+
+func (m *CParental_GetSignedParentalSettings_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_GetSignedParentalSettings_Request.Unmarshal(m, b)
+}
+func (m *CParental_GetSignedParentalSettings_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_GetSignedParentalSettings_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_GetSignedParentalSettings_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_GetSignedParentalSettings_Request.Merge(m, src)
+}
+func (m *CParental_GetSignedParentalSettings_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_GetSignedParentalSettings_Request.Size(m)
+}
+func (m *CParental_GetSignedParentalSettings_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_GetSignedParentalSettings_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_GetSignedParentalSettings_Request proto.InternalMessageInfo
 
 func (m *CParental_GetSignedParentalSettings_Request) GetPriority() uint32 {
 	if m != nil && m.Priority != nil {
@@ -314,9 +339,11 @@ func (m *CParental_GetSignedParentalSettings_Request) GetPriority() uint32 {
 }
 
 type CParental_GetSignedParentalSettings_Response struct {
-	SerializedSettings []byte `protobuf:"bytes,1,opt,name=serialized_settings,json=serializedSettings" json:"serialized_settings,omitempty"`
-	Signature          []byte `protobuf:"bytes,2,opt,name=signature" json:"signature,omitempty"`
-	XXX_unrecognized   []byte `json:"-"`
+	SerializedSettings   []byte   `protobuf:"bytes,1,opt,name=serialized_settings,json=serializedSettings" json:"serialized_settings,omitempty"`
+	Signature            []byte   `protobuf:"bytes,2,opt,name=signature" json:"signature,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_GetSignedParentalSettings_Response) Reset() {
@@ -327,8 +354,26 @@ func (m *CParental_GetSignedParentalSettings_Response) String() string {
 }
 func (*CParental_GetSignedParentalSettings_Response) ProtoMessage() {}
 func (*CParental_GetSignedParentalSettings_Response) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{9}
+	return fileDescriptor_16081bf1f772237a, []int{7}
 }
+
+func (m *CParental_GetSignedParentalSettings_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_GetSignedParentalSettings_Response.Unmarshal(m, b)
+}
+func (m *CParental_GetSignedParentalSettings_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_GetSignedParentalSettings_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_GetSignedParentalSettings_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_GetSignedParentalSettings_Response.Merge(m, src)
+}
+func (m *CParental_GetSignedParentalSettings_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_GetSignedParentalSettings_Response.Size(m)
+}
+func (m *CParental_GetSignedParentalSettings_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_GetSignedParentalSettings_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_GetSignedParentalSettings_Response proto.InternalMessageInfo
 
 func (m *CParental_GetSignedParentalSettings_Response) GetSerializedSettings() []byte {
 	if m != nil {
@@ -345,20 +390,40 @@ func (m *CParental_GetSignedParentalSettings_Response) GetSignature() []byte {
 }
 
 type CParental_SetParentalSettings_Request struct {
-	Password         *string           `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
-	Settings         *ParentalSettings `protobuf:"bytes,2,opt,name=settings" json:"settings,omitempty"`
-	NewPassword      *string           `protobuf:"bytes,3,opt,name=new_password,json=newPassword" json:"new_password,omitempty"`
-	Sessionid        *string           `protobuf:"bytes,4,opt,name=sessionid" json:"sessionid,omitempty"`
-	Steamid          *uint64           `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
-	XXX_unrecognized []byte            `json:"-"`
+	Password             *string           `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
+	Settings             *ParentalSettings `protobuf:"bytes,2,opt,name=settings" json:"settings,omitempty"`
+	NewPassword          *string           `protobuf:"bytes,3,opt,name=new_password,json=newPassword" json:"new_password,omitempty"`
+	Sessionid            *string           `protobuf:"bytes,4,opt,name=sessionid" json:"sessionid,omitempty"`
+	Steamid              *uint64           `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}          `json:"-"`
+	XXX_unrecognized     []byte            `json:"-"`
+	XXX_sizecache        int32             `json:"-"`
 }
 
 func (m *CParental_SetParentalSettings_Request) Reset()         { *m = CParental_SetParentalSettings_Request{} }
 func (m *CParental_SetParentalSettings_Request) String() string { return proto.CompactTextString(m) }
 func (*CParental_SetParentalSettings_Request) ProtoMessage()    {}
 func (*CParental_SetParentalSettings_Request) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{10}
+	return fileDescriptor_16081bf1f772237a, []int{8}
 }
+
+func (m *CParental_SetParentalSettings_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_SetParentalSettings_Request.Unmarshal(m, b)
+}
+func (m *CParental_SetParentalSettings_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_SetParentalSettings_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_SetParentalSettings_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_SetParentalSettings_Request.Merge(m, src)
+}
+func (m *CParental_SetParentalSettings_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_SetParentalSettings_Request.Size(m)
+}
+func (m *CParental_SetParentalSettings_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_SetParentalSettings_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_SetParentalSettings_Request proto.InternalMessageInfo
 
 func (m *CParental_SetParentalSettings_Request) GetPassword() string {
 	if m != nil && m.Password != nil {
@@ -396,7 +461,9 @@ func (m *CParental_SetParentalSettings_Request) GetSteamid() uint64 {
 }
 
 type CParental_SetParentalSettings_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_SetParentalSettings_Response) Reset() {
@@ -405,20 +472,58 @@ func (m *CParental_SetParentalSettings_Response) Reset() {
 func (m *CParental_SetParentalSettings_Response) String() string { return proto.CompactTextString(m) }
 func (*CParental_SetParentalSettings_Response) ProtoMessage()    {}
 func (*CParental_SetParentalSettings_Response) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{11}
+	return fileDescriptor_16081bf1f772237a, []int{9}
 }
 
+func (m *CParental_SetParentalSettings_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_SetParentalSettings_Response.Unmarshal(m, b)
+}
+func (m *CParental_SetParentalSettings_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_SetParentalSettings_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_SetParentalSettings_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_SetParentalSettings_Response.Merge(m, src)
+}
+func (m *CParental_SetParentalSettings_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_SetParentalSettings_Response.Size(m)
+}
+func (m *CParental_SetParentalSettings_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_SetParentalSettings_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_SetParentalSettings_Response proto.InternalMessageInfo
+
 type CParental_ValidateToken_Request struct {
-	UnlockToken      *string `protobuf:"bytes,1,opt,name=unlock_token,json=unlockToken" json:"unlock_token,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	UnlockToken          *string  `protobuf:"bytes,1,opt,name=unlock_token,json=unlockToken" json:"unlock_token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_ValidateToken_Request) Reset()         { *m = CParental_ValidateToken_Request{} }
 func (m *CParental_ValidateToken_Request) String() string { return proto.CompactTextString(m) }
 func (*CParental_ValidateToken_Request) ProtoMessage()    {}
 func (*CParental_ValidateToken_Request) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{12}
+	return fileDescriptor_16081bf1f772237a, []int{10}
 }
+
+func (m *CParental_ValidateToken_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ValidateToken_Request.Unmarshal(m, b)
+}
+func (m *CParental_ValidateToken_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ValidateToken_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_ValidateToken_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ValidateToken_Request.Merge(m, src)
+}
+func (m *CParental_ValidateToken_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_ValidateToken_Request.Size(m)
+}
+func (m *CParental_ValidateToken_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ValidateToken_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ValidateToken_Request proto.InternalMessageInfo
 
 func (m *CParental_ValidateToken_Request) GetUnlockToken() string {
 	if m != nil && m.UnlockToken != nil {
@@ -428,29 +533,69 @@ func (m *CParental_ValidateToken_Request) GetUnlockToken() string {
 }
 
 type CParental_ValidateToken_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_ValidateToken_Response) Reset()         { *m = CParental_ValidateToken_Response{} }
 func (m *CParental_ValidateToken_Response) String() string { return proto.CompactTextString(m) }
 func (*CParental_ValidateToken_Response) ProtoMessage()    {}
 func (*CParental_ValidateToken_Response) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{13}
+	return fileDescriptor_16081bf1f772237a, []int{11}
 }
 
+func (m *CParental_ValidateToken_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ValidateToken_Response.Unmarshal(m, b)
+}
+func (m *CParental_ValidateToken_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ValidateToken_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_ValidateToken_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ValidateToken_Response.Merge(m, src)
+}
+func (m *CParental_ValidateToken_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_ValidateToken_Response.Size(m)
+}
+func (m *CParental_ValidateToken_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ValidateToken_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ValidateToken_Response proto.InternalMessageInfo
+
 type CParental_ValidatePassword_Request struct {
-	Password            *string `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
-	Session             *string `protobuf:"bytes,2,opt,name=session" json:"session,omitempty"`
-	SendUnlockOnSuccess *bool   `protobuf:"varint,3,opt,name=send_unlock_on_success,json=sendUnlockOnSuccess" json:"send_unlock_on_success,omitempty"`
-	XXX_unrecognized    []byte  `json:"-"`
+	Password             *string  `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
+	Session              *string  `protobuf:"bytes,2,opt,name=session" json:"session,omitempty"`
+	SendUnlockOnSuccess  *bool    `protobuf:"varint,3,opt,name=send_unlock_on_success,json=sendUnlockOnSuccess" json:"send_unlock_on_success,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_ValidatePassword_Request) Reset()         { *m = CParental_ValidatePassword_Request{} }
 func (m *CParental_ValidatePassword_Request) String() string { return proto.CompactTextString(m) }
 func (*CParental_ValidatePassword_Request) ProtoMessage()    {}
 func (*CParental_ValidatePassword_Request) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{14}
+	return fileDescriptor_16081bf1f772237a, []int{12}
 }
+
+func (m *CParental_ValidatePassword_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ValidatePassword_Request.Unmarshal(m, b)
+}
+func (m *CParental_ValidatePassword_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ValidatePassword_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_ValidatePassword_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ValidatePassword_Request.Merge(m, src)
+}
+func (m *CParental_ValidatePassword_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_ValidatePassword_Request.Size(m)
+}
+func (m *CParental_ValidatePassword_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ValidatePassword_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ValidatePassword_Request proto.InternalMessageInfo
 
 func (m *CParental_ValidatePassword_Request) GetPassword() string {
 	if m != nil && m.Password != nil {
@@ -474,16 +619,36 @@ func (m *CParental_ValidatePassword_Request) GetSendUnlockOnSuccess() bool {
 }
 
 type CParental_ValidatePassword_Response struct {
-	Token            *string `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Token                *string  `protobuf:"bytes,1,opt,name=token" json:"token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_ValidatePassword_Response) Reset()         { *m = CParental_ValidatePassword_Response{} }
 func (m *CParental_ValidatePassword_Response) String() string { return proto.CompactTextString(m) }
 func (*CParental_ValidatePassword_Response) ProtoMessage()    {}
 func (*CParental_ValidatePassword_Response) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{15}
+	return fileDescriptor_16081bf1f772237a, []int{13}
 }
+
+func (m *CParental_ValidatePassword_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ValidatePassword_Response.Unmarshal(m, b)
+}
+func (m *CParental_ValidatePassword_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ValidatePassword_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_ValidatePassword_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ValidatePassword_Response.Merge(m, src)
+}
+func (m *CParental_ValidatePassword_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_ValidatePassword_Response.Size(m)
+}
+func (m *CParental_ValidatePassword_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ValidatePassword_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ValidatePassword_Response proto.InternalMessageInfo
 
 func (m *CParental_ValidatePassword_Response) GetToken() string {
 	if m != nil && m.Token != nil {
@@ -493,14 +658,36 @@ func (m *CParental_ValidatePassword_Response) GetToken() string {
 }
 
 type CParental_LockClient_Request struct {
-	Session          *string `protobuf:"bytes,1,opt,name=session" json:"session,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Session              *string  `protobuf:"bytes,1,opt,name=session" json:"session,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CParental_LockClient_Request) Reset()                    { *m = CParental_LockClient_Request{} }
-func (m *CParental_LockClient_Request) String() string            { return proto.CompactTextString(m) }
-func (*CParental_LockClient_Request) ProtoMessage()               {}
-func (*CParental_LockClient_Request) Descriptor() ([]byte, []int) { return parental_fileDescriptor0, []int{16} }
+func (m *CParental_LockClient_Request) Reset()         { *m = CParental_LockClient_Request{} }
+func (m *CParental_LockClient_Request) String() string { return proto.CompactTextString(m) }
+func (*CParental_LockClient_Request) ProtoMessage()    {}
+func (*CParental_LockClient_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{14}
+}
+
+func (m *CParental_LockClient_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_LockClient_Request.Unmarshal(m, b)
+}
+func (m *CParental_LockClient_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_LockClient_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_LockClient_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_LockClient_Request.Merge(m, src)
+}
+func (m *CParental_LockClient_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_LockClient_Request.Size(m)
+}
+func (m *CParental_LockClient_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_LockClient_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_LockClient_Request proto.InternalMessageInfo
 
 func (m *CParental_LockClient_Request) GetSession() string {
 	if m != nil && m.Session != nil {
@@ -510,27 +697,71 @@ func (m *CParental_LockClient_Request) GetSession() string {
 }
 
 type CParental_LockClient_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CParental_LockClient_Response) Reset()                    { *m = CParental_LockClient_Response{} }
-func (m *CParental_LockClient_Response) String() string            { return proto.CompactTextString(m) }
-func (*CParental_LockClient_Response) ProtoMessage()               {}
-func (*CParental_LockClient_Response) Descriptor() ([]byte, []int) { return parental_fileDescriptor0, []int{17} }
+func (m *CParental_LockClient_Response) Reset()         { *m = CParental_LockClient_Response{} }
+func (m *CParental_LockClient_Response) String() string { return proto.CompactTextString(m) }
+func (*CParental_LockClient_Response) ProtoMessage()    {}
+func (*CParental_LockClient_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{15}
+}
+
+func (m *CParental_LockClient_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_LockClient_Response.Unmarshal(m, b)
+}
+func (m *CParental_LockClient_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_LockClient_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_LockClient_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_LockClient_Response.Merge(m, src)
+}
+func (m *CParental_LockClient_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_LockClient_Response.Size(m)
+}
+func (m *CParental_LockClient_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_LockClient_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_LockClient_Response proto.InternalMessageInfo
 
 type CParental_RequestRecoveryCode_Request struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_RequestRecoveryCode_Request) Reset()         { *m = CParental_RequestRecoveryCode_Request{} }
 func (m *CParental_RequestRecoveryCode_Request) String() string { return proto.CompactTextString(m) }
 func (*CParental_RequestRecoveryCode_Request) ProtoMessage()    {}
 func (*CParental_RequestRecoveryCode_Request) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{18}
+	return fileDescriptor_16081bf1f772237a, []int{16}
 }
 
+func (m *CParental_RequestRecoveryCode_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_RequestRecoveryCode_Request.Unmarshal(m, b)
+}
+func (m *CParental_RequestRecoveryCode_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_RequestRecoveryCode_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_RequestRecoveryCode_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_RequestRecoveryCode_Request.Merge(m, src)
+}
+func (m *CParental_RequestRecoveryCode_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_RequestRecoveryCode_Request.Size(m)
+}
+func (m *CParental_RequestRecoveryCode_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_RequestRecoveryCode_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_RequestRecoveryCode_Request proto.InternalMessageInfo
+
 type CParental_RequestRecoveryCode_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_RequestRecoveryCode_Response) Reset() {
@@ -539,59 +770,607 @@ func (m *CParental_RequestRecoveryCode_Response) Reset() {
 func (m *CParental_RequestRecoveryCode_Response) String() string { return proto.CompactTextString(m) }
 func (*CParental_RequestRecoveryCode_Response) ProtoMessage()    {}
 func (*CParental_RequestRecoveryCode_Response) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{19}
+	return fileDescriptor_16081bf1f772237a, []int{17}
 }
 
-type CParental_DisableWithRecoveryCode_Request struct {
-	RecoveryCode     *uint32 `protobuf:"varint,1,opt,name=recovery_code,json=recoveryCode" json:"recovery_code,omitempty"`
-	Steamid          *uint64 `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+func (m *CParental_RequestRecoveryCode_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_RequestRecoveryCode_Response.Unmarshal(m, b)
+}
+func (m *CParental_RequestRecoveryCode_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_RequestRecoveryCode_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_RequestRecoveryCode_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_RequestRecoveryCode_Response.Merge(m, src)
+}
+func (m *CParental_RequestRecoveryCode_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_RequestRecoveryCode_Response.Size(m)
+}
+func (m *CParental_RequestRecoveryCode_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_RequestRecoveryCode_Response.DiscardUnknown(m)
 }
 
-func (m *CParental_DisableWithRecoveryCode_Request) Reset() {
-	*m = CParental_DisableWithRecoveryCode_Request{}
-}
-func (m *CParental_DisableWithRecoveryCode_Request) String() string { return proto.CompactTextString(m) }
-func (*CParental_DisableWithRecoveryCode_Request) ProtoMessage()    {}
-func (*CParental_DisableWithRecoveryCode_Request) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{20}
+var xxx_messageInfo_CParental_RequestRecoveryCode_Response proto.InternalMessageInfo
+
+type CParental_RequestFeatureAccess_Request struct {
+	Features             *uint32  `protobuf:"varint,1,opt,name=features" json:"features,omitempty"`
+	Steamid              *uint64  `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CParental_DisableWithRecoveryCode_Request) GetRecoveryCode() uint32 {
-	if m != nil && m.RecoveryCode != nil {
-		return *m.RecoveryCode
+func (m *CParental_RequestFeatureAccess_Request) Reset() {
+	*m = CParental_RequestFeatureAccess_Request{}
+}
+func (m *CParental_RequestFeatureAccess_Request) String() string { return proto.CompactTextString(m) }
+func (*CParental_RequestFeatureAccess_Request) ProtoMessage()    {}
+func (*CParental_RequestFeatureAccess_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{18}
+}
+
+func (m *CParental_RequestFeatureAccess_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_RequestFeatureAccess_Request.Unmarshal(m, b)
+}
+func (m *CParental_RequestFeatureAccess_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_RequestFeatureAccess_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_RequestFeatureAccess_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_RequestFeatureAccess_Request.Merge(m, src)
+}
+func (m *CParental_RequestFeatureAccess_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_RequestFeatureAccess_Request.Size(m)
+}
+func (m *CParental_RequestFeatureAccess_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_RequestFeatureAccess_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_RequestFeatureAccess_Request proto.InternalMessageInfo
+
+func (m *CParental_RequestFeatureAccess_Request) GetFeatures() uint32 {
+	if m != nil && m.Features != nil {
+		return *m.Features
 	}
 	return 0
 }
 
-func (m *CParental_DisableWithRecoveryCode_Request) GetSteamid() uint64 {
+func (m *CParental_RequestFeatureAccess_Request) GetSteamid() uint64 {
 	if m != nil && m.Steamid != nil {
 		return *m.Steamid
 	}
 	return 0
 }
 
-type CParental_DisableWithRecoveryCode_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+type CParental_RequestFeatureAccess_Response struct {
+	Requestid            *uint64  `protobuf:"fixed64,1,opt,name=requestid" json:"requestid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CParental_DisableWithRecoveryCode_Response) Reset() {
-	*m = CParental_DisableWithRecoveryCode_Response{}
+func (m *CParental_RequestFeatureAccess_Response) Reset() {
+	*m = CParental_RequestFeatureAccess_Response{}
 }
-func (m *CParental_DisableWithRecoveryCode_Response) String() string {
+func (m *CParental_RequestFeatureAccess_Response) String() string { return proto.CompactTextString(m) }
+func (*CParental_RequestFeatureAccess_Response) ProtoMessage()    {}
+func (*CParental_RequestFeatureAccess_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{19}
+}
+
+func (m *CParental_RequestFeatureAccess_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_RequestFeatureAccess_Response.Unmarshal(m, b)
+}
+func (m *CParental_RequestFeatureAccess_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_RequestFeatureAccess_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_RequestFeatureAccess_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_RequestFeatureAccess_Response.Merge(m, src)
+}
+func (m *CParental_RequestFeatureAccess_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_RequestFeatureAccess_Response.Size(m)
+}
+func (m *CParental_RequestFeatureAccess_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_RequestFeatureAccess_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_RequestFeatureAccess_Response proto.InternalMessageInfo
+
+func (m *CParental_RequestFeatureAccess_Response) GetRequestid() uint64 {
+	if m != nil && m.Requestid != nil {
+		return *m.Requestid
+	}
+	return 0
+}
+
+type CParental_ApproveFeatureAccess_Request struct {
+	Approve              *bool    `protobuf:"varint,1,opt,name=approve" json:"approve,omitempty"`
+	Requestid            *uint64  `protobuf:"fixed64,2,opt,name=requestid" json:"requestid,omitempty"`
+	Features             *uint32  `protobuf:"varint,3,opt,name=features" json:"features,omitempty"`
+	Duration             *uint32  `protobuf:"varint,4,opt,name=duration" json:"duration,omitempty"`
+	Steamid              *uint64  `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CParental_ApproveFeatureAccess_Request) Reset() {
+	*m = CParental_ApproveFeatureAccess_Request{}
+}
+func (m *CParental_ApproveFeatureAccess_Request) String() string { return proto.CompactTextString(m) }
+func (*CParental_ApproveFeatureAccess_Request) ProtoMessage()    {}
+func (*CParental_ApproveFeatureAccess_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{20}
+}
+
+func (m *CParental_ApproveFeatureAccess_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ApproveFeatureAccess_Request.Unmarshal(m, b)
+}
+func (m *CParental_ApproveFeatureAccess_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ApproveFeatureAccess_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_ApproveFeatureAccess_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ApproveFeatureAccess_Request.Merge(m, src)
+}
+func (m *CParental_ApproveFeatureAccess_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_ApproveFeatureAccess_Request.Size(m)
+}
+func (m *CParental_ApproveFeatureAccess_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ApproveFeatureAccess_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ApproveFeatureAccess_Request proto.InternalMessageInfo
+
+func (m *CParental_ApproveFeatureAccess_Request) GetApprove() bool {
+	if m != nil && m.Approve != nil {
+		return *m.Approve
+	}
+	return false
+}
+
+func (m *CParental_ApproveFeatureAccess_Request) GetRequestid() uint64 {
+	if m != nil && m.Requestid != nil {
+		return *m.Requestid
+	}
+	return 0
+}
+
+func (m *CParental_ApproveFeatureAccess_Request) GetFeatures() uint32 {
+	if m != nil && m.Features != nil {
+		return *m.Features
+	}
+	return 0
+}
+
+func (m *CParental_ApproveFeatureAccess_Request) GetDuration() uint32 {
+	if m != nil && m.Duration != nil {
+		return *m.Duration
+	}
+	return 0
+}
+
+func (m *CParental_ApproveFeatureAccess_Request) GetSteamid() uint64 {
+	if m != nil && m.Steamid != nil {
+		return *m.Steamid
+	}
+	return 0
+}
+
+type CParental_ApproveFeatureAccess_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CParental_ApproveFeatureAccess_Response) Reset() {
+	*m = CParental_ApproveFeatureAccess_Response{}
+}
+func (m *CParental_ApproveFeatureAccess_Response) String() string { return proto.CompactTextString(m) }
+func (*CParental_ApproveFeatureAccess_Response) ProtoMessage()    {}
+func (*CParental_ApproveFeatureAccess_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{21}
+}
+
+func (m *CParental_ApproveFeatureAccess_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ApproveFeatureAccess_Response.Unmarshal(m, b)
+}
+func (m *CParental_ApproveFeatureAccess_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ApproveFeatureAccess_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_ApproveFeatureAccess_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ApproveFeatureAccess_Response.Merge(m, src)
+}
+func (m *CParental_ApproveFeatureAccess_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_ApproveFeatureAccess_Response.Size(m)
+}
+func (m *CParental_ApproveFeatureAccess_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ApproveFeatureAccess_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ApproveFeatureAccess_Response proto.InternalMessageInfo
+
+type CParental_RequestPlaytime_Request struct {
+	TimeExpires                 *uint32              `protobuf:"varint,1,opt,name=time_expires,json=timeExpires" json:"time_expires,omitempty"`
+	CurrentPlaytimeRestrictions *ParentalPlaytimeDay `protobuf:"bytes,2,opt,name=current_playtime_restrictions,json=currentPlaytimeRestrictions" json:"current_playtime_restrictions,omitempty"`
+	Steamid                     *uint64              `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral        struct{}             `json:"-"`
+	XXX_unrecognized            []byte               `json:"-"`
+	XXX_sizecache               int32                `json:"-"`
+}
+
+func (m *CParental_RequestPlaytime_Request) Reset()         { *m = CParental_RequestPlaytime_Request{} }
+func (m *CParental_RequestPlaytime_Request) String() string { return proto.CompactTextString(m) }
+func (*CParental_RequestPlaytime_Request) ProtoMessage()    {}
+func (*CParental_RequestPlaytime_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{22}
+}
+
+func (m *CParental_RequestPlaytime_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_RequestPlaytime_Request.Unmarshal(m, b)
+}
+func (m *CParental_RequestPlaytime_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_RequestPlaytime_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_RequestPlaytime_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_RequestPlaytime_Request.Merge(m, src)
+}
+func (m *CParental_RequestPlaytime_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_RequestPlaytime_Request.Size(m)
+}
+func (m *CParental_RequestPlaytime_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_RequestPlaytime_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_RequestPlaytime_Request proto.InternalMessageInfo
+
+func (m *CParental_RequestPlaytime_Request) GetTimeExpires() uint32 {
+	if m != nil && m.TimeExpires != nil {
+		return *m.TimeExpires
+	}
+	return 0
+}
+
+func (m *CParental_RequestPlaytime_Request) GetCurrentPlaytimeRestrictions() *ParentalPlaytimeDay {
+	if m != nil {
+		return m.CurrentPlaytimeRestrictions
+	}
+	return nil
+}
+
+func (m *CParental_RequestPlaytime_Request) GetSteamid() uint64 {
+	if m != nil && m.Steamid != nil {
+		return *m.Steamid
+	}
+	return 0
+}
+
+type CParental_RequestPlaytime_Response struct {
+	Requestid            *uint64  `protobuf:"fixed64,1,opt,name=requestid" json:"requestid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CParental_RequestPlaytime_Response) Reset()         { *m = CParental_RequestPlaytime_Response{} }
+func (m *CParental_RequestPlaytime_Response) String() string { return proto.CompactTextString(m) }
+func (*CParental_RequestPlaytime_Response) ProtoMessage()    {}
+func (*CParental_RequestPlaytime_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{23}
+}
+
+func (m *CParental_RequestPlaytime_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_RequestPlaytime_Response.Unmarshal(m, b)
+}
+func (m *CParental_RequestPlaytime_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_RequestPlaytime_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_RequestPlaytime_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_RequestPlaytime_Response.Merge(m, src)
+}
+func (m *CParental_RequestPlaytime_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_RequestPlaytime_Response.Size(m)
+}
+func (m *CParental_RequestPlaytime_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_RequestPlaytime_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_RequestPlaytime_Response proto.InternalMessageInfo
+
+func (m *CParental_RequestPlaytime_Response) GetRequestid() uint64 {
+	if m != nil && m.Requestid != nil {
+		return *m.Requestid
+	}
+	return 0
+}
+
+type CParental_ApprovePlaytime_Request struct {
+	Approve              *bool                                  `protobuf:"varint,1,opt,name=approve" json:"approve,omitempty"`
+	Requestid            *uint64                                `protobuf:"fixed64,2,opt,name=requestid" json:"requestid,omitempty"`
+	RestrictionsApproved *ParentalTemporaryPlaytimeRestrictions `protobuf:"bytes,3,opt,name=restrictions_approved,json=restrictionsApproved" json:"restrictions_approved,omitempty"`
+	Steamid              *uint64                                `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                               `json:"-"`
+	XXX_unrecognized     []byte                                 `json:"-"`
+	XXX_sizecache        int32                                  `json:"-"`
+}
+
+func (m *CParental_ApprovePlaytime_Request) Reset()         { *m = CParental_ApprovePlaytime_Request{} }
+func (m *CParental_ApprovePlaytime_Request) String() string { return proto.CompactTextString(m) }
+func (*CParental_ApprovePlaytime_Request) ProtoMessage()    {}
+func (*CParental_ApprovePlaytime_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{24}
+}
+
+func (m *CParental_ApprovePlaytime_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ApprovePlaytime_Request.Unmarshal(m, b)
+}
+func (m *CParental_ApprovePlaytime_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ApprovePlaytime_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_ApprovePlaytime_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ApprovePlaytime_Request.Merge(m, src)
+}
+func (m *CParental_ApprovePlaytime_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_ApprovePlaytime_Request.Size(m)
+}
+func (m *CParental_ApprovePlaytime_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ApprovePlaytime_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ApprovePlaytime_Request proto.InternalMessageInfo
+
+func (m *CParental_ApprovePlaytime_Request) GetApprove() bool {
+	if m != nil && m.Approve != nil {
+		return *m.Approve
+	}
+	return false
+}
+
+func (m *CParental_ApprovePlaytime_Request) GetRequestid() uint64 {
+	if m != nil && m.Requestid != nil {
+		return *m.Requestid
+	}
+	return 0
+}
+
+func (m *CParental_ApprovePlaytime_Request) GetRestrictionsApproved() *ParentalTemporaryPlaytimeRestrictions {
+	if m != nil {
+		return m.RestrictionsApproved
+	}
+	return nil
+}
+
+func (m *CParental_ApprovePlaytime_Request) GetSteamid() uint64 {
+	if m != nil && m.Steamid != nil {
+		return *m.Steamid
+	}
+	return 0
+}
+
+type CParental_ApprovePlaytime_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CParental_ApprovePlaytime_Response) Reset()         { *m = CParental_ApprovePlaytime_Response{} }
+func (m *CParental_ApprovePlaytime_Response) String() string { return proto.CompactTextString(m) }
+func (*CParental_ApprovePlaytime_Response) ProtoMessage()    {}
+func (*CParental_ApprovePlaytime_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{25}
+}
+
+func (m *CParental_ApprovePlaytime_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ApprovePlaytime_Response.Unmarshal(m, b)
+}
+func (m *CParental_ApprovePlaytime_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ApprovePlaytime_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_ApprovePlaytime_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ApprovePlaytime_Response.Merge(m, src)
+}
+func (m *CParental_ApprovePlaytime_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_ApprovePlaytime_Response.Size(m)
+}
+func (m *CParental_ApprovePlaytime_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ApprovePlaytime_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ApprovePlaytime_Response proto.InternalMessageInfo
+
+type CParental_GetRequests_Request struct {
+	RtIncludeCompletedSince *uint32  `protobuf:"varint,1,opt,name=rt_include_completed_since,json=rtIncludeCompletedSince" json:"rt_include_completed_since,omitempty"`
+	FamilyGroupid           *uint64  `protobuf:"fixed64,2,opt,name=family_groupid,json=familyGroupid" json:"family_groupid,omitempty"`
+	XXX_NoUnkeyedLiteral    struct{} `json:"-"`
+	XXX_unrecognized        []byte   `json:"-"`
+	XXX_sizecache           int32    `json:"-"`
+}
+
+func (m *CParental_GetRequests_Request) Reset()         { *m = CParental_GetRequests_Request{} }
+func (m *CParental_GetRequests_Request) String() string { return proto.CompactTextString(m) }
+func (*CParental_GetRequests_Request) ProtoMessage()    {}
+func (*CParental_GetRequests_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{26}
+}
+
+func (m *CParental_GetRequests_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_GetRequests_Request.Unmarshal(m, b)
+}
+func (m *CParental_GetRequests_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_GetRequests_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_GetRequests_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_GetRequests_Request.Merge(m, src)
+}
+func (m *CParental_GetRequests_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_GetRequests_Request.Size(m)
+}
+func (m *CParental_GetRequests_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_GetRequests_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_GetRequests_Request proto.InternalMessageInfo
+
+func (m *CParental_GetRequests_Request) GetRtIncludeCompletedSince() uint32 {
+	if m != nil && m.RtIncludeCompletedSince != nil {
+		return *m.RtIncludeCompletedSince
+	}
+	return 0
+}
+
+func (m *CParental_GetRequests_Request) GetFamilyGroupid() uint64 {
+	if m != nil && m.FamilyGroupid != nil {
+		return *m.FamilyGroupid
+	}
+	return 0
+}
+
+type CParental_GetRequests_Response struct {
+	FeatureRequests      []*ParentalFeatureRequest  `protobuf:"bytes,1,rep,name=feature_requests,json=featureRequests" json:"feature_requests,omitempty"`
+	PlaytimeRequests     []*ParentalPlaytimeRequest `protobuf:"bytes,2,rep,name=playtime_requests,json=playtimeRequests" json:"playtime_requests,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                   `json:"-"`
+	XXX_unrecognized     []byte                     `json:"-"`
+	XXX_sizecache        int32                      `json:"-"`
+}
+
+func (m *CParental_GetRequests_Response) Reset()         { *m = CParental_GetRequests_Response{} }
+func (m *CParental_GetRequests_Response) String() string { return proto.CompactTextString(m) }
+func (*CParental_GetRequests_Response) ProtoMessage()    {}
+func (*CParental_GetRequests_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{27}
+}
+
+func (m *CParental_GetRequests_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_GetRequests_Response.Unmarshal(m, b)
+}
+func (m *CParental_GetRequests_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_GetRequests_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_GetRequests_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_GetRequests_Response.Merge(m, src)
+}
+func (m *CParental_GetRequests_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_GetRequests_Response.Size(m)
+}
+func (m *CParental_GetRequests_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_GetRequests_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_GetRequests_Response proto.InternalMessageInfo
+
+func (m *CParental_GetRequests_Response) GetFeatureRequests() []*ParentalFeatureRequest {
+	if m != nil {
+		return m.FeatureRequests
+	}
+	return nil
+}
+
+func (m *CParental_GetRequests_Response) GetPlaytimeRequests() []*ParentalPlaytimeRequest {
+	if m != nil {
+		return m.PlaytimeRequests
+	}
+	return nil
+}
+
+type CParental_ReportPlaytimeAndNotify_Request struct {
+	DayOfWeek            *uint32  `protobuf:"varint,1,opt,name=day_of_week,json=dayOfWeek" json:"day_of_week,omitempty"`
+	MinutesUsed          *uint32  `protobuf:"varint,2,opt,name=minutes_used,json=minutesUsed" json:"minutes_used,omitempty"`
+	Steamid              *uint64  `protobuf:"fixed64,10,opt,name=steamid" json:"steamid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CParental_ReportPlaytimeAndNotify_Request) Reset() {
+	*m = CParental_ReportPlaytimeAndNotify_Request{}
+}
+func (m *CParental_ReportPlaytimeAndNotify_Request) String() string {
 	return proto.CompactTextString(m)
 }
-func (*CParental_DisableWithRecoveryCode_Response) ProtoMessage() {}
-func (*CParental_DisableWithRecoveryCode_Response) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{21}
+func (*CParental_ReportPlaytimeAndNotify_Request) ProtoMessage() {}
+func (*CParental_ReportPlaytimeAndNotify_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{28}
 }
 
+func (m *CParental_ReportPlaytimeAndNotify_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Request.Unmarshal(m, b)
+}
+func (m *CParental_ReportPlaytimeAndNotify_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Request.Marshal(b, m, deterministic)
+}
+func (m *CParental_ReportPlaytimeAndNotify_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Request.Merge(m, src)
+}
+func (m *CParental_ReportPlaytimeAndNotify_Request) XXX_Size() int {
+	return xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Request.Size(m)
+}
+func (m *CParental_ReportPlaytimeAndNotify_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Request proto.InternalMessageInfo
+
+func (m *CParental_ReportPlaytimeAndNotify_Request) GetDayOfWeek() uint32 {
+	if m != nil && m.DayOfWeek != nil {
+		return *m.DayOfWeek
+	}
+	return 0
+}
+
+func (m *CParental_ReportPlaytimeAndNotify_Request) GetMinutesUsed() uint32 {
+	if m != nil && m.MinutesUsed != nil {
+		return *m.MinutesUsed
+	}
+	return 0
+}
+
+func (m *CParental_ReportPlaytimeAndNotify_Request) GetSteamid() uint64 {
+	if m != nil && m.Steamid != nil {
+		return *m.Steamid
+	}
+	return 0
+}
+
+type CParental_ReportPlaytimeAndNotify_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CParental_ReportPlaytimeAndNotify_Response) Reset() {
+	*m = CParental_ReportPlaytimeAndNotify_Response{}
+}
+func (m *CParental_ReportPlaytimeAndNotify_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CParental_ReportPlaytimeAndNotify_Response) ProtoMessage() {}
+func (*CParental_ReportPlaytimeAndNotify_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{29}
+}
+
+func (m *CParental_ReportPlaytimeAndNotify_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Response.Unmarshal(m, b)
+}
+func (m *CParental_ReportPlaytimeAndNotify_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Response.Marshal(b, m, deterministic)
+}
+func (m *CParental_ReportPlaytimeAndNotify_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Response.Merge(m, src)
+}
+func (m *CParental_ReportPlaytimeAndNotify_Response) XXX_Size() int {
+	return xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Response.Size(m)
+}
+func (m *CParental_ReportPlaytimeAndNotify_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ReportPlaytimeAndNotify_Response proto.InternalMessageInfo
+
 type CParental_ParentalSettingsChange_Notification struct {
-	SerializedSettings []byte  `protobuf:"bytes,1,opt,name=serialized_settings,json=serializedSettings" json:"serialized_settings,omitempty"`
-	Signature          []byte  `protobuf:"bytes,2,opt,name=signature" json:"signature,omitempty"`
-	Password           *string `protobuf:"bytes,3,opt,name=password" json:"password,omitempty"`
-	Sessionid          *string `protobuf:"bytes,4,opt,name=sessionid" json:"sessionid,omitempty"`
-	XXX_unrecognized   []byte  `json:"-"`
+	SerializedSettings   []byte   `protobuf:"bytes,1,opt,name=serialized_settings,json=serializedSettings" json:"serialized_settings,omitempty"`
+	Signature            []byte   `protobuf:"bytes,2,opt,name=signature" json:"signature,omitempty"`
+	Password             *string  `protobuf:"bytes,3,opt,name=password" json:"password,omitempty"`
+	Sessionid            *string  `protobuf:"bytes,4,opt,name=sessionid" json:"sessionid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_ParentalSettingsChange_Notification) Reset() {
@@ -602,8 +1381,26 @@ func (m *CParental_ParentalSettingsChange_Notification) String() string {
 }
 func (*CParental_ParentalSettingsChange_Notification) ProtoMessage() {}
 func (*CParental_ParentalSettingsChange_Notification) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{22}
+	return fileDescriptor_16081bf1f772237a, []int{30}
 }
+
+func (m *CParental_ParentalSettingsChange_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ParentalSettingsChange_Notification.Unmarshal(m, b)
+}
+func (m *CParental_ParentalSettingsChange_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ParentalSettingsChange_Notification.Marshal(b, m, deterministic)
+}
+func (m *CParental_ParentalSettingsChange_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ParentalSettingsChange_Notification.Merge(m, src)
+}
+func (m *CParental_ParentalSettingsChange_Notification) XXX_Size() int {
+	return xxx_messageInfo_CParental_ParentalSettingsChange_Notification.Size(m)
+}
+func (m *CParental_ParentalSettingsChange_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ParentalSettingsChange_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ParentalSettingsChange_Notification proto.InternalMessageInfo
 
 func (m *CParental_ParentalSettingsChange_Notification) GetSerializedSettings() []byte {
 	if m != nil {
@@ -634,17 +1431,37 @@ func (m *CParental_ParentalSettingsChange_Notification) GetSessionid() string {
 }
 
 type CParental_ParentalUnlock_Notification struct {
-	Password         *string `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
-	Sessionid        *string `protobuf:"bytes,2,opt,name=sessionid" json:"sessionid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Password             *string  `protobuf:"bytes,1,opt,name=password" json:"password,omitempty"`
+	Sessionid            *string  `protobuf:"bytes,2,opt,name=sessionid" json:"sessionid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_ParentalUnlock_Notification) Reset()         { *m = CParental_ParentalUnlock_Notification{} }
 func (m *CParental_ParentalUnlock_Notification) String() string { return proto.CompactTextString(m) }
 func (*CParental_ParentalUnlock_Notification) ProtoMessage()    {}
 func (*CParental_ParentalUnlock_Notification) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{23}
+	return fileDescriptor_16081bf1f772237a, []int{31}
 }
+
+func (m *CParental_ParentalUnlock_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ParentalUnlock_Notification.Unmarshal(m, b)
+}
+func (m *CParental_ParentalUnlock_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ParentalUnlock_Notification.Marshal(b, m, deterministic)
+}
+func (m *CParental_ParentalUnlock_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ParentalUnlock_Notification.Merge(m, src)
+}
+func (m *CParental_ParentalUnlock_Notification) XXX_Size() int {
+	return xxx_messageInfo_CParental_ParentalUnlock_Notification.Size(m)
+}
+func (m *CParental_ParentalUnlock_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ParentalUnlock_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ParentalUnlock_Notification proto.InternalMessageInfo
 
 func (m *CParental_ParentalUnlock_Notification) GetPassword() string {
 	if m != nil && m.Password != nil {
@@ -661,16 +1478,36 @@ func (m *CParental_ParentalUnlock_Notification) GetSessionid() string {
 }
 
 type CParental_ParentalLock_Notification struct {
-	Sessionid        *string `protobuf:"bytes,1,opt,name=sessionid" json:"sessionid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Sessionid            *string  `protobuf:"bytes,1,opt,name=sessionid" json:"sessionid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CParental_ParentalLock_Notification) Reset()         { *m = CParental_ParentalLock_Notification{} }
 func (m *CParental_ParentalLock_Notification) String() string { return proto.CompactTextString(m) }
 func (*CParental_ParentalLock_Notification) ProtoMessage()    {}
 func (*CParental_ParentalLock_Notification) Descriptor() ([]byte, []int) {
-	return parental_fileDescriptor0, []int{24}
+	return fileDescriptor_16081bf1f772237a, []int{32}
 }
+
+func (m *CParental_ParentalLock_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_ParentalLock_Notification.Unmarshal(m, b)
+}
+func (m *CParental_ParentalLock_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_ParentalLock_Notification.Marshal(b, m, deterministic)
+}
+func (m *CParental_ParentalLock_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_ParentalLock_Notification.Merge(m, src)
+}
+func (m *CParental_ParentalLock_Notification) XXX_Size() int {
+	return xxx_messageInfo_CParental_ParentalLock_Notification.Size(m)
+}
+func (m *CParental_ParentalLock_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_ParentalLock_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_ParentalLock_Notification proto.InternalMessageInfo
 
 func (m *CParental_ParentalLock_Notification) GetSessionid() string {
 	if m != nil && m.Sessionid != nil {
@@ -679,9 +1516,54 @@ func (m *CParental_ParentalLock_Notification) GetSessionid() string {
 	return ""
 }
 
+type CParental_PlaytimeUsed_Notification struct {
+	DayOfWeek            *uint32  `protobuf:"varint,1,opt,name=day_of_week,json=dayOfWeek" json:"day_of_week,omitempty"`
+	MinutesUsed          *uint32  `protobuf:"varint,2,opt,name=minutes_used,json=minutesUsed" json:"minutes_used,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CParental_PlaytimeUsed_Notification) Reset()         { *m = CParental_PlaytimeUsed_Notification{} }
+func (m *CParental_PlaytimeUsed_Notification) String() string { return proto.CompactTextString(m) }
+func (*CParental_PlaytimeUsed_Notification) ProtoMessage()    {}
+func (*CParental_PlaytimeUsed_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_16081bf1f772237a, []int{33}
+}
+
+func (m *CParental_PlaytimeUsed_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CParental_PlaytimeUsed_Notification.Unmarshal(m, b)
+}
+func (m *CParental_PlaytimeUsed_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CParental_PlaytimeUsed_Notification.Marshal(b, m, deterministic)
+}
+func (m *CParental_PlaytimeUsed_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CParental_PlaytimeUsed_Notification.Merge(m, src)
+}
+func (m *CParental_PlaytimeUsed_Notification) XXX_Size() int {
+	return xxx_messageInfo_CParental_PlaytimeUsed_Notification.Size(m)
+}
+func (m *CParental_PlaytimeUsed_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CParental_PlaytimeUsed_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CParental_PlaytimeUsed_Notification proto.InternalMessageInfo
+
+func (m *CParental_PlaytimeUsed_Notification) GetDayOfWeek() uint32 {
+	if m != nil && m.DayOfWeek != nil {
+		return *m.DayOfWeek
+	}
+	return 0
+}
+
+func (m *CParental_PlaytimeUsed_Notification) GetMinutesUsed() uint32 {
+	if m != nil && m.MinutesUsed != nil {
+		return *m.MinutesUsed
+	}
+	return 0
+}
+
 func init() {
-	proto.RegisterType((*ParentalApp)(nil), "ParentalApp")
-	proto.RegisterType((*ParentalSettings)(nil), "ParentalSettings")
 	proto.RegisterType((*CParental_EnableParentalSettings_Request)(nil), "CParental_EnableParentalSettings_Request")
 	proto.RegisterType((*CParental_EnableParentalSettings_Response)(nil), "CParental_EnableParentalSettings_Response")
 	proto.RegisterType((*CParental_DisableParentalSettings_Request)(nil), "CParental_DisableParentalSettings_Request")
@@ -700,107 +1582,114 @@ func init() {
 	proto.RegisterType((*CParental_LockClient_Response)(nil), "CParental_LockClient_Response")
 	proto.RegisterType((*CParental_RequestRecoveryCode_Request)(nil), "CParental_RequestRecoveryCode_Request")
 	proto.RegisterType((*CParental_RequestRecoveryCode_Response)(nil), "CParental_RequestRecoveryCode_Response")
-	proto.RegisterType((*CParental_DisableWithRecoveryCode_Request)(nil), "CParental_DisableWithRecoveryCode_Request")
-	proto.RegisterType((*CParental_DisableWithRecoveryCode_Response)(nil), "CParental_DisableWithRecoveryCode_Response")
+	proto.RegisterType((*CParental_RequestFeatureAccess_Request)(nil), "CParental_RequestFeatureAccess_Request")
+	proto.RegisterType((*CParental_RequestFeatureAccess_Response)(nil), "CParental_RequestFeatureAccess_Response")
+	proto.RegisterType((*CParental_ApproveFeatureAccess_Request)(nil), "CParental_ApproveFeatureAccess_Request")
+	proto.RegisterType((*CParental_ApproveFeatureAccess_Response)(nil), "CParental_ApproveFeatureAccess_Response")
+	proto.RegisterType((*CParental_RequestPlaytime_Request)(nil), "CParental_RequestPlaytime_Request")
+	proto.RegisterType((*CParental_RequestPlaytime_Response)(nil), "CParental_RequestPlaytime_Response")
+	proto.RegisterType((*CParental_ApprovePlaytime_Request)(nil), "CParental_ApprovePlaytime_Request")
+	proto.RegisterType((*CParental_ApprovePlaytime_Response)(nil), "CParental_ApprovePlaytime_Response")
+	proto.RegisterType((*CParental_GetRequests_Request)(nil), "CParental_GetRequests_Request")
+	proto.RegisterType((*CParental_GetRequests_Response)(nil), "CParental_GetRequests_Response")
+	proto.RegisterType((*CParental_ReportPlaytimeAndNotify_Request)(nil), "CParental_ReportPlaytimeAndNotify_Request")
+	proto.RegisterType((*CParental_ReportPlaytimeAndNotify_Response)(nil), "CParental_ReportPlaytimeAndNotify_Response")
 	proto.RegisterType((*CParental_ParentalSettingsChange_Notification)(nil), "CParental_ParentalSettingsChange_Notification")
 	proto.RegisterType((*CParental_ParentalUnlock_Notification)(nil), "CParental_ParentalUnlock_Notification")
 	proto.RegisterType((*CParental_ParentalLock_Notification)(nil), "CParental_ParentalLock_Notification")
+	proto.RegisterType((*CParental_PlaytimeUsed_Notification)(nil), "CParental_PlaytimeUsed_Notification")
 }
 
-func init() { proto.RegisterFile("steammessages_parental.steamclient.proto", parental_fileDescriptor0) }
+func init() {
+	proto.RegisterFile("steammessages_parental.steamclient.proto", fileDescriptor_16081bf1f772237a)
+}
 
-var parental_fileDescriptor0 = []byte{
-	// 1471 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x57, 0xcf, 0x6f, 0xd4, 0x46,
-	0x14, 0x96, 0x49, 0x80, 0xe4, 0xed, 0x26, 0xa4, 0x13, 0x44, 0xcd, 0x8a, 0xc0, 0x60, 0x20, 0x2c,
-	0x10, 0x8c, 0x14, 0xa4, 0x16, 0x09, 0xa9, 0x55, 0xb2, 0x50, 0x8a, 0x4a, 0x81, 0x7a, 0x69, 0xa9,
-	0xc4, 0xc1, 0x9a, 0xd8, 0x93, 0xdd, 0x21, 0xce, 0x8c, 0xeb, 0x99, 0x4d, 0x9a, 0x4a, 0x95, 0xaa,
-	0x3d, 0xf4, 0x56, 0x71, 0xe9, 0xb1, 0x77, 0xa4, 0xf6, 0x6c, 0xb5, 0xc7, 0x4a, 0x3d, 0xf5, 0x50,
-	0xa9, 0xea, 0x5f, 0xd1, 0x3f, 0xa3, 0xf2, 0xd8, 0xde, 0xb5, 0x37, 0xfb, 0x2b, 0x85, 0xdb, 0xfa,
-	0xcd, 0x9b, 0x37, 0xdf, 0x9b, 0xf7, 0xbd, 0xf9, 0xde, 0x42, 0x5d, 0x2a, 0x4a, 0x76, 0x77, 0xa9,
-	0x94, 0xa4, 0x45, 0xa5, 0x1b, 0x92, 0x88, 0x72, 0x45, 0x02, 0x5b, 0x9b, 0xbd, 0x80, 0x51, 0xae,
-	0xec, 0x30, 0x12, 0x4a, 0xd4, 0xd6, 0xca, 0x9e, 0x1d, 0xce, 0xb6, 0x19, 0xf5, 0xdd, 0x2d, 0x22,
-	0xe9, 0x61, 0x6f, 0x6b, 0x13, 0x2a, 0x4f, 0xb3, 0x58, 0x1b, 0x61, 0x88, 0x4e, 0xc3, 0x71, 0x12,
-	0x86, 0xcc, 0x37, 0x0d, 0x6c, 0xd4, 0x17, 0x9c, 0xf4, 0x03, 0xad, 0x00, 0x30, 0xe9, 0x92, 0x20,
-	0x10, 0xfb, 0xd4, 0x37, 0x8f, 0x61, 0xa3, 0x3e, 0xe7, 0xcc, 0x33, 0xb9, 0x91, 0x1a, 0xac, 0x3f,
-	0x67, 0x60, 0x29, 0x0f, 0xd2, 0xa4, 0x4a, 0x31, 0xde, 0x92, 0xc8, 0x84, 0x93, 0xfa, 0xb4, 0x2c,
-	0xd6, 0x09, 0x27, 0xff, 0x44, 0xab, 0x70, 0x8a, 0x84, 0x61, 0xc0, 0xa4, 0xd2, 0xa0, 0x5c, 0x96,
-	0x86, 0x5c, 0x70, 0x16, 0x32, 0xf3, 0x26, 0x91, 0xf4, 0xa1, 0x8f, 0xee, 0x80, 0x59, 0xf2, 0xf3,
-	0xa9, 0xf4, 0x22, 0x16, 0x2a, 0x26, 0xb8, 0x39, 0x83, 0x8d, 0xfa, 0xbc, 0x73, 0xa6, 0xb0, 0xe1,
-	0x5e, 0x7f, 0x15, 0xdd, 0x82, 0x6a, 0x71, 0xa7, 0x39, 0x8b, 0x67, 0xea, 0x95, 0xf5, 0xaa, 0x5d,
-	0xc8, 0xd4, 0xa9, 0x14, 0xf6, 0xa2, 0xdb, 0xb0, 0x98, 0x6f, 0xf0, 0x3a, 0x52, 0x89, 0x5d, 0xf3,
-	0xf8, 0x90, 0x2d, 0x39, 0xbe, 0x86, 0x76, 0x41, 0xd7, 0x61, 0x29, 0x24, 0x52, 0xee, 0x8b, 0xc8,
-	0x6f, 0x13, 0xd9, 0x56, 0x07, 0x21, 0x35, 0x4f, 0xe8, 0x44, 0x0e, 0xd9, 0x11, 0x82, 0x59, 0x49,
-	0x02, 0x65, 0x9e, 0xc4, 0x46, 0xbd, 0xea, 0xe8, 0xdf, 0xc8, 0x82, 0x6a, 0xd1, 0xcf, 0x9c, 0xd3,
-	0x6b, 0x25, 0x5b, 0x76, 0xf3, 0x94, 0x93, 0xad, 0x80, 0xfa, 0xe6, 0x7c, 0x7e, 0xf3, 0xf7, 0x53,
-	0x03, 0xba, 0x06, 0x4b, 0xd9, 0x9a, 0xbb, 0x4d, 0x89, 0xea, 0x44, 0x54, 0x9a, 0xa0, 0x21, 0x9c,
-	0xca, 0xec, 0x1f, 0x65, 0x66, 0x74, 0x05, 0x16, 0x23, 0xea, 0x89, 0x3d, 0x1a, 0x1d, 0xb8, 0x74,
-	0x97, 0xb0, 0xc0, 0xac, 0xe8, 0x3b, 0x5c, 0xc8, 0xad, 0xf7, 0x13, 0xa3, 0xf5, 0x97, 0x01, 0xf5,
-	0x46, 0x9e, 0xb4, 0x9b, 0x9e, 0x33, 0x58, 0x5b, 0xd7, 0xa1, 0x5f, 0x75, 0xa8, 0x54, 0xa8, 0x06,
-	0x73, 0x39, 0x5a, 0x5d, 0xe4, 0x79, 0xa7, 0xf7, 0x8d, 0x6e, 0xc2, 0x9c, 0xcc, 0xfc, 0x75, 0x79,
-	0x2b, 0xeb, 0xef, 0xd8, 0x83, 0x81, 0x9c, 0x9e, 0x0b, 0x3a, 0x07, 0xf3, 0x92, 0x4a, 0xc9, 0x04,
-	0x67, 0x7e, 0x56, 0xdd, 0xbe, 0x01, 0x9d, 0x07, 0x48, 0xf3, 0xf1, 0x84, 0x9f, 0x94, 0x33, 0xc9,
-	0xb0, 0x60, 0x29, 0x92, 0x0d, 0x4a, 0x64, 0xb3, 0x6e, 0xc0, 0xb5, 0x29, 0xd2, 0x91, 0xa1, 0xe0,
-	0x92, 0x5a, 0xa4, 0xe8, 0x7c, 0x8f, 0xc9, 0xff, 0x9d, 0xfc, 0x68, 0x3c, 0x6b, 0x70, 0x7d, 0x9a,
-	0x23, 0x32, 0x40, 0x1b, 0x70, 0xa5, 0xef, 0xfd, 0x80, 0xaa, 0x91, 0x60, 0x46, 0x1f, 0xf8, 0x1c,
-	0x56, 0x27, 0x85, 0x48, 0x0f, 0x2b, 0x55, 0xcc, 0x98, 0x58, 0x31, 0xeb, 0x21, 0xdc, 0x28, 0x05,
-	0x6e, 0xb2, 0x16, 0xa7, 0xfe, 0xd8, 0xeb, 0x8a, 0x98, 0x88, 0x98, 0x3a, 0xc8, 0x1e, 0x97, 0xde,
-	0xb7, 0xf5, 0x2d, 0xac, 0x4d, 0x17, 0x2a, 0x43, 0x7a, 0x0b, 0x96, 0x25, 0x8d, 0x18, 0x09, 0xd8,
-	0x37, 0xd4, 0x77, 0x4b, 0xa0, 0xab, 0x0e, 0xea, 0x2f, 0x35, 0x8b, 0xec, 0x62, 0x2d, 0xae, 0x5b,
-	0x41, 0xb3, 0xb1, 0xea, 0xf4, 0x0d, 0x09, 0xe7, 0x0b, 0xd7, 0xdc, 0x1c, 0x73, 0xcd, 0x6f, 0x91,
-	0xf0, 0x17, 0xa1, 0xca, 0xe9, 0xbe, 0xdb, 0x0b, 0x97, 0x72, 0xbe, 0xc2, 0xe9, 0xfe, 0xd3, 0x3c,
-	0x62, 0xa9, 0x27, 0x66, 0x07, 0x7b, 0x62, 0x74, 0xc9, 0xeb, 0xc5, 0x92, 0x37, 0xc7, 0x94, 0xdc,
-	0xba, 0x07, 0x17, 0xfa, 0x9e, 0x5f, 0x90, 0x80, 0xf9, 0x44, 0xd1, 0x67, 0x62, 0x87, 0xf2, 0x5e,
-	0xca, 0x17, 0xa1, 0xda, 0xe1, 0x81, 0xf0, 0x76, 0x5c, 0x95, 0xd8, 0xb3, 0xb4, 0x2b, 0xa9, 0x4d,
-	0xbb, 0x5a, 0x16, 0xe0, 0xd1, 0x51, 0xb2, 0x93, 0x5e, 0x19, 0x60, 0x1d, 0x76, 0xca, 0x53, 0x9d,
-	0xba, 0xa9, 0xd2, 0xec, 0xf5, 0xfd, 0xce, 0x3b, 0xf9, 0x27, 0xba, 0x0d, 0x67, 0x24, 0xe5, 0xbe,
-	0x9b, 0x01, 0x15, 0xdc, 0x95, 0x1d, 0xcf, 0xa3, 0x52, 0xea, 0x5b, 0x9d, 0x73, 0x96, 0x93, 0xd5,
-	0xcf, 0xf5, 0xe2, 0x13, 0xde, 0x4c, 0x97, 0xac, 0xbb, 0x70, 0x69, 0x2c, 0xa0, 0x8c, 0x6b, 0xa7,
-	0xe1, 0x78, 0x31, 0xf1, 0xf4, 0xc3, 0xba, 0x03, 0xe7, 0xfa, 0x9b, 0x1f, 0x09, 0x6f, 0xa7, 0xa1,
-	0x45, 0xb5, 0xd4, 0x8f, 0x19, 0x56, 0xa3, 0x84, 0xd5, 0xba, 0x00, 0x2b, 0x23, 0x76, 0x66, 0x37,
-	0x75, 0xb5, 0x48, 0xc6, 0x2c, 0x9e, 0x93, 0xbd, 0xd1, 0x0d, 0xe1, 0xd3, 0xdc, 0x56, 0x2e, 0xf3,
-	0x70, 0xc7, 0x2c, 0xe4, 0xcb, 0x21, 0xef, 0xda, 0x73, 0xa6, 0xda, 0xc3, 0xc2, 0xa2, 0x4b, 0xd0,
-	0x93, 0x04, 0x57, 0x3f, 0xb7, 0x69, 0xb7, 0x56, 0xa3, 0x82, 0xf3, 0x11, 0x1f, 0xb8, 0x21, 0x67,
-	0x65, 0xc8, 0x7e, 0x33, 0xe0, 0x66, 0xdf, 0x7d, 0x90, 0xa8, 0x8d, 0x36, 0xe1, 0x2d, 0xea, 0x3e,
-	0x16, 0x8a, 0x6d, 0x33, 0x8f, 0x64, 0xda, 0xfe, 0x36, 0x7b, 0xbf, 0x44, 0xb8, 0x99, 0x01, 0xc2,
-	0x8d, 0xed, 0x3f, 0x8b, 0x14, 0xeb, 0x94, 0xff, 0x48, 0x49, 0x56, 0x46, 0x3c, 0x8e, 0xd3, 0xa5,
-	0x23, 0x8e, 0x0d, 0x1e, 0xd1, 0x28, 0x52, 0x34, 0xff, 0xf1, 0xe8, 0xd0, 0x01, 0xa5, 0x20, 0xc6,
-	0x40, 0x90, 0xf5, 0x7f, 0x16, 0x61, 0x2e, 0xdf, 0x8b, 0xfe, 0x36, 0xe0, 0xcc, 0x70, 0x15, 0x44,
-	0xd7, 0xec, 0x69, 0x75, 0xbf, 0x76, 0xdd, 0x9e, 0x5e, 0x53, 0xdd, 0x6e, 0x6c, 0xbe, 0x48, 0x9d,
-	0x70, 0x3e, 0xb5, 0xe2, 0xbc, 0x6c, 0x78, 0x5b, 0x44, 0x58, 0xb5, 0x29, 0x0e, 0x44, 0xab, 0x45,
-	0x7d, 0xcc, 0x38, 0x26, 0x9e, 0x27, 0x3a, 0x5c, 0xad, 0x61, 0xa1, 0x67, 0x39, 0x12, 0x04, 0x07,
-	0xb9, 0xbb, 0xf6, 0xf4, 0x3a, 0x51, 0x12, 0xa4, 0x17, 0x02, 0xfd, 0x62, 0xc0, 0xbb, 0x23, 0x84,
-	0x14, 0x15, 0x81, 0x4e, 0xd0, 0xf3, 0xda, 0x0d, 0xfb, 0x08, 0xc2, 0xfc, 0x7e, 0x37, 0x36, 0x6f,
-	0x67, 0x5e, 0x47, 0x49, 0x0b, 0xbd, 0x36, 0x60, 0x79, 0x88, 0x0a, 0xa3, 0x55, 0x7b, 0x2a, 0xa1,
-	0xaf, 0x5d, 0xb5, 0xa7, 0x53, 0x73, 0xeb, 0xc3, 0x6e, 0x6c, 0xde, 0x7d, 0x40, 0x55, 0xe9, 0xd2,
-	0x8e, 0x82, 0xf4, 0x5f, 0x03, 0xce, 0x8e, 0xd4, 0x62, 0xb4, 0x66, 0x1f, 0x41, 0xfc, 0x6b, 0x37,
-	0xed, 0xa3, 0xe8, 0xbb, 0xc5, 0xbb, 0xb1, 0xf9, 0xf2, 0x0d, 0xb0, 0xeb, 0x9f, 0xc9, 0xf2, 0x2e,
-	0x56, 0x6d, 0xa2, 0xb0, 0x47, 0x38, 0xde, 0x3a, 0xc0, 0x7b, 0x34, 0xd2, 0xff, 0x85, 0x92, 0xdf,
-	0xc9, 0xbe, 0x88, 0x7a, 0x94, 0xed, 0xd1, 0x48, 0x17, 0xa5, 0x39, 0xa1, 0x28, 0xcd, 0x29, 0x8b,
-	0xd2, 0x9c, 0x58, 0x94, 0xe6, 0x1b, 0x14, 0xe5, 0xb5, 0x01, 0x0b, 0x25, 0x85, 0x45, 0xd8, 0x9e,
-	0xa0, 0xe0, 0xb5, 0x8b, 0xf6, 0x44, 0x75, 0xfe, 0xac, 0x1b, 0x9b, 0x9f, 0x36, 0xda, 0xd4, 0xdb,
-	0xc1, 0x6c, 0x5b, 0x1f, 0xdd, 0x62, 0x7b, 0x94, 0xf7, 0xa1, 0xa5, 0xca, 0x8a, 0xb5, 0xf8, 0x61,
-	0x26, 0xb1, 0x27, 0xa2, 0x88, 0x7a, 0x6a, 0x0c, 0xd2, 0x5f, 0x0d, 0x58, 0x1a, 0x54, 0x55, 0x74,
-	0xc9, 0x9e, 0x3c, 0x03, 0xd4, 0x2e, 0xdb, 0x53, 0xe8, 0xb2, 0xf5, 0x65, 0x37, 0x36, 0x9f, 0xe5,
-	0xcb, 0x1a, 0x43, 0x18, 0x10, 0xc6, 0x15, 0xfd, 0x3a, 0xb9, 0xd1, 0xd4, 0x7b, 0x0c, 0x43, 0x08,
-	0xf7, 0x71, 0x44, 0x55, 0x27, 0xe2, 0x98, 0xf0, 0x52, 0x7a, 0xe8, 0x95, 0x01, 0xd0, 0x17, 0x66,
-	0xb4, 0x62, 0x8f, 0x53, 0xfa, 0xda, 0x79, 0x7b, 0xbc, 0x9c, 0x6f, 0x76, 0x63, 0xf3, 0x03, 0xfd,
-	0x5c, 0x1f, 0x60, 0x4f, 0x70, 0x4e, 0x3d, 0x45, 0x7d, 0x9c, 0xfe, 0x07, 0x97, 0x29, 0x3d, 0x09,
-	0xd6, 0xa7, 0xb7, 0x89, 0xc4, 0xc2, 0xd3, 0xac, 0x48, 0xa1, 0xe2, 0xad, 0x48, 0xec, 0x4b, 0x1a,
-	0xa1, 0x3f, 0x0c, 0x58, 0x1e, 0x22, 0xf0, 0x25, 0x7e, 0x8e, 0x99, 0x14, 0x4a, 0xfc, 0x1c, 0x3b,
-	0x28, 0xbc, 0xe8, 0xc6, 0xe6, 0xf3, 0xcc, 0x03, 0x13, 0x9c, 0x4b, 0x3e, 0x4e, 0xe6, 0x00, 0xbc,
-	0x45, 0xb1, 0x4c, 0xf8, 0xaa, 0x44, 0xde, 0x3d, 0xe9, 0xa2, 0xfe, 0x37, 0x89, 0x89, 0xef, 0x47,
-	0x54, 0xf6, 0xb9, 0x2b, 0x43, 0xea, 0xa5, 0xdd, 0x96, 0x33, 0xe2, 0xe7, 0xfe, 0x43, 0x3d, 0x38,
-	0x10, 0x0c, 0x7b, 0xa8, 0x47, 0x0d, 0x28, 0xc3, 0x1e, 0xea, 0xd1, 0x03, 0xc6, 0x7b, 0xdd, 0xd8,
-	0x5c, 0xdf, 0x50, 0x8a, 0xee, 0x86, 0xa5, 0x8c, 0xb2, 0x8a, 0x0b, 0x3e, 0x1c, 0x6c, 0x6d, 0xa5,
-	0x1b, 0x9b, 0x67, 0x9f, 0x1e, 0xea, 0x4c, 0x49, 0xa3, 0x3d, 0xe6, 0xd1, 0xf5, 0xef, 0x67, 0x61,
-	0x31, 0x5f, 0xcd, 0x78, 0xf2, 0x93, 0x01, 0xa7, 0xd3, 0x3a, 0x97, 0xc7, 0x17, 0x64, 0xdb, 0x47,
-	0x9a, 0x70, 0x6a, 0x15, 0xfb, 0xb1, 0xe8, 0xe1, 0x7f, 0xd0, 0x8d, 0xcd, 0x46, 0x71, 0x19, 0x6f,
-	0x47, 0x62, 0x57, 0xe3, 0xa0, 0x51, 0x52, 0x8a, 0x94, 0x49, 0x58, 0x6c, 0x63, 0x82, 0x3d, 0x1d,
-	0x2d, 0xe1, 0xce, 0xa1, 0x37, 0x05, 0xfd, 0x68, 0x40, 0x35, 0x85, 0x97, 0xce, 0x28, 0x25, 0xf2,
-	0x8c, 0x19, 0x5f, 0xca, 0x70, 0x9e, 0x74, 0x63, 0xf3, 0x93, 0x29, 0xe0, 0xa4, 0xbc, 0xee, 0x35,
-	0xd6, 0x68, 0x6a, 0xff, 0x60, 0x00, 0xa4, 0xb0, 0x92, 0xe6, 0x41, 0x97, 0xed, 0x29, 0x06, 0x9e,
-	0x32, 0xa4, 0x47, 0xdd, 0xd8, 0xfc, 0x78, 0x6a, 0x48, 0x13, 0x5a, 0xad, 0x66, 0x77, 0x63, 0x73,
-	0xf5, 0x70, 0xdd, 0xb3, 0x18, 0xbc, 0x70, 0x8c, 0xfc, 0x3d, 0x36, 0x8f, 0x6d, 0xce, 0x7c, 0x67,
-	0x18, 0xff, 0x05, 0x00, 0x00, 0xff, 0xff, 0xef, 0x59, 0xe8, 0x52, 0x9d, 0x13, 0x00, 0x00,
+var fileDescriptor_16081bf1f772237a = []byte{
+	// 1372 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x57, 0x5d, 0x6f, 0xd4, 0x46,
+	0x17, 0x96, 0x13, 0x5e, 0x48, 0xce, 0x26, 0x7c, 0x4c, 0xf2, 0x92, 0xad, 0x0b, 0x21, 0x31, 0x01,
+	0x16, 0x08, 0x53, 0x29, 0xbd, 0xa9, 0xc4, 0x45, 0x15, 0x16, 0x1a, 0xa1, 0x22, 0x40, 0x5e, 0x28,
+	0x15, 0x55, 0x6b, 0x19, 0xfb, 0x6c, 0x98, 0x66, 0xd7, 0x76, 0x3d, 0x5e, 0xc2, 0x56, 0xaa, 0x54,
+	0xa9, 0x37, 0xbd, 0xeb, 0x0f, 0xe9, 0x5d, 0xa5, 0x4a, 0x15, 0x57, 0xfd, 0x03, 0xbd, 0xe9, 0x7f,
+	0xe9, 0x7d, 0x65, 0xcf, 0xd8, 0x3b, 0xb3, 0xbb, 0xfe, 0x80, 0x72, 0xe7, 0x39, 0x73, 0xfc, 0x9c,
+	0xcf, 0x99, 0xf3, 0x0c, 0x74, 0x78, 0x82, 0xee, 0x70, 0x88, 0x9c, 0xbb, 0x87, 0xc8, 0x9d, 0xc8,
+	0x8d, 0x31, 0x48, 0xdc, 0x01, 0xcd, 0xc4, 0xde, 0x80, 0x61, 0x90, 0xd0, 0x28, 0x0e, 0x93, 0xd0,
+	0x6c, 0xeb, 0x9a, 0x2f, 0x5c, 0x8e, 0x72, 0x67, 0x57, 0xdf, 0x19, 0x05, 0xac, 0xcf, 0xd0, 0x17,
+	0x1a, 0xb3, 0x38, 0x3b, 0xf3, 0x2d, 0x3a, 0xe1, 0x8b, 0x6f, 0xd1, 0x4b, 0xb8, 0xd0, 0xb2, 0xfe,
+	0x32, 0xa0, 0xd3, 0x7d, 0x9c, 0xef, 0xdd, 0x0b, 0xdc, 0x17, 0x03, 0xcc, 0x97, 0x3d, 0x4c, 0x12,
+	0x16, 0x1c, 0x72, 0xc7, 0xc6, 0xef, 0x46, 0xc8, 0x13, 0x62, 0xc2, 0x52, 0xe4, 0x72, 0x7e, 0x1c,
+	0xc6, 0x7e, 0xdb, 0xd8, 0x32, 0x3a, 0xcb, 0x76, 0xb1, 0x26, 0xb7, 0x60, 0x89, 0x4b, 0xfd, 0xf6,
+	0xc2, 0x96, 0xd1, 0x69, 0xed, 0x9d, 0xa3, 0xd3, 0x40, 0x76, 0xa1, 0x42, 0x2e, 0xc0, 0x32, 0x47,
+	0xce, 0x59, 0x18, 0x30, 0xbf, 0xbd, 0x98, 0x61, 0x4d, 0x04, 0x64, 0x13, 0x00, 0x33, 0x57, 0xbc,
+	0xd0, 0xc7, 0xf6, 0x89, 0x2d, 0xa3, 0xb3, 0x6a, 0x2b, 0x12, 0xd2, 0x86, 0x53, 0x59, 0x74, 0xcc,
+	0x6f, 0xc3, 0x96, 0xd1, 0x39, 0x69, 0xe7, 0x4b, 0xeb, 0x26, 0x5c, 0x6f, 0x10, 0x0e, 0x8f, 0xc2,
+	0x80, 0xa3, 0xe5, 0xaa, 0xca, 0x77, 0x19, 0x7f, 0xe7, 0xe0, 0xcb, 0xfd, 0xd9, 0x85, 0x1b, 0x4d,
+	0x4c, 0x48, 0x87, 0xf6, 0xe1, 0xca, 0x44, 0xfb, 0x00, 0x93, 0x52, 0x67, 0xca, 0x0d, 0x3e, 0x83,
+	0xab, 0x75, 0x10, 0xc2, 0x98, 0x56, 0x31, 0xa3, 0xb6, 0x62, 0xd6, 0x7d, 0xb8, 0xa9, 0x01, 0xf7,
+	0xd8, 0x61, 0x80, 0x7e, 0x65, 0xba, 0x62, 0x16, 0xc6, 0x2c, 0x19, 0x67, 0xe8, 0xab, 0x76, 0xb1,
+	0xb6, 0x7e, 0x80, 0xdd, 0x66, 0x50, 0xd2, 0xd3, 0x8f, 0x60, 0x8d, 0x63, 0xcc, 0xdc, 0x01, 0xfb,
+	0x1e, 0x7d, 0x47, 0x73, 0x7a, 0xc5, 0x26, 0x93, 0xad, 0x9e, 0xda, 0x5d, 0xec, 0x30, 0x70, 0x93,
+	0x51, 0x8c, 0x59, 0x37, 0xae, 0xd8, 0x13, 0x41, 0xda, 0xf3, 0x4a, 0x9a, 0x7b, 0x15, 0x69, 0x7e,
+	0x8f, 0x0d, 0xbf, 0x0d, 0x2b, 0x01, 0x1e, 0x3b, 0x05, 0x9c, 0xe8, 0xf9, 0x56, 0x80, 0xc7, 0x8f,
+	0x73, 0x44, 0xed, 0x4c, 0x9c, 0x98, 0x3e, 0x13, 0xe5, 0x25, 0xef, 0xa8, 0x25, 0xef, 0x55, 0x94,
+	0xdc, 0xba, 0x0b, 0x97, 0x26, 0x9a, 0x5f, 0xb8, 0x03, 0xe6, 0xbb, 0x09, 0x3e, 0x09, 0x8f, 0x30,
+	0x28, 0x42, 0xde, 0x86, 0x95, 0x51, 0x30, 0x08, 0xbd, 0x23, 0x27, 0x49, 0xe5, 0x32, 0xec, 0x96,
+	0x90, 0x65, 0xaa, 0x96, 0x05, 0x5b, 0xe5, 0x28, 0xd2, 0xd2, 0x2f, 0x06, 0x58, 0xb3, 0x4a, 0x79,
+	0xa8, 0x8d, 0x0f, 0x95, 0x88, 0x3e, 0xcb, 0xef, 0xb2, 0x9d, 0x2f, 0xc9, 0xc7, 0x70, 0x9e, 0x63,
+	0xe0, 0x3b, 0xd2, 0xd1, 0x30, 0x70, 0xf8, 0xc8, 0xf3, 0x90, 0xf3, 0x2c, 0xab, 0x4b, 0xf6, 0x5a,
+	0xba, 0xfb, 0x34, 0xdb, 0x7c, 0x14, 0xf4, 0xc4, 0x96, 0x75, 0x1b, 0x2e, 0x57, 0x3a, 0x24, 0x7b,
+	0x6d, 0x1d, 0xfe, 0xa7, 0x06, 0x2e, 0x16, 0xd6, 0x27, 0x70, 0x61, 0xf2, 0xf3, 0x83, 0xd0, 0x3b,
+	0xea, 0x66, 0x57, 0xad, 0x76, 0x1e, 0xa5, 0xaf, 0x86, 0xe6, 0xab, 0x75, 0x09, 0x2e, 0x96, 0xfc,
+	0x29, 0x33, 0x75, 0x4d, 0x6d, 0x46, 0x89, 0x67, 0xa3, 0x17, 0xbe, 0xc2, 0x78, 0xdc, 0x0d, 0x7d,
+	0xcc, 0x65, 0x7a, 0x99, 0xe7, 0x2b, 0x4a, 0xc8, 0x6f, 0xe6, 0x68, 0x7e, 0x86, 0x59, 0xf3, 0xef,
+	0x67, 0xc9, 0x50, 0xf3, 0xdf, 0x17, 0x1b, 0x3c, 0x3f, 0xa5, 0xf9, 0xba, 0xa2, 0xe1, 0x0e, 0xe0,
+	0x5a, 0x2d, 0xbe, 0x4c, 0xe7, 0x05, 0x58, 0x8e, 0x85, 0x02, 0x13, 0x15, 0x3e, 0x69, 0x4f, 0x04,
+	0xd6, 0x6f, 0x86, 0xea, 0xe9, 0x7e, 0x14, 0xc5, 0xe1, 0x2b, 0x9c, 0xef, 0x69, 0x1b, 0x4e, 0xb9,
+	0x62, 0x3f, 0x83, 0x59, 0xb2, 0xf3, 0xa5, 0x6e, 0x62, 0x61, 0xca, 0x84, 0x16, 0xe1, 0xe2, 0x54,
+	0x84, 0x26, 0x2c, 0xf9, 0xa3, 0xd8, 0x4d, 0xd2, 0xb2, 0x89, 0x21, 0x53, 0xac, 0x2b, 0xa2, 0xbf,
+	0xae, 0x46, 0x5f, 0xe2, 0xb3, 0x2c, 0xc4, 0x1b, 0x03, 0xb6, 0x67, 0x32, 0xf5, 0x78, 0xe0, 0x8e,
+	0x13, 0x36, 0x44, 0xf5, 0xc8, 0x65, 0x6b, 0x7c, 0x1d, 0xb1, 0x49, 0x21, 0x5a, 0xa9, 0xec, 0x9e,
+	0x10, 0x91, 0x2f, 0xe1, 0xa2, 0x37, 0x8a, 0x53, 0x1c, 0x27, 0xca, 0x7f, 0x8f, 0x91, 0x27, 0x31,
+	0xf3, 0x52, 0x6f, 0xf3, 0x1b, 0x68, 0xbd, 0xb8, 0x81, 0x72, 0x23, 0x77, 0xdd, 0xb1, 0xfd, 0xa1,
+	0xfc, 0x35, 0x97, 0xd9, 0xca, 0x8f, 0x15, 0x71, 0xde, 0x51, 0x4f, 0xf0, 0xac, 0xef, 0x8d, 0x0a,
+	0xfc, 0xb7, 0x96, 0x00, 0x99, 0xac, 0x99, 0x04, 0xbc, 0x6b, 0x6d, 0xbf, 0x82, 0xff, 0xab, 0x49,
+	0x70, 0xe4, 0x5f, 0xe2, 0x72, 0x6d, 0xed, 0x5d, 0x2d, 0xb2, 0xf1, 0x04, 0x87, 0x51, 0x18, 0xbb,
+	0xf1, 0x78, 0x5e, 0x0a, 0xec, 0x75, 0x15, 0x44, 0xfa, 0x58, 0x75, 0xdf, 0xee, 0xa8, 0x89, 0x99,
+	0x8d, 0x49, 0xd6, 0xfe, 0x27, 0x43, 0x3d, 0xf9, 0x07, 0x98, 0xc8, 0x68, 0x27, 0x2d, 0x7d, 0x1b,
+	0xcc, 0x38, 0x71, 0x58, 0xe0, 0x0d, 0x46, 0x3e, 0x3a, 0x5e, 0x38, 0x8c, 0x06, 0x98, 0xa4, 0x03,
+	0x8e, 0x05, 0x1e, 0xca, 0x2e, 0xd8, 0x88, 0x93, 0xfb, 0x42, 0xa1, 0x9b, 0xef, 0xf7, 0xd2, 0x6d,
+	0x72, 0x05, 0x4e, 0xf7, 0xdd, 0x21, 0x1b, 0x8c, 0x9d, 0xc3, 0x38, 0x1c, 0x45, 0x45, 0x7a, 0x56,
+	0x85, 0xf4, 0x40, 0x08, 0xad, 0x5f, 0x0d, 0xd8, 0x2c, 0xf3, 0x42, 0x56, 0xf0, 0x0e, 0x9c, 0x95,
+	0x27, 0xc2, 0x91, 0xa9, 0x4d, 0x5b, 0x70, 0xb1, 0xd3, 0xda, 0xdb, 0x28, 0x12, 0x28, 0xfb, 0x3b,
+	0xbf, 0x75, 0xce, 0xf4, 0xb5, 0x35, 0x27, 0xf7, 0xe0, 0x9c, 0xd2, 0x97, 0x12, 0x64, 0x21, 0x03,
+	0x69, 0xcf, 0xf4, 0x64, 0x8e, 0x72, 0x36, 0xd2, 0x05, 0xdc, 0xfa, 0xd9, 0x50, 0x19, 0x99, 0x8d,
+	0x51, 0x18, 0x17, 0x2d, 0xb7, 0x1f, 0xf8, 0x0f, 0xc3, 0x84, 0xf5, 0xc7, 0x45, 0xfe, 0x36, 0xa1,
+	0xe5, 0xbb, 0x63, 0x27, 0xec, 0x3b, 0xc7, 0x88, 0x47, 0x32, 0x61, 0xcb, 0xbe, 0x3b, 0x7e, 0xd4,
+	0x7f, 0x86, 0x78, 0x94, 0x9e, 0xab, 0x21, 0x0b, 0x46, 0x49, 0xca, 0x95, 0x39, 0x8a, 0x04, 0xad,
+	0xda, 0x2d, 0x29, 0x7b, 0xca, 0xb1, 0x31, 0x71, 0x2b, 0xf7, 0x44, 0x16, 0xfb, 0x0f, 0x03, 0x6e,
+	0x4d, 0xd4, 0xa7, 0x07, 0x70, 0xf7, 0xa5, 0x1b, 0x1c, 0xa2, 0x93, 0xfd, 0xc4, 0x3c, 0x71, 0xbf,
+	0xbc, 0x5f, 0x4e, 0xa3, 0x0d, 0xd2, 0xc5, 0xa9, 0x41, 0x5a, 0xc9, 0x2b, 0x2c, 0x57, 0x9d, 0x3f,
+	0xf9, 0x87, 0x18, 0x9e, 0xba, 0xc7, 0x55, 0xb3, 0x5a, 0x33, 0xb1, 0x30, 0x6d, 0xa2, 0xab, 0x8e,
+	0xde, 0xfc, 0xe3, 0xc1, 0x8c, 0x01, 0x0d, 0xc4, 0x98, 0x06, 0x79, 0xa9, 0x81, 0xc8, 0x52, 0xa4,
+	0x45, 0xd4, 0x41, 0xfe, 0x7b, 0x53, 0xec, 0xfd, 0xd3, 0x82, 0xa5, 0xdc, 0x12, 0x09, 0xe1, 0xfc,
+	0xfc, 0x67, 0x04, 0xb9, 0x4e, 0x9b, 0x3e, 0x9c, 0xcc, 0x1b, 0xb4, 0xf1, 0xa3, 0x84, 0xc4, 0xb0,
+	0x51, 0xf2, 0x4e, 0x20, 0x2a, 0x4c, 0xcd, 0x73, 0xc5, 0xbc, 0x49, 0x9b, 0xbf, 0x3b, 0x48, 0x1f,
+	0xd6, 0xe6, 0x3c, 0x15, 0xc8, 0x55, 0xda, 0xe8, 0x35, 0x62, 0x5e, 0xa3, 0x0d, 0x9f, 0x1c, 0xaf,
+	0xe1, 0x83, 0x52, 0xba, 0x4f, 0x76, 0xe9, 0x5b, 0xbc, 0x2f, 0xcc, 0x5b, 0xf4, 0xad, 0x9e, 0x10,
+	0x7d, 0x58, 0xeb, 0xd5, 0x44, 0xd8, 0x6b, 0x18, 0x61, 0x15, 0xc3, 0x26, 0x4f, 0x60, 0x55, 0x63,
+	0xc4, 0x64, 0x8b, 0xd6, 0x30, 0x6e, 0x73, 0x9b, 0xd6, 0xb1, 0x69, 0xf2, 0x35, 0x9c, 0x9d, 0x66,
+	0xac, 0xe4, 0x32, 0xad, 0xe7, 0xd7, 0xe6, 0x0e, 0x6d, 0xc2, 0x79, 0x3f, 0x07, 0x98, 0x30, 0x53,
+	0x72, 0x91, 0x56, 0x51, 0x5d, 0x73, 0x93, 0x56, 0xf2, 0xd9, 0x34, 0xd3, 0x73, 0xc8, 0xa9, 0x96,
+	0xe9, 0x0a, 0x96, 0xab, 0x65, 0xba, 0x8a, 0xe4, 0x12, 0x06, 0xeb, 0xf3, 0xa8, 0x27, 0x99, 0x03,
+	0x30, 0x97, 0x51, 0x9a, 0x1d, 0xda, 0x94, 0xc4, 0x32, 0x58, 0x9f, 0xc7, 0xf3, 0x34, 0x53, 0x55,
+	0xe4, 0x55, 0x33, 0x55, 0xc9, 0x18, 0xc9, 0x73, 0x38, 0x33, 0x45, 0xb5, 0x88, 0x45, 0x6b, 0x29,
+	0xa4, 0x79, 0x99, 0x36, 0xa0, 0x6a, 0xcf, 0xe1, 0xcc, 0x14, 0x5b, 0xd1, 0xb0, 0x4b, 0xd8, 0x99,
+	0x86, 0x5d, 0xc6, 0x76, 0xc8, 0x43, 0x68, 0x29, 0xe4, 0x82, 0x6c, 0xd2, 0x4a, 0xea, 0x63, 0x5e,
+	0xa2, 0x35, 0xa4, 0x24, 0x86, 0x8d, 0x92, 0xa1, 0xab, 0xdd, 0x82, 0x35, 0x14, 0x41, 0xbb, 0x05,
+	0xeb, 0x86, 0xf8, 0xde, 0x9b, 0x05, 0x38, 0x9d, 0x6b, 0xcb, 0xb3, 0xd0, 0x83, 0x75, 0xa1, 0xa5,
+	0x8f, 0x72, 0x42, 0xe9, 0x5b, 0x4d, 0x7b, 0xb3, 0x45, 0x1f, 0x86, 0x45, 0x6c, 0x5d, 0x58, 0x11,
+	0xa0, 0x62, 0xca, 0x6a, 0x47, 0xa3, 0x62, 0x00, 0xeb, 0x20, 0x9f, 0x02, 0x08, 0x90, 0xf4, 0x0c,
+	0x92, 0x1d, 0xda, 0x60, 0xc0, 0xea, 0x00, 0x07, 0x40, 0x04, 0x80, 0x3a, 0x4b, 0x75, 0xa0, 0xb2,
+	0x21, 0xab, 0x01, 0x99, 0x27, 0xfe, 0xfc, 0xbd, 0xbd, 0x70, 0x67, 0xf1, 0x47, 0xc3, 0xf8, 0x37,
+	0x00, 0x00, 0xff, 0xff, 0x03, 0xc1, 0x9b, 0xdc, 0xe6, 0x14, 0x00, 0x00,
 }

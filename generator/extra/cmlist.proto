@@ -1,0 +1,11 @@
+// CMsgClientCMList is sent by Steam (EMsg_ClientCMList) with the connection
+// manager server list. It is no longer present in the SteamDatabase/Protobufs
+// `steam/` definitions, so it is preserved here as a repo-local definition.
+option optimize_for = SPEED;
+
+message CMsgClientCMList {
+	repeated uint32 cm_addresses = 1;
+	repeated uint32 cm_ports = 2;
+	repeated string cm_websocket_addresses = 3;
+	optional uint32 percent_default_to_websocket = 4;
+}

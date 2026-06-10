@@ -3,9 +3,11 @@
 
 package protobuf
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -13,21 +15,44 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package protobuf is being compiled against.
+// is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
-// proto package protobuf to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type CMsgClientSiteInfo struct {
-	SiteId           *uint64 `protobuf:"varint,1,opt,name=site_id,json=siteId" json:"site_id,omitempty"`
-	SiteName         *string `protobuf:"bytes,2,opt,name=site_name,json=siteName" json:"site_name,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	SiteId                 *uint64  `protobuf:"varint,1,opt,name=site_id,json=siteId" json:"site_id,omitempty"`
+	SiteName               *string  `protobuf:"bytes,2,opt,name=site_name,json=siteName" json:"site_name,omitempty"`
+	AllowCachedCredentials *bool    `protobuf:"varint,3,opt,name=allow_cached_credentials,json=allowCachedCredentials" json:"allow_cached_credentials,omitempty"`
+	XXX_NoUnkeyedLiteral   struct{} `json:"-"`
+	XXX_unrecognized       []byte   `json:"-"`
+	XXX_sizecache          int32    `json:"-"`
 }
 
-func (m *CMsgClientSiteInfo) Reset()                    { *m = CMsgClientSiteInfo{} }
-func (m *CMsgClientSiteInfo) String() string            { return proto.CompactTextString(m) }
-func (*CMsgClientSiteInfo) ProtoMessage()               {}
-func (*CMsgClientSiteInfo) Descriptor() ([]byte, []int) { return client_site_license_fileDescriptor0, []int{0} }
+func (m *CMsgClientSiteInfo) Reset()         { *m = CMsgClientSiteInfo{} }
+func (m *CMsgClientSiteInfo) String() string { return proto.CompactTextString(m) }
+func (*CMsgClientSiteInfo) ProtoMessage()    {}
+func (*CMsgClientSiteInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a32817a56a37a6e, []int{0}
+}
+
+func (m *CMsgClientSiteInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CMsgClientSiteInfo.Unmarshal(m, b)
+}
+func (m *CMsgClientSiteInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CMsgClientSiteInfo.Marshal(b, m, deterministic)
+}
+func (m *CMsgClientSiteInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CMsgClientSiteInfo.Merge(m, src)
+}
+func (m *CMsgClientSiteInfo) XXX_Size() int {
+	return xxx_messageInfo_CMsgClientSiteInfo.Size(m)
+}
+func (m *CMsgClientSiteInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_CMsgClientSiteInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CMsgClientSiteInfo proto.InternalMessageInfo
 
 func (m *CMsgClientSiteInfo) GetSiteId() uint64 {
 	if m != nil && m.SiteId != nil {
@@ -43,15 +68,44 @@ func (m *CMsgClientSiteInfo) GetSiteName() string {
 	return ""
 }
 
-type CMsgClientSiteLicenseCheckout struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+func (m *CMsgClientSiteInfo) GetAllowCachedCredentials() bool {
+	if m != nil && m.AllowCachedCredentials != nil {
+		return *m.AllowCachedCredentials
+	}
+	return false
 }
 
-func (m *CMsgClientSiteLicenseCheckout) Reset()                    { *m = CMsgClientSiteLicenseCheckout{} }
-func (m *CMsgClientSiteLicenseCheckout) String() string            { return proto.CompactTextString(m) }
-func (*CMsgClientSiteLicenseCheckout) ProtoMessage()               {}
-func (*CMsgClientSiteLicenseCheckout) Descriptor() ([]byte, []int) { return client_site_license_fileDescriptor0, []int{1} }
+type CMsgClientSiteLicenseCheckout struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CMsgClientSiteLicenseCheckout) Reset()         { *m = CMsgClientSiteLicenseCheckout{} }
+func (m *CMsgClientSiteLicenseCheckout) String() string { return proto.CompactTextString(m) }
+func (*CMsgClientSiteLicenseCheckout) ProtoMessage()    {}
+func (*CMsgClientSiteLicenseCheckout) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a32817a56a37a6e, []int{1}
+}
+
+func (m *CMsgClientSiteLicenseCheckout) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CMsgClientSiteLicenseCheckout.Unmarshal(m, b)
+}
+func (m *CMsgClientSiteLicenseCheckout) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CMsgClientSiteLicenseCheckout.Marshal(b, m, deterministic)
+}
+func (m *CMsgClientSiteLicenseCheckout) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CMsgClientSiteLicenseCheckout.Merge(m, src)
+}
+func (m *CMsgClientSiteLicenseCheckout) XXX_Size() int {
+	return xxx_messageInfo_CMsgClientSiteLicenseCheckout.Size(m)
+}
+func (m *CMsgClientSiteLicenseCheckout) XXX_DiscardUnknown() {
+	xxx_messageInfo_CMsgClientSiteLicenseCheckout.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CMsgClientSiteLicenseCheckout proto.InternalMessageInfo
 
 func (m *CMsgClientSiteLicenseCheckout) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -61,16 +115,36 @@ func (m *CMsgClientSiteLicenseCheckout) GetAppid() uint32 {
 }
 
 type CMsgClientSiteLicenseCheckoutResponse struct {
-	Eresult          *int32 `protobuf:"varint,1,opt,name=eresult,def=2" json:"eresult,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	Eresult              *int32   `protobuf:"varint,1,opt,name=eresult,def=2" json:"eresult,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CMsgClientSiteLicenseCheckoutResponse) Reset()         { *m = CMsgClientSiteLicenseCheckoutResponse{} }
 func (m *CMsgClientSiteLicenseCheckoutResponse) String() string { return proto.CompactTextString(m) }
 func (*CMsgClientSiteLicenseCheckoutResponse) ProtoMessage()    {}
 func (*CMsgClientSiteLicenseCheckoutResponse) Descriptor() ([]byte, []int) {
-	return client_site_license_fileDescriptor0, []int{2}
+	return fileDescriptor_0a32817a56a37a6e, []int{2}
 }
+
+func (m *CMsgClientSiteLicenseCheckoutResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CMsgClientSiteLicenseCheckoutResponse.Unmarshal(m, b)
+}
+func (m *CMsgClientSiteLicenseCheckoutResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CMsgClientSiteLicenseCheckoutResponse.Marshal(b, m, deterministic)
+}
+func (m *CMsgClientSiteLicenseCheckoutResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CMsgClientSiteLicenseCheckoutResponse.Merge(m, src)
+}
+func (m *CMsgClientSiteLicenseCheckoutResponse) XXX_Size() int {
+	return xxx_messageInfo_CMsgClientSiteLicenseCheckoutResponse.Size(m)
+}
+func (m *CMsgClientSiteLicenseCheckoutResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_CMsgClientSiteLicenseCheckoutResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CMsgClientSiteLicenseCheckoutResponse proto.InternalMessageInfo
 
 const Default_CMsgClientSiteLicenseCheckoutResponse_Eresult int32 = 2
 
@@ -82,8 +156,10 @@ func (m *CMsgClientSiteLicenseCheckoutResponse) GetEresult() int32 {
 }
 
 type CMsgClientSiteLicenseGetAvailableSeats struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CMsgClientSiteLicenseGetAvailableSeats) Reset() {
@@ -92,8 +168,26 @@ func (m *CMsgClientSiteLicenseGetAvailableSeats) Reset() {
 func (m *CMsgClientSiteLicenseGetAvailableSeats) String() string { return proto.CompactTextString(m) }
 func (*CMsgClientSiteLicenseGetAvailableSeats) ProtoMessage()    {}
 func (*CMsgClientSiteLicenseGetAvailableSeats) Descriptor() ([]byte, []int) {
-	return client_site_license_fileDescriptor0, []int{3}
+	return fileDescriptor_0a32817a56a37a6e, []int{3}
 }
+
+func (m *CMsgClientSiteLicenseGetAvailableSeats) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeats.Unmarshal(m, b)
+}
+func (m *CMsgClientSiteLicenseGetAvailableSeats) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeats.Marshal(b, m, deterministic)
+}
+func (m *CMsgClientSiteLicenseGetAvailableSeats) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeats.Merge(m, src)
+}
+func (m *CMsgClientSiteLicenseGetAvailableSeats) XXX_Size() int {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeats.Size(m)
+}
+func (m *CMsgClientSiteLicenseGetAvailableSeats) XXX_DiscardUnknown() {
+	xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeats.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeats proto.InternalMessageInfo
 
 func (m *CMsgClientSiteLicenseGetAvailableSeats) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -103,9 +197,11 @@ func (m *CMsgClientSiteLicenseGetAvailableSeats) GetAppid() uint32 {
 }
 
 type CMsgClientSiteLicenseGetAvailableSeatsResponse struct {
-	Eresult          *int32  `protobuf:"varint,1,opt,name=eresult,def=2" json:"eresult,omitempty"`
-	Seats            *uint32 `protobuf:"varint,2,opt,name=seats" json:"seats,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Eresult              *int32   `protobuf:"varint,1,opt,name=eresult,def=2" json:"eresult,omitempty"`
+	Seats                *uint32  `protobuf:"varint,2,opt,name=seats" json:"seats,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CMsgClientSiteLicenseGetAvailableSeatsResponse) Reset() {
@@ -116,8 +212,26 @@ func (m *CMsgClientSiteLicenseGetAvailableSeatsResponse) String() string {
 }
 func (*CMsgClientSiteLicenseGetAvailableSeatsResponse) ProtoMessage() {}
 func (*CMsgClientSiteLicenseGetAvailableSeatsResponse) Descriptor() ([]byte, []int) {
-	return client_site_license_fileDescriptor0, []int{4}
+	return fileDescriptor_0a32817a56a37a6e, []int{4}
 }
+
+func (m *CMsgClientSiteLicenseGetAvailableSeatsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeatsResponse.Unmarshal(m, b)
+}
+func (m *CMsgClientSiteLicenseGetAvailableSeatsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeatsResponse.Marshal(b, m, deterministic)
+}
+func (m *CMsgClientSiteLicenseGetAvailableSeatsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeatsResponse.Merge(m, src)
+}
+func (m *CMsgClientSiteLicenseGetAvailableSeatsResponse) XXX_Size() int {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeatsResponse.Size(m)
+}
+func (m *CMsgClientSiteLicenseGetAvailableSeatsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeatsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CMsgClientSiteLicenseGetAvailableSeatsResponse proto.InternalMessageInfo
 
 const Default_CMsgClientSiteLicenseGetAvailableSeatsResponse_Eresult int32 = 2
 
@@ -136,7 +250,9 @@ func (m *CMsgClientSiteLicenseGetAvailableSeatsResponse) GetSeats() uint32 {
 }
 
 type CMsgClientSiteLicenseGetContentCacheInfo struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CMsgClientSiteLicenseGetContentCacheInfo) Reset() {
@@ -145,15 +261,36 @@ func (m *CMsgClientSiteLicenseGetContentCacheInfo) Reset() {
 func (m *CMsgClientSiteLicenseGetContentCacheInfo) String() string { return proto.CompactTextString(m) }
 func (*CMsgClientSiteLicenseGetContentCacheInfo) ProtoMessage()    {}
 func (*CMsgClientSiteLicenseGetContentCacheInfo) Descriptor() ([]byte, []int) {
-	return client_site_license_fileDescriptor0, []int{5}
+	return fileDescriptor_0a32817a56a37a6e, []int{5}
 }
 
+func (m *CMsgClientSiteLicenseGetContentCacheInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfo.Unmarshal(m, b)
+}
+func (m *CMsgClientSiteLicenseGetContentCacheInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfo.Marshal(b, m, deterministic)
+}
+func (m *CMsgClientSiteLicenseGetContentCacheInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfo.Merge(m, src)
+}
+func (m *CMsgClientSiteLicenseGetContentCacheInfo) XXX_Size() int {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfo.Size(m)
+}
+func (m *CMsgClientSiteLicenseGetContentCacheInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfo proto.InternalMessageInfo
+
 type CMsgClientSiteLicenseGetContentCacheInfoResponse struct {
-	UseCache         *bool   `protobuf:"varint,1,opt,name=use_cache,json=useCache" json:"use_cache,omitempty"`
-	Ipv4Address      *uint32 `protobuf:"varint,2,opt,name=ipv4_address,json=ipv4Address" json:"ipv4_address,omitempty"`
-	PortNumber       *uint32 `protobuf:"varint,3,opt,name=port_number,json=portNumber" json:"port_number,omitempty"`
-	P2PGroup         *uint32 `protobuf:"varint,4,opt,name=p2p_group,json=p2pGroup" json:"p2p_group,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	UseCache             *bool    `protobuf:"varint,1,opt,name=use_cache,json=useCache" json:"use_cache,omitempty"`
+	Ipv4Address          *uint32  `protobuf:"varint,2,opt,name=ipv4_address,json=ipv4Address" json:"ipv4_address,omitempty"`
+	PortNumber           *uint32  `protobuf:"varint,3,opt,name=port_number,json=portNumber" json:"port_number,omitempty"`
+	P2PGroup             *uint32  `protobuf:"varint,4,opt,name=p2p_group,json=p2pGroup" json:"p2p_group,omitempty"`
+	IpAddress            *string  `protobuf:"bytes,5,opt,name=ip_address,json=ipAddress" json:"ip_address,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) Reset() {
@@ -164,8 +301,26 @@ func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) String() string {
 }
 func (*CMsgClientSiteLicenseGetContentCacheInfoResponse) ProtoMessage() {}
 func (*CMsgClientSiteLicenseGetContentCacheInfoResponse) Descriptor() ([]byte, []int) {
-	return client_site_license_fileDescriptor0, []int{6}
+	return fileDescriptor_0a32817a56a37a6e, []int{6}
 }
+
+func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfoResponse.Unmarshal(m, b)
+}
+func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfoResponse.Marshal(b, m, deterministic)
+}
+func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfoResponse.Merge(m, src)
+}
+func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) XXX_Size() int {
+	return xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfoResponse.Size(m)
+}
+func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfoResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CMsgClientSiteLicenseGetContentCacheInfoResponse proto.InternalMessageInfo
 
 func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) GetUseCache() bool {
 	if m != nil && m.UseCache != nil {
@@ -195,6 +350,13 @@ func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) GetP2PGroup() uint32 
 	return 0
 }
 
+func (m *CMsgClientSiteLicenseGetContentCacheInfoResponse) GetIpAddress() string {
+	if m != nil && m.IpAddress != nil {
+		return *m.IpAddress
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*CMsgClientSiteInfo)(nil), "CMsgClientSiteInfo")
 	proto.RegisterType((*CMsgClientSiteLicenseCheckout)(nil), "CMsgClientSiteLicenseCheckout")
@@ -205,30 +367,35 @@ func init() {
 	proto.RegisterType((*CMsgClientSiteLicenseGetContentCacheInfoResponse)(nil), "CMsgClientSiteLicenseGetContentCacheInfoResponse")
 }
 
-func init() { proto.RegisterFile("steammessages_sitelicenseclient.proto", client_site_license_fileDescriptor0) }
+func init() {
+	proto.RegisterFile("steammessages_sitelicenseclient.proto", fileDescriptor_0a32817a56a37a6e)
+}
 
-var client_site_license_fileDescriptor0 = []byte{
-	// 344 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x51, 0x4d, 0x4b, 0xeb, 0x40,
-	0x14, 0x7d, 0x79, 0xaf, 0x7d, 0x4d, 0x6f, 0x5f, 0x37, 0xe1, 0x81, 0xc1, 0x22, 0xd6, 0x40, 0xa5,
-	0xb8, 0x28, 0x52, 0x74, 0xe3, 0x42, 0xa8, 0x11, 0x6a, 0x45, 0xbb, 0x98, 0xfe, 0x80, 0x30, 0x4d,
-	0xae, 0xed, 0x60, 0x32, 0x33, 0xe4, 0x4e, 0xba, 0xf6, 0x27, 0xf9, 0x13, 0x65, 0x26, 0x16, 0x2c,
-	0x58, 0xe9, 0xf2, 0x7c, 0xdc, 0x73, 0x0e, 0x33, 0x30, 0x20, 0x83, 0xbc, 0x28, 0x90, 0x88, 0xaf,
-	0x90, 0x12, 0x12, 0x06, 0x73, 0x91, 0xa2, 0x24, 0x4c, 0x73, 0x81, 0xd2, 0x8c, 0x74, 0xa9, 0x8c,
-	0x3a, 0x0e, 0x77, 0x6d, 0x4b, 0x4e, 0x58, 0x2b, 0xd1, 0x23, 0x04, 0xf1, 0x33, 0xad, 0x62, 0xe7,
-	0x5e, 0x08, 0x83, 0x33, 0xf9, 0xa2, 0x82, 0x23, 0x68, 0xd9, 0xa8, 0x44, 0x64, 0xa1, 0xd7, 0xf7,
-	0x86, 0x0d, 0xf6, 0xd7, 0xc2, 0x59, 0x16, 0xf4, 0xa0, 0xed, 0x04, 0xc9, 0x0b, 0x0c, 0x7f, 0xf7,
-	0xbd, 0x61, 0x9b, 0xf9, 0x96, 0x98, 0xf3, 0x02, 0xa3, 0x6b, 0x38, 0xd9, 0xcd, 0x7a, 0xaa, 0xa7,
-	0xc4, 0x6b, 0x4c, 0x5f, 0x55, 0x65, 0x82, 0xff, 0xd0, 0xe4, 0x5a, 0x7f, 0x86, 0x76, 0x59, 0x0d,
-	0xa2, 0x7b, 0x18, 0xfc, 0x78, 0xc6, 0x90, 0xb4, 0x92, 0x84, 0x41, 0x0f, 0x5a, 0x58, 0x22, 0x55,
-	0xb9, 0x71, 0x01, 0xcd, 0x1b, 0x6f, 0xcc, 0xb6, 0x4c, 0x74, 0x0b, 0xe7, 0xdf, 0xa6, 0x4c, 0xd1,
-	0x4c, 0x36, 0x5c, 0xe4, 0x7c, 0x99, 0xe3, 0x02, 0xb9, 0xa1, 0x3d, 0x2b, 0x52, 0x18, 0x1d, 0x76,
-	0x7f, 0xd0, 0x1c, 0x5b, 0x42, 0xd6, 0xed, 0x1e, 0xa9, 0xcb, 0x6a, 0x10, 0x5d, 0xc0, 0x70, 0x5f,
-	0x49, 0xac, 0xa4, 0x41, 0x69, 0x62, 0x9e, 0xae, 0xdd, 0x1f, 0x44, 0xef, 0x1e, 0x5c, 0x1e, 0x6a,
-	0xfe, 0xb2, 0xa9, 0x5d, 0x11, 0x26, 0xa9, 0x15, 0xdc, 0x2a, 0x9f, 0xf9, 0x15, 0xa1, 0x33, 0x06,
-	0x67, 0xf0, 0x4f, 0xe8, 0xcd, 0x55, 0xc2, 0xb3, 0xac, 0x44, 0xda, 0x4e, 0xeb, 0x58, 0x6e, 0x52,
-	0x53, 0xc1, 0x29, 0x74, 0xb4, 0x2a, 0x4d, 0x22, 0xab, 0x62, 0x89, 0x65, 0xf8, 0xc7, 0x39, 0xc0,
-	0x52, 0x73, 0xc7, 0xd8, 0x02, 0x3d, 0xd6, 0xc9, 0xaa, 0x54, 0x95, 0x0e, 0x1b, 0x4e, 0xf6, 0xf5,
-	0x58, 0x4f, 0x2d, 0xbe, 0x6b, 0x3e, 0x78, 0x6f, 0xde, 0xaf, 0x8f, 0x00, 0x00, 0x00, 0xff, 0xff,
-	0xf7, 0x75, 0x24, 0x97, 0x95, 0x02, 0x00, 0x00,
+var fileDescriptor_0a32817a56a37a6e = []byte{
+	// 393 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x4f, 0x8b, 0xd3, 0x40,
+	0x14, 0x77, 0x74, 0xe3, 0x26, 0x6f, 0xed, 0x65, 0x10, 0x0d, 0x2e, 0x8b, 0x35, 0xb0, 0x12, 0x3c,
+	0x2c, 0x52, 0x14, 0xc4, 0x83, 0xb0, 0x46, 0x58, 0x17, 0xb4, 0x87, 0xe9, 0x07, 0x08, 0xd3, 0xe4,
+	0xd9, 0x0e, 0x4e, 0x66, 0x86, 0xbc, 0x49, 0xbd, 0x7a, 0xf0, 0xfb, 0xf9, 0x95, 0x64, 0x26, 0xad,
+	0x5a, 0xb0, 0xd2, 0xe3, 0xef, 0xcf, 0xfc, 0xde, 0x2f, 0xef, 0x05, 0x2e, 0xc9, 0xa3, 0xec, 0x3a,
+	0x24, 0x92, 0x2b, 0xa4, 0x9a, 0x94, 0x47, 0xad, 0x1a, 0x34, 0x84, 0x8d, 0x56, 0x68, 0xfc, 0x95,
+	0xeb, 0xad, 0xb7, 0x4f, 0xf2, 0x7d, 0xdb, 0x52, 0x12, 0x8e, 0x4a, 0xf1, 0x83, 0x01, 0xaf, 0x3e,
+	0xd3, 0xaa, 0x8a, 0xf6, 0x85, 0xf2, 0x78, 0x6b, 0xbe, 0x58, 0xfe, 0x18, 0x4e, 0x43, 0x56, 0xad,
+	0xda, 0x9c, 0x4d, 0x59, 0x79, 0x22, 0xee, 0x07, 0x78, 0xdb, 0xf2, 0x73, 0xc8, 0xa2, 0x60, 0x64,
+	0x87, 0xf9, 0xdd, 0x29, 0x2b, 0x33, 0x91, 0x06, 0x62, 0x2e, 0x3b, 0xe4, 0x6f, 0x20, 0x97, 0x5a,
+	0xdb, 0x6f, 0x75, 0x23, 0x9b, 0x35, 0xb6, 0x75, 0xd3, 0x63, 0x8b, 0xc6, 0x2b, 0xa9, 0x29, 0xbf,
+	0x37, 0x65, 0x65, 0x2a, 0x1e, 0x45, 0xbd, 0x8a, 0x72, 0xf5, 0x47, 0x2d, 0x5e, 0xc3, 0xc5, 0x7e,
+	0x8b, 0x4f, 0xe3, 0x57, 0x54, 0x6b, 0x6c, 0xbe, 0xda, 0xc1, 0xf3, 0x87, 0x90, 0x48, 0xe7, 0xb6,
+	0x75, 0x26, 0x62, 0x04, 0xc5, 0x07, 0xb8, 0xfc, 0xef, 0x33, 0x81, 0xe4, 0xac, 0x21, 0xe4, 0xe7,
+	0x70, 0x8a, 0x3d, 0xd2, 0xa0, 0x7d, 0x0c, 0x48, 0xde, 0xb2, 0x99, 0xd8, 0x31, 0xc5, 0x3b, 0x78,
+	0xfe, 0xcf, 0x94, 0x1b, 0xf4, 0xd7, 0x1b, 0xa9, 0xb4, 0x5c, 0x6a, 0x5c, 0xa0, 0xf4, 0x74, 0xa0,
+	0x45, 0x03, 0x57, 0xc7, 0xbd, 0x3f, 0xaa, 0x4e, 0x18, 0x42, 0xc1, 0x1d, 0xd7, 0x3b, 0x11, 0x23,
+	0x28, 0x5e, 0x40, 0x79, 0x68, 0x48, 0x65, 0x8d, 0x47, 0xe3, 0xe3, 0x56, 0xc3, 0xf5, 0x8a, 0x9f,
+	0x0c, 0x5e, 0x1e, 0x6b, 0xfe, 0xab, 0x53, 0x36, 0x10, 0x8e, 0xa7, 0x8b, 0xad, 0x52, 0x91, 0x0e,
+	0x84, 0xd1, 0xc8, 0x9f, 0xc1, 0x03, 0xe5, 0x36, 0xaf, 0x6a, 0xd9, 0xb6, 0x3d, 0xd2, 0xae, 0xda,
+	0x59, 0xe0, 0xae, 0x47, 0x8a, 0x3f, 0x85, 0x33, 0x67, 0x7b, 0x5f, 0x9b, 0xa1, 0x5b, 0x62, 0x1f,
+	0xef, 0x3d, 0x11, 0x10, 0xa8, 0x79, 0x64, 0xc2, 0x00, 0x37, 0x73, 0xf5, 0xaa, 0xb7, 0x83, 0xcb,
+	0x4f, 0xa2, 0x9c, 0xba, 0x99, 0xbb, 0x09, 0x98, 0x5f, 0x00, 0x28, 0xf7, 0x3b, 0x3e, 0x89, 0x3f,
+	0x56, 0xa6, 0xdc, 0x36, 0xfc, 0x7d, 0xf2, 0x91, 0x7d, 0x67, 0x77, 0x7e, 0x05, 0x00, 0x00, 0xff,
+	0xff, 0x35, 0x87, 0xfb, 0x5f, 0xef, 0x02, 0x00, 0x00,
 }

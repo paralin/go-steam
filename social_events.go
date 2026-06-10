@@ -47,10 +47,7 @@ type PersonaStateEvent struct {
 	ClanRank               uint32
 	ClanTag                string
 	OnlineSessionInstances uint32
-	PublishedSessionId     uint32
 	PersonaSetByUser       bool
-	FacebookName           string
-	FacebookId             uint64 `json:",string"`
 }
 
 // Fired when a clan's state has been changed

@@ -1,15 +1,14 @@
 package steam
 
 import (
-	"crypto/sha1"
 	"sync/atomic"
 	"time"
 
+	"github.com/golang/protobuf/proto"
 	. "github.com/paralin/go-steam/protocol"
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	. "github.com/paralin/go-steam/protocol/steamlang"
 	"github.com/paralin/go-steam/steamid"
-	"github.com/golang/protobuf/proto"
 )
 
 type Auth struct {
@@ -33,6 +32,11 @@ type LogOnDetails struct {
 	SentryFileHash SentryHash
 	LoginKey       string
 
+	// A refresh token obtained from the Authentication service. If set, it is
+	// used to log on directly and Password is ignored. When only a Password is
+	// set, one is obtained automatically before logging on.
+	AccessToken string
+
 	// true if you want to get a login key which can be used in lieu of
 	// a password for subsequent logins. false or omitted otherwise.
 	ShouldRememberPassword bool
@@ -40,7 +44,9 @@ type LogOnDetails struct {
 
 // Log on with the given details. You must always specify username and
 // password OR username and loginkey. For the first login, don't set an authcode or a hash and you'll
-//  receive an error (EResult_AccountLogonDenied)
+//
+//	receive an error (EResult_AccountLogonDenied)
+//
 // and Steam will send you an authcode. Then you have to login again, this time with the authcode.
 // Shortly after logging in, you'll receive a MachineAuthUpdateEvent with a hash which allows
 // you to login without using an authcode in the future.
@@ -53,13 +59,38 @@ func (a *Auth) LogOn(details *LogOnDetails) {
 	if details.Username == "" {
 		panic("Username must be set!")
 	}
-	if details.Password == "" && details.LoginKey == "" {
-		panic("Password or LoginKey must be set!")
+	if details.Password == "" && details.LoginKey == "" && details.AccessToken == "" {
+		panic("Password, LoginKey or AccessToken must be set!")
 	}
 
+	// Steam no longer accepts a plaintext password in the logon message. When a
+	// password is supplied (and no access token), exchange it for a refresh
+	// token via the Authentication service first, then log on with that token.
+	if details.AccessToken == "" && details.Password != "" {
+		go func() {
+			token, err := a.getAccessTokenViaCredentials(details)
+			if err != nil {
+				a.client.Errorf("auth: failed to obtain access token: %v", err)
+				a.client.Emit(&LogOnFailedEvent{Result: EResult_InvalidPassword})
+				a.client.Disconnect()
+				return
+			}
+			a.sendLogon(details, token)
+		}()
+		return
+	}
+
+	a.sendLogon(details, details.AccessToken)
+}
+
+func (a *Auth) sendLogon(details *LogOnDetails, accessToken string) {
 	logon := new(CMsgClientLogon)
 	logon.AccountName = &details.Username
-	logon.Password = &details.Password
+	if accessToken != "" {
+		logon.AccessToken = proto.String(accessToken)
+	} else if details.Password != "" {
+		logon.Password = proto.String(details.Password)
+	}
 	if details.AuthCode != "" {
 		logon.AuthCode = proto.String(details.AuthCode)
 	}
@@ -90,8 +121,6 @@ func (a *Auth) HandlePacket(packet *Packet) {
 	case EMsg_ClientSessionToken:
 	case EMsg_ClientLoggedOff:
 		a.handleLoggedOff(packet)
-	case EMsg_ClientUpdateMachineAuth:
-		a.handleUpdateMachineAuth(packet)
 	case EMsg_ClientAccountInfo:
 		a.handleAccountInfo(packet)
 	case EMsg_ClientWalletInfoUpdate:
@@ -113,11 +142,13 @@ func (a *Auth) handleLogOnResponse(packet *Packet) {
 	if result == EResult_OK {
 		atomic.StoreInt32(&a.client.sessionId, msg.Header.Proto.GetClientSessionid())
 		atomic.StoreUint64(&a.client.steamId, msg.Header.Proto.GetSteamid())
-		if body.WebapiAuthenticateUserNonce != nil {
-			a.client.Web.webLoginKey = *body.WebapiAuthenticateUserNonce
-		}
 
-		go a.client.heartbeatLoop(time.Duration(body.GetOutOfGameHeartbeatSeconds()))
+		// The webapi nonce is no longer included in the logon response, so
+		// request it explicitly. The Web module stores it when the response
+		// arrives, enabling Web.LogOn().
+		a.client.Write(NewClientMsgProtobuf(EMsg_ClientRequestWebAPIAuthenticateUserNonce, new(CMsgClientRequestWebAPIAuthenticateUserNonce)))
+
+		go a.client.heartbeatLoop(time.Duration(body.GetHeartbeatSeconds()))
 
 		a.client.Emit(&LoggedOnEvent{
 			Result:         EResult(body.GetEresult()),
@@ -165,22 +196,6 @@ func (a *Auth) handleLoggedOff(packet *Packet) {
 	a.client.Emit(&LoggedOffEvent{Result: result})
 }
 
-func (a *Auth) handleUpdateMachineAuth(packet *Packet) {
-	body := new(CMsgClientUpdateMachineAuth)
-	packet.ReadProtoMsg(body)
-	hash := sha1.New()
-	hash.Write(packet.Data)
-	sha := hash.Sum(nil)
-
-	msg := NewClientMsgProtobuf(EMsg_ClientUpdateMachineAuthResponse, &CMsgClientUpdateMachineAuthResponse{
-		ShaFile: sha,
-	})
-	msg.SetTargetJobId(packet.SourceJobId)
-	a.client.Write(msg)
-
-	a.client.Emit(&MachineAuthUpdateEvent{sha})
-}
-
 func (a *Auth) handleAccountInfo(packet *Packet) {
 	body := new(CMsgClientAccountInfo)
 	packet.ReadProtoMsg(body)
@@ -189,7 +204,5 @@ func (a *Auth) handleAccountInfo(packet *Packet) {
 		Country:              body.GetIpCountry(),
 		CountAuthedComputers: body.GetCountAuthedComputers(),
 		AccountFlags:         EAccountFlags(body.GetAccountFlags()),
-		FacebookId:           body.GetFacebookId(),
-		FacebookName:         body.GetFacebookName(),
 	})
 }

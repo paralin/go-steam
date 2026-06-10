@@ -36,8 +36,6 @@ type AccountInfoEvent struct {
 	Country              string
 	CountAuthedComputers int32
 	AccountFlags         EAccountFlags
-	FacebookId           uint64 `json:",string"`
-	FacebookName         string
 }
 
 // Returned when Steam is down for some reason.

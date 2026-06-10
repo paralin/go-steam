@@ -3,9 +3,12 @@
 
 package unified
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	protobuf "github.com/paralin/go-steam/protocol/protobuf"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -13,23 +16,78 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 // This is a compile-time assertion to ensure that this generated file
-// is compatible with the proto package unified is being compiled against.
+// is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
-// proto package unified to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type PublishedFileDetails_EPublishedFileForSaleStatus int32
+type EPublishedFileRevision int32
 
 const (
-	PublishedFileDetails_k_PFFSS_NotForSale        PublishedFileDetails_EPublishedFileForSaleStatus = 0
-	PublishedFileDetails_k_PFFSS_PendingApproval   PublishedFileDetails_EPublishedFileForSaleStatus = 1
-	PublishedFileDetails_k_PFFSS_ApprovedForSale   PublishedFileDetails_EPublishedFileForSaleStatus = 2
-	PublishedFileDetails_k_PFFSS_RejectedForSale   PublishedFileDetails_EPublishedFileForSaleStatus = 3
-	PublishedFileDetails_k_PFFSS_NoLongerForSale   PublishedFileDetails_EPublishedFileForSaleStatus = 4
-	PublishedFileDetails_k_PFFSS_TentativeApproval PublishedFileDetails_EPublishedFileForSaleStatus = 5
+	EPublishedFileRevision_k_EPublishedFileRevision_Default                EPublishedFileRevision = 0
+	EPublishedFileRevision_k_EPublishedFileRevision_Latest                 EPublishedFileRevision = 1
+	EPublishedFileRevision_k_EPublishedFileRevision_ApprovedSnapshot       EPublishedFileRevision = 2
+	EPublishedFileRevision_k_EPublishedFileRevision_ApprovedSnapshot_China EPublishedFileRevision = 3
+	EPublishedFileRevision_k_EPublishedFileRevision_RejectedSnapshot       EPublishedFileRevision = 4
+	EPublishedFileRevision_k_EPublishedFileRevision_RejectedSnapshot_China EPublishedFileRevision = 5
+	EPublishedFileRevision_k_EPublishedFileRevision_AuthorSnapshot         EPublishedFileRevision = 6
 )
 
-var PublishedFileDetails_EPublishedFileForSaleStatus_name = map[int32]string{
+var EPublishedFileRevision_name = map[int32]string{
+	0: "k_EPublishedFileRevision_Default",
+	1: "k_EPublishedFileRevision_Latest",
+	2: "k_EPublishedFileRevision_ApprovedSnapshot",
+	3: "k_EPublishedFileRevision_ApprovedSnapshot_China",
+	4: "k_EPublishedFileRevision_RejectedSnapshot",
+	5: "k_EPublishedFileRevision_RejectedSnapshot_China",
+	6: "k_EPublishedFileRevision_AuthorSnapshot",
+}
+
+var EPublishedFileRevision_value = map[string]int32{
+	"k_EPublishedFileRevision_Default":                0,
+	"k_EPublishedFileRevision_Latest":                 1,
+	"k_EPublishedFileRevision_ApprovedSnapshot":       2,
+	"k_EPublishedFileRevision_ApprovedSnapshot_China": 3,
+	"k_EPublishedFileRevision_RejectedSnapshot":       4,
+	"k_EPublishedFileRevision_RejectedSnapshot_China": 5,
+	"k_EPublishedFileRevision_AuthorSnapshot":         6,
+}
+
+func (x EPublishedFileRevision) Enum() *EPublishedFileRevision {
+	p := new(EPublishedFileRevision)
+	*p = x
+	return p
+}
+
+func (x EPublishedFileRevision) String() string {
+	return proto.EnumName(EPublishedFileRevision_name, int32(x))
+}
+
+func (x *EPublishedFileRevision) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(EPublishedFileRevision_value, data, "EPublishedFileRevision")
+	if err != nil {
+		return err
+	}
+	*x = EPublishedFileRevision(value)
+	return nil
+}
+
+func (EPublishedFileRevision) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{0}
+}
+
+type EPublishedFileForSaleStatus int32
+
+const (
+	EPublishedFileForSaleStatus_k_PFFSS_NotForSale        EPublishedFileForSaleStatus = 0
+	EPublishedFileForSaleStatus_k_PFFSS_PendingApproval   EPublishedFileForSaleStatus = 1
+	EPublishedFileForSaleStatus_k_PFFSS_ApprovedForSale   EPublishedFileForSaleStatus = 2
+	EPublishedFileForSaleStatus_k_PFFSS_RejectedForSale   EPublishedFileForSaleStatus = 3
+	EPublishedFileForSaleStatus_k_PFFSS_NoLongerForSale   EPublishedFileForSaleStatus = 4
+	EPublishedFileForSaleStatus_k_PFFSS_TentativeApproval EPublishedFileForSaleStatus = 5
+)
+
+var EPublishedFileForSaleStatus_name = map[int32]string{
 	0: "k_PFFSS_NotForSale",
 	1: "k_PFFSS_PendingApproval",
 	2: "k_PFFSS_ApprovedForSale",
@@ -37,7 +95,8 @@ var PublishedFileDetails_EPublishedFileForSaleStatus_name = map[int32]string{
 	4: "k_PFFSS_NoLongerForSale",
 	5: "k_PFFSS_TentativeApproval",
 }
-var PublishedFileDetails_EPublishedFileForSaleStatus_value = map[string]int32{
+
+var EPublishedFileForSaleStatus_value = map[string]int32{
 	"k_PFFSS_NotForSale":        0,
 	"k_PFFSS_PendingApproval":   1,
 	"k_PFFSS_ApprovedForSale":   2,
@@ -46,40 +105,243 @@ var PublishedFileDetails_EPublishedFileForSaleStatus_value = map[string]int32{
 	"k_PFFSS_TentativeApproval": 5,
 }
 
-func (x PublishedFileDetails_EPublishedFileForSaleStatus) Enum() *PublishedFileDetails_EPublishedFileForSaleStatus {
-	p := new(PublishedFileDetails_EPublishedFileForSaleStatus)
+func (x EPublishedFileForSaleStatus) Enum() *EPublishedFileForSaleStatus {
+	p := new(EPublishedFileForSaleStatus)
 	*p = x
 	return p
 }
-func (x PublishedFileDetails_EPublishedFileForSaleStatus) String() string {
-	return proto.EnumName(PublishedFileDetails_EPublishedFileForSaleStatus_name, int32(x))
+
+func (x EPublishedFileForSaleStatus) String() string {
+	return proto.EnumName(EPublishedFileForSaleStatus_name, int32(x))
 }
-func (x *PublishedFileDetails_EPublishedFileForSaleStatus) UnmarshalJSON(data []byte) error {
-	value, err := proto.UnmarshalJSONEnum(PublishedFileDetails_EPublishedFileForSaleStatus_value, data, "PublishedFileDetails_EPublishedFileForSaleStatus")
+
+func (x *EPublishedFileForSaleStatus) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(EPublishedFileForSaleStatus_value, data, "EPublishedFileForSaleStatus")
 	if err != nil {
 		return err
 	}
-	*x = PublishedFileDetails_EPublishedFileForSaleStatus(value)
+	*x = EPublishedFileForSaleStatus(value)
 	return nil
 }
-func (PublishedFileDetails_EPublishedFileForSaleStatus) EnumDescriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{9, 0}
+
+func (EPublishedFileForSaleStatus) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{1}
 }
 
+type EQueryFilesSpecialFilter int32
+
+const (
+	EQueryFilesSpecialFilter_k_EQueryFilesSpecialFilter_None               EQueryFilesSpecialFilter = 0
+	EQueryFilesSpecialFilter_k_EQueryFilesSpecialFilter_AcceptedForUse     EQueryFilesSpecialFilter = 1
+	EQueryFilesSpecialFilter_k_EQueryFilesSpecialFilter_FavoritedByFriends EQueryFilesSpecialFilter = 2
+	EQueryFilesSpecialFilter_k_EQueryFilesSpecialFilter_CreateByFriends    EQueryFilesSpecialFilter = 3
+	EQueryFilesSpecialFilter_k_EQueryFilesSpecialFilter_CreatedByFollowed  EQueryFilesSpecialFilter = 4
+	EQueryFilesSpecialFilter_k_EQueryFilesSpecialFilter_Reported           EQueryFilesSpecialFilter = 5
+	EQueryFilesSpecialFilter_k_EQueryFilesSpecialFilter_ParentItems        EQueryFilesSpecialFilter = 6
+	EQueryFilesSpecialFilter_k_EQueryFilesSpecialFilter_ParentCollections  EQueryFilesSpecialFilter = 7
+)
+
+var EQueryFilesSpecialFilter_name = map[int32]string{
+	0: "k_EQueryFilesSpecialFilter_None",
+	1: "k_EQueryFilesSpecialFilter_AcceptedForUse",
+	2: "k_EQueryFilesSpecialFilter_FavoritedByFriends",
+	3: "k_EQueryFilesSpecialFilter_CreateByFriends",
+	4: "k_EQueryFilesSpecialFilter_CreatedByFollowed",
+	5: "k_EQueryFilesSpecialFilter_Reported",
+	6: "k_EQueryFilesSpecialFilter_ParentItems",
+	7: "k_EQueryFilesSpecialFilter_ParentCollections",
+}
+
+var EQueryFilesSpecialFilter_value = map[string]int32{
+	"k_EQueryFilesSpecialFilter_None":               0,
+	"k_EQueryFilesSpecialFilter_AcceptedForUse":     1,
+	"k_EQueryFilesSpecialFilter_FavoritedByFriends": 2,
+	"k_EQueryFilesSpecialFilter_CreateByFriends":    3,
+	"k_EQueryFilesSpecialFilter_CreatedByFollowed":  4,
+	"k_EQueryFilesSpecialFilter_Reported":           5,
+	"k_EQueryFilesSpecialFilter_ParentItems":        6,
+	"k_EQueryFilesSpecialFilter_ParentCollections":  7,
+}
+
+func (x EQueryFilesSpecialFilter) Enum() *EQueryFilesSpecialFilter {
+	p := new(EQueryFilesSpecialFilter)
+	*p = x
+	return p
+}
+
+func (x EQueryFilesSpecialFilter) String() string {
+	return proto.EnumName(EQueryFilesSpecialFilter_name, int32(x))
+}
+
+func (x *EQueryFilesSpecialFilter) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(EQueryFilesSpecialFilter_value, data, "EQueryFilesSpecialFilter")
+	if err != nil {
+		return err
+	}
+	*x = EQueryFilesSpecialFilter(value)
+	return nil
+}
+
+func (EQueryFilesSpecialFilter) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{2}
+}
+
+type EQueryFilesSearchTextTarget int32
+
+const (
+	EQueryFilesSearchTextTarget_k_EQueryFilesSearchTextTarget_AllText     EQueryFilesSearchTextTarget = 0
+	EQueryFilesSearchTextTarget_k_EQueryFilesSearchTextTarget_Title       EQueryFilesSearchTextTarget = 1
+	EQueryFilesSearchTextTarget_k_EQueryFilesSearchTextTarget_Description EQueryFilesSearchTextTarget = 2
+)
+
+var EQueryFilesSearchTextTarget_name = map[int32]string{
+	0: "k_EQueryFilesSearchTextTarget_AllText",
+	1: "k_EQueryFilesSearchTextTarget_Title",
+	2: "k_EQueryFilesSearchTextTarget_Description",
+}
+
+var EQueryFilesSearchTextTarget_value = map[string]int32{
+	"k_EQueryFilesSearchTextTarget_AllText":     0,
+	"k_EQueryFilesSearchTextTarget_Title":       1,
+	"k_EQueryFilesSearchTextTarget_Description": 2,
+}
+
+func (x EQueryFilesSearchTextTarget) Enum() *EQueryFilesSearchTextTarget {
+	p := new(EQueryFilesSearchTextTarget)
+	*p = x
+	return p
+}
+
+func (x EQueryFilesSearchTextTarget) String() string {
+	return proto.EnumName(EQueryFilesSearchTextTarget_name, int32(x))
+}
+
+func (x *EQueryFilesSearchTextTarget) UnmarshalJSON(data []byte) error {
+	value, err := proto.UnmarshalJSONEnum(EQueryFilesSearchTextTarget_value, data, "EQueryFilesSearchTextTarget")
+	if err != nil {
+		return err
+	}
+	*x = EQueryFilesSearchTextTarget(value)
+	return nil
+}
+
+func (EQueryFilesSearchTextTarget) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{3}
+}
+
+type CPublishedFile_Vote_Request struct {
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	VoteUp               *bool    `protobuf:"varint,2,opt,name=vote_up,json=voteUp" json:"vote_up,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_Vote_Request) Reset()         { *m = CPublishedFile_Vote_Request{} }
+func (m *CPublishedFile_Vote_Request) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_Vote_Request) ProtoMessage()    {}
+func (*CPublishedFile_Vote_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{0}
+}
+
+func (m *CPublishedFile_Vote_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Vote_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Vote_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Vote_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Vote_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Vote_Request.Merge(m, src)
+}
+func (m *CPublishedFile_Vote_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Vote_Request.Size(m)
+}
+func (m *CPublishedFile_Vote_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Vote_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Vote_Request proto.InternalMessageInfo
+
+func (m *CPublishedFile_Vote_Request) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_Vote_Request) GetVoteUp() bool {
+	if m != nil && m.VoteUp != nil {
+		return *m.VoteUp
+	}
+	return false
+}
+
+type CPublishedFile_Vote_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_Vote_Response) Reset()         { *m = CPublishedFile_Vote_Response{} }
+func (m *CPublishedFile_Vote_Response) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_Vote_Response) ProtoMessage()    {}
+func (*CPublishedFile_Vote_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{1}
+}
+
+func (m *CPublishedFile_Vote_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Vote_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Vote_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Vote_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Vote_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Vote_Response.Merge(m, src)
+}
+func (m *CPublishedFile_Vote_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Vote_Response.Size(m)
+}
+func (m *CPublishedFile_Vote_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Vote_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Vote_Response proto.InternalMessageInfo
+
 type CPublishedFile_Subscribe_Request struct {
-	Publishedfileid  *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	ListType         *uint32 `protobuf:"varint,2,opt,name=list_type,json=listType" json:"list_type,omitempty"`
-	Appid            *int32  `protobuf:"varint,3,opt,name=appid" json:"appid,omitempty"`
-	NotifyClient     *bool   `protobuf:"varint,4,opt,name=notify_client,json=notifyClient" json:"notify_client,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	ListType             *uint32  `protobuf:"varint,2,opt,name=list_type,json=listType" json:"list_type,omitempty"`
+	Appid                *int32   `protobuf:"varint,3,opt,name=appid" json:"appid,omitempty"`
+	NotifyClient         *bool    `protobuf:"varint,4,opt,name=notify_client,json=notifyClient" json:"notify_client,omitempty"`
+	IncludeDependencies  *bool    `protobuf:"varint,5,opt,name=include_dependencies,json=includeDependencies" json:"include_dependencies,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_Subscribe_Request) Reset()         { *m = CPublishedFile_Subscribe_Request{} }
 func (m *CPublishedFile_Subscribe_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_Subscribe_Request) ProtoMessage()    {}
 func (*CPublishedFile_Subscribe_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{0}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{2}
 }
+
+func (m *CPublishedFile_Subscribe_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Subscribe_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Subscribe_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Subscribe_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Subscribe_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Subscribe_Request.Merge(m, src)
+}
+func (m *CPublishedFile_Subscribe_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Subscribe_Request.Size(m)
+}
+func (m *CPublishedFile_Subscribe_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Subscribe_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Subscribe_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_Subscribe_Request) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -109,31 +371,78 @@ func (m *CPublishedFile_Subscribe_Request) GetNotifyClient() bool {
 	return false
 }
 
+func (m *CPublishedFile_Subscribe_Request) GetIncludeDependencies() bool {
+	if m != nil && m.IncludeDependencies != nil {
+		return *m.IncludeDependencies
+	}
+	return false
+}
+
 type CPublishedFile_Subscribe_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_Subscribe_Response) Reset()         { *m = CPublishedFile_Subscribe_Response{} }
 func (m *CPublishedFile_Subscribe_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_Subscribe_Response) ProtoMessage()    {}
 func (*CPublishedFile_Subscribe_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{1}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{3}
 }
 
+func (m *CPublishedFile_Subscribe_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Subscribe_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Subscribe_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Subscribe_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Subscribe_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Subscribe_Response.Merge(m, src)
+}
+func (m *CPublishedFile_Subscribe_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Subscribe_Response.Size(m)
+}
+func (m *CPublishedFile_Subscribe_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Subscribe_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Subscribe_Response proto.InternalMessageInfo
+
 type CPublishedFile_Unsubscribe_Request struct {
-	Publishedfileid  *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	ListType         *uint32 `protobuf:"varint,2,opt,name=list_type,json=listType" json:"list_type,omitempty"`
-	Appid            *int32  `protobuf:"varint,3,opt,name=appid" json:"appid,omitempty"`
-	NotifyClient     *bool   `protobuf:"varint,4,opt,name=notify_client,json=notifyClient" json:"notify_client,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	ListType             *uint32  `protobuf:"varint,2,opt,name=list_type,json=listType" json:"list_type,omitempty"`
+	Appid                *int32   `protobuf:"varint,3,opt,name=appid" json:"appid,omitempty"`
+	NotifyClient         *bool    `protobuf:"varint,4,opt,name=notify_client,json=notifyClient" json:"notify_client,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_Unsubscribe_Request) Reset()         { *m = CPublishedFile_Unsubscribe_Request{} }
 func (m *CPublishedFile_Unsubscribe_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_Unsubscribe_Request) ProtoMessage()    {}
 func (*CPublishedFile_Unsubscribe_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{2}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{4}
 }
+
+func (m *CPublishedFile_Unsubscribe_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Unsubscribe_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Unsubscribe_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Unsubscribe_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Unsubscribe_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Unsubscribe_Request.Merge(m, src)
+}
+func (m *CPublishedFile_Unsubscribe_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Unsubscribe_Request.Size(m)
+}
+func (m *CPublishedFile_Unsubscribe_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Unsubscribe_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Unsubscribe_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_Unsubscribe_Request) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -164,27 +473,67 @@ func (m *CPublishedFile_Unsubscribe_Request) GetNotifyClient() bool {
 }
 
 type CPublishedFile_Unsubscribe_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_Unsubscribe_Response) Reset()         { *m = CPublishedFile_Unsubscribe_Response{} }
 func (m *CPublishedFile_Unsubscribe_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_Unsubscribe_Response) ProtoMessage()    {}
 func (*CPublishedFile_Unsubscribe_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{3}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{5}
 }
 
+func (m *CPublishedFile_Unsubscribe_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Unsubscribe_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Unsubscribe_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Unsubscribe_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Unsubscribe_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Unsubscribe_Response.Merge(m, src)
+}
+func (m *CPublishedFile_Unsubscribe_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Unsubscribe_Response.Size(m)
+}
+func (m *CPublishedFile_Unsubscribe_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Unsubscribe_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Unsubscribe_Response proto.InternalMessageInfo
+
 type CPublishedFile_CanSubscribe_Request struct {
-	Publishedfileid  *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_CanSubscribe_Request) Reset()         { *m = CPublishedFile_CanSubscribe_Request{} }
 func (m *CPublishedFile_CanSubscribe_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_CanSubscribe_Request) ProtoMessage()    {}
 func (*CPublishedFile_CanSubscribe_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{4}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{6}
 }
+
+func (m *CPublishedFile_CanSubscribe_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_CanSubscribe_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_CanSubscribe_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_CanSubscribe_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_CanSubscribe_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_CanSubscribe_Request.Merge(m, src)
+}
+func (m *CPublishedFile_CanSubscribe_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_CanSubscribe_Request.Size(m)
+}
+func (m *CPublishedFile_CanSubscribe_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_CanSubscribe_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_CanSubscribe_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_CanSubscribe_Request) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -194,22 +543,215 @@ func (m *CPublishedFile_CanSubscribe_Request) GetPublishedfileid() uint64 {
 }
 
 type CPublishedFile_CanSubscribe_Response struct {
-	CanSubscribe     *bool  `protobuf:"varint,1,opt,name=can_subscribe,json=canSubscribe" json:"can_subscribe,omitempty"`
-	XXX_unrecognized []byte `json:"-"`
+	CanSubscribe         *bool    `protobuf:"varint,1,opt,name=can_subscribe,json=canSubscribe" json:"can_subscribe,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_CanSubscribe_Response) Reset()         { *m = CPublishedFile_CanSubscribe_Response{} }
 func (m *CPublishedFile_CanSubscribe_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_CanSubscribe_Response) ProtoMessage()    {}
 func (*CPublishedFile_CanSubscribe_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{5}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{7}
 }
+
+func (m *CPublishedFile_CanSubscribe_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_CanSubscribe_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_CanSubscribe_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_CanSubscribe_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_CanSubscribe_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_CanSubscribe_Response.Merge(m, src)
+}
+func (m *CPublishedFile_CanSubscribe_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_CanSubscribe_Response.Size(m)
+}
+func (m *CPublishedFile_CanSubscribe_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_CanSubscribe_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_CanSubscribe_Response proto.InternalMessageInfo
 
 func (m *CPublishedFile_CanSubscribe_Response) GetCanSubscribe() bool {
 	if m != nil && m.CanSubscribe != nil {
 		return *m.CanSubscribe
 	}
 	return false
+}
+
+type CPublishedFile_GetSubSectionData_Request struct {
+	Publishedfileid      *uint64                 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	ForTableOfContents   *bool                   `protobuf:"varint,2,opt,name=for_table_of_contents,json=forTableOfContents" json:"for_table_of_contents,omitempty"`
+	SpecificSectionid    *uint64                 `protobuf:"varint,3,opt,name=specific_sectionid,json=specificSectionid" json:"specific_sectionid,omitempty"`
+	DesiredRevision      *EPublishedFileRevision `protobuf:"varint,4,opt,name=desired_revision,json=desiredRevision,enum=EPublishedFileRevision,def=0" json:"desired_revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
+}
+
+func (m *CPublishedFile_GetSubSectionData_Request) Reset() {
+	*m = CPublishedFile_GetSubSectionData_Request{}
+}
+func (m *CPublishedFile_GetSubSectionData_Request) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_GetSubSectionData_Request) ProtoMessage()    {}
+func (*CPublishedFile_GetSubSectionData_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{8}
+}
+
+func (m *CPublishedFile_GetSubSectionData_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetSubSectionData_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetSubSectionData_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetSubSectionData_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetSubSectionData_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetSubSectionData_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetSubSectionData_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetSubSectionData_Request.Size(m)
+}
+func (m *CPublishedFile_GetSubSectionData_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetSubSectionData_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetSubSectionData_Request proto.InternalMessageInfo
+
+const Default_CPublishedFile_GetSubSectionData_Request_DesiredRevision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
+
+func (m *CPublishedFile_GetSubSectionData_Request) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetSubSectionData_Request) GetForTableOfContents() bool {
+	if m != nil && m.ForTableOfContents != nil {
+		return *m.ForTableOfContents
+	}
+	return false
+}
+
+func (m *CPublishedFile_GetSubSectionData_Request) GetSpecificSectionid() uint64 {
+	if m != nil && m.SpecificSectionid != nil {
+		return *m.SpecificSectionid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetSubSectionData_Request) GetDesiredRevision() EPublishedFileRevision {
+	if m != nil && m.DesiredRevision != nil {
+		return *m.DesiredRevision
+	}
+	return Default_CPublishedFile_GetSubSectionData_Request_DesiredRevision
+}
+
+type PublishedFileSubSection struct {
+	Sectionid            *uint64  `protobuf:"varint,1,opt,name=sectionid" json:"sectionid,omitempty"`
+	Title                *string  `protobuf:"bytes,2,opt,name=title" json:"title,omitempty"`
+	DescriptionText      *string  `protobuf:"bytes,3,opt,name=description_text,json=descriptionText" json:"description_text,omitempty"`
+	SortOrder            *uint32  `protobuf:"varint,4,opt,name=sort_order,json=sortOrder" json:"sort_order,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PublishedFileSubSection) Reset()         { *m = PublishedFileSubSection{} }
+func (m *PublishedFileSubSection) String() string { return proto.CompactTextString(m) }
+func (*PublishedFileSubSection) ProtoMessage()    {}
+func (*PublishedFileSubSection) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{9}
+}
+
+func (m *PublishedFileSubSection) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileSubSection.Unmarshal(m, b)
+}
+func (m *PublishedFileSubSection) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileSubSection.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileSubSection) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileSubSection.Merge(m, src)
+}
+func (m *PublishedFileSubSection) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileSubSection.Size(m)
+}
+func (m *PublishedFileSubSection) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileSubSection.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileSubSection proto.InternalMessageInfo
+
+func (m *PublishedFileSubSection) GetSectionid() uint64 {
+	if m != nil && m.Sectionid != nil {
+		return *m.Sectionid
+	}
+	return 0
+}
+
+func (m *PublishedFileSubSection) GetTitle() string {
+	if m != nil && m.Title != nil {
+		return *m.Title
+	}
+	return ""
+}
+
+func (m *PublishedFileSubSection) GetDescriptionText() string {
+	if m != nil && m.DescriptionText != nil {
+		return *m.DescriptionText
+	}
+	return ""
+}
+
+func (m *PublishedFileSubSection) GetSortOrder() uint32 {
+	if m != nil && m.SortOrder != nil {
+		return *m.SortOrder
+	}
+	return 0
+}
+
+type CPublishedFile_GetSubSectionData_Response struct {
+	SubSections          []*PublishedFileSubSection `protobuf:"bytes,1,rep,name=sub_sections,json=subSections" json:"sub_sections,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                   `json:"-"`
+	XXX_unrecognized     []byte                     `json:"-"`
+	XXX_sizecache        int32                      `json:"-"`
+}
+
+func (m *CPublishedFile_GetSubSectionData_Response) Reset() {
+	*m = CPublishedFile_GetSubSectionData_Response{}
+}
+func (m *CPublishedFile_GetSubSectionData_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetSubSectionData_Response) ProtoMessage() {}
+func (*CPublishedFile_GetSubSectionData_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{10}
+}
+
+func (m *CPublishedFile_GetSubSectionData_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetSubSectionData_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetSubSectionData_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetSubSectionData_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetSubSectionData_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetSubSectionData_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetSubSectionData_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetSubSectionData_Response.Size(m)
+}
+func (m *CPublishedFile_GetSubSectionData_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetSubSectionData_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetSubSectionData_Response proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetSubSectionData_Response) GetSubSections() []*PublishedFileSubSection {
+	if m != nil {
+		return m.SubSections
+	}
+	return nil
 }
 
 type CPublishedFile_Publish_Request struct {
@@ -229,13 +771,35 @@ type CPublishedFile_Publish_Request struct {
 	CollectionType       *string  `protobuf:"bytes,14,opt,name=collection_type,json=collectionType" json:"collection_type,omitempty"`
 	GameType             *string  `protobuf:"bytes,15,opt,name=game_type,json=gameType" json:"game_type,omitempty"`
 	Url                  *string  `protobuf:"bytes,16,opt,name=url" json:"url,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CPublishedFile_Publish_Request) Reset()                    { *m = CPublishedFile_Publish_Request{} }
-func (m *CPublishedFile_Publish_Request) String() string            { return proto.CompactTextString(m) }
-func (*CPublishedFile_Publish_Request) ProtoMessage()               {}
-func (*CPublishedFile_Publish_Request) Descriptor() ([]byte, []int) { return publishedfile_fileDescriptor0, []int{6} }
+func (m *CPublishedFile_Publish_Request) Reset()         { *m = CPublishedFile_Publish_Request{} }
+func (m *CPublishedFile_Publish_Request) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_Publish_Request) ProtoMessage()    {}
+func (*CPublishedFile_Publish_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{11}
+}
+
+func (m *CPublishedFile_Publish_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Publish_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Publish_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Publish_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Publish_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Publish_Request.Merge(m, src)
+}
+func (m *CPublishedFile_Publish_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Publish_Request.Size(m)
+}
+func (m *CPublishedFile_Publish_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Publish_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Publish_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_Publish_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -350,15 +914,37 @@ func (m *CPublishedFile_Publish_Request) GetUrl() string {
 }
 
 type CPublishedFile_Publish_Response struct {
-	Publishedfileid  *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	RedirectUri      *string `protobuf:"bytes,2,opt,name=redirect_uri,json=redirectUri" json:"redirect_uri,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	RedirectUri          *string  `protobuf:"bytes,2,opt,name=redirect_uri,json=redirectUri" json:"redirect_uri,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CPublishedFile_Publish_Response) Reset()                    { *m = CPublishedFile_Publish_Response{} }
-func (m *CPublishedFile_Publish_Response) String() string            { return proto.CompactTextString(m) }
-func (*CPublishedFile_Publish_Response) ProtoMessage()               {}
-func (*CPublishedFile_Publish_Response) Descriptor() ([]byte, []int) { return publishedfile_fileDescriptor0, []int{7} }
+func (m *CPublishedFile_Publish_Response) Reset()         { *m = CPublishedFile_Publish_Response{} }
+func (m *CPublishedFile_Publish_Response) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_Publish_Response) ProtoMessage()    {}
+func (*CPublishedFile_Publish_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{12}
+}
+
+func (m *CPublishedFile_Publish_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Publish_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Publish_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Publish_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Publish_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Publish_Response.Merge(m, src)
+}
+func (m *CPublishedFile_Publish_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Publish_Response.Size(m)
+}
+func (m *CPublishedFile_Publish_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Publish_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Publish_Response proto.InternalMessageInfo
 
 func (m *CPublishedFile_Publish_Response) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -375,28 +961,55 @@ func (m *CPublishedFile_Publish_Response) GetRedirectUri() string {
 }
 
 type CPublishedFile_GetDetails_Request struct {
-	Publishedfileids          []uint64 `protobuf:"fixed64,1,rep,name=publishedfileids" json:"publishedfileids,omitempty"`
-	Includetags               *bool    `protobuf:"varint,2,opt,name=includetags" json:"includetags,omitempty"`
-	Includeadditionalpreviews *bool    `protobuf:"varint,3,opt,name=includeadditionalpreviews" json:"includeadditionalpreviews,omitempty"`
-	Includechildren           *bool    `protobuf:"varint,4,opt,name=includechildren" json:"includechildren,omitempty"`
-	Includekvtags             *bool    `protobuf:"varint,5,opt,name=includekvtags" json:"includekvtags,omitempty"`
-	Includevotes              *bool    `protobuf:"varint,6,opt,name=includevotes" json:"includevotes,omitempty"`
-	ShortDescription          *bool    `protobuf:"varint,8,opt,name=short_description,json=shortDescription" json:"short_description,omitempty"`
-	Includeforsaledata        *bool    `protobuf:"varint,10,opt,name=includeforsaledata" json:"includeforsaledata,omitempty"`
-	Includemetadata           *bool    `protobuf:"varint,11,opt,name=includemetadata" json:"includemetadata,omitempty"`
-	Language                  *int32   `protobuf:"varint,12,opt,name=language,def=0" json:"language,omitempty"`
-	ReturnPlaytimeStats       *uint32  `protobuf:"varint,13,opt,name=return_playtime_stats,json=returnPlaytimeStats" json:"return_playtime_stats,omitempty"`
-	XXX_unrecognized          []byte   `json:"-"`
+	Publishedfileids          []uint64                `protobuf:"fixed64,1,rep,name=publishedfileids" json:"publishedfileids,omitempty"`
+	Includetags               *bool                   `protobuf:"varint,2,opt,name=includetags" json:"includetags,omitempty"`
+	Includeadditionalpreviews *bool                   `protobuf:"varint,3,opt,name=includeadditionalpreviews" json:"includeadditionalpreviews,omitempty"`
+	Includechildren           *bool                   `protobuf:"varint,4,opt,name=includechildren" json:"includechildren,omitempty"`
+	Includekvtags             *bool                   `protobuf:"varint,5,opt,name=includekvtags" json:"includekvtags,omitempty"`
+	Includevotes              *bool                   `protobuf:"varint,6,opt,name=includevotes" json:"includevotes,omitempty"`
+	ShortDescription          *bool                   `protobuf:"varint,8,opt,name=short_description,json=shortDescription" json:"short_description,omitempty"`
+	Includeforsaledata        *bool                   `protobuf:"varint,10,opt,name=includeforsaledata" json:"includeforsaledata,omitempty"`
+	Includemetadata           *bool                   `protobuf:"varint,11,opt,name=includemetadata" json:"includemetadata,omitempty"`
+	Language                  *int32                  `protobuf:"varint,12,opt,name=language,def=0" json:"language,omitempty"`
+	ReturnPlaytimeStats       *uint32                 `protobuf:"varint,13,opt,name=return_playtime_stats,json=returnPlaytimeStats" json:"return_playtime_stats,omitempty"`
+	Appid                     *uint32                 `protobuf:"varint,14,opt,name=appid" json:"appid,omitempty"`
+	StripDescriptionBbcode    *bool                   `protobuf:"varint,15,opt,name=strip_description_bbcode,json=stripDescriptionBbcode" json:"strip_description_bbcode,omitempty"`
+	DesiredRevision           *EPublishedFileRevision `protobuf:"varint,16,opt,name=desired_revision,json=desiredRevision,enum=EPublishedFileRevision,def=0" json:"desired_revision,omitempty"`
+	Includereactions          *bool                   `protobuf:"varint,17,opt,name=includereactions,def=0" json:"includereactions,omitempty"`
+	AdminQuery                *bool                   `protobuf:"varint,18,opt,name=admin_query,json=adminQuery" json:"admin_query,omitempty"`
+	XXX_NoUnkeyedLiteral      struct{}                `json:"-"`
+	XXX_unrecognized          []byte                  `json:"-"`
+	XXX_sizecache             int32                   `json:"-"`
 }
 
 func (m *CPublishedFile_GetDetails_Request) Reset()         { *m = CPublishedFile_GetDetails_Request{} }
 func (m *CPublishedFile_GetDetails_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_GetDetails_Request) ProtoMessage()    {}
 func (*CPublishedFile_GetDetails_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{8}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{13}
 }
 
+func (m *CPublishedFile_GetDetails_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetDetails_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetDetails_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetDetails_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetDetails_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetDetails_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetDetails_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetDetails_Request.Size(m)
+}
+func (m *CPublishedFile_GetDetails_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetDetails_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetDetails_Request proto.InternalMessageInfo
+
 const Default_CPublishedFile_GetDetails_Request_Language int32 = 0
+const Default_CPublishedFile_GetDetails_Request_DesiredRevision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
+const Default_CPublishedFile_GetDetails_Request_Includereactions bool = false
 
 func (m *CPublishedFile_GetDetails_Request) GetPublishedfileids() []uint64 {
 	if m != nil {
@@ -475,80 +1088,211 @@ func (m *CPublishedFile_GetDetails_Request) GetReturnPlaytimeStats() uint32 {
 	return 0
 }
 
-type PublishedFileDetails struct {
-	Result                   *uint32                             `protobuf:"varint,1,opt,name=result" json:"result,omitempty"`
-	Publishedfileid          *uint64                             `protobuf:"varint,2,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	Creator                  *uint64                             `protobuf:"fixed64,3,opt,name=creator" json:"creator,omitempty"`
-	CreatorAppid             *uint32                             `protobuf:"varint,4,opt,name=creator_appid,json=creatorAppid" json:"creator_appid,omitempty"`
-	ConsumerAppid            *uint32                             `protobuf:"varint,5,opt,name=consumer_appid,json=consumerAppid" json:"consumer_appid,omitempty"`
-	ConsumerShortcutid       *uint32                             `protobuf:"varint,6,opt,name=consumer_shortcutid,json=consumerShortcutid" json:"consumer_shortcutid,omitempty"`
-	Filename                 *string                             `protobuf:"bytes,7,opt,name=filename" json:"filename,omitempty"`
-	FileSize                 *uint64                             `protobuf:"varint,8,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
-	PreviewFileSize          *uint64                             `protobuf:"varint,9,opt,name=preview_file_size,json=previewFileSize" json:"preview_file_size,omitempty"`
-	FileUrl                  *string                             `protobuf:"bytes,10,opt,name=file_url,json=fileUrl" json:"file_url,omitempty"`
-	PreviewUrl               *string                             `protobuf:"bytes,11,opt,name=preview_url,json=previewUrl" json:"preview_url,omitempty"`
-	Youtubevideoid           *string                             `protobuf:"bytes,12,opt,name=youtubevideoid" json:"youtubevideoid,omitempty"`
-	Url                      *string                             `protobuf:"bytes,13,opt,name=url" json:"url,omitempty"`
-	HcontentFile             *uint64                             `protobuf:"fixed64,14,opt,name=hcontent_file,json=hcontentFile" json:"hcontent_file,omitempty"`
-	HcontentPreview          *uint64                             `protobuf:"fixed64,15,opt,name=hcontent_preview,json=hcontentPreview" json:"hcontent_preview,omitempty"`
-	Title                    *string                             `protobuf:"bytes,16,opt,name=title" json:"title,omitempty"`
-	FileDescription          *string                             `protobuf:"bytes,17,opt,name=file_description,json=fileDescription" json:"file_description,omitempty"`
-	ShortDescription         *string                             `protobuf:"bytes,18,opt,name=short_description,json=shortDescription" json:"short_description,omitempty"`
-	TimeCreated              *uint32                             `protobuf:"varint,19,opt,name=time_created,json=timeCreated" json:"time_created,omitempty"`
-	TimeUpdated              *uint32                             `protobuf:"varint,20,opt,name=time_updated,json=timeUpdated" json:"time_updated,omitempty"`
-	Visibility               *uint32                             `protobuf:"varint,21,opt,name=visibility" json:"visibility,omitempty"`
-	Flags                    *uint32                             `protobuf:"varint,22,opt,name=flags" json:"flags,omitempty"`
-	WorkshopFile             *bool                               `protobuf:"varint,23,opt,name=workshop_file,json=workshopFile" json:"workshop_file,omitempty"`
-	WorkshopAccepted         *bool                               `protobuf:"varint,24,opt,name=workshop_accepted,json=workshopAccepted" json:"workshop_accepted,omitempty"`
-	ShowSubscribeAll         *bool                               `protobuf:"varint,25,opt,name=show_subscribe_all,json=showSubscribeAll" json:"show_subscribe_all,omitempty"`
-	NumCommentsDeveloper     *int32                              `protobuf:"varint,26,opt,name=num_comments_developer,json=numCommentsDeveloper" json:"num_comments_developer,omitempty"`
-	NumCommentsPublic        *int32                              `protobuf:"varint,27,opt,name=num_comments_public,json=numCommentsPublic" json:"num_comments_public,omitempty"`
-	Banned                   *bool                               `protobuf:"varint,28,opt,name=banned" json:"banned,omitempty"`
-	BanReason                *string                             `protobuf:"bytes,29,opt,name=ban_reason,json=banReason" json:"ban_reason,omitempty"`
-	Banner                   *uint64                             `protobuf:"fixed64,30,opt,name=banner" json:"banner,omitempty"`
-	CanBeDeleted             *bool                               `protobuf:"varint,31,opt,name=can_be_deleted,json=canBeDeleted" json:"can_be_deleted,omitempty"`
-	Incompatible             *bool                               `protobuf:"varint,32,opt,name=incompatible" json:"incompatible,omitempty"`
-	AppName                  *string                             `protobuf:"bytes,33,opt,name=app_name,json=appName" json:"app_name,omitempty"`
-	FileType                 *uint32                             `protobuf:"varint,34,opt,name=file_type,json=fileType" json:"file_type,omitempty"`
-	CanSubscribe             *bool                               `protobuf:"varint,35,opt,name=can_subscribe,json=canSubscribe" json:"can_subscribe,omitempty"`
-	Subscriptions            *uint32                             `protobuf:"varint,36,opt,name=subscriptions" json:"subscriptions,omitempty"`
-	Favorited                *uint32                             `protobuf:"varint,37,opt,name=favorited" json:"favorited,omitempty"`
-	Followers                *uint32                             `protobuf:"varint,38,opt,name=followers" json:"followers,omitempty"`
-	LifetimeSubscriptions    *uint32                             `protobuf:"varint,39,opt,name=lifetime_subscriptions,json=lifetimeSubscriptions" json:"lifetime_subscriptions,omitempty"`
-	LifetimeFavorited        *uint32                             `protobuf:"varint,40,opt,name=lifetime_favorited,json=lifetimeFavorited" json:"lifetime_favorited,omitempty"`
-	LifetimeFollowers        *uint32                             `protobuf:"varint,41,opt,name=lifetime_followers,json=lifetimeFollowers" json:"lifetime_followers,omitempty"`
-	LifetimePlaytime         *uint64                             `protobuf:"varint,62,opt,name=lifetime_playtime,json=lifetimePlaytime" json:"lifetime_playtime,omitempty"`
-	LifetimePlaytimeSessions *uint64                             `protobuf:"varint,63,opt,name=lifetime_playtime_sessions,json=lifetimePlaytimeSessions" json:"lifetime_playtime_sessions,omitempty"`
-	Views                    *uint32                             `protobuf:"varint,42,opt,name=views" json:"views,omitempty"`
-	ImageWidth               *uint32                             `protobuf:"varint,43,opt,name=image_width,json=imageWidth" json:"image_width,omitempty"`
-	ImageHeight              *uint32                             `protobuf:"varint,44,opt,name=image_height,json=imageHeight" json:"image_height,omitempty"`
-	ImageUrl                 *string                             `protobuf:"bytes,45,opt,name=image_url,json=imageUrl" json:"image_url,omitempty"`
-	SpoilerTag               *bool                               `protobuf:"varint,46,opt,name=spoiler_tag,json=spoilerTag" json:"spoiler_tag,omitempty"`
-	Shortcutid               *uint32                             `protobuf:"varint,47,opt,name=shortcutid" json:"shortcutid,omitempty"`
-	Shortcutname             *string                             `protobuf:"bytes,48,opt,name=shortcutname" json:"shortcutname,omitempty"`
-	NumChildren              *uint32                             `protobuf:"varint,49,opt,name=num_children,json=numChildren" json:"num_children,omitempty"`
-	NumReports               *uint32                             `protobuf:"varint,50,opt,name=num_reports,json=numReports" json:"num_reports,omitempty"`
-	Previews                 []*PublishedFileDetails_Preview     `protobuf:"bytes,51,rep,name=previews" json:"previews,omitempty"`
-	Tags                     []*PublishedFileDetails_Tag         `protobuf:"bytes,52,rep,name=tags" json:"tags,omitempty"`
-	Children                 []*PublishedFileDetails_Child       `protobuf:"bytes,53,rep,name=children" json:"children,omitempty"`
-	Kvtags                   []*PublishedFileDetails_KVTag       `protobuf:"bytes,54,rep,name=kvtags" json:"kvtags,omitempty"`
-	VoteData                 *PublishedFileDetails_VoteData      `protobuf:"bytes,55,opt,name=vote_data,json=voteData" json:"vote_data,omitempty"`
-	PlaytimeStats            *PublishedFileDetails_PlaytimeStats `protobuf:"bytes,64,opt,name=playtime_stats,json=playtimeStats" json:"playtime_stats,omitempty"`
-	TimeSubscribed           *uint32                             `protobuf:"varint,56,opt,name=time_subscribed,json=timeSubscribed" json:"time_subscribed,omitempty"`
-	ForSaleData              *PublishedFileDetails_ForSaleData   `protobuf:"bytes,57,opt,name=for_sale_data,json=forSaleData" json:"for_sale_data,omitempty"`
-	Metadata                 *string                             `protobuf:"bytes,58,opt,name=metadata" json:"metadata,omitempty"`
-	IncompatibleActor        *uint64                             `protobuf:"fixed64,59,opt,name=incompatible_actor,json=incompatibleActor" json:"incompatible_actor,omitempty"`
-	IncompatibleTimestamp    *uint32                             `protobuf:"varint,60,opt,name=incompatible_timestamp,json=incompatibleTimestamp" json:"incompatible_timestamp,omitempty"`
-	Language                 *int32                              `protobuf:"varint,61,opt,name=language,def=0" json:"language,omitempty"`
-	XXX_unrecognized         []byte                              `json:"-"`
+func (m *CPublishedFile_GetDetails_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
 }
 
-func (m *PublishedFileDetails) Reset()                    { *m = PublishedFileDetails{} }
-func (m *PublishedFileDetails) String() string            { return proto.CompactTextString(m) }
-func (*PublishedFileDetails) ProtoMessage()               {}
-func (*PublishedFileDetails) Descriptor() ([]byte, []int) { return publishedfile_fileDescriptor0, []int{9} }
+func (m *CPublishedFile_GetDetails_Request) GetStripDescriptionBbcode() bool {
+	if m != nil && m.StripDescriptionBbcode != nil {
+		return *m.StripDescriptionBbcode
+	}
+	return false
+}
+
+func (m *CPublishedFile_GetDetails_Request) GetDesiredRevision() EPublishedFileRevision {
+	if m != nil && m.DesiredRevision != nil {
+		return *m.DesiredRevision
+	}
+	return Default_CPublishedFile_GetDetails_Request_DesiredRevision
+}
+
+func (m *CPublishedFile_GetDetails_Request) GetIncludereactions() bool {
+	if m != nil && m.Includereactions != nil {
+		return *m.Includereactions
+	}
+	return Default_CPublishedFile_GetDetails_Request_Includereactions
+}
+
+func (m *CPublishedFile_GetDetails_Request) GetAdminQuery() bool {
+	if m != nil && m.AdminQuery != nil {
+		return *m.AdminQuery
+	}
+	return false
+}
+
+type PublishedFileAuthorSnapshot struct {
+	Timestamp            *uint32  `protobuf:"varint,1,opt,name=timestamp" json:"timestamp,omitempty"`
+	GameBranchMin        *string  `protobuf:"bytes,2,opt,name=game_branch_min,json=gameBranchMin" json:"game_branch_min,omitempty"`
+	GameBranchMax        *string  `protobuf:"bytes,3,opt,name=game_branch_max,json=gameBranchMax" json:"game_branch_max,omitempty"`
+	Manifestid           *uint64  `protobuf:"fixed64,4,opt,name=manifestid" json:"manifestid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PublishedFileAuthorSnapshot) Reset()         { *m = PublishedFileAuthorSnapshot{} }
+func (m *PublishedFileAuthorSnapshot) String() string { return proto.CompactTextString(m) }
+func (*PublishedFileAuthorSnapshot) ProtoMessage()    {}
+func (*PublishedFileAuthorSnapshot) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{14}
+}
+
+func (m *PublishedFileAuthorSnapshot) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileAuthorSnapshot.Unmarshal(m, b)
+}
+func (m *PublishedFileAuthorSnapshot) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileAuthorSnapshot.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileAuthorSnapshot) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileAuthorSnapshot.Merge(m, src)
+}
+func (m *PublishedFileAuthorSnapshot) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileAuthorSnapshot.Size(m)
+}
+func (m *PublishedFileAuthorSnapshot) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileAuthorSnapshot.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileAuthorSnapshot proto.InternalMessageInfo
+
+func (m *PublishedFileAuthorSnapshot) GetTimestamp() uint32 {
+	if m != nil && m.Timestamp != nil {
+		return *m.Timestamp
+	}
+	return 0
+}
+
+func (m *PublishedFileAuthorSnapshot) GetGameBranchMin() string {
+	if m != nil && m.GameBranchMin != nil {
+		return *m.GameBranchMin
+	}
+	return ""
+}
+
+func (m *PublishedFileAuthorSnapshot) GetGameBranchMax() string {
+	if m != nil && m.GameBranchMax != nil {
+		return *m.GameBranchMax
+	}
+	return ""
+}
+
+func (m *PublishedFileAuthorSnapshot) GetManifestid() uint64 {
+	if m != nil && m.Manifestid != nil {
+		return *m.Manifestid
+	}
+	return 0
+}
+
+type PublishedFileDetails struct {
+	Result                     *uint32                             `protobuf:"varint,1,opt,name=result" json:"result,omitempty"`
+	Publishedfileid            *uint64                             `protobuf:"varint,2,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Creator                    *uint64                             `protobuf:"fixed64,3,opt,name=creator" json:"creator,omitempty"`
+	CreatorAppid               *uint32                             `protobuf:"varint,4,opt,name=creator_appid,json=creatorAppid" json:"creator_appid,omitempty"`
+	ConsumerAppid              *uint32                             `protobuf:"varint,5,opt,name=consumer_appid,json=consumerAppid" json:"consumer_appid,omitempty"`
+	ConsumerShortcutid         *uint32                             `protobuf:"varint,6,opt,name=consumer_shortcutid,json=consumerShortcutid" json:"consumer_shortcutid,omitempty"`
+	Filename                   *string                             `protobuf:"bytes,7,opt,name=filename" json:"filename,omitempty"`
+	FileSize                   *uint64                             `protobuf:"varint,8,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
+	PreviewFileSize            *uint64                             `protobuf:"varint,9,opt,name=preview_file_size,json=previewFileSize" json:"preview_file_size,omitempty"`
+	FileUrl                    *string                             `protobuf:"bytes,10,opt,name=file_url,json=fileUrl" json:"file_url,omitempty"`
+	PreviewUrl                 *string                             `protobuf:"bytes,11,opt,name=preview_url,json=previewUrl" json:"preview_url,omitempty"`
+	Youtubevideoid             *string                             `protobuf:"bytes,12,opt,name=youtubevideoid" json:"youtubevideoid,omitempty"`
+	Url                        *string                             `protobuf:"bytes,13,opt,name=url" json:"url,omitempty"`
+	HcontentFile               *uint64                             `protobuf:"fixed64,14,opt,name=hcontent_file,json=hcontentFile" json:"hcontent_file,omitempty"`
+	HcontentPreview            *uint64                             `protobuf:"fixed64,15,opt,name=hcontent_preview,json=hcontentPreview" json:"hcontent_preview,omitempty"`
+	Title                      *string                             `protobuf:"bytes,16,opt,name=title" json:"title,omitempty"`
+	FileDescription            *string                             `protobuf:"bytes,17,opt,name=file_description,json=fileDescription" json:"file_description,omitempty"`
+	ShortDescription           *string                             `protobuf:"bytes,18,opt,name=short_description,json=shortDescription" json:"short_description,omitempty"`
+	TimeCreated                *uint32                             `protobuf:"varint,19,opt,name=time_created,json=timeCreated" json:"time_created,omitempty"`
+	TimeUpdated                *uint32                             `protobuf:"varint,20,opt,name=time_updated,json=timeUpdated" json:"time_updated,omitempty"`
+	Visibility                 *uint32                             `protobuf:"varint,21,opt,name=visibility" json:"visibility,omitempty"`
+	Flags                      *uint32                             `protobuf:"varint,22,opt,name=flags" json:"flags,omitempty"`
+	WorkshopFile               *bool                               `protobuf:"varint,23,opt,name=workshop_file,json=workshopFile" json:"workshop_file,omitempty"`
+	WorkshopAccepted           *bool                               `protobuf:"varint,24,opt,name=workshop_accepted,json=workshopAccepted" json:"workshop_accepted,omitempty"`
+	ShowSubscribeAll           *bool                               `protobuf:"varint,25,opt,name=show_subscribe_all,json=showSubscribeAll" json:"show_subscribe_all,omitempty"`
+	NumCommentsDeveloper       *int32                              `protobuf:"varint,26,opt,name=num_comments_developer,json=numCommentsDeveloper" json:"num_comments_developer,omitempty"`
+	NumCommentsPublic          *int32                              `protobuf:"varint,27,opt,name=num_comments_public,json=numCommentsPublic" json:"num_comments_public,omitempty"`
+	Banned                     *bool                               `protobuf:"varint,28,opt,name=banned" json:"banned,omitempty"`
+	BanReason                  *string                             `protobuf:"bytes,29,opt,name=ban_reason,json=banReason" json:"ban_reason,omitempty"`
+	Banner                     *uint64                             `protobuf:"fixed64,30,opt,name=banner" json:"banner,omitempty"`
+	CanBeDeleted               *bool                               `protobuf:"varint,31,opt,name=can_be_deleted,json=canBeDeleted" json:"can_be_deleted,omitempty"`
+	Incompatible               *bool                               `protobuf:"varint,32,opt,name=incompatible" json:"incompatible,omitempty"`
+	AppName                    *string                             `protobuf:"bytes,33,opt,name=app_name,json=appName" json:"app_name,omitempty"`
+	FileType                   *uint32                             `protobuf:"varint,34,opt,name=file_type,json=fileType" json:"file_type,omitempty"`
+	CanSubscribe               *bool                               `protobuf:"varint,35,opt,name=can_subscribe,json=canSubscribe" json:"can_subscribe,omitempty"`
+	Subscriptions              *uint32                             `protobuf:"varint,36,opt,name=subscriptions" json:"subscriptions,omitempty"`
+	Favorited                  *uint32                             `protobuf:"varint,37,opt,name=favorited" json:"favorited,omitempty"`
+	Followers                  *uint32                             `protobuf:"varint,38,opt,name=followers" json:"followers,omitempty"`
+	LifetimeSubscriptions      *uint32                             `protobuf:"varint,39,opt,name=lifetime_subscriptions,json=lifetimeSubscriptions" json:"lifetime_subscriptions,omitempty"`
+	LifetimeFavorited          *uint32                             `protobuf:"varint,40,opt,name=lifetime_favorited,json=lifetimeFavorited" json:"lifetime_favorited,omitempty"`
+	LifetimeFollowers          *uint32                             `protobuf:"varint,41,opt,name=lifetime_followers,json=lifetimeFollowers" json:"lifetime_followers,omitempty"`
+	LifetimePlaytime           *uint64                             `protobuf:"varint,62,opt,name=lifetime_playtime,json=lifetimePlaytime" json:"lifetime_playtime,omitempty"`
+	LifetimePlaytimeSessions   *uint64                             `protobuf:"varint,63,opt,name=lifetime_playtime_sessions,json=lifetimePlaytimeSessions" json:"lifetime_playtime_sessions,omitempty"`
+	Views                      *uint32                             `protobuf:"varint,42,opt,name=views" json:"views,omitempty"`
+	ImageWidth                 *uint32                             `protobuf:"varint,43,opt,name=image_width,json=imageWidth" json:"image_width,omitempty"`
+	ImageHeight                *uint32                             `protobuf:"varint,44,opt,name=image_height,json=imageHeight" json:"image_height,omitempty"`
+	ImageUrl                   *string                             `protobuf:"bytes,45,opt,name=image_url,json=imageUrl" json:"image_url,omitempty"`
+	SpoilerTag                 *bool                               `protobuf:"varint,46,opt,name=spoiler_tag,json=spoilerTag" json:"spoiler_tag,omitempty"`
+	Shortcutid                 *uint32                             `protobuf:"varint,47,opt,name=shortcutid" json:"shortcutid,omitempty"`
+	Shortcutname               *string                             `protobuf:"bytes,48,opt,name=shortcutname" json:"shortcutname,omitempty"`
+	NumChildren                *uint32                             `protobuf:"varint,49,opt,name=num_children,json=numChildren" json:"num_children,omitempty"`
+	NumReports                 *uint32                             `protobuf:"varint,50,opt,name=num_reports,json=numReports" json:"num_reports,omitempty"`
+	Previews                   []*PublishedFileDetails_Preview     `protobuf:"bytes,51,rep,name=previews" json:"previews,omitempty"`
+	Tags                       []*PublishedFileDetails_Tag         `protobuf:"bytes,52,rep,name=tags" json:"tags,omitempty"`
+	Children                   []*PublishedFileDetails_Child       `protobuf:"bytes,53,rep,name=children" json:"children,omitempty"`
+	Kvtags                     []*PublishedFileDetails_KVTag       `protobuf:"bytes,54,rep,name=kvtags" json:"kvtags,omitempty"`
+	VoteData                   *PublishedFileDetails_VoteData      `protobuf:"bytes,55,opt,name=vote_data,json=voteData" json:"vote_data,omitempty"`
+	PlaytimeStats              *PublishedFileDetails_PlaytimeStats `protobuf:"bytes,64,opt,name=playtime_stats,json=playtimeStats" json:"playtime_stats,omitempty"`
+	TimeSubscribed             *uint32                             `protobuf:"varint,56,opt,name=time_subscribed,json=timeSubscribed" json:"time_subscribed,omitempty"`
+	ForSaleData                *PublishedFileDetails_ForSaleData   `protobuf:"bytes,57,opt,name=for_sale_data,json=forSaleData" json:"for_sale_data,omitempty"`
+	Metadata                   *string                             `protobuf:"bytes,58,opt,name=metadata" json:"metadata,omitempty"`
+	Language                   *int32                              `protobuf:"varint,61,opt,name=language,def=0" json:"language,omitempty"`
+	MaybeInappropriateSex      *bool                               `protobuf:"varint,65,opt,name=maybe_inappropriate_sex,json=maybeInappropriateSex" json:"maybe_inappropriate_sex,omitempty"`
+	MaybeInappropriateViolence *bool                               `protobuf:"varint,66,opt,name=maybe_inappropriate_violence,json=maybeInappropriateViolence" json:"maybe_inappropriate_violence,omitempty"`
+	ContentDescriptorids       []EContentDescriptorID              `protobuf:"varint,72,rep,name=content_descriptorids,json=contentDescriptorids,enum=EContentDescriptorID" json:"content_descriptorids,omitempty"`
+	RevisionChangeNumber       *uint64                             `protobuf:"varint,67,opt,name=revision_change_number,json=revisionChangeNumber" json:"revision_change_number,omitempty"`
+	Revision                   *EPublishedFileRevision             `protobuf:"varint,68,opt,name=revision,enum=EPublishedFileRevision,def=0" json:"revision,omitempty"`
+	AvailableRevisions         []EPublishedFileRevision            `protobuf:"varint,69,rep,name=available_revisions,json=availableRevisions,enum=EPublishedFileRevision" json:"available_revisions,omitempty"`
+	Reactions                  []*PublishedFileDetails_Reaction    `protobuf:"bytes,70,rep,name=reactions" json:"reactions,omitempty"`
+	BanTextCheckResult         *protobuf.EBanContentCheckResult    `protobuf:"varint,71,opt,name=ban_text_check_result,json=banTextCheckResult,enum=EBanContentCheckResult,def=0" json:"ban_text_check_result,omitempty"`
+	SearchScore                *float32                            `protobuf:"fixed32,73,opt,name=search_score,json=searchScore" json:"search_score,omitempty"`
+	ExternalAssetId            *uint64                             `protobuf:"varint,74,opt,name=external_asset_id,json=externalAssetId" json:"external_asset_id,omitempty"`
+	AuthorSnapshots            []*PublishedFileAuthorSnapshot      `protobuf:"bytes,75,rep,name=author_snapshots,json=authorSnapshots" json:"author_snapshots,omitempty"`
+	XXX_NoUnkeyedLiteral       struct{}                            `json:"-"`
+	XXX_unrecognized           []byte                              `json:"-"`
+	XXX_sizecache              int32                               `json:"-"`
+}
+
+func (m *PublishedFileDetails) Reset()         { *m = PublishedFileDetails{} }
+func (m *PublishedFileDetails) String() string { return proto.CompactTextString(m) }
+func (*PublishedFileDetails) ProtoMessage()    {}
+func (*PublishedFileDetails) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{15}
+}
+
+func (m *PublishedFileDetails) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileDetails.Unmarshal(m, b)
+}
+func (m *PublishedFileDetails) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileDetails.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileDetails) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileDetails.Merge(m, src)
+}
+func (m *PublishedFileDetails) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileDetails.Size(m)
+}
+func (m *PublishedFileDetails) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileDetails.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileDetails proto.InternalMessageInfo
 
 const Default_PublishedFileDetails_Language int32 = 0
+const Default_PublishedFileDetails_Revision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
+const Default_PublishedFileDetails_BanTextCheckResult protobuf.EBanContentCheckResult = protobuf.EBanContentCheckResult_k_EBanContentCheckResult_NotScanned
 
 func (m *PublishedFileDetails) GetResult() uint32 {
 	if m != nil && m.Result != nil {
@@ -977,20 +1721,6 @@ func (m *PublishedFileDetails) GetMetadata() string {
 	return ""
 }
 
-func (m *PublishedFileDetails) GetIncompatibleActor() uint64 {
-	if m != nil && m.IncompatibleActor != nil {
-		return *m.IncompatibleActor
-	}
-	return 0
-}
-
-func (m *PublishedFileDetails) GetIncompatibleTimestamp() uint32 {
-	if m != nil && m.IncompatibleTimestamp != nil {
-		return *m.IncompatibleTimestamp
-	}
-	return 0
-}
-
 func (m *PublishedFileDetails) GetLanguage() int32 {
 	if m != nil && m.Language != nil {
 		return *m.Language
@@ -998,16 +1728,116 @@ func (m *PublishedFileDetails) GetLanguage() int32 {
 	return Default_PublishedFileDetails_Language
 }
 
-type PublishedFileDetails_Tag struct {
-	Tag              *string `protobuf:"bytes,1,opt,name=tag" json:"tag,omitempty"`
-	Adminonly        *bool   `protobuf:"varint,2,opt,name=adminonly" json:"adminonly,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+func (m *PublishedFileDetails) GetMaybeInappropriateSex() bool {
+	if m != nil && m.MaybeInappropriateSex != nil {
+		return *m.MaybeInappropriateSex
+	}
+	return false
 }
 
-func (m *PublishedFileDetails_Tag) Reset()                    { *m = PublishedFileDetails_Tag{} }
-func (m *PublishedFileDetails_Tag) String() string            { return proto.CompactTextString(m) }
-func (*PublishedFileDetails_Tag) ProtoMessage()               {}
-func (*PublishedFileDetails_Tag) Descriptor() ([]byte, []int) { return publishedfile_fileDescriptor0, []int{9, 0} }
+func (m *PublishedFileDetails) GetMaybeInappropriateViolence() bool {
+	if m != nil && m.MaybeInappropriateViolence != nil {
+		return *m.MaybeInappropriateViolence
+	}
+	return false
+}
+
+func (m *PublishedFileDetails) GetContentDescriptorids() []EContentDescriptorID {
+	if m != nil {
+		return m.ContentDescriptorids
+	}
+	return nil
+}
+
+func (m *PublishedFileDetails) GetRevisionChangeNumber() uint64 {
+	if m != nil && m.RevisionChangeNumber != nil {
+		return *m.RevisionChangeNumber
+	}
+	return 0
+}
+
+func (m *PublishedFileDetails) GetRevision() EPublishedFileRevision {
+	if m != nil && m.Revision != nil {
+		return *m.Revision
+	}
+	return Default_PublishedFileDetails_Revision
+}
+
+func (m *PublishedFileDetails) GetAvailableRevisions() []EPublishedFileRevision {
+	if m != nil {
+		return m.AvailableRevisions
+	}
+	return nil
+}
+
+func (m *PublishedFileDetails) GetReactions() []*PublishedFileDetails_Reaction {
+	if m != nil {
+		return m.Reactions
+	}
+	return nil
+}
+
+func (m *PublishedFileDetails) GetBanTextCheckResult() protobuf.EBanContentCheckResult {
+	if m != nil && m.BanTextCheckResult != nil {
+		return *m.BanTextCheckResult
+	}
+	return Default_PublishedFileDetails_BanTextCheckResult
+}
+
+func (m *PublishedFileDetails) GetSearchScore() float32 {
+	if m != nil && m.SearchScore != nil {
+		return *m.SearchScore
+	}
+	return 0
+}
+
+func (m *PublishedFileDetails) GetExternalAssetId() uint64 {
+	if m != nil && m.ExternalAssetId != nil {
+		return *m.ExternalAssetId
+	}
+	return 0
+}
+
+func (m *PublishedFileDetails) GetAuthorSnapshots() []*PublishedFileAuthorSnapshot {
+	if m != nil {
+		return m.AuthorSnapshots
+	}
+	return nil
+}
+
+type PublishedFileDetails_Tag struct {
+	Tag                  *string  `protobuf:"bytes,1,opt,name=tag" json:"tag,omitempty"`
+	Adminonly            *bool    `protobuf:"varint,2,opt,name=adminonly" json:"adminonly,omitempty"`
+	DisplayName          *string  `protobuf:"bytes,3,opt,name=display_name,json=displayName" json:"display_name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PublishedFileDetails_Tag) Reset()         { *m = PublishedFileDetails_Tag{} }
+func (m *PublishedFileDetails_Tag) String() string { return proto.CompactTextString(m) }
+func (*PublishedFileDetails_Tag) ProtoMessage()    {}
+func (*PublishedFileDetails_Tag) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{15, 0}
+}
+
+func (m *PublishedFileDetails_Tag) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileDetails_Tag.Unmarshal(m, b)
+}
+func (m *PublishedFileDetails_Tag) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileDetails_Tag.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileDetails_Tag) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileDetails_Tag.Merge(m, src)
+}
+func (m *PublishedFileDetails_Tag) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileDetails_Tag.Size(m)
+}
+func (m *PublishedFileDetails_Tag) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileDetails_Tag.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileDetails_Tag proto.InternalMessageInfo
 
 func (m *PublishedFileDetails_Tag) GetTag() string {
 	if m != nil && m.Tag != nil {
@@ -1023,22 +1853,51 @@ func (m *PublishedFileDetails_Tag) GetAdminonly() bool {
 	return false
 }
 
-type PublishedFileDetails_Preview struct {
-	Previewid         *uint64 `protobuf:"varint,1,opt,name=previewid" json:"previewid,omitempty"`
-	Sortorder         *uint32 `protobuf:"varint,2,opt,name=sortorder" json:"sortorder,omitempty"`
-	Url               *string `protobuf:"bytes,3,opt,name=url" json:"url,omitempty"`
-	Size              *uint32 `protobuf:"varint,4,opt,name=size" json:"size,omitempty"`
-	Filename          *string `protobuf:"bytes,5,opt,name=filename" json:"filename,omitempty"`
-	Youtubevideoid    *string `protobuf:"bytes,6,opt,name=youtubevideoid" json:"youtubevideoid,omitempty"`
-	PreviewType       *uint32 `protobuf:"varint,7,opt,name=preview_type,json=previewType" json:"preview_type,omitempty"`
-	ExternalReference *string `protobuf:"bytes,8,opt,name=external_reference,json=externalReference" json:"external_reference,omitempty"`
-	XXX_unrecognized  []byte  `json:"-"`
+func (m *PublishedFileDetails_Tag) GetDisplayName() string {
+	if m != nil && m.DisplayName != nil {
+		return *m.DisplayName
+	}
+	return ""
 }
 
-func (m *PublishedFileDetails_Preview) Reset()                    { *m = PublishedFileDetails_Preview{} }
-func (m *PublishedFileDetails_Preview) String() string            { return proto.CompactTextString(m) }
-func (*PublishedFileDetails_Preview) ProtoMessage()               {}
-func (*PublishedFileDetails_Preview) Descriptor() ([]byte, []int) { return publishedfile_fileDescriptor0, []int{9, 1} }
+type PublishedFileDetails_Preview struct {
+	Previewid            *uint64  `protobuf:"varint,1,opt,name=previewid" json:"previewid,omitempty"`
+	Sortorder            *uint32  `protobuf:"varint,2,opt,name=sortorder" json:"sortorder,omitempty"`
+	Url                  *string  `protobuf:"bytes,3,opt,name=url" json:"url,omitempty"`
+	Size                 *uint32  `protobuf:"varint,4,opt,name=size" json:"size,omitempty"`
+	Filename             *string  `protobuf:"bytes,5,opt,name=filename" json:"filename,omitempty"`
+	Youtubevideoid       *string  `protobuf:"bytes,6,opt,name=youtubevideoid" json:"youtubevideoid,omitempty"`
+	PreviewType          *uint32  `protobuf:"varint,7,opt,name=preview_type,json=previewType" json:"preview_type,omitempty"`
+	ExternalReference    *string  `protobuf:"bytes,8,opt,name=external_reference,json=externalReference" json:"external_reference,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PublishedFileDetails_Preview) Reset()         { *m = PublishedFileDetails_Preview{} }
+func (m *PublishedFileDetails_Preview) String() string { return proto.CompactTextString(m) }
+func (*PublishedFileDetails_Preview) ProtoMessage()    {}
+func (*PublishedFileDetails_Preview) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{15, 1}
+}
+
+func (m *PublishedFileDetails_Preview) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileDetails_Preview.Unmarshal(m, b)
+}
+func (m *PublishedFileDetails_Preview) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileDetails_Preview.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileDetails_Preview) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileDetails_Preview.Merge(m, src)
+}
+func (m *PublishedFileDetails_Preview) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileDetails_Preview.Size(m)
+}
+func (m *PublishedFileDetails_Preview) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileDetails_Preview.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileDetails_Preview proto.InternalMessageInfo
 
 func (m *PublishedFileDetails_Preview) GetPreviewid() uint64 {
 	if m != nil && m.Previewid != nil {
@@ -1097,16 +1956,38 @@ func (m *PublishedFileDetails_Preview) GetExternalReference() string {
 }
 
 type PublishedFileDetails_Child struct {
-	Publishedfileid  *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	Sortorder        *uint32 `protobuf:"varint,2,opt,name=sortorder" json:"sortorder,omitempty"`
-	FileType         *uint32 `protobuf:"varint,3,opt,name=file_type,json=fileType" json:"file_type,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Sortorder            *uint32  `protobuf:"varint,2,opt,name=sortorder" json:"sortorder,omitempty"`
+	FileType             *uint32  `protobuf:"varint,3,opt,name=file_type,json=fileType" json:"file_type,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *PublishedFileDetails_Child) Reset()                    { *m = PublishedFileDetails_Child{} }
-func (m *PublishedFileDetails_Child) String() string            { return proto.CompactTextString(m) }
-func (*PublishedFileDetails_Child) ProtoMessage()               {}
-func (*PublishedFileDetails_Child) Descriptor() ([]byte, []int) { return publishedfile_fileDescriptor0, []int{9, 2} }
+func (m *PublishedFileDetails_Child) Reset()         { *m = PublishedFileDetails_Child{} }
+func (m *PublishedFileDetails_Child) String() string { return proto.CompactTextString(m) }
+func (*PublishedFileDetails_Child) ProtoMessage()    {}
+func (*PublishedFileDetails_Child) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{15, 2}
+}
+
+func (m *PublishedFileDetails_Child) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileDetails_Child.Unmarshal(m, b)
+}
+func (m *PublishedFileDetails_Child) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileDetails_Child.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileDetails_Child) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileDetails_Child.Merge(m, src)
+}
+func (m *PublishedFileDetails_Child) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileDetails_Child.Size(m)
+}
+func (m *PublishedFileDetails_Child) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileDetails_Child.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileDetails_Child proto.InternalMessageInfo
 
 func (m *PublishedFileDetails_Child) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -1130,15 +2011,37 @@ func (m *PublishedFileDetails_Child) GetFileType() uint32 {
 }
 
 type PublishedFileDetails_KVTag struct {
-	Key              *string `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
-	Value            *string `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Key                  *string  `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
+	Value                *string  `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *PublishedFileDetails_KVTag) Reset()                    { *m = PublishedFileDetails_KVTag{} }
-func (m *PublishedFileDetails_KVTag) String() string            { return proto.CompactTextString(m) }
-func (*PublishedFileDetails_KVTag) ProtoMessage()               {}
-func (*PublishedFileDetails_KVTag) Descriptor() ([]byte, []int) { return publishedfile_fileDescriptor0, []int{9, 3} }
+func (m *PublishedFileDetails_KVTag) Reset()         { *m = PublishedFileDetails_KVTag{} }
+func (m *PublishedFileDetails_KVTag) String() string { return proto.CompactTextString(m) }
+func (*PublishedFileDetails_KVTag) ProtoMessage()    {}
+func (*PublishedFileDetails_KVTag) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{15, 3}
+}
+
+func (m *PublishedFileDetails_KVTag) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileDetails_KVTag.Unmarshal(m, b)
+}
+func (m *PublishedFileDetails_KVTag) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileDetails_KVTag.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileDetails_KVTag) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileDetails_KVTag.Merge(m, src)
+}
+func (m *PublishedFileDetails_KVTag) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileDetails_KVTag.Size(m)
+}
+func (m *PublishedFileDetails_KVTag) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileDetails_KVTag.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileDetails_KVTag proto.InternalMessageInfo
 
 func (m *PublishedFileDetails_KVTag) GetKey() string {
 	if m != nil && m.Key != nil {
@@ -1155,18 +2058,41 @@ func (m *PublishedFileDetails_KVTag) GetValue() string {
 }
 
 type PublishedFileDetails_VoteData struct {
-	Score            *float32 `protobuf:"fixed32,1,opt,name=score" json:"score,omitempty"`
-	VotesUp          *uint32  `protobuf:"varint,2,opt,name=votes_up,json=votesUp" json:"votes_up,omitempty"`
-	VotesDown        *uint32  `protobuf:"varint,3,opt,name=votes_down,json=votesDown" json:"votes_down,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	Score                *float32 `protobuf:"fixed32,1,opt,name=score" json:"score,omitempty"`
+	VotesUp              *uint32  `protobuf:"varint,2,opt,name=votes_up,json=votesUp" json:"votes_up,omitempty"`
+	VotesDown            *uint32  `protobuf:"varint,3,opt,name=votes_down,json=votesDown" json:"votes_down,omitempty"`
+	TrustedScore         *float32 `protobuf:"fixed32,4,opt,name=trusted_score,json=trustedScore" json:"trusted_score,omitempty"`
+	TrustedVotesUp       *uint32  `protobuf:"varint,5,opt,name=trusted_votes_up,json=trustedVotesUp" json:"trusted_votes_up,omitempty"`
+	TrustedVotesDown     *uint32  `protobuf:"varint,6,opt,name=trusted_votes_down,json=trustedVotesDown" json:"trusted_votes_down,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *PublishedFileDetails_VoteData) Reset()         { *m = PublishedFileDetails_VoteData{} }
 func (m *PublishedFileDetails_VoteData) String() string { return proto.CompactTextString(m) }
 func (*PublishedFileDetails_VoteData) ProtoMessage()    {}
 func (*PublishedFileDetails_VoteData) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{9, 4}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{15, 4}
 }
+
+func (m *PublishedFileDetails_VoteData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileDetails_VoteData.Unmarshal(m, b)
+}
+func (m *PublishedFileDetails_VoteData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileDetails_VoteData.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileDetails_VoteData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileDetails_VoteData.Merge(m, src)
+}
+func (m *PublishedFileDetails_VoteData) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileDetails_VoteData.Size(m)
+}
+func (m *PublishedFileDetails_VoteData) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileDetails_VoteData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileDetails_VoteData proto.InternalMessageInfo
 
 func (m *PublishedFileDetails_VoteData) GetScore() float32 {
 	if m != nil && m.Score != nil {
@@ -1189,24 +2115,65 @@ func (m *PublishedFileDetails_VoteData) GetVotesDown() uint32 {
 	return 0
 }
 
+func (m *PublishedFileDetails_VoteData) GetTrustedScore() float32 {
+	if m != nil && m.TrustedScore != nil {
+		return *m.TrustedScore
+	}
+	return 0
+}
+
+func (m *PublishedFileDetails_VoteData) GetTrustedVotesUp() uint32 {
+	if m != nil && m.TrustedVotesUp != nil {
+		return *m.TrustedVotesUp
+	}
+	return 0
+}
+
+func (m *PublishedFileDetails_VoteData) GetTrustedVotesDown() uint32 {
+	if m != nil && m.TrustedVotesDown != nil {
+		return *m.TrustedVotesDown
+	}
+	return 0
+}
+
 type PublishedFileDetails_ForSaleData struct {
-	IsForSale             *bool                                             `protobuf:"varint,1,opt,name=is_for_sale,json=isForSale" json:"is_for_sale,omitempty"`
-	PriceCategory         *uint32                                           `protobuf:"varint,2,opt,name=price_category,json=priceCategory" json:"price_category,omitempty"`
-	Estatus               *PublishedFileDetails_EPublishedFileForSaleStatus `protobuf:"varint,3,opt,name=estatus,enum=PublishedFileDetails_EPublishedFileForSaleStatus,def=0" json:"estatus,omitempty"`
-	PriceCategoryFloor    *uint32                                           `protobuf:"varint,4,opt,name=price_category_floor,json=priceCategoryFloor" json:"price_category_floor,omitempty"`
-	PriceIsPayWhatYouWant *bool                                             `protobuf:"varint,5,opt,name=price_is_pay_what_you_want,json=priceIsPayWhatYouWant" json:"price_is_pay_what_you_want,omitempty"`
-	DiscountPercentage    *uint32                                           `protobuf:"varint,6,opt,name=discount_percentage,json=discountPercentage" json:"discount_percentage,omitempty"`
-	XXX_unrecognized      []byte                                            `json:"-"`
+	IsForSale             *bool                        `protobuf:"varint,1,opt,name=is_for_sale,json=isForSale" json:"is_for_sale,omitempty"`
+	PriceCategory         *uint32                      `protobuf:"varint,2,opt,name=price_category,json=priceCategory" json:"price_category,omitempty"`
+	Estatus               *EPublishedFileForSaleStatus `protobuf:"varint,3,opt,name=estatus,enum=EPublishedFileForSaleStatus,def=0" json:"estatus,omitempty"`
+	PriceCategoryFloor    *uint32                      `protobuf:"varint,4,opt,name=price_category_floor,json=priceCategoryFloor" json:"price_category_floor,omitempty"`
+	PriceIsPayWhatYouWant *bool                        `protobuf:"varint,5,opt,name=price_is_pay_what_you_want,json=priceIsPayWhatYouWant" json:"price_is_pay_what_you_want,omitempty"`
+	DiscountPercentage    *uint32                      `protobuf:"varint,6,opt,name=discount_percentage,json=discountPercentage" json:"discount_percentage,omitempty"`
+	XXX_NoUnkeyedLiteral  struct{}                     `json:"-"`
+	XXX_unrecognized      []byte                       `json:"-"`
+	XXX_sizecache         int32                        `json:"-"`
 }
 
 func (m *PublishedFileDetails_ForSaleData) Reset()         { *m = PublishedFileDetails_ForSaleData{} }
 func (m *PublishedFileDetails_ForSaleData) String() string { return proto.CompactTextString(m) }
 func (*PublishedFileDetails_ForSaleData) ProtoMessage()    {}
 func (*PublishedFileDetails_ForSaleData) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{9, 5}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{15, 5}
 }
 
-const Default_PublishedFileDetails_ForSaleData_Estatus PublishedFileDetails_EPublishedFileForSaleStatus = PublishedFileDetails_k_PFFSS_NotForSale
+func (m *PublishedFileDetails_ForSaleData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileDetails_ForSaleData.Unmarshal(m, b)
+}
+func (m *PublishedFileDetails_ForSaleData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileDetails_ForSaleData.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileDetails_ForSaleData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileDetails_ForSaleData.Merge(m, src)
+}
+func (m *PublishedFileDetails_ForSaleData) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileDetails_ForSaleData.Size(m)
+}
+func (m *PublishedFileDetails_ForSaleData) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileDetails_ForSaleData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileDetails_ForSaleData proto.InternalMessageInfo
+
+const Default_PublishedFileDetails_ForSaleData_Estatus EPublishedFileForSaleStatus = EPublishedFileForSaleStatus_k_PFFSS_NotForSale
 
 func (m *PublishedFileDetails_ForSaleData) GetIsForSale() bool {
 	if m != nil && m.IsForSale != nil {
@@ -1222,7 +2189,7 @@ func (m *PublishedFileDetails_ForSaleData) GetPriceCategory() uint32 {
 	return 0
 }
 
-func (m *PublishedFileDetails_ForSaleData) GetEstatus() PublishedFileDetails_EPublishedFileForSaleStatus {
+func (m *PublishedFileDetails_ForSaleData) GetEstatus() EPublishedFileForSaleStatus {
 	if m != nil && m.Estatus != nil {
 		return *m.Estatus
 	}
@@ -1251,17 +2218,37 @@ func (m *PublishedFileDetails_ForSaleData) GetDiscountPercentage() uint32 {
 }
 
 type PublishedFileDetails_PlaytimeStats struct {
-	PlaytimeSeconds  *uint64 `protobuf:"varint,1,opt,name=playtime_seconds,json=playtimeSeconds" json:"playtime_seconds,omitempty"`
-	NumSessions      *uint64 `protobuf:"varint,2,opt,name=num_sessions,json=numSessions" json:"num_sessions,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	PlaytimeSeconds      *uint64  `protobuf:"varint,1,opt,name=playtime_seconds,json=playtimeSeconds" json:"playtime_seconds,omitempty"`
+	NumSessions          *uint64  `protobuf:"varint,2,opt,name=num_sessions,json=numSessions" json:"num_sessions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *PublishedFileDetails_PlaytimeStats) Reset()         { *m = PublishedFileDetails_PlaytimeStats{} }
 func (m *PublishedFileDetails_PlaytimeStats) String() string { return proto.CompactTextString(m) }
 func (*PublishedFileDetails_PlaytimeStats) ProtoMessage()    {}
 func (*PublishedFileDetails_PlaytimeStats) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{9, 6}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{15, 6}
 }
+
+func (m *PublishedFileDetails_PlaytimeStats) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileDetails_PlaytimeStats.Unmarshal(m, b)
+}
+func (m *PublishedFileDetails_PlaytimeStats) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileDetails_PlaytimeStats.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileDetails_PlaytimeStats) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileDetails_PlaytimeStats.Merge(m, src)
+}
+func (m *PublishedFileDetails_PlaytimeStats) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileDetails_PlaytimeStats.Size(m)
+}
+func (m *PublishedFileDetails_PlaytimeStats) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileDetails_PlaytimeStats.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileDetails_PlaytimeStats proto.InternalMessageInfo
 
 func (m *PublishedFileDetails_PlaytimeStats) GetPlaytimeSeconds() uint64 {
 	if m != nil && m.PlaytimeSeconds != nil {
@@ -1277,17 +2264,84 @@ func (m *PublishedFileDetails_PlaytimeStats) GetNumSessions() uint64 {
 	return 0
 }
 
+type PublishedFileDetails_Reaction struct {
+	Reactionid           *uint32  `protobuf:"varint,1,opt,name=reactionid" json:"reactionid,omitempty"`
+	Count                *uint32  `protobuf:"varint,2,opt,name=count" json:"count,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PublishedFileDetails_Reaction) Reset()         { *m = PublishedFileDetails_Reaction{} }
+func (m *PublishedFileDetails_Reaction) String() string { return proto.CompactTextString(m) }
+func (*PublishedFileDetails_Reaction) ProtoMessage()    {}
+func (*PublishedFileDetails_Reaction) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{15, 7}
+}
+
+func (m *PublishedFileDetails_Reaction) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PublishedFileDetails_Reaction.Unmarshal(m, b)
+}
+func (m *PublishedFileDetails_Reaction) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PublishedFileDetails_Reaction.Marshal(b, m, deterministic)
+}
+func (m *PublishedFileDetails_Reaction) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PublishedFileDetails_Reaction.Merge(m, src)
+}
+func (m *PublishedFileDetails_Reaction) XXX_Size() int {
+	return xxx_messageInfo_PublishedFileDetails_Reaction.Size(m)
+}
+func (m *PublishedFileDetails_Reaction) XXX_DiscardUnknown() {
+	xxx_messageInfo_PublishedFileDetails_Reaction.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PublishedFileDetails_Reaction proto.InternalMessageInfo
+
+func (m *PublishedFileDetails_Reaction) GetReactionid() uint32 {
+	if m != nil && m.Reactionid != nil {
+		return *m.Reactionid
+	}
+	return 0
+}
+
+func (m *PublishedFileDetails_Reaction) GetCount() uint32 {
+	if m != nil && m.Count != nil {
+		return *m.Count
+	}
+	return 0
+}
+
 type CPublishedFile_GetDetails_Response struct {
 	Publishedfiledetails []*PublishedFileDetails `protobuf:"bytes,1,rep,name=publishedfiledetails" json:"publishedfiledetails,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
 	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
 func (m *CPublishedFile_GetDetails_Response) Reset()         { *m = CPublishedFile_GetDetails_Response{} }
 func (m *CPublishedFile_GetDetails_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_GetDetails_Response) ProtoMessage()    {}
 func (*CPublishedFile_GetDetails_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{10}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{16}
 }
+
+func (m *CPublishedFile_GetDetails_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetDetails_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetDetails_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetDetails_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetDetails_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetDetails_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetDetails_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetDetails_Response.Size(m)
+}
+func (m *CPublishedFile_GetDetails_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetDetails_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetDetails_Response proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetDetails_Response) GetPublishedfiledetails() []*PublishedFileDetails {
 	if m != nil {
@@ -1297,22 +2351,45 @@ func (m *CPublishedFile_GetDetails_Response) GetPublishedfiledetails() []*Publis
 }
 
 type CPublishedFile_GetItemInfo_Request struct {
-	AppId            *uint32                                            `protobuf:"varint,1,opt,name=app_id,json=appId" json:"app_id,omitempty"`
-	LastTimeUpdated  *uint32                                            `protobuf:"varint,2,opt,name=last_time_updated,json=lastTimeUpdated" json:"last_time_updated,omitempty"`
-	WorkshopItems    []*CPublishedFile_GetItemInfo_Request_WorkshopItem `protobuf:"bytes,3,rep,name=workshop_items,json=workshopItems" json:"workshop_items,omitempty"`
-	XXX_unrecognized []byte                                             `json:"-"`
+	Appid                *uint32                                            `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	LastTimeUpdated      *uint32                                            `protobuf:"varint,2,opt,name=last_time_updated,json=lastTimeUpdated" json:"last_time_updated,omitempty"`
+	WorkshopItems        []*CPublishedFile_GetItemInfo_Request_WorkshopItem `protobuf:"bytes,3,rep,name=workshop_items,json=workshopItems" json:"workshop_items,omitempty"`
+	DesiredRevision      *EPublishedFileRevision                            `protobuf:"varint,4,opt,name=desired_revision,json=desiredRevision,enum=EPublishedFileRevision,def=0" json:"desired_revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                           `json:"-"`
+	XXX_unrecognized     []byte                                             `json:"-"`
+	XXX_sizecache        int32                                              `json:"-"`
 }
 
 func (m *CPublishedFile_GetItemInfo_Request) Reset()         { *m = CPublishedFile_GetItemInfo_Request{} }
 func (m *CPublishedFile_GetItemInfo_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_GetItemInfo_Request) ProtoMessage()    {}
 func (*CPublishedFile_GetItemInfo_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{11}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{17}
 }
 
-func (m *CPublishedFile_GetItemInfo_Request) GetAppId() uint32 {
-	if m != nil && m.AppId != nil {
-		return *m.AppId
+func (m *CPublishedFile_GetItemInfo_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetItemInfo_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetItemInfo_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetItemInfo_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetItemInfo_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Request.Size(m)
+}
+func (m *CPublishedFile_GetItemInfo_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetItemInfo_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetItemInfo_Request proto.InternalMessageInfo
+
+const Default_CPublishedFile_GetItemInfo_Request_DesiredRevision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
+
+func (m *CPublishedFile_GetItemInfo_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
 	}
 	return 0
 }
@@ -1331,10 +2408,20 @@ func (m *CPublishedFile_GetItemInfo_Request) GetWorkshopItems() []*CPublishedFil
 	return nil
 }
 
+func (m *CPublishedFile_GetItemInfo_Request) GetDesiredRevision() EPublishedFileRevision {
+	if m != nil && m.DesiredRevision != nil {
+		return *m.DesiredRevision
+	}
+	return Default_CPublishedFile_GetItemInfo_Request_DesiredRevision
+}
+
 type CPublishedFile_GetItemInfo_Request_WorkshopItem struct {
-	PublishedFileId  *uint64 `protobuf:"fixed64,1,opt,name=published_file_id,json=publishedFileId" json:"published_file_id,omitempty"`
-	TimeUpdated      *uint32 `protobuf:"varint,2,opt,name=time_updated,json=timeUpdated" json:"time_updated,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	PublishedFileId      *uint64                 `protobuf:"fixed64,1,opt,name=published_file_id,json=publishedFileId" json:"published_file_id,omitempty"`
+	TimeUpdated          *uint32                 `protobuf:"varint,2,opt,name=time_updated,json=timeUpdated" json:"time_updated,omitempty"`
+	DesiredRevision      *EPublishedFileRevision `protobuf:"varint,3,opt,name=desired_revision,json=desiredRevision,enum=EPublishedFileRevision,def=0" json:"desired_revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
 func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) Reset() {
@@ -1345,8 +2432,28 @@ func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) String() string {
 }
 func (*CPublishedFile_GetItemInfo_Request_WorkshopItem) ProtoMessage() {}
 func (*CPublishedFile_GetItemInfo_Request_WorkshopItem) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{11, 0}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{17, 0}
 }
+
+func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Request_WorkshopItem.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Request_WorkshopItem.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetItemInfo_Request_WorkshopItem.Merge(m, src)
+}
+func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Request_WorkshopItem.Size(m)
+}
+func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetItemInfo_Request_WorkshopItem.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetItemInfo_Request_WorkshopItem proto.InternalMessageInfo
+
+const Default_CPublishedFile_GetItemInfo_Request_WorkshopItem_DesiredRevision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
 
 func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) GetPublishedFileId() uint64 {
 	if m != nil && m.PublishedFileId != nil {
@@ -1362,18 +2469,46 @@ func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) GetTimeUpdated() uint3
 	return 0
 }
 
+func (m *CPublishedFile_GetItemInfo_Request_WorkshopItem) GetDesiredRevision() EPublishedFileRevision {
+	if m != nil && m.DesiredRevision != nil {
+		return *m.DesiredRevision
+	}
+	return Default_CPublishedFile_GetItemInfo_Request_WorkshopItem_DesiredRevision
+}
+
 type CPublishedFile_GetItemInfo_Response struct {
-	UpdateTime       *uint32                                                 `protobuf:"varint,1,opt,name=update_time,json=updateTime" json:"update_time,omitempty"`
-	WorkshopItems    []*CPublishedFile_GetItemInfo_Response_WorkshopItemInfo `protobuf:"bytes,2,rep,name=workshop_items,json=workshopItems" json:"workshop_items,omitempty"`
-	XXX_unrecognized []byte                                                  `json:"-"`
+	UpdateTime           *uint32                                                 `protobuf:"varint,1,opt,name=update_time,json=updateTime" json:"update_time,omitempty"`
+	WorkshopItems        []*CPublishedFile_GetItemInfo_Response_WorkshopItemInfo `protobuf:"bytes,2,rep,name=workshop_items,json=workshopItems" json:"workshop_items,omitempty"`
+	PrivateItems         []uint64                                                `protobuf:"fixed64,3,rep,name=private_items,json=privateItems" json:"private_items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                `json:"-"`
+	XXX_unrecognized     []byte                                                  `json:"-"`
+	XXX_sizecache        int32                                                   `json:"-"`
 }
 
 func (m *CPublishedFile_GetItemInfo_Response) Reset()         { *m = CPublishedFile_GetItemInfo_Response{} }
 func (m *CPublishedFile_GetItemInfo_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_GetItemInfo_Response) ProtoMessage()    {}
 func (*CPublishedFile_GetItemInfo_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{12}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{18}
 }
+
+func (m *CPublishedFile_GetItemInfo_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetItemInfo_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetItemInfo_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetItemInfo_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetItemInfo_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Response.Size(m)
+}
+func (m *CPublishedFile_GetItemInfo_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetItemInfo_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetItemInfo_Response proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetItemInfo_Response) GetUpdateTime() uint32 {
 	if m != nil && m.UpdateTime != nil {
@@ -1389,12 +2524,23 @@ func (m *CPublishedFile_GetItemInfo_Response) GetWorkshopItems() []*CPublishedFi
 	return nil
 }
 
+func (m *CPublishedFile_GetItemInfo_Response) GetPrivateItems() []uint64 {
+	if m != nil {
+		return m.PrivateItems
+	}
+	return nil
+}
+
 type CPublishedFile_GetItemInfo_Response_WorkshopItemInfo struct {
-	PublishedFileId  *uint64 `protobuf:"fixed64,1,opt,name=published_file_id,json=publishedFileId" json:"published_file_id,omitempty"`
-	TimeUpdated      *uint32 `protobuf:"varint,2,opt,name=time_updated,json=timeUpdated" json:"time_updated,omitempty"`
-	ManifestId       *uint64 `protobuf:"fixed64,3,opt,name=manifest_id,json=manifestId" json:"manifest_id,omitempty"`
-	Flags            *uint32 `protobuf:"varint,4,opt,name=flags" json:"flags,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	PublishedFileId      *uint64                        `protobuf:"fixed64,1,opt,name=published_file_id,json=publishedFileId" json:"published_file_id,omitempty"`
+	TimeUpdated          *uint32                        `protobuf:"varint,2,opt,name=time_updated,json=timeUpdated" json:"time_updated,omitempty"`
+	ManifestId           *uint64                        `protobuf:"fixed64,3,opt,name=manifest_id,json=manifestId" json:"manifest_id,omitempty"`
+	Flags                *uint32                        `protobuf:"varint,4,opt,name=flags" json:"flags,omitempty"`
+	Revision             *EPublishedFileRevision        `protobuf:"varint,5,opt,name=revision,enum=EPublishedFileRevision,def=0" json:"revision,omitempty"`
+	AuthorSnapshots      []*PublishedFileAuthorSnapshot `protobuf:"bytes,6,rep,name=author_snapshots,json=authorSnapshots" json:"author_snapshots,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
+	XXX_unrecognized     []byte                         `json:"-"`
+	XXX_sizecache        int32                          `json:"-"`
 }
 
 func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) Reset() {
@@ -1405,8 +2551,28 @@ func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) String() string {
 }
 func (*CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) ProtoMessage() {}
 func (*CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{12, 0}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{18, 0}
 }
+
+func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Response_WorkshopItemInfo.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Response_WorkshopItemInfo.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetItemInfo_Response_WorkshopItemInfo.Merge(m, src)
+}
+func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetItemInfo_Response_WorkshopItemInfo.Size(m)
+}
+func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetItemInfo_Response_WorkshopItemInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetItemInfo_Response_WorkshopItemInfo proto.InternalMessageInfo
+
+const Default_CPublishedFile_GetItemInfo_Response_WorkshopItemInfo_Revision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
 
 func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) GetPublishedFileId() uint64 {
 	if m != nil && m.PublishedFileId != nil {
@@ -1436,42 +2602,87 @@ func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) GetFlags() uint32
 	return 0
 }
 
+func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) GetRevision() EPublishedFileRevision {
+	if m != nil && m.Revision != nil {
+		return *m.Revision
+	}
+	return Default_CPublishedFile_GetItemInfo_Response_WorkshopItemInfo_Revision
+}
+
+func (m *CPublishedFile_GetItemInfo_Response_WorkshopItemInfo) GetAuthorSnapshots() []*PublishedFileAuthorSnapshot {
+	if m != nil {
+		return m.AuthorSnapshots
+	}
+	return nil
+}
+
 type CPublishedFile_GetUserFiles_Request struct {
-	Steamid                *uint64                                      `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
-	Appid                  *uint32                                      `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	Page                   *uint32                                      `protobuf:"varint,4,opt,name=page,def=1" json:"page,omitempty"`
-	Numperpage             *uint32                                      `protobuf:"varint,5,opt,name=numperpage,def=1" json:"numperpage,omitempty"`
-	Type                   *string                                      `protobuf:"bytes,6,opt,name=type,def=myfiles" json:"type,omitempty"`
-	Sortmethod             *string                                      `protobuf:"bytes,7,opt,name=sortmethod,def=lastupdated" json:"sortmethod,omitempty"`
-	Privacy                *uint32                                      `protobuf:"varint,9,opt,name=privacy" json:"privacy,omitempty"`
-	Requiredtags           []string                                     `protobuf:"bytes,10,rep,name=requiredtags" json:"requiredtags,omitempty"`
-	Excludedtags           []string                                     `protobuf:"bytes,11,rep,name=excludedtags" json:"excludedtags,omitempty"`
-	RequiredKvTags         []*CPublishedFile_GetUserFiles_Request_KVTag `protobuf:"bytes,30,rep,name=required_kv_tags,json=requiredKvTags" json:"required_kv_tags,omitempty"`
-	Filetype               *uint32                                      `protobuf:"varint,14,opt,name=filetype" json:"filetype,omitempty"`
-	CreatorAppid           *uint32                                      `protobuf:"varint,15,opt,name=creator_appid,json=creatorAppid" json:"creator_appid,omitempty"`
-	MatchCloudFilename     *string                                      `protobuf:"bytes,16,opt,name=match_cloud_filename,json=matchCloudFilename" json:"match_cloud_filename,omitempty"`
-	CacheMaxAgeSeconds     *uint32                                      `protobuf:"varint,27,opt,name=cache_max_age_seconds,json=cacheMaxAgeSeconds,def=0" json:"cache_max_age_seconds,omitempty"`
-	Language               *int32                                       `protobuf:"varint,29,opt,name=language,def=0" json:"language,omitempty"`
-	Totalonly              *bool                                        `protobuf:"varint,17,opt,name=totalonly" json:"totalonly,omitempty"`
-	IdsOnly                *bool                                        `protobuf:"varint,18,opt,name=ids_only,json=idsOnly" json:"ids_only,omitempty"`
-	ReturnVoteData         *bool                                        `protobuf:"varint,19,opt,name=return_vote_data,json=returnVoteData,def=1" json:"return_vote_data,omitempty"`
-	ReturnTags             *bool                                        `protobuf:"varint,20,opt,name=return_tags,json=returnTags" json:"return_tags,omitempty"`
-	ReturnKvTags           *bool                                        `protobuf:"varint,21,opt,name=return_kv_tags,json=returnKvTags,def=1" json:"return_kv_tags,omitempty"`
-	ReturnPreviews         *bool                                        `protobuf:"varint,22,opt,name=return_previews,json=returnPreviews" json:"return_previews,omitempty"`
-	ReturnChildren         *bool                                        `protobuf:"varint,23,opt,name=return_children,json=returnChildren" json:"return_children,omitempty"`
-	ReturnShortDescription *bool                                        `protobuf:"varint,24,opt,name=return_short_description,json=returnShortDescription,def=1" json:"return_short_description,omitempty"`
-	ReturnForSaleData      *bool                                        `protobuf:"varint,26,opt,name=return_for_sale_data,json=returnForSaleData" json:"return_for_sale_data,omitempty"`
-	ReturnMetadata         *bool                                        `protobuf:"varint,28,opt,name=return_metadata,json=returnMetadata,def=0" json:"return_metadata,omitempty"`
-	ReturnPlaytimeStats    *uint32                                      `protobuf:"varint,31,opt,name=return_playtime_stats,json=returnPlaytimeStats" json:"return_playtime_stats,omitempty"`
-	XXX_unrecognized       []byte                                       `json:"-"`
+	Steamid                    *uint64                                         `protobuf:"fixed64,1,opt,name=steamid" json:"steamid,omitempty"`
+	Appid                      *uint32                                         `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	Shortcutid                 *uint32                                         `protobuf:"varint,3,opt,name=shortcutid" json:"shortcutid,omitempty"`
+	Page                       *uint32                                         `protobuf:"varint,4,opt,name=page,def=1" json:"page,omitempty"`
+	Numperpage                 *uint32                                         `protobuf:"varint,5,opt,name=numperpage,def=1" json:"numperpage,omitempty"`
+	Type                       *string                                         `protobuf:"bytes,6,opt,name=type,def=myfiles" json:"type,omitempty"`
+	Sortmethod                 *string                                         `protobuf:"bytes,7,opt,name=sortmethod,def=lastupdated" json:"sortmethod,omitempty"`
+	Privacy                    *uint32                                         `protobuf:"varint,9,opt,name=privacy" json:"privacy,omitempty"`
+	Requiredtags               []string                                        `protobuf:"bytes,10,rep,name=requiredtags" json:"requiredtags,omitempty"`
+	Excludedtags               []string                                        `protobuf:"bytes,11,rep,name=excludedtags" json:"excludedtags,omitempty"`
+	RequiredKvTags             []*CPublishedFile_GetUserFiles_Request_KVTag    `protobuf:"bytes,30,rep,name=required_kv_tags,json=requiredKvTags" json:"required_kv_tags,omitempty"`
+	Filetype                   *uint32                                         `protobuf:"varint,14,opt,name=filetype" json:"filetype,omitempty"`
+	CreatorAppid               *uint32                                         `protobuf:"varint,15,opt,name=creator_appid,json=creatorAppid" json:"creator_appid,omitempty"`
+	MatchCloudFilename         *string                                         `protobuf:"bytes,16,opt,name=match_cloud_filename,json=matchCloudFilename" json:"match_cloud_filename,omitempty"`
+	CacheMaxAgeSeconds         *uint32                                         `protobuf:"varint,27,opt,name=cache_max_age_seconds,json=cacheMaxAgeSeconds,def=0" json:"cache_max_age_seconds,omitempty"`
+	Language                   *int32                                          `protobuf:"varint,29,opt,name=language,def=0" json:"language,omitempty"`
+	Taggroups                  []*CPublishedFile_GetUserFiles_Request_TagGroup `protobuf:"bytes,34,rep,name=taggroups" json:"taggroups,omitempty"`
+	DateRangeCreated           *CPublishedFile_GetUserFiles_Request_DateRange  `protobuf:"bytes,39,opt,name=date_range_created,json=dateRangeCreated" json:"date_range_created,omitempty"`
+	DateRangeUpdated           *CPublishedFile_GetUserFiles_Request_DateRange  `protobuf:"bytes,40,opt,name=date_range_updated,json=dateRangeUpdated" json:"date_range_updated,omitempty"`
+	ExcludedContentDescriptors []EContentDescriptorID                          `protobuf:"varint,37,rep,name=excluded_content_descriptors,json=excludedContentDescriptors,enum=EContentDescriptorID" json:"excluded_content_descriptors,omitempty"`
+	AdminQuery                 *bool                                           `protobuf:"varint,38,opt,name=admin_query,json=adminQuery" json:"admin_query,omitempty"`
+	Totalonly                  *bool                                           `protobuf:"varint,17,opt,name=totalonly" json:"totalonly,omitempty"`
+	IdsOnly                    *bool                                           `protobuf:"varint,18,opt,name=ids_only,json=idsOnly" json:"ids_only,omitempty"`
+	ReturnVoteData             *bool                                           `protobuf:"varint,19,opt,name=return_vote_data,json=returnVoteData,def=1" json:"return_vote_data,omitempty"`
+	ReturnTags                 *bool                                           `protobuf:"varint,20,opt,name=return_tags,json=returnTags" json:"return_tags,omitempty"`
+	ReturnKvTags               *bool                                           `protobuf:"varint,21,opt,name=return_kv_tags,json=returnKvTags,def=1" json:"return_kv_tags,omitempty"`
+	ReturnPreviews             *bool                                           `protobuf:"varint,22,opt,name=return_previews,json=returnPreviews" json:"return_previews,omitempty"`
+	ReturnChildren             *bool                                           `protobuf:"varint,23,opt,name=return_children,json=returnChildren" json:"return_children,omitempty"`
+	ReturnShortDescription     *bool                                           `protobuf:"varint,24,opt,name=return_short_description,json=returnShortDescription,def=1" json:"return_short_description,omitempty"`
+	ReturnForSaleData          *bool                                           `protobuf:"varint,26,opt,name=return_for_sale_data,json=returnForSaleData" json:"return_for_sale_data,omitempty"`
+	ReturnMetadata             *bool                                           `protobuf:"varint,28,opt,name=return_metadata,json=returnMetadata,def=0" json:"return_metadata,omitempty"`
+	ReturnPlaytimeStats        *uint32                                         `protobuf:"varint,31,opt,name=return_playtime_stats,json=returnPlaytimeStats" json:"return_playtime_stats,omitempty"`
+	StripDescriptionBbcode     *bool                                           `protobuf:"varint,32,opt,name=strip_description_bbcode,json=stripDescriptionBbcode" json:"strip_description_bbcode,omitempty"`
+	ReturnReactions            *bool                                           `protobuf:"varint,35,opt,name=return_reactions,json=returnReactions,def=0" json:"return_reactions,omitempty"`
+	StartindexOverride         *uint32                                         `protobuf:"varint,25,opt,name=startindex_override,json=startindexOverride" json:"startindex_override,omitempty"`
+	DesiredRevision            *EPublishedFileRevision                         `protobuf:"varint,33,opt,name=desired_revision,json=desiredRevision,enum=EPublishedFileRevision,def=0" json:"desired_revision,omitempty"`
+	ReturnApps                 *bool                                           `protobuf:"varint,36,opt,name=return_apps,json=returnApps" json:"return_apps,omitempty"`
+	XXX_NoUnkeyedLiteral       struct{}                                        `json:"-"`
+	XXX_unrecognized           []byte                                          `json:"-"`
+	XXX_sizecache              int32                                           `json:"-"`
 }
 
 func (m *CPublishedFile_GetUserFiles_Request) Reset()         { *m = CPublishedFile_GetUserFiles_Request{} }
 func (m *CPublishedFile_GetUserFiles_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_GetUserFiles_Request) ProtoMessage()    {}
 func (*CPublishedFile_GetUserFiles_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{13}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{19}
 }
+
+func (m *CPublishedFile_GetUserFiles_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetUserFiles_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetUserFiles_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetUserFiles_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request.Size(m)
+}
+func (m *CPublishedFile_GetUserFiles_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetUserFiles_Request proto.InternalMessageInfo
 
 const Default_CPublishedFile_GetUserFiles_Request_Page uint32 = 1
 const Default_CPublishedFile_GetUserFiles_Request_Numperpage uint32 = 1
@@ -1483,6 +2694,8 @@ const Default_CPublishedFile_GetUserFiles_Request_ReturnVoteData bool = true
 const Default_CPublishedFile_GetUserFiles_Request_ReturnKvTags bool = true
 const Default_CPublishedFile_GetUserFiles_Request_ReturnShortDescription bool = true
 const Default_CPublishedFile_GetUserFiles_Request_ReturnMetadata bool = false
+const Default_CPublishedFile_GetUserFiles_Request_ReturnReactions bool = false
+const Default_CPublishedFile_GetUserFiles_Request_DesiredRevision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
 
 func (m *CPublishedFile_GetUserFiles_Request) GetSteamid() uint64 {
 	if m != nil && m.Steamid != nil {
@@ -1494,6 +2707,13 @@ func (m *CPublishedFile_GetUserFiles_Request) GetSteamid() uint64 {
 func (m *CPublishedFile_GetUserFiles_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
 		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetUserFiles_Request) GetShortcutid() uint32 {
+	if m != nil && m.Shortcutid != nil {
+		return *m.Shortcutid
 	}
 	return 0
 }
@@ -1589,6 +2809,41 @@ func (m *CPublishedFile_GetUserFiles_Request) GetLanguage() int32 {
 	return Default_CPublishedFile_GetUserFiles_Request_Language
 }
 
+func (m *CPublishedFile_GetUserFiles_Request) GetTaggroups() []*CPublishedFile_GetUserFiles_Request_TagGroup {
+	if m != nil {
+		return m.Taggroups
+	}
+	return nil
+}
+
+func (m *CPublishedFile_GetUserFiles_Request) GetDateRangeCreated() *CPublishedFile_GetUserFiles_Request_DateRange {
+	if m != nil {
+		return m.DateRangeCreated
+	}
+	return nil
+}
+
+func (m *CPublishedFile_GetUserFiles_Request) GetDateRangeUpdated() *CPublishedFile_GetUserFiles_Request_DateRange {
+	if m != nil {
+		return m.DateRangeUpdated
+	}
+	return nil
+}
+
+func (m *CPublishedFile_GetUserFiles_Request) GetExcludedContentDescriptors() []EContentDescriptorID {
+	if m != nil {
+		return m.ExcludedContentDescriptors
+	}
+	return nil
+}
+
+func (m *CPublishedFile_GetUserFiles_Request) GetAdminQuery() bool {
+	if m != nil && m.AdminQuery != nil {
+		return *m.AdminQuery
+	}
+	return false
+}
+
 func (m *CPublishedFile_GetUserFiles_Request) GetTotalonly() bool {
 	if m != nil && m.Totalonly != nil {
 		return *m.Totalonly
@@ -1666,20 +2921,77 @@ func (m *CPublishedFile_GetUserFiles_Request) GetReturnPlaytimeStats() uint32 {
 	return 0
 }
 
+func (m *CPublishedFile_GetUserFiles_Request) GetStripDescriptionBbcode() bool {
+	if m != nil && m.StripDescriptionBbcode != nil {
+		return *m.StripDescriptionBbcode
+	}
+	return false
+}
+
+func (m *CPublishedFile_GetUserFiles_Request) GetReturnReactions() bool {
+	if m != nil && m.ReturnReactions != nil {
+		return *m.ReturnReactions
+	}
+	return Default_CPublishedFile_GetUserFiles_Request_ReturnReactions
+}
+
+func (m *CPublishedFile_GetUserFiles_Request) GetStartindexOverride() uint32 {
+	if m != nil && m.StartindexOverride != nil {
+		return *m.StartindexOverride
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetUserFiles_Request) GetDesiredRevision() EPublishedFileRevision {
+	if m != nil && m.DesiredRevision != nil {
+		return *m.DesiredRevision
+	}
+	return Default_CPublishedFile_GetUserFiles_Request_DesiredRevision
+}
+
+func (m *CPublishedFile_GetUserFiles_Request) GetReturnApps() bool {
+	if m != nil && m.ReturnApps != nil {
+		return *m.ReturnApps
+	}
+	return false
+}
+
 type CPublishedFile_GetUserFiles_Request_KVTag struct {
-	Key              *string `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
-	Value            *string `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Key                  *string  `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
+	Value                *string  `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_GetUserFiles_Request_KVTag) Reset() {
 	*m = CPublishedFile_GetUserFiles_Request_KVTag{}
 }
-func (m *CPublishedFile_GetUserFiles_Request_KVTag) String() string { return proto.CompactTextString(m) }
-func (*CPublishedFile_GetUserFiles_Request_KVTag) ProtoMessage()    {}
-func (*CPublishedFile_GetUserFiles_Request_KVTag) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{13, 0}
+func (m *CPublishedFile_GetUserFiles_Request_KVTag) String() string {
+	return proto.CompactTextString(m)
 }
+func (*CPublishedFile_GetUserFiles_Request_KVTag) ProtoMessage() {}
+func (*CPublishedFile_GetUserFiles_Request_KVTag) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{19, 0}
+}
+
+func (m *CPublishedFile_GetUserFiles_Request_KVTag) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request_KVTag.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetUserFiles_Request_KVTag) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request_KVTag.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetUserFiles_Request_KVTag) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Request_KVTag.Merge(m, src)
+}
+func (m *CPublishedFile_GetUserFiles_Request_KVTag) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request_KVTag.Size(m)
+}
+func (m *CPublishedFile_GetUserFiles_Request_KVTag) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Request_KVTag.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetUserFiles_Request_KVTag proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetUserFiles_Request_KVTag) GetKey() string {
 	if m != nil && m.Key != nil {
@@ -1695,20 +3007,134 @@ func (m *CPublishedFile_GetUserFiles_Request_KVTag) GetValue() string {
 	return ""
 }
 
+type CPublishedFile_GetUserFiles_Request_TagGroup struct {
+	Tags                 []string `protobuf:"bytes,1,rep,name=tags" json:"tags,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_GetUserFiles_Request_TagGroup) Reset() {
+	*m = CPublishedFile_GetUserFiles_Request_TagGroup{}
+}
+func (m *CPublishedFile_GetUserFiles_Request_TagGroup) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetUserFiles_Request_TagGroup) ProtoMessage() {}
+func (*CPublishedFile_GetUserFiles_Request_TagGroup) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{19, 1}
+}
+
+func (m *CPublishedFile_GetUserFiles_Request_TagGroup) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request_TagGroup.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetUserFiles_Request_TagGroup) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request_TagGroup.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetUserFiles_Request_TagGroup) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Request_TagGroup.Merge(m, src)
+}
+func (m *CPublishedFile_GetUserFiles_Request_TagGroup) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request_TagGroup.Size(m)
+}
+func (m *CPublishedFile_GetUserFiles_Request_TagGroup) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Request_TagGroup.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetUserFiles_Request_TagGroup proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetUserFiles_Request_TagGroup) GetTags() []string {
+	if m != nil {
+		return m.Tags
+	}
+	return nil
+}
+
+type CPublishedFile_GetUserFiles_Request_DateRange struct {
+	TimestampStart       *uint32  `protobuf:"varint,1,opt,name=timestamp_start,json=timestampStart" json:"timestamp_start,omitempty"`
+	TimestampEnd         *uint32  `protobuf:"varint,2,opt,name=timestamp_end,json=timestampEnd" json:"timestamp_end,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_GetUserFiles_Request_DateRange) Reset() {
+	*m = CPublishedFile_GetUserFiles_Request_DateRange{}
+}
+func (m *CPublishedFile_GetUserFiles_Request_DateRange) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetUserFiles_Request_DateRange) ProtoMessage() {}
+func (*CPublishedFile_GetUserFiles_Request_DateRange) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{19, 2}
+}
+
+func (m *CPublishedFile_GetUserFiles_Request_DateRange) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request_DateRange.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetUserFiles_Request_DateRange) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request_DateRange.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetUserFiles_Request_DateRange) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Request_DateRange.Merge(m, src)
+}
+func (m *CPublishedFile_GetUserFiles_Request_DateRange) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Request_DateRange.Size(m)
+}
+func (m *CPublishedFile_GetUserFiles_Request_DateRange) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Request_DateRange.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetUserFiles_Request_DateRange proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetUserFiles_Request_DateRange) GetTimestampStart() uint32 {
+	if m != nil && m.TimestampStart != nil {
+		return *m.TimestampStart
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetUserFiles_Request_DateRange) GetTimestampEnd() uint32 {
+	if m != nil && m.TimestampEnd != nil {
+		return *m.TimestampEnd
+	}
+	return 0
+}
+
 type CPublishedFile_GetUserFiles_Response struct {
 	Total                *uint32                                     `protobuf:"varint,1,opt,name=total" json:"total,omitempty"`
 	Startindex           *uint32                                     `protobuf:"varint,2,opt,name=startindex" json:"startindex,omitempty"`
 	Publishedfiledetails []*PublishedFileDetails                     `protobuf:"bytes,3,rep,name=publishedfiledetails" json:"publishedfiledetails,omitempty"`
 	Apps                 []*CPublishedFile_GetUserFiles_Response_App `protobuf:"bytes,4,rep,name=apps" json:"apps,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                    `json:"-"`
 	XXX_unrecognized     []byte                                      `json:"-"`
+	XXX_sizecache        int32                                       `json:"-"`
 }
 
 func (m *CPublishedFile_GetUserFiles_Response) Reset()         { *m = CPublishedFile_GetUserFiles_Response{} }
 func (m *CPublishedFile_GetUserFiles_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_GetUserFiles_Response) ProtoMessage()    {}
 func (*CPublishedFile_GetUserFiles_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{14}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{20}
 }
+
+func (m *CPublishedFile_GetUserFiles_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetUserFiles_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetUserFiles_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetUserFiles_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Response.Size(m)
+}
+func (m *CPublishedFile_GetUserFiles_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetUserFiles_Response proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetUserFiles_Response) GetTotal() uint32 {
 	if m != nil && m.Total != nil {
@@ -1739,11 +3165,13 @@ func (m *CPublishedFile_GetUserFiles_Response) GetApps() []*CPublishedFile_GetUs
 }
 
 type CPublishedFile_GetUserFiles_Response_App struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	Name             *string `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
-	Shortcutid       *uint32 `protobuf:"varint,3,opt,name=shortcutid" json:"shortcutid,omitempty"`
-	Private          *bool   `protobuf:"varint,4,opt,name=private" json:"private,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Name                 *string  `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
+	Shortcutid           *uint32  `protobuf:"varint,3,opt,name=shortcutid" json:"shortcutid,omitempty"`
+	Private              *bool    `protobuf:"varint,4,opt,name=private" json:"private,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_GetUserFiles_Response_App) Reset() {
@@ -1752,8 +3180,26 @@ func (m *CPublishedFile_GetUserFiles_Response_App) Reset() {
 func (m *CPublishedFile_GetUserFiles_Response_App) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_GetUserFiles_Response_App) ProtoMessage()    {}
 func (*CPublishedFile_GetUserFiles_Response_App) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{14, 0}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{20, 0}
 }
+
+func (m *CPublishedFile_GetUserFiles_Response_App) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Response_App.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetUserFiles_Response_App) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Response_App.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetUserFiles_Response_App) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Response_App.Merge(m, src)
+}
+func (m *CPublishedFile_GetUserFiles_Response_App) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetUserFiles_Response_App.Size(m)
+}
+func (m *CPublishedFile_GetUserFiles_Response_App) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetUserFiles_Response_App.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetUserFiles_Response_App proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetUserFiles_Response_App) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -1783,24 +3229,217 @@ func (m *CPublishedFile_GetUserFiles_Response_App) GetPrivate() bool {
 	return false
 }
 
-type CPublishedFile_Update_Request struct {
-	Appid            *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	Publishedfileid  *uint64  `protobuf:"fixed64,2,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	Title            *string  `protobuf:"bytes,3,opt,name=title" json:"title,omitempty"`
-	FileDescription  *string  `protobuf:"bytes,4,opt,name=file_description,json=fileDescription" json:"file_description,omitempty"`
-	Visibility       *uint32  `protobuf:"varint,5,opt,name=visibility" json:"visibility,omitempty"`
-	Tags             []string `protobuf:"bytes,6,rep,name=tags" json:"tags,omitempty"`
-	Filename         *string  `protobuf:"bytes,7,opt,name=filename" json:"filename,omitempty"`
-	PreviewFilename  *string  `protobuf:"bytes,8,opt,name=preview_filename,json=previewFilename" json:"preview_filename,omitempty"`
-	ImageWidth       *uint32  `protobuf:"varint,15,opt,name=image_width,json=imageWidth" json:"image_width,omitempty"`
-	ImageHeight      *uint32  `protobuf:"varint,16,opt,name=image_height,json=imageHeight" json:"image_height,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+type CPublishedFile_AreFilesInSubscriptionList_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Publishedfileids     []uint64 `protobuf:"fixed64,2,rep,name=publishedfileids" json:"publishedfileids,omitempty"`
+	Listtype             *uint32  `protobuf:"varint,3,opt,name=listtype" json:"listtype,omitempty"`
+	Filetype             *uint32  `protobuf:"varint,4,opt,name=filetype" json:"filetype,omitempty"`
+	Workshopfiletype     *uint32  `protobuf:"varint,5,opt,name=workshopfiletype" json:"workshopfiletype,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CPublishedFile_Update_Request) Reset()                    { *m = CPublishedFile_Update_Request{} }
-func (m *CPublishedFile_Update_Request) String() string            { return proto.CompactTextString(m) }
-func (*CPublishedFile_Update_Request) ProtoMessage()               {}
-func (*CPublishedFile_Update_Request) Descriptor() ([]byte, []int) { return publishedfile_fileDescriptor0, []int{15} }
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) Reset() {
+	*m = CPublishedFile_AreFilesInSubscriptionList_Request{}
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_AreFilesInSubscriptionList_Request) ProtoMessage() {}
+func (*CPublishedFile_AreFilesInSubscriptionList_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{21}
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Request.Merge(m, src)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Request.Size(m)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Request proto.InternalMessageInfo
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) GetPublishedfileids() []uint64 {
+	if m != nil {
+		return m.Publishedfileids
+	}
+	return nil
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) GetListtype() uint32 {
+	if m != nil && m.Listtype != nil {
+		return *m.Listtype
+	}
+	return 0
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) GetFiletype() uint32 {
+	if m != nil && m.Filetype != nil {
+		return *m.Filetype
+	}
+	return 0
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Request) GetWorkshopfiletype() uint32 {
+	if m != nil && m.Workshopfiletype != nil {
+		return *m.Workshopfiletype
+	}
+	return 0
+}
+
+type CPublishedFile_AreFilesInSubscriptionList_Response struct {
+	Files                []*CPublishedFile_AreFilesInSubscriptionList_Response_InList `protobuf:"bytes,1,rep,name=files" json:"files,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                     `json:"-"`
+	XXX_unrecognized     []byte                                                       `json:"-"`
+	XXX_sizecache        int32                                                        `json:"-"`
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response) Reset() {
+	*m = CPublishedFile_AreFilesInSubscriptionList_Response{}
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_AreFilesInSubscriptionList_Response) ProtoMessage() {}
+func (*CPublishedFile_AreFilesInSubscriptionList_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{22}
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response.Merge(m, src)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response.Size(m)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response proto.InternalMessageInfo
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response) GetFiles() []*CPublishedFile_AreFilesInSubscriptionList_Response_InList {
+	if m != nil {
+		return m.Files
+	}
+	return nil
+}
+
+type CPublishedFile_AreFilesInSubscriptionList_Response_InList struct {
+	Publishedfileid      *uint64  `protobuf:"fixed64,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Inlist               *bool    `protobuf:"varint,2,opt,name=inlist" json:"inlist,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response_InList) Reset() {
+	*m = CPublishedFile_AreFilesInSubscriptionList_Response_InList{}
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response_InList) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_AreFilesInSubscriptionList_Response_InList) ProtoMessage() {}
+func (*CPublishedFile_AreFilesInSubscriptionList_Response_InList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{22, 0}
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response_InList) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response_InList.Unmarshal(m, b)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response_InList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response_InList.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response_InList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response_InList.Merge(m, src)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response_InList) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response_InList.Size(m)
+}
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response_InList) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response_InList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_AreFilesInSubscriptionList_Response_InList proto.InternalMessageInfo
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response_InList) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_AreFilesInSubscriptionList_Response_InList) GetInlist() bool {
+	if m != nil && m.Inlist != nil {
+		return *m.Inlist
+	}
+	return false
+}
+
+type CPublishedFile_Update_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Publishedfileid      *uint64  `protobuf:"fixed64,2,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Title                *string  `protobuf:"bytes,3,opt,name=title" json:"title,omitempty"`
+	FileDescription      *string  `protobuf:"bytes,4,opt,name=file_description,json=fileDescription" json:"file_description,omitempty"`
+	Visibility           *uint32  `protobuf:"varint,5,opt,name=visibility" json:"visibility,omitempty"`
+	Tags                 []string `protobuf:"bytes,6,rep,name=tags" json:"tags,omitempty"`
+	Filename             *string  `protobuf:"bytes,7,opt,name=filename" json:"filename,omitempty"`
+	PreviewFilename      *string  `protobuf:"bytes,8,opt,name=preview_filename,json=previewFilename" json:"preview_filename,omitempty"`
+	SpoilerTag           *bool    `protobuf:"varint,10,opt,name=spoiler_tag,json=spoilerTag" json:"spoiler_tag,omitempty"`
+	ImageWidth           *uint32  `protobuf:"varint,15,opt,name=image_width,json=imageWidth" json:"image_width,omitempty"`
+	ImageHeight          *uint32  `protobuf:"varint,16,opt,name=image_height,json=imageHeight" json:"image_height,omitempty"`
+	Language             *int32   `protobuf:"varint,17,opt,name=language" json:"language,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_Update_Request) Reset()         { *m = CPublishedFile_Update_Request{} }
+func (m *CPublishedFile_Update_Request) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_Update_Request) ProtoMessage()    {}
+func (*CPublishedFile_Update_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{23}
+}
+
+func (m *CPublishedFile_Update_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Update_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Update_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Update_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Update_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Update_Request.Merge(m, src)
+}
+func (m *CPublishedFile_Update_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Update_Request.Size(m)
+}
+func (m *CPublishedFile_Update_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Update_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Update_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_Update_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -1858,6 +3497,13 @@ func (m *CPublishedFile_Update_Request) GetPreviewFilename() string {
 	return ""
 }
 
+func (m *CPublishedFile_Update_Request) GetSpoilerTag() bool {
+	if m != nil && m.SpoilerTag != nil {
+		return *m.SpoilerTag
+	}
+	return false
+}
+
 func (m *CPublishedFile_Update_Request) GetImageWidth() uint32 {
 	if m != nil && m.ImageWidth != nil {
 		return *m.ImageWidth
@@ -1872,20 +3518,129 @@ func (m *CPublishedFile_Update_Request) GetImageHeight() uint32 {
 	return 0
 }
 
-type CPublishedFile_Update_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+func (m *CPublishedFile_Update_Request) GetLanguage() int32 {
+	if m != nil && m.Language != nil {
+		return *m.Language
+	}
+	return 0
 }
 
-func (m *CPublishedFile_Update_Response) Reset()                    { *m = CPublishedFile_Update_Response{} }
-func (m *CPublishedFile_Update_Response) String() string            { return proto.CompactTextString(m) }
-func (*CPublishedFile_Update_Response) ProtoMessage()               {}
-func (*CPublishedFile_Update_Response) Descriptor() ([]byte, []int) { return publishedfile_fileDescriptor0, []int{16} }
+type CPublishedFile_Update_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_Update_Response) Reset()         { *m = CPublishedFile_Update_Response{} }
+func (m *CPublishedFile_Update_Response) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_Update_Response) ProtoMessage()    {}
+func (*CPublishedFile_Update_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{24}
+}
+
+func (m *CPublishedFile_Update_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Update_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Update_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Update_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Update_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Update_Response.Merge(m, src)
+}
+func (m *CPublishedFile_Update_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Update_Response.Size(m)
+}
+func (m *CPublishedFile_Update_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Update_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Update_Response proto.InternalMessageInfo
+
+type CPublishedFile_Delete_Request struct {
+	Publishedfileid      *uint64  `protobuf:"fixed64,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Appid                *uint32  `protobuf:"varint,5,opt,name=appid" json:"appid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_Delete_Request) Reset()         { *m = CPublishedFile_Delete_Request{} }
+func (m *CPublishedFile_Delete_Request) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_Delete_Request) ProtoMessage()    {}
+func (*CPublishedFile_Delete_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{25}
+}
+
+func (m *CPublishedFile_Delete_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Delete_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Delete_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Delete_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Delete_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Delete_Request.Merge(m, src)
+}
+func (m *CPublishedFile_Delete_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Delete_Request.Size(m)
+}
+func (m *CPublishedFile_Delete_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Delete_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Delete_Request proto.InternalMessageInfo
+
+func (m *CPublishedFile_Delete_Request) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_Delete_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+type CPublishedFile_Delete_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_Delete_Response) Reset()         { *m = CPublishedFile_Delete_Response{} }
+func (m *CPublishedFile_Delete_Response) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_Delete_Response) ProtoMessage()    {}
+func (*CPublishedFile_Delete_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{26}
+}
+
+func (m *CPublishedFile_Delete_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_Delete_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_Delete_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_Delete_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_Delete_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_Delete_Response.Merge(m, src)
+}
+func (m *CPublishedFile_Delete_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_Delete_Response.Size(m)
+}
+func (m *CPublishedFile_Delete_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_Delete_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_Delete_Response proto.InternalMessageInfo
 
 type CPublishedFile_GetChangeHistoryEntry_Request struct {
-	Publishedfileid  *uint64 `protobuf:"fixed64,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	Timestamp        *uint32 `protobuf:"varint,2,opt,name=timestamp" json:"timestamp,omitempty"`
-	Language         *int32  `protobuf:"varint,3,opt,name=language" json:"language,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"fixed64,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Timestamp            *uint32  `protobuf:"varint,2,opt,name=timestamp" json:"timestamp,omitempty"`
+	Language             *int32   `protobuf:"varint,3,opt,name=language" json:"language,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_GetChangeHistoryEntry_Request) Reset() {
@@ -1896,8 +3651,26 @@ func (m *CPublishedFile_GetChangeHistoryEntry_Request) String() string {
 }
 func (*CPublishedFile_GetChangeHistoryEntry_Request) ProtoMessage() {}
 func (*CPublishedFile_GetChangeHistoryEntry_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{17}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{27}
 }
+
+func (m *CPublishedFile_GetChangeHistoryEntry_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetChangeHistoryEntry_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetChangeHistoryEntry_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetChangeHistoryEntry_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Request.Size(m)
+}
+func (m *CPublishedFile_GetChangeHistoryEntry_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetChangeHistoryEntry_Request) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -1921,9 +3694,16 @@ func (m *CPublishedFile_GetChangeHistoryEntry_Request) GetLanguage() int32 {
 }
 
 type CPublishedFile_GetChangeHistoryEntry_Response struct {
-	ChangeDescription *string `protobuf:"bytes,1,opt,name=change_description,json=changeDescription" json:"change_description,omitempty"`
-	Language          *int32  `protobuf:"varint,2,opt,name=language" json:"language,omitempty"`
-	XXX_unrecognized  []byte  `json:"-"`
+	ChangeDescription     *string  `protobuf:"bytes,1,opt,name=change_description,json=changeDescription" json:"change_description,omitempty"`
+	Language              *int32   `protobuf:"varint,2,opt,name=language" json:"language,omitempty"`
+	SavedSnapshot         *bool    `protobuf:"varint,3,opt,name=saved_snapshot,json=savedSnapshot" json:"saved_snapshot,omitempty"`
+	SnapshotGameBranchMin *string  `protobuf:"bytes,4,opt,name=snapshot_game_branch_min,json=snapshotGameBranchMin" json:"snapshot_game_branch_min,omitempty"`
+	SnapshotGameBranchMax *string  `protobuf:"bytes,5,opt,name=snapshot_game_branch_max,json=snapshotGameBranchMax" json:"snapshot_game_branch_max,omitempty"`
+	ManifestId            *uint64  `protobuf:"fixed64,6,opt,name=manifest_id,json=manifestId" json:"manifest_id,omitempty"`
+	Accountid             *uint32  `protobuf:"varint,7,opt,name=accountid" json:"accountid,omitempty"`
+	XXX_NoUnkeyedLiteral  struct{} `json:"-"`
+	XXX_unrecognized      []byte   `json:"-"`
+	XXX_sizecache         int32    `json:"-"`
 }
 
 func (m *CPublishedFile_GetChangeHistoryEntry_Response) Reset() {
@@ -1934,8 +3714,26 @@ func (m *CPublishedFile_GetChangeHistoryEntry_Response) String() string {
 }
 func (*CPublishedFile_GetChangeHistoryEntry_Response) ProtoMessage() {}
 func (*CPublishedFile_GetChangeHistoryEntry_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{18}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{28}
 }
+
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Response.Size(m)
+}
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetChangeHistoryEntry_Response proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetChangeHistoryEntry_Response) GetChangeDescription() string {
 	if m != nil && m.ChangeDescription != nil {
@@ -1951,13 +3749,50 @@ func (m *CPublishedFile_GetChangeHistoryEntry_Response) GetLanguage() int32 {
 	return 0
 }
 
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) GetSavedSnapshot() bool {
+	if m != nil && m.SavedSnapshot != nil {
+		return *m.SavedSnapshot
+	}
+	return false
+}
+
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) GetSnapshotGameBranchMin() string {
+	if m != nil && m.SnapshotGameBranchMin != nil {
+		return *m.SnapshotGameBranchMin
+	}
+	return ""
+}
+
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) GetSnapshotGameBranchMax() string {
+	if m != nil && m.SnapshotGameBranchMax != nil {
+		return *m.SnapshotGameBranchMax
+	}
+	return ""
+}
+
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) GetManifestId() uint64 {
+	if m != nil && m.ManifestId != nil {
+		return *m.ManifestId
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetChangeHistoryEntry_Response) GetAccountid() uint32 {
+	if m != nil && m.Accountid != nil {
+		return *m.Accountid
+	}
+	return 0
+}
+
 type CPublishedFile_GetChangeHistory_Request struct {
-	Publishedfileid  *uint64 `protobuf:"fixed64,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	TotalOnly        *bool   `protobuf:"varint,2,opt,name=total_only,json=totalOnly" json:"total_only,omitempty"`
-	Startindex       *uint32 `protobuf:"varint,3,opt,name=startindex" json:"startindex,omitempty"`
-	Count            *uint32 `protobuf:"varint,4,opt,name=count" json:"count,omitempty"`
-	Language         *int32  `protobuf:"varint,5,opt,name=language,def=0" json:"language,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"fixed64,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	TotalOnly            *bool    `protobuf:"varint,2,opt,name=total_only,json=totalOnly" json:"total_only,omitempty"`
+	Startindex           *uint32  `protobuf:"varint,3,opt,name=startindex" json:"startindex,omitempty"`
+	Count                *uint32  `protobuf:"varint,4,opt,name=count" json:"count,omitempty"`
+	Language             *int32   `protobuf:"varint,5,opt,name=language,def=0" json:"language,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_GetChangeHistory_Request) Reset() {
@@ -1966,8 +3801,26 @@ func (m *CPublishedFile_GetChangeHistory_Request) Reset() {
 func (m *CPublishedFile_GetChangeHistory_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_GetChangeHistory_Request) ProtoMessage()    {}
 func (*CPublishedFile_GetChangeHistory_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{19}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{29}
 }
+
+func (m *CPublishedFile_GetChangeHistory_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistory_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetChangeHistory_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistory_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetChangeHistory_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetChangeHistory_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetChangeHistory_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistory_Request.Size(m)
+}
+func (m *CPublishedFile_GetChangeHistory_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetChangeHistory_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetChangeHistory_Request proto.InternalMessageInfo
 
 const Default_CPublishedFile_GetChangeHistory_Request_Language int32 = 0
 
@@ -2007,9 +3860,11 @@ func (m *CPublishedFile_GetChangeHistory_Request) GetLanguage() int32 {
 }
 
 type CPublishedFile_GetChangeHistory_Response struct {
-	Changes          []*CPublishedFile_GetChangeHistory_Response_ChangeLog `protobuf:"bytes,1,rep,name=changes" json:"changes,omitempty"`
-	Total            *uint32                                               `protobuf:"varint,2,opt,name=total" json:"total,omitempty"`
-	XXX_unrecognized []byte                                                `json:"-"`
+	Changes              []*CPublishedFile_GetChangeHistory_Response_ChangeLog `protobuf:"bytes,1,rep,name=changes" json:"changes,omitempty"`
+	Total                *uint32                                               `protobuf:"varint,2,opt,name=total" json:"total,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                              `json:"-"`
+	XXX_unrecognized     []byte                                                `json:"-"`
+	XXX_sizecache        int32                                                 `json:"-"`
 }
 
 func (m *CPublishedFile_GetChangeHistory_Response) Reset() {
@@ -2018,8 +3873,26 @@ func (m *CPublishedFile_GetChangeHistory_Response) Reset() {
 func (m *CPublishedFile_GetChangeHistory_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_GetChangeHistory_Response) ProtoMessage()    {}
 func (*CPublishedFile_GetChangeHistory_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{20}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{30}
 }
+
+func (m *CPublishedFile_GetChangeHistory_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistory_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetChangeHistory_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistory_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetChangeHistory_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetChangeHistory_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetChangeHistory_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistory_Response.Size(m)
+}
+func (m *CPublishedFile_GetChangeHistory_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetChangeHistory_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetChangeHistory_Response proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetChangeHistory_Response) GetChanges() []*CPublishedFile_GetChangeHistory_Response_ChangeLog {
 	if m != nil {
@@ -2036,10 +3909,17 @@ func (m *CPublishedFile_GetChangeHistory_Response) GetTotal() uint32 {
 }
 
 type CPublishedFile_GetChangeHistory_Response_ChangeLog struct {
-	Timestamp         *uint32 `protobuf:"varint,1,opt,name=timestamp" json:"timestamp,omitempty"`
-	ChangeDescription *string `protobuf:"bytes,2,opt,name=change_description,json=changeDescription" json:"change_description,omitempty"`
-	Language          *int32  `protobuf:"varint,3,opt,name=language" json:"language,omitempty"`
-	XXX_unrecognized  []byte  `json:"-"`
+	Timestamp             *uint32  `protobuf:"varint,1,opt,name=timestamp" json:"timestamp,omitempty"`
+	ChangeDescription     *string  `protobuf:"bytes,2,opt,name=change_description,json=changeDescription" json:"change_description,omitempty"`
+	Language              *int32   `protobuf:"varint,3,opt,name=language" json:"language,omitempty"`
+	SavedSnapshot         *bool    `protobuf:"varint,4,opt,name=saved_snapshot,json=savedSnapshot" json:"saved_snapshot,omitempty"`
+	SnapshotGameBranchMin *string  `protobuf:"bytes,5,opt,name=snapshot_game_branch_min,json=snapshotGameBranchMin" json:"snapshot_game_branch_min,omitempty"`
+	SnapshotGameBranchMax *string  `protobuf:"bytes,6,opt,name=snapshot_game_branch_max,json=snapshotGameBranchMax" json:"snapshot_game_branch_max,omitempty"`
+	ManifestId            *uint64  `protobuf:"fixed64,7,opt,name=manifest_id,json=manifestId" json:"manifest_id,omitempty"`
+	Accountid             *uint32  `protobuf:"varint,8,opt,name=accountid" json:"accountid,omitempty"`
+	XXX_NoUnkeyedLiteral  struct{} `json:"-"`
+	XXX_unrecognized      []byte   `json:"-"`
+	XXX_sizecache         int32    `json:"-"`
 }
 
 func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) Reset() {
@@ -2050,8 +3930,26 @@ func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) String() string {
 }
 func (*CPublishedFile_GetChangeHistory_Response_ChangeLog) ProtoMessage() {}
 func (*CPublishedFile_GetChangeHistory_Response_ChangeLog) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{20, 0}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{30, 0}
 }
+
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistory_Response_ChangeLog.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistory_Response_ChangeLog.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetChangeHistory_Response_ChangeLog.Merge(m, src)
+}
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetChangeHistory_Response_ChangeLog.Size(m)
+}
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetChangeHistory_Response_ChangeLog.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetChangeHistory_Response_ChangeLog proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) GetTimestamp() uint32 {
 	if m != nil && m.Timestamp != nil {
@@ -2074,26 +3972,85 @@ func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) GetLanguage() int32
 	return 0
 }
 
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) GetSavedSnapshot() bool {
+	if m != nil && m.SavedSnapshot != nil {
+		return *m.SavedSnapshot
+	}
+	return false
+}
+
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) GetSnapshotGameBranchMin() string {
+	if m != nil && m.SnapshotGameBranchMin != nil {
+		return *m.SnapshotGameBranchMin
+	}
+	return ""
+}
+
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) GetSnapshotGameBranchMax() string {
+	if m != nil && m.SnapshotGameBranchMax != nil {
+		return *m.SnapshotGameBranchMax
+	}
+	return ""
+}
+
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) GetManifestId() uint64 {
+	if m != nil && m.ManifestId != nil {
+		return *m.ManifestId
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetChangeHistory_Response_ChangeLog) GetAccountid() uint32 {
+	if m != nil && m.Accountid != nil {
+		return *m.Accountid
+	}
+	return 0
+}
+
 type CPublishedFile_RefreshVotingQueue_Request struct {
-	Appid            *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	MatchingFileType *uint32  `protobuf:"varint,2,opt,name=matching_file_type,json=matchingFileType" json:"matching_file_type,omitempty"`
-	Tags             []string `protobuf:"bytes,3,rep,name=tags" json:"tags,omitempty"`
-	MatchAllTags     *bool    `protobuf:"varint,4,opt,name=match_all_tags,json=matchAllTags,def=1" json:"match_all_tags,omitempty"`
-	ExcludedTags     []string `protobuf:"bytes,5,rep,name=excluded_tags,json=excludedTags" json:"excluded_tags,omitempty"`
-	DesiredQueueSize *uint32  `protobuf:"varint,6,opt,name=desired_queue_size,json=desiredQueueSize" json:"desired_queue_size,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	Appid                *uint32                 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	MatchingFileType     *uint32                 `protobuf:"varint,2,opt,name=matching_file_type,json=matchingFileType" json:"matching_file_type,omitempty"`
+	Tags                 []string                `protobuf:"bytes,3,rep,name=tags" json:"tags,omitempty"`
+	MatchAllTags         *bool                   `protobuf:"varint,4,opt,name=match_all_tags,json=matchAllTags,def=1" json:"match_all_tags,omitempty"`
+	ExcludedTags         []string                `protobuf:"bytes,5,rep,name=excluded_tags,json=excludedTags" json:"excluded_tags,omitempty"`
+	DesiredQueueSize     *uint32                 `protobuf:"varint,6,opt,name=desired_queue_size,json=desiredQueueSize" json:"desired_queue_size,omitempty"`
+	DesiredRevision      *EPublishedFileRevision `protobuf:"varint,8,opt,name=desired_revision,json=desiredRevision,enum=EPublishedFileRevision,def=0" json:"desired_revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
 func (m *CPublishedFile_RefreshVotingQueue_Request) Reset() {
 	*m = CPublishedFile_RefreshVotingQueue_Request{}
 }
-func (m *CPublishedFile_RefreshVotingQueue_Request) String() string { return proto.CompactTextString(m) }
-func (*CPublishedFile_RefreshVotingQueue_Request) ProtoMessage()    {}
+func (m *CPublishedFile_RefreshVotingQueue_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_RefreshVotingQueue_Request) ProtoMessage() {}
 func (*CPublishedFile_RefreshVotingQueue_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{21}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{31}
 }
 
+func (m *CPublishedFile_RefreshVotingQueue_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_RefreshVotingQueue_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_RefreshVotingQueue_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Request.Merge(m, src)
+}
+func (m *CPublishedFile_RefreshVotingQueue_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Request.Size(m)
+}
+func (m *CPublishedFile_RefreshVotingQueue_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Request proto.InternalMessageInfo
+
 const Default_CPublishedFile_RefreshVotingQueue_Request_MatchAllTags bool = true
+const Default_CPublishedFile_RefreshVotingQueue_Request_DesiredRevision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
 
 func (m *CPublishedFile_RefreshVotingQueue_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -2137,8 +4094,17 @@ func (m *CPublishedFile_RefreshVotingQueue_Request) GetDesiredQueueSize() uint32
 	return 0
 }
 
+func (m *CPublishedFile_RefreshVotingQueue_Request) GetDesiredRevision() EPublishedFileRevision {
+	if m != nil && m.DesiredRevision != nil {
+		return *m.DesiredRevision
+	}
+	return Default_CPublishedFile_RefreshVotingQueue_Request_DesiredRevision
+}
+
 type CPublishedFile_RefreshVotingQueue_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_RefreshVotingQueue_Response) Reset() {
@@ -2149,54 +4115,110 @@ func (m *CPublishedFile_RefreshVotingQueue_Response) String() string {
 }
 func (*CPublishedFile_RefreshVotingQueue_Response) ProtoMessage() {}
 func (*CPublishedFile_RefreshVotingQueue_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{22}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{32}
 }
 
+func (m *CPublishedFile_RefreshVotingQueue_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_RefreshVotingQueue_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_RefreshVotingQueue_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Response.Merge(m, src)
+}
+func (m *CPublishedFile_RefreshVotingQueue_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Response.Size(m)
+}
+func (m *CPublishedFile_RefreshVotingQueue_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_RefreshVotingQueue_Response proto.InternalMessageInfo
+
 type CPublishedFile_QueryFiles_Request struct {
-	QueryType              *uint32                                    `protobuf:"varint,1,opt,name=query_type,json=queryType" json:"query_type,omitempty"`
-	Page                   *uint32                                    `protobuf:"varint,2,opt,name=page" json:"page,omitempty"`
-	Numperpage             *uint32                                    `protobuf:"varint,3,opt,name=numperpage,def=1" json:"numperpage,omitempty"`
-	CreatorAppid           *uint32                                    `protobuf:"varint,4,opt,name=creator_appid,json=creatorAppid" json:"creator_appid,omitempty"`
-	Appid                  *uint32                                    `protobuf:"varint,5,opt,name=appid" json:"appid,omitempty"`
-	Requiredtags           []string                                   `protobuf:"bytes,6,rep,name=requiredtags" json:"requiredtags,omitempty"`
-	Excludedtags           []string                                   `protobuf:"bytes,7,rep,name=excludedtags" json:"excludedtags,omitempty"`
-	MatchAllTags           *bool                                      `protobuf:"varint,8,opt,name=match_all_tags,json=matchAllTags,def=1" json:"match_all_tags,omitempty"`
-	RequiredFlags          []string                                   `protobuf:"bytes,9,rep,name=required_flags,json=requiredFlags" json:"required_flags,omitempty"`
-	OmittedFlags           []string                                   `protobuf:"bytes,10,rep,name=omitted_flags,json=omittedFlags" json:"omitted_flags,omitempty"`
-	SearchText             *string                                    `protobuf:"bytes,11,opt,name=search_text,json=searchText" json:"search_text,omitempty"`
-	Filetype               *uint32                                    `protobuf:"varint,12,opt,name=filetype" json:"filetype,omitempty"`
-	ChildPublishedfileid   *uint64                                    `protobuf:"fixed64,13,opt,name=child_publishedfileid,json=childPublishedfileid" json:"child_publishedfileid,omitempty"`
-	Days                   *uint32                                    `protobuf:"varint,14,opt,name=days" json:"days,omitempty"`
-	IncludeRecentVotesOnly *bool                                      `protobuf:"varint,15,opt,name=include_recent_votes_only,json=includeRecentVotesOnly" json:"include_recent_votes_only,omitempty"`
-	CacheMaxAgeSeconds     *uint32                                    `protobuf:"varint,31,opt,name=cache_max_age_seconds,json=cacheMaxAgeSeconds,def=0" json:"cache_max_age_seconds,omitempty"`
-	Language               *int32                                     `protobuf:"varint,33,opt,name=language,def=0" json:"language,omitempty"`
-	RequiredKvTags         []*CPublishedFile_QueryFiles_Request_KVTag `protobuf:"bytes,34,rep,name=required_kv_tags,json=requiredKvTags" json:"required_kv_tags,omitempty"`
-	Totalonly              *bool                                      `protobuf:"varint,16,opt,name=totalonly" json:"totalonly,omitempty"`
-	IdsOnly                *bool                                      `protobuf:"varint,35,opt,name=ids_only,json=idsOnly" json:"ids_only,omitempty"`
-	ReturnVoteData         *bool                                      `protobuf:"varint,17,opt,name=return_vote_data,json=returnVoteData" json:"return_vote_data,omitempty"`
-	ReturnTags             *bool                                      `protobuf:"varint,18,opt,name=return_tags,json=returnTags" json:"return_tags,omitempty"`
-	ReturnKvTags           *bool                                      `protobuf:"varint,19,opt,name=return_kv_tags,json=returnKvTags" json:"return_kv_tags,omitempty"`
-	ReturnPreviews         *bool                                      `protobuf:"varint,20,opt,name=return_previews,json=returnPreviews" json:"return_previews,omitempty"`
-	ReturnChildren         *bool                                      `protobuf:"varint,21,opt,name=return_children,json=returnChildren" json:"return_children,omitempty"`
-	ReturnShortDescription *bool                                      `protobuf:"varint,22,opt,name=return_short_description,json=returnShortDescription" json:"return_short_description,omitempty"`
-	ReturnForSaleData      *bool                                      `protobuf:"varint,30,opt,name=return_for_sale_data,json=returnForSaleData" json:"return_for_sale_data,omitempty"`
-	ReturnMetadata         *bool                                      `protobuf:"varint,32,opt,name=return_metadata,json=returnMetadata,def=0" json:"return_metadata,omitempty"`
-	ReturnPlaytimeStats    *uint32                                    `protobuf:"varint,36,opt,name=return_playtime_stats,json=returnPlaytimeStats" json:"return_playtime_stats,omitempty"`
-	XXX_unrecognized       []byte                                     `json:"-"`
+	QueryType                    *uint32                                       `protobuf:"varint,1,opt,name=query_type,json=queryType" json:"query_type,omitempty"`
+	Page                         *uint32                                       `protobuf:"varint,2,opt,name=page" json:"page,omitempty"`
+	Cursor                       *string                                       `protobuf:"bytes,39,opt,name=cursor" json:"cursor,omitempty"`
+	Numperpage                   *uint32                                       `protobuf:"varint,3,opt,name=numperpage,def=1" json:"numperpage,omitempty"`
+	CreatorAppid                 *uint32                                       `protobuf:"varint,4,opt,name=creator_appid,json=creatorAppid" json:"creator_appid,omitempty"`
+	Appid                        *uint32                                       `protobuf:"varint,5,opt,name=appid" json:"appid,omitempty"`
+	Requiredtags                 []string                                      `protobuf:"bytes,6,rep,name=requiredtags" json:"requiredtags,omitempty"`
+	Excludedtags                 []string                                      `protobuf:"bytes,7,rep,name=excludedtags" json:"excludedtags,omitempty"`
+	MatchAllTags                 *bool                                         `protobuf:"varint,8,opt,name=match_all_tags,json=matchAllTags,def=1" json:"match_all_tags,omitempty"`
+	RequiredFlags                []string                                      `protobuf:"bytes,9,rep,name=required_flags,json=requiredFlags" json:"required_flags,omitempty"`
+	OmittedFlags                 []string                                      `protobuf:"bytes,10,rep,name=omitted_flags,json=omittedFlags" json:"omitted_flags,omitempty"`
+	SearchText                   *string                                       `protobuf:"bytes,11,opt,name=search_text,json=searchText" json:"search_text,omitempty"`
+	Filetype                     *uint32                                       `protobuf:"varint,12,opt,name=filetype" json:"filetype,omitempty"`
+	ChildPublishedfileid         *uint64                                       `protobuf:"fixed64,13,opt,name=child_publishedfileid,json=childPublishedfileid" json:"child_publishedfileid,omitempty"`
+	Days                         *uint32                                       `protobuf:"varint,14,opt,name=days" json:"days,omitempty"`
+	IncludeRecentVotesOnly       *bool                                         `protobuf:"varint,15,opt,name=include_recent_votes_only,json=includeRecentVotesOnly" json:"include_recent_votes_only,omitempty"`
+	CacheMaxAgeSeconds           *uint32                                       `protobuf:"varint,31,opt,name=cache_max_age_seconds,json=cacheMaxAgeSeconds,def=0" json:"cache_max_age_seconds,omitempty"`
+	Language                     *int32                                        `protobuf:"varint,33,opt,name=language,def=0" json:"language,omitempty"`
+	RequiredKvTags               []*CPublishedFile_QueryFiles_Request_KVTag    `protobuf:"bytes,34,rep,name=required_kv_tags,json=requiredKvTags" json:"required_kv_tags,omitempty"`
+	Taggroups                    []*CPublishedFile_QueryFiles_Request_TagGroup `protobuf:"bytes,42,rep,name=taggroups" json:"taggroups,omitempty"`
+	DateRangeCreated             *CPublishedFile_QueryFiles_Request_DateRange  `protobuf:"bytes,44,opt,name=date_range_created,json=dateRangeCreated" json:"date_range_created,omitempty"`
+	DateRangeUpdated             *CPublishedFile_QueryFiles_Request_DateRange  `protobuf:"bytes,45,opt,name=date_range_updated,json=dateRangeUpdated" json:"date_range_updated,omitempty"`
+	ExcludedContentDescriptors   []EContentDescriptorID                        `protobuf:"varint,46,rep,name=excluded_content_descriptors,json=excludedContentDescriptors,enum=EContentDescriptorID" json:"excluded_content_descriptors,omitempty"`
+	AdminQuery                   *bool                                         `protobuf:"varint,47,opt,name=admin_query,json=adminQuery" json:"admin_query,omitempty"`
+	SpecialFilter                *EQueryFilesSpecialFilter                     `protobuf:"varint,48,opt,name=special_filter,json=specialFilter,enum=EQueryFilesSpecialFilter,def=0" json:"special_filter,omitempty"`
+	AppidsRequiredForUse         []uint32                                      `protobuf:"varint,49,rep,name=appids_required_for_use,json=appidsRequiredForUse" json:"appids_required_for_use,omitempty"`
+	ExcludedAppidsRequiredForUse []uint32                                      `protobuf:"varint,51,rep,name=excluded_appids_required_for_use,json=excludedAppidsRequiredForUse" json:"excluded_appids_required_for_use,omitempty"`
+	SearchTextTarget             *EQueryFilesSearchTextTarget                  `protobuf:"varint,50,opt,name=search_text_target,json=searchTextTarget,enum=EQueryFilesSearchTextTarget,def=0" json:"search_text_target,omitempty"`
+	Totalonly                    *bool                                         `protobuf:"varint,16,opt,name=totalonly" json:"totalonly,omitempty"`
+	IdsOnly                      *bool                                         `protobuf:"varint,35,opt,name=ids_only,json=idsOnly" json:"ids_only,omitempty"`
+	ReturnVoteData               *bool                                         `protobuf:"varint,17,opt,name=return_vote_data,json=returnVoteData" json:"return_vote_data,omitempty"`
+	ReturnTags                   *bool                                         `protobuf:"varint,18,opt,name=return_tags,json=returnTags" json:"return_tags,omitempty"`
+	ReturnKvTags                 *bool                                         `protobuf:"varint,19,opt,name=return_kv_tags,json=returnKvTags" json:"return_kv_tags,omitempty"`
+	ReturnPreviews               *bool                                         `protobuf:"varint,20,opt,name=return_previews,json=returnPreviews" json:"return_previews,omitempty"`
+	ReturnChildren               *bool                                         `protobuf:"varint,21,opt,name=return_children,json=returnChildren" json:"return_children,omitempty"`
+	ReturnShortDescription       *bool                                         `protobuf:"varint,22,opt,name=return_short_description,json=returnShortDescription" json:"return_short_description,omitempty"`
+	ReturnForSaleData            *bool                                         `protobuf:"varint,30,opt,name=return_for_sale_data,json=returnForSaleData" json:"return_for_sale_data,omitempty"`
+	ReturnMetadata               *bool                                         `protobuf:"varint,32,opt,name=return_metadata,json=returnMetadata,def=0" json:"return_metadata,omitempty"`
+	ReturnPlaytimeStats          *uint32                                       `protobuf:"varint,36,opt,name=return_playtime_stats,json=returnPlaytimeStats" json:"return_playtime_stats,omitempty"`
+	ReturnDetails                *bool                                         `protobuf:"varint,37,opt,name=return_details,json=returnDetails" json:"return_details,omitempty"`
+	StripDescriptionBbcode       *bool                                         `protobuf:"varint,38,opt,name=strip_description_bbcode,json=stripDescriptionBbcode" json:"strip_description_bbcode,omitempty"`
+	DesiredRevision              *EPublishedFileRevision                       `protobuf:"varint,40,opt,name=desired_revision,json=desiredRevision,enum=EPublishedFileRevision,def=0" json:"desired_revision,omitempty"`
+	ReturnReactions              *bool                                         `protobuf:"varint,43,opt,name=return_reactions,json=returnReactions,def=0" json:"return_reactions,omitempty"`
+	XXX_NoUnkeyedLiteral         struct{}                                      `json:"-"`
+	XXX_unrecognized             []byte                                        `json:"-"`
+	XXX_sizecache                int32                                         `json:"-"`
 }
 
 func (m *CPublishedFile_QueryFiles_Request) Reset()         { *m = CPublishedFile_QueryFiles_Request{} }
 func (m *CPublishedFile_QueryFiles_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_QueryFiles_Request) ProtoMessage()    {}
 func (*CPublishedFile_QueryFiles_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{23}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{33}
 }
+
+func (m *CPublishedFile_QueryFiles_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_QueryFiles_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_QueryFiles_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Request.Merge(m, src)
+}
+func (m *CPublishedFile_QueryFiles_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request.Size(m)
+}
+func (m *CPublishedFile_QueryFiles_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_QueryFiles_Request proto.InternalMessageInfo
 
 const Default_CPublishedFile_QueryFiles_Request_Numperpage uint32 = 1
 const Default_CPublishedFile_QueryFiles_Request_MatchAllTags bool = true
 const Default_CPublishedFile_QueryFiles_Request_CacheMaxAgeSeconds uint32 = 0
 const Default_CPublishedFile_QueryFiles_Request_Language int32 = 0
+const Default_CPublishedFile_QueryFiles_Request_SpecialFilter EQueryFilesSpecialFilter = EQueryFilesSpecialFilter_k_EQueryFilesSpecialFilter_None
+const Default_CPublishedFile_QueryFiles_Request_SearchTextTarget EQueryFilesSearchTextTarget = EQueryFilesSearchTextTarget_k_EQueryFilesSearchTextTarget_AllText
 const Default_CPublishedFile_QueryFiles_Request_ReturnMetadata bool = false
+const Default_CPublishedFile_QueryFiles_Request_DesiredRevision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
+const Default_CPublishedFile_QueryFiles_Request_ReturnReactions bool = false
 
 func (m *CPublishedFile_QueryFiles_Request) GetQueryType() uint32 {
 	if m != nil && m.QueryType != nil {
@@ -2210,6 +4232,13 @@ func (m *CPublishedFile_QueryFiles_Request) GetPage() uint32 {
 		return *m.Page
 	}
 	return 0
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetCursor() string {
+	if m != nil && m.Cursor != nil {
+		return *m.Cursor
+	}
+	return ""
 }
 
 func (m *CPublishedFile_QueryFiles_Request) GetNumperpage() uint32 {
@@ -2324,6 +4353,69 @@ func (m *CPublishedFile_QueryFiles_Request) GetRequiredKvTags() []*CPublishedFil
 	return nil
 }
 
+func (m *CPublishedFile_QueryFiles_Request) GetTaggroups() []*CPublishedFile_QueryFiles_Request_TagGroup {
+	if m != nil {
+		return m.Taggroups
+	}
+	return nil
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetDateRangeCreated() *CPublishedFile_QueryFiles_Request_DateRange {
+	if m != nil {
+		return m.DateRangeCreated
+	}
+	return nil
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetDateRangeUpdated() *CPublishedFile_QueryFiles_Request_DateRange {
+	if m != nil {
+		return m.DateRangeUpdated
+	}
+	return nil
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetExcludedContentDescriptors() []EContentDescriptorID {
+	if m != nil {
+		return m.ExcludedContentDescriptors
+	}
+	return nil
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetAdminQuery() bool {
+	if m != nil && m.AdminQuery != nil {
+		return *m.AdminQuery
+	}
+	return false
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetSpecialFilter() EQueryFilesSpecialFilter {
+	if m != nil && m.SpecialFilter != nil {
+		return *m.SpecialFilter
+	}
+	return Default_CPublishedFile_QueryFiles_Request_SpecialFilter
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetAppidsRequiredForUse() []uint32 {
+	if m != nil {
+		return m.AppidsRequiredForUse
+	}
+	return nil
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetExcludedAppidsRequiredForUse() []uint32 {
+	if m != nil {
+		return m.ExcludedAppidsRequiredForUse
+	}
+	return nil
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetSearchTextTarget() EQueryFilesSearchTextTarget {
+	if m != nil && m.SearchTextTarget != nil {
+		return *m.SearchTextTarget
+	}
+	return Default_CPublishedFile_QueryFiles_Request_SearchTextTarget
+}
+
 func (m *CPublishedFile_QueryFiles_Request) GetTotalonly() bool {
 	if m != nil && m.Totalonly != nil {
 		return *m.Totalonly
@@ -2401,10 +4493,40 @@ func (m *CPublishedFile_QueryFiles_Request) GetReturnPlaytimeStats() uint32 {
 	return 0
 }
 
+func (m *CPublishedFile_QueryFiles_Request) GetReturnDetails() bool {
+	if m != nil && m.ReturnDetails != nil {
+		return *m.ReturnDetails
+	}
+	return false
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetStripDescriptionBbcode() bool {
+	if m != nil && m.StripDescriptionBbcode != nil {
+		return *m.StripDescriptionBbcode
+	}
+	return false
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetDesiredRevision() EPublishedFileRevision {
+	if m != nil && m.DesiredRevision != nil {
+		return *m.DesiredRevision
+	}
+	return Default_CPublishedFile_QueryFiles_Request_DesiredRevision
+}
+
+func (m *CPublishedFile_QueryFiles_Request) GetReturnReactions() bool {
+	if m != nil && m.ReturnReactions != nil {
+		return *m.ReturnReactions
+	}
+	return Default_CPublishedFile_QueryFiles_Request_ReturnReactions
+}
+
 type CPublishedFile_QueryFiles_Request_KVTag struct {
-	Key              *string `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
-	Value            *string `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Key                  *string  `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
+	Value                *string  `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_QueryFiles_Request_KVTag) Reset() {
@@ -2413,8 +4535,26 @@ func (m *CPublishedFile_QueryFiles_Request_KVTag) Reset() {
 func (m *CPublishedFile_QueryFiles_Request_KVTag) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_QueryFiles_Request_KVTag) ProtoMessage()    {}
 func (*CPublishedFile_QueryFiles_Request_KVTag) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{23, 0}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{33, 0}
 }
+
+func (m *CPublishedFile_QueryFiles_Request_KVTag) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request_KVTag.Unmarshal(m, b)
+}
+func (m *CPublishedFile_QueryFiles_Request_KVTag) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request_KVTag.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_QueryFiles_Request_KVTag) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Request_KVTag.Merge(m, src)
+}
+func (m *CPublishedFile_QueryFiles_Request_KVTag) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request_KVTag.Size(m)
+}
+func (m *CPublishedFile_QueryFiles_Request_KVTag) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Request_KVTag.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_QueryFiles_Request_KVTag proto.InternalMessageInfo
 
 func (m *CPublishedFile_QueryFiles_Request_KVTag) GetKey() string {
 	if m != nil && m.Key != nil {
@@ -2430,18 +4570,133 @@ func (m *CPublishedFile_QueryFiles_Request_KVTag) GetValue() string {
 	return ""
 }
 
+type CPublishedFile_QueryFiles_Request_TagGroup struct {
+	Tags                 []string `protobuf:"bytes,1,rep,name=tags" json:"tags,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_QueryFiles_Request_TagGroup) Reset() {
+	*m = CPublishedFile_QueryFiles_Request_TagGroup{}
+}
+func (m *CPublishedFile_QueryFiles_Request_TagGroup) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_QueryFiles_Request_TagGroup) ProtoMessage() {}
+func (*CPublishedFile_QueryFiles_Request_TagGroup) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{33, 1}
+}
+
+func (m *CPublishedFile_QueryFiles_Request_TagGroup) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request_TagGroup.Unmarshal(m, b)
+}
+func (m *CPublishedFile_QueryFiles_Request_TagGroup) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request_TagGroup.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_QueryFiles_Request_TagGroup) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Request_TagGroup.Merge(m, src)
+}
+func (m *CPublishedFile_QueryFiles_Request_TagGroup) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request_TagGroup.Size(m)
+}
+func (m *CPublishedFile_QueryFiles_Request_TagGroup) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Request_TagGroup.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_QueryFiles_Request_TagGroup proto.InternalMessageInfo
+
+func (m *CPublishedFile_QueryFiles_Request_TagGroup) GetTags() []string {
+	if m != nil {
+		return m.Tags
+	}
+	return nil
+}
+
+type CPublishedFile_QueryFiles_Request_DateRange struct {
+	TimestampStart       *uint32  `protobuf:"varint,1,opt,name=timestamp_start,json=timestampStart" json:"timestamp_start,omitempty"`
+	TimestampEnd         *uint32  `protobuf:"varint,2,opt,name=timestamp_end,json=timestampEnd" json:"timestamp_end,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_QueryFiles_Request_DateRange) Reset() {
+	*m = CPublishedFile_QueryFiles_Request_DateRange{}
+}
+func (m *CPublishedFile_QueryFiles_Request_DateRange) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_QueryFiles_Request_DateRange) ProtoMessage() {}
+func (*CPublishedFile_QueryFiles_Request_DateRange) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{33, 2}
+}
+
+func (m *CPublishedFile_QueryFiles_Request_DateRange) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request_DateRange.Unmarshal(m, b)
+}
+func (m *CPublishedFile_QueryFiles_Request_DateRange) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request_DateRange.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_QueryFiles_Request_DateRange) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Request_DateRange.Merge(m, src)
+}
+func (m *CPublishedFile_QueryFiles_Request_DateRange) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Request_DateRange.Size(m)
+}
+func (m *CPublishedFile_QueryFiles_Request_DateRange) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Request_DateRange.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_QueryFiles_Request_DateRange proto.InternalMessageInfo
+
+func (m *CPublishedFile_QueryFiles_Request_DateRange) GetTimestampStart() uint32 {
+	if m != nil && m.TimestampStart != nil {
+		return *m.TimestampStart
+	}
+	return 0
+}
+
+func (m *CPublishedFile_QueryFiles_Request_DateRange) GetTimestampEnd() uint32 {
+	if m != nil && m.TimestampEnd != nil {
+		return *m.TimestampEnd
+	}
+	return 0
+}
+
 type CPublishedFile_QueryFiles_Response struct {
 	Total                *uint32                 `protobuf:"varint,1,opt,name=total" json:"total,omitempty"`
 	Publishedfiledetails []*PublishedFileDetails `protobuf:"bytes,2,rep,name=publishedfiledetails" json:"publishedfiledetails,omitempty"`
+	NextCursor           *string                 `protobuf:"bytes,3,opt,name=next_cursor,json=nextCursor" json:"next_cursor,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
 	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
 }
 
 func (m *CPublishedFile_QueryFiles_Response) Reset()         { *m = CPublishedFile_QueryFiles_Response{} }
 func (m *CPublishedFile_QueryFiles_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_QueryFiles_Response) ProtoMessage()    {}
 func (*CPublishedFile_QueryFiles_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{24}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{34}
 }
+
+func (m *CPublishedFile_QueryFiles_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_QueryFiles_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_QueryFiles_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Response.Merge(m, src)
+}
+func (m *CPublishedFile_QueryFiles_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_QueryFiles_Response.Size(m)
+}
+func (m *CPublishedFile_QueryFiles_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_QueryFiles_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_QueryFiles_Response proto.InternalMessageInfo
 
 func (m *CPublishedFile_QueryFiles_Response) GetTotal() uint32 {
 	if m != nil && m.Total != nil {
@@ -2457,21 +4712,50 @@ func (m *CPublishedFile_QueryFiles_Response) GetPublishedfiledetails() []*Publis
 	return nil
 }
 
+func (m *CPublishedFile_QueryFiles_Response) GetNextCursor() string {
+	if m != nil && m.NextCursor != nil {
+		return *m.NextCursor
+	}
+	return ""
+}
+
 type CPublishedFile_AddAppRelationship_Request struct {
-	Publishedfileid  *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	Appid            *uint32 `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	Relationship     *uint32 `protobuf:"varint,3,opt,name=relationship" json:"relationship,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	Relationship         *uint32  `protobuf:"varint,3,opt,name=relationship" json:"relationship,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_AddAppRelationship_Request) Reset() {
 	*m = CPublishedFile_AddAppRelationship_Request{}
 }
-func (m *CPublishedFile_AddAppRelationship_Request) String() string { return proto.CompactTextString(m) }
-func (*CPublishedFile_AddAppRelationship_Request) ProtoMessage()    {}
-func (*CPublishedFile_AddAppRelationship_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{25}
+func (m *CPublishedFile_AddAppRelationship_Request) String() string {
+	return proto.CompactTextString(m)
 }
+func (*CPublishedFile_AddAppRelationship_Request) ProtoMessage() {}
+func (*CPublishedFile_AddAppRelationship_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{35}
+}
+
+func (m *CPublishedFile_AddAppRelationship_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_AddAppRelationship_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_AddAppRelationship_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_AddAppRelationship_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_AddAppRelationship_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_AddAppRelationship_Request.Merge(m, src)
+}
+func (m *CPublishedFile_AddAppRelationship_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_AddAppRelationship_Request.Size(m)
+}
+func (m *CPublishedFile_AddAppRelationship_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_AddAppRelationship_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_AddAppRelationship_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_AddAppRelationship_Request) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -2495,7 +4779,9 @@ func (m *CPublishedFile_AddAppRelationship_Request) GetRelationship() uint32 {
 }
 
 type CPublishedFile_AddAppRelationship_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_AddAppRelationship_Response) Reset() {
@@ -2506,14 +4792,34 @@ func (m *CPublishedFile_AddAppRelationship_Response) String() string {
 }
 func (*CPublishedFile_AddAppRelationship_Response) ProtoMessage() {}
 func (*CPublishedFile_AddAppRelationship_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{26}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{36}
 }
 
+func (m *CPublishedFile_AddAppRelationship_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_AddAppRelationship_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_AddAppRelationship_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_AddAppRelationship_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_AddAppRelationship_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_AddAppRelationship_Response.Merge(m, src)
+}
+func (m *CPublishedFile_AddAppRelationship_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_AddAppRelationship_Response.Size(m)
+}
+func (m *CPublishedFile_AddAppRelationship_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_AddAppRelationship_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_AddAppRelationship_Response proto.InternalMessageInfo
+
 type CPublishedFile_RemoveAppRelationship_Request struct {
-	Publishedfileid  *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	Appid            *uint32 `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
-	Relationship     *uint32 `protobuf:"varint,3,opt,name=relationship" json:"relationship,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Appid                *uint32  `protobuf:"varint,2,opt,name=appid" json:"appid,omitempty"`
+	Relationship         *uint32  `protobuf:"varint,3,opt,name=relationship" json:"relationship,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_RemoveAppRelationship_Request) Reset() {
@@ -2524,8 +4830,26 @@ func (m *CPublishedFile_RemoveAppRelationship_Request) String() string {
 }
 func (*CPublishedFile_RemoveAppRelationship_Request) ProtoMessage() {}
 func (*CPublishedFile_RemoveAppRelationship_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{27}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{37}
 }
+
+func (m *CPublishedFile_RemoveAppRelationship_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_RemoveAppRelationship_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_RemoveAppRelationship_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Request.Merge(m, src)
+}
+func (m *CPublishedFile_RemoveAppRelationship_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Request.Size(m)
+}
+func (m *CPublishedFile_RemoveAppRelationship_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_RemoveAppRelationship_Request) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -2549,7 +4873,9 @@ func (m *CPublishedFile_RemoveAppRelationship_Request) GetRelationship() uint32 
 }
 
 type CPublishedFile_RemoveAppRelationship_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_RemoveAppRelationship_Response) Reset() {
@@ -2560,12 +4886,32 @@ func (m *CPublishedFile_RemoveAppRelationship_Response) String() string {
 }
 func (*CPublishedFile_RemoveAppRelationship_Response) ProtoMessage() {}
 func (*CPublishedFile_RemoveAppRelationship_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{28}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{38}
 }
 
+func (m *CPublishedFile_RemoveAppRelationship_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_RemoveAppRelationship_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_RemoveAppRelationship_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Response.Merge(m, src)
+}
+func (m *CPublishedFile_RemoveAppRelationship_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Response.Size(m)
+}
+func (m *CPublishedFile_RemoveAppRelationship_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_RemoveAppRelationship_Response proto.InternalMessageInfo
+
 type CPublishedFile_GetAppRelationships_Request struct {
-	Publishedfileid  *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_GetAppRelationships_Request) Reset() {
@@ -2576,8 +4922,26 @@ func (m *CPublishedFile_GetAppRelationships_Request) String() string {
 }
 func (*CPublishedFile_GetAppRelationships_Request) ProtoMessage() {}
 func (*CPublishedFile_GetAppRelationships_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{29}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{39}
 }
+
+func (m *CPublishedFile_GetAppRelationships_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationships_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetAppRelationships_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationships_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetAppRelationships_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetAppRelationships_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetAppRelationships_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationships_Request.Size(m)
+}
+func (m *CPublishedFile_GetAppRelationships_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetAppRelationships_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetAppRelationships_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetAppRelationships_Request) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -2587,8 +4951,10 @@ func (m *CPublishedFile_GetAppRelationships_Request) GetPublishedfileid() uint64
 }
 
 type CPublishedFile_GetAppRelationships_Response struct {
-	AppRelationships []*CPublishedFile_GetAppRelationships_Response_AppRelationship `protobuf:"bytes,3,rep,name=app_relationships,json=appRelationships" json:"app_relationships,omitempty"`
-	XXX_unrecognized []byte                                                         `json:"-"`
+	AppRelationships     []*CPublishedFile_GetAppRelationships_Response_AppRelationship `protobuf:"bytes,3,rep,name=app_relationships,json=appRelationships" json:"app_relationships,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                       `json:"-"`
+	XXX_unrecognized     []byte                                                         `json:"-"`
+	XXX_sizecache        int32                                                          `json:"-"`
 }
 
 func (m *CPublishedFile_GetAppRelationships_Response) Reset() {
@@ -2599,8 +4965,26 @@ func (m *CPublishedFile_GetAppRelationships_Response) String() string {
 }
 func (*CPublishedFile_GetAppRelationships_Response) ProtoMessage() {}
 func (*CPublishedFile_GetAppRelationships_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{30}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{40}
 }
+
+func (m *CPublishedFile_GetAppRelationships_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationships_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetAppRelationships_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationships_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetAppRelationships_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetAppRelationships_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetAppRelationships_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationships_Response.Size(m)
+}
+func (m *CPublishedFile_GetAppRelationships_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetAppRelationships_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetAppRelationships_Response proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetAppRelationships_Response) GetAppRelationships() []*CPublishedFile_GetAppRelationships_Response_AppRelationship {
 	if m != nil {
@@ -2610,9 +4994,11 @@ func (m *CPublishedFile_GetAppRelationships_Response) GetAppRelationships() []*C
 }
 
 type CPublishedFile_GetAppRelationships_Response_AppRelationship struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	Relationship     *uint32 `protobuf:"varint,2,opt,name=relationship" json:"relationship,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Relationship         *uint32  `protobuf:"varint,2,opt,name=relationship" json:"relationship,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_GetAppRelationships_Response_AppRelationship) Reset() {
@@ -2623,8 +5009,26 @@ func (m *CPublishedFile_GetAppRelationships_Response_AppRelationship) String() s
 }
 func (*CPublishedFile_GetAppRelationships_Response_AppRelationship) ProtoMessage() {}
 func (*CPublishedFile_GetAppRelationships_Response_AppRelationship) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{30, 0}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{40, 0}
 }
+
+func (m *CPublishedFile_GetAppRelationships_Response_AppRelationship) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationships_Response_AppRelationship.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetAppRelationships_Response_AppRelationship) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationships_Response_AppRelationship.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetAppRelationships_Response_AppRelationship) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetAppRelationships_Response_AppRelationship.Merge(m, src)
+}
+func (m *CPublishedFile_GetAppRelationships_Response_AppRelationship) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationships_Response_AppRelationship.Size(m)
+}
+func (m *CPublishedFile_GetAppRelationships_Response_AppRelationship) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetAppRelationships_Response_AppRelationship.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetAppRelationships_Response_AppRelationship proto.InternalMessageInfo
 
 func (m *CPublishedFile_GetAppRelationships_Response_AppRelationship) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -2640,10 +5044,217 @@ func (m *CPublishedFile_GetAppRelationships_Response_AppRelationship) GetRelatio
 	return 0
 }
 
+type CPublishedFile_GetAppRelationshipsBatched_Request struct {
+	Publishedfileids     []uint64 `protobuf:"varint,1,rep,name=publishedfileids" json:"publishedfileids,omitempty"`
+	FilterRelationship   *uint32  `protobuf:"varint,2,opt,name=filter_relationship,json=filterRelationship" json:"filter_relationship,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Request) Reset() {
+	*m = CPublishedFile_GetAppRelationshipsBatched_Request{}
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetAppRelationshipsBatched_Request) ProtoMessage() {}
+func (*CPublishedFile_GetAppRelationshipsBatched_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{41}
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Request.Size(m)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Request proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Request) GetPublishedfileids() []uint64 {
+	if m != nil {
+		return m.Publishedfileids
+	}
+	return nil
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Request) GetFilterRelationship() uint32 {
+	if m != nil && m.FilterRelationship != nil {
+		return *m.FilterRelationship
+	}
+	return 0
+}
+
+type CPublishedFile_GetAppRelationshipsBatched_Response struct {
+	Relationships        []*CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship `protobuf:"bytes,1,rep,name=relationships" json:"relationships,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                                           `json:"-"`
+	XXX_unrecognized     []byte                                                                             `json:"-"`
+	XXX_sizecache        int32                                                                              `json:"-"`
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response) Reset() {
+	*m = CPublishedFile_GetAppRelationshipsBatched_Response{}
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetAppRelationshipsBatched_Response) ProtoMessage() {}
+func (*CPublishedFile_GetAppRelationshipsBatched_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{42}
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response.Size(m)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response) GetRelationships() []*CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship {
+	if m != nil {
+		return m.Relationships
+	}
+	return nil
+}
+
+type CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Relationship         *uint32  `protobuf:"varint,2,opt,name=relationship" json:"relationship,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) Reset() {
+	*m = CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship{}
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) ProtoMessage() {}
+func (*CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{42, 0}
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship.Merge(m, src)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship.Size(m)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship) GetRelationship() uint32 {
+	if m != nil && m.Relationship != nil {
+		return *m.Relationship
+	}
+	return 0
+}
+
+type CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship struct {
+	Publishedfileid      *uint64                                                               `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Result               *uint32                                                               `protobuf:"varint,2,opt,name=result" json:"result,omitempty"`
+	AppRelationships     []*CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship `protobuf:"bytes,3,rep,name=app_relationships,json=appRelationships" json:"app_relationships,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                              `json:"-"`
+	XXX_unrecognized     []byte                                                                `json:"-"`
+	XXX_sizecache        int32                                                                 `json:"-"`
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) Reset() {
+	*m = CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship{}
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) ProtoMessage() {
+}
+func (*CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{42, 1}
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship.Merge(m, src)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship.Size(m)
+}
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) GetResult() uint32 {
+	if m != nil && m.Result != nil {
+		return *m.Result
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship) GetAppRelationships() []*CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship {
+	if m != nil {
+		return m.AppRelationships
+	}
+	return nil
+}
+
 type CPublishedFile_StartPlaytimeTracking_Request struct {
-	Appid            *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	Publishedfileids []uint64 `protobuf:"varint,2,rep,name=publishedfileids" json:"publishedfileids,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Publishedfileids     []uint64 `protobuf:"varint,2,rep,name=publishedfileids" json:"publishedfileids,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_StartPlaytimeTracking_Request) Reset() {
@@ -2654,8 +5265,26 @@ func (m *CPublishedFile_StartPlaytimeTracking_Request) String() string {
 }
 func (*CPublishedFile_StartPlaytimeTracking_Request) ProtoMessage() {}
 func (*CPublishedFile_StartPlaytimeTracking_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{31}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{43}
 }
+
+func (m *CPublishedFile_StartPlaytimeTracking_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_StartPlaytimeTracking_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_StartPlaytimeTracking_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Request.Merge(m, src)
+}
+func (m *CPublishedFile_StartPlaytimeTracking_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Request.Size(m)
+}
+func (m *CPublishedFile_StartPlaytimeTracking_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_StartPlaytimeTracking_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -2672,7 +5301,9 @@ func (m *CPublishedFile_StartPlaytimeTracking_Request) GetPublishedfileids() []u
 }
 
 type CPublishedFile_StartPlaytimeTracking_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_StartPlaytimeTracking_Response) Reset() {
@@ -2683,13 +5314,33 @@ func (m *CPublishedFile_StartPlaytimeTracking_Response) String() string {
 }
 func (*CPublishedFile_StartPlaytimeTracking_Response) ProtoMessage() {}
 func (*CPublishedFile_StartPlaytimeTracking_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{32}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{44}
 }
 
+func (m *CPublishedFile_StartPlaytimeTracking_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_StartPlaytimeTracking_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_StartPlaytimeTracking_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Response.Merge(m, src)
+}
+func (m *CPublishedFile_StartPlaytimeTracking_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Response.Size(m)
+}
+func (m *CPublishedFile_StartPlaytimeTracking_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_StartPlaytimeTracking_Response proto.InternalMessageInfo
+
 type CPublishedFile_StopPlaytimeTracking_Request struct {
-	Appid            *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	Publishedfileids []uint64 `protobuf:"varint,2,rep,name=publishedfileids" json:"publishedfileids,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Publishedfileids     []uint64 `protobuf:"varint,2,rep,name=publishedfileids" json:"publishedfileids,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_StopPlaytimeTracking_Request) Reset() {
@@ -2700,8 +5351,26 @@ func (m *CPublishedFile_StopPlaytimeTracking_Request) String() string {
 }
 func (*CPublishedFile_StopPlaytimeTracking_Request) ProtoMessage() {}
 func (*CPublishedFile_StopPlaytimeTracking_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{33}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{45}
 }
+
+func (m *CPublishedFile_StopPlaytimeTracking_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_StopPlaytimeTracking_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_StopPlaytimeTracking_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Request.Merge(m, src)
+}
+func (m *CPublishedFile_StopPlaytimeTracking_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Request.Size(m)
+}
+func (m *CPublishedFile_StopPlaytimeTracking_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_StopPlaytimeTracking_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -2718,7 +5387,9 @@ func (m *CPublishedFile_StopPlaytimeTracking_Request) GetPublishedfileids() []ui
 }
 
 type CPublishedFile_StopPlaytimeTracking_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_StopPlaytimeTracking_Response) Reset() {
@@ -2729,12 +5400,32 @@ func (m *CPublishedFile_StopPlaytimeTracking_Response) String() string {
 }
 func (*CPublishedFile_StopPlaytimeTracking_Response) ProtoMessage() {}
 func (*CPublishedFile_StopPlaytimeTracking_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{34}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{46}
 }
 
+func (m *CPublishedFile_StopPlaytimeTracking_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_StopPlaytimeTracking_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_StopPlaytimeTracking_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Response.Merge(m, src)
+}
+func (m *CPublishedFile_StopPlaytimeTracking_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Response.Size(m)
+}
+func (m *CPublishedFile_StopPlaytimeTracking_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_StopPlaytimeTracking_Response proto.InternalMessageInfo
+
 type CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request struct {
-	Appid            *uint32 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
-	XXX_unrecognized []byte  `json:"-"`
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) Reset() {
@@ -2745,8 +5436,26 @@ func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) String() str
 }
 func (*CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) ProtoMessage() {}
 func (*CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{35}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{47}
 }
+
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request.Merge(m, src)
+}
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request.Size(m)
+}
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -2756,7 +5465,9 @@ func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Request) GetAppid() u
 }
 
 type CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response) Reset() {
@@ -2767,13 +5478,33 @@ func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response) String() st
 }
 func (*CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response) ProtoMessage() {}
 func (*CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{36}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{48}
 }
+
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response.Merge(m, src)
+}
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response.Size(m)
+}
+func (m *CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_StopPlaytimeTrackingForAllAppItems_Response proto.InternalMessageInfo
 
 type CPublishedFile_SetPlaytimeForControllerConfigs_Request struct {
 	Appid                 *uint32                                                                         `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
 	ControllerConfigUsage []*CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage `protobuf:"bytes,2,rep,name=controller_config_usage,json=controllerConfigUsage" json:"controller_config_usage,omitempty"`
+	XXX_NoUnkeyedLiteral  struct{}                                                                        `json:"-"`
 	XXX_unrecognized      []byte                                                                          `json:"-"`
+	XXX_sizecache         int32                                                                           `json:"-"`
 }
 
 func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request) Reset() {
@@ -2784,8 +5515,26 @@ func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request) String() string
 }
 func (*CPublishedFile_SetPlaytimeForControllerConfigs_Request) ProtoMessage() {}
 func (*CPublishedFile_SetPlaytimeForControllerConfigs_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{37}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{49}
 }
+
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request.Merge(m, src)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request.Size(m)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request) GetAppid() uint32 {
 	if m != nil && m.Appid != nil {
@@ -2802,9 +5551,11 @@ func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request) GetControllerCo
 }
 
 type CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage struct {
-	Publishedfileid  *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	SecondsActive    *float32 `protobuf:"fixed32,2,opt,name=seconds_active,json=secondsActive" json:"seconds_active,omitempty"`
-	XXX_unrecognized []byte   `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	SecondsActive        *float32 `protobuf:"fixed32,2,opt,name=seconds_active,json=secondsActive" json:"seconds_active,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage) Reset() {
@@ -2815,8 +5566,26 @@ func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfig
 }
 func (*CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage) ProtoMessage() {}
 func (*CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{37, 0}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{49, 0}
 }
+
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage.Unmarshal(m, b)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage.Merge(m, src)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage.Size(m)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage proto.InternalMessageInfo
 
 func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfigUsage) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -2833,7 +5602,9 @@ func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Request_ControllerConfig
 }
 
 type CPublishedFile_SetPlaytimeForControllerConfigs_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Response) Reset() {
@@ -2844,21 +5615,59 @@ func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Response) String() strin
 }
 func (*CPublishedFile_SetPlaytimeForControllerConfigs_Response) ProtoMessage() {}
 func (*CPublishedFile_SetPlaytimeForControllerConfigs_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{38}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{50}
 }
 
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Response.Merge(m, src)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Response.Size(m)
+}
+func (m *CPublishedFile_SetPlaytimeForControllerConfigs_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_SetPlaytimeForControllerConfigs_Response proto.InternalMessageInfo
+
 type CPublishedFile_AddChild_Request struct {
-	Publishedfileid      *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	ChildPublishedfileid *uint64 `protobuf:"varint,2,opt,name=child_publishedfileid,json=childPublishedfileid" json:"child_publishedfileid,omitempty"`
-	XXX_unrecognized     []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	ChildPublishedfileid *uint64  `protobuf:"varint,2,opt,name=child_publishedfileid,json=childPublishedfileid" json:"child_publishedfileid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_AddChild_Request) Reset()         { *m = CPublishedFile_AddChild_Request{} }
 func (m *CPublishedFile_AddChild_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_AddChild_Request) ProtoMessage()    {}
 func (*CPublishedFile_AddChild_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{39}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{51}
 }
+
+func (m *CPublishedFile_AddChild_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_AddChild_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_AddChild_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_AddChild_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_AddChild_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_AddChild_Request.Merge(m, src)
+}
+func (m *CPublishedFile_AddChild_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_AddChild_Request.Size(m)
+}
+func (m *CPublishedFile_AddChild_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_AddChild_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_AddChild_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_AddChild_Request) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -2875,28 +5684,68 @@ func (m *CPublishedFile_AddChild_Request) GetChildPublishedfileid() uint64 {
 }
 
 type CPublishedFile_AddChild_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_AddChild_Response) Reset()         { *m = CPublishedFile_AddChild_Response{} }
 func (m *CPublishedFile_AddChild_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_AddChild_Response) ProtoMessage()    {}
 func (*CPublishedFile_AddChild_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{40}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{52}
 }
 
+func (m *CPublishedFile_AddChild_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_AddChild_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_AddChild_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_AddChild_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_AddChild_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_AddChild_Response.Merge(m, src)
+}
+func (m *CPublishedFile_AddChild_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_AddChild_Response.Size(m)
+}
+func (m *CPublishedFile_AddChild_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_AddChild_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_AddChild_Response proto.InternalMessageInfo
+
 type CPublishedFile_RemoveChild_Request struct {
-	Publishedfileid      *uint64 `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
-	ChildPublishedfileid *uint64 `protobuf:"varint,2,opt,name=child_publishedfileid,json=childPublishedfileid" json:"child_publishedfileid,omitempty"`
-	XXX_unrecognized     []byte  `json:"-"`
+	Publishedfileid      *uint64  `protobuf:"varint,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	ChildPublishedfileid *uint64  `protobuf:"varint,2,opt,name=child_publishedfileid,json=childPublishedfileid" json:"child_publishedfileid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_RemoveChild_Request) Reset()         { *m = CPublishedFile_RemoveChild_Request{} }
 func (m *CPublishedFile_RemoveChild_Request) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_RemoveChild_Request) ProtoMessage()    {}
 func (*CPublishedFile_RemoveChild_Request) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{41}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{53}
 }
+
+func (m *CPublishedFile_RemoveChild_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_RemoveChild_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_RemoveChild_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_RemoveChild_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_RemoveChild_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_RemoveChild_Request.Merge(m, src)
+}
+func (m *CPublishedFile_RemoveChild_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_RemoveChild_Request.Size(m)
+}
+func (m *CPublishedFile_RemoveChild_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_RemoveChild_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_RemoveChild_Request proto.InternalMessageInfo
 
 func (m *CPublishedFile_RemoveChild_Request) GetPublishedfileid() uint64 {
 	if m != nil && m.Publishedfileid != nil {
@@ -2913,26 +5762,1131 @@ func (m *CPublishedFile_RemoveChild_Request) GetChildPublishedfileid() uint64 {
 }
 
 type CPublishedFile_RemoveChild_Response struct {
-	XXX_unrecognized []byte `json:"-"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
 func (m *CPublishedFile_RemoveChild_Response) Reset()         { *m = CPublishedFile_RemoveChild_Response{} }
 func (m *CPublishedFile_RemoveChild_Response) String() string { return proto.CompactTextString(m) }
 func (*CPublishedFile_RemoveChild_Response) ProtoMessage()    {}
 func (*CPublishedFile_RemoveChild_Response) Descriptor() ([]byte, []int) {
-	return publishedfile_fileDescriptor0, []int{42}
+	return fileDescriptor_bb56ea57a5e2aeda, []int{54}
+}
+
+func (m *CPublishedFile_RemoveChild_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_RemoveChild_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_RemoveChild_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_RemoveChild_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_RemoveChild_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_RemoveChild_Response.Merge(m, src)
+}
+func (m *CPublishedFile_RemoveChild_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_RemoveChild_Response.Size(m)
+}
+func (m *CPublishedFile_RemoveChild_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_RemoveChild_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_RemoveChild_Response proto.InternalMessageInfo
+
+type CPublishedFile_SetCollectionChildren_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	Publishedfileid      *uint64  `protobuf:"varint,2,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	Children             []uint64 `protobuf:"varint,3,rep,name=children" json:"children,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_SetCollectionChildren_Request) Reset() {
+	*m = CPublishedFile_SetCollectionChildren_Request{}
+}
+func (m *CPublishedFile_SetCollectionChildren_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_SetCollectionChildren_Request) ProtoMessage() {}
+func (*CPublishedFile_SetCollectionChildren_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{55}
+}
+
+func (m *CPublishedFile_SetCollectionChildren_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_SetCollectionChildren_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_SetCollectionChildren_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_SetCollectionChildren_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_SetCollectionChildren_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_SetCollectionChildren_Request.Merge(m, src)
+}
+func (m *CPublishedFile_SetCollectionChildren_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_SetCollectionChildren_Request.Size(m)
+}
+func (m *CPublishedFile_SetCollectionChildren_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_SetCollectionChildren_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_SetCollectionChildren_Request proto.InternalMessageInfo
+
+func (m *CPublishedFile_SetCollectionChildren_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_SetCollectionChildren_Request) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_SetCollectionChildren_Request) GetChildren() []uint64 {
+	if m != nil {
+		return m.Children
+	}
+	return nil
+}
+
+type CPublishedFile_SetCollectionChildren_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_SetCollectionChildren_Response) Reset() {
+	*m = CPublishedFile_SetCollectionChildren_Response{}
+}
+func (m *CPublishedFile_SetCollectionChildren_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_SetCollectionChildren_Response) ProtoMessage() {}
+func (*CPublishedFile_SetCollectionChildren_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{56}
+}
+
+func (m *CPublishedFile_SetCollectionChildren_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_SetCollectionChildren_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_SetCollectionChildren_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_SetCollectionChildren_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_SetCollectionChildren_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_SetCollectionChildren_Response.Merge(m, src)
+}
+func (m *CPublishedFile_SetCollectionChildren_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_SetCollectionChildren_Response.Size(m)
+}
+func (m *CPublishedFile_SetCollectionChildren_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_SetCollectionChildren_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_SetCollectionChildren_Response proto.InternalMessageInfo
+
+type CPublishedFile_SetSubscriptionListFromCollection_Request struct {
+	Appid                *uint32  `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	ListType             *uint32  `protobuf:"varint,2,opt,name=list_type,json=listType" json:"list_type,omitempty"`
+	Publishedfileid      *uint64  `protobuf:"varint,3,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	AddOnly              *bool    `protobuf:"varint,4,opt,name=add_only,json=addOnly" json:"add_only,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) Reset() {
+	*m = CPublishedFile_SetSubscriptionListFromCollection_Request{}
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_SetSubscriptionListFromCollection_Request) ProtoMessage() {}
+func (*CPublishedFile_SetSubscriptionListFromCollection_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{57}
+}
+
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Request.Merge(m, src)
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Request.Size(m)
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Request proto.InternalMessageInfo
+
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) GetListType() uint32 {
+	if m != nil && m.ListType != nil {
+		return *m.ListType
+	}
+	return 0
+}
+
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Request) GetAddOnly() bool {
+	if m != nil && m.AddOnly != nil {
+		return *m.AddOnly
+	}
+	return false
+}
+
+type CPublishedFile_SetSubscriptionListFromCollection_Response struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Response) Reset() {
+	*m = CPublishedFile_SetSubscriptionListFromCollection_Response{}
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_SetSubscriptionListFromCollection_Response) ProtoMessage() {}
+func (*CPublishedFile_SetSubscriptionListFromCollection_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{58}
+}
+
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Response.Merge(m, src)
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Response.Size(m)
+}
+func (m *CPublishedFile_SetSubscriptionListFromCollection_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_SetSubscriptionListFromCollection_Response proto.InternalMessageInfo
+
+type CPublishedFile_GetUserVoteSummary_Request struct {
+	Publishedfileids     []uint64 `protobuf:"fixed64,1,rep,name=publishedfileids" json:"publishedfileids,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_GetUserVoteSummary_Request) Reset() {
+	*m = CPublishedFile_GetUserVoteSummary_Request{}
+}
+func (m *CPublishedFile_GetUserVoteSummary_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetUserVoteSummary_Request) ProtoMessage() {}
+func (*CPublishedFile_GetUserVoteSummary_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{59}
+}
+
+func (m *CPublishedFile_GetUserVoteSummary_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Request.Size(m)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Request proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetUserVoteSummary_Request) GetPublishedfileids() []uint64 {
+	if m != nil {
+		return m.Publishedfileids
+	}
+	return nil
+}
+
+type CPublishedFile_GetUserVoteSummary_Response struct {
+	Summaries            []*CPublishedFile_GetUserVoteSummary_Response_VoteSummary `protobuf:"bytes,1,rep,name=summaries" json:"summaries,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                  `json:"-"`
+	XXX_unrecognized     []byte                                                    `json:"-"`
+	XXX_sizecache        int32                                                     `json:"-"`
+}
+
+func (m *CPublishedFile_GetUserVoteSummary_Response) Reset() {
+	*m = CPublishedFile_GetUserVoteSummary_Response{}
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetUserVoteSummary_Response) ProtoMessage() {}
+func (*CPublishedFile_GetUserVoteSummary_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{60}
+}
+
+func (m *CPublishedFile_GetUserVoteSummary_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response.Size(m)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetUserVoteSummary_Response) GetSummaries() []*CPublishedFile_GetUserVoteSummary_Response_VoteSummary {
+	if m != nil {
+		return m.Summaries
+	}
+	return nil
+}
+
+type CPublishedFile_GetUserVoteSummary_Response_VoteSummary struct {
+	Publishedfileid      *uint64  `protobuf:"fixed64,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	VoteFor              *bool    `protobuf:"varint,2,opt,name=vote_for,json=voteFor" json:"vote_for,omitempty"`
+	VoteAgainst          *bool    `protobuf:"varint,3,opt,name=vote_against,json=voteAgainst" json:"vote_against,omitempty"`
+	Reported             *bool    `protobuf:"varint,4,opt,name=reported" json:"reported,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) Reset() {
+	*m = CPublishedFile_GetUserVoteSummary_Response_VoteSummary{}
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetUserVoteSummary_Response_VoteSummary) ProtoMessage() {}
+func (*CPublishedFile_GetUserVoteSummary_Response_VoteSummary) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{60, 0}
+}
+
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response_VoteSummary.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response_VoteSummary.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response_VoteSummary.Merge(m, src)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response_VoteSummary.Size(m)
+}
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response_VoteSummary.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetUserVoteSummary_Response_VoteSummary proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) GetVoteFor() bool {
+	if m != nil && m.VoteFor != nil {
+		return *m.VoteFor
+	}
+	return false
+}
+
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) GetVoteAgainst() bool {
+	if m != nil && m.VoteAgainst != nil {
+		return *m.VoteAgainst
+	}
+	return false
+}
+
+func (m *CPublishedFile_GetUserVoteSummary_Response_VoteSummary) GetReported() bool {
+	if m != nil && m.Reported != nil {
+		return *m.Reported
+	}
+	return false
+}
+
+type CPublishedFile_GetItemChanges_Request struct {
+	Appid                *uint32                 `protobuf:"varint,1,opt,name=appid" json:"appid,omitempty"`
+	LastTimeUpdated      *uint32                 `protobuf:"varint,2,opt,name=last_time_updated,json=lastTimeUpdated" json:"last_time_updated,omitempty"`
+	NumItemsMax          *uint32                 `protobuf:"varint,3,opt,name=num_items_max,json=numItemsMax" json:"num_items_max,omitempty"`
+	DesiredRevision      *EPublishedFileRevision `protobuf:"varint,4,opt,name=desired_revision,json=desiredRevision,enum=EPublishedFileRevision,def=0" json:"desired_revision,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
+}
+
+func (m *CPublishedFile_GetItemChanges_Request) Reset()         { *m = CPublishedFile_GetItemChanges_Request{} }
+func (m *CPublishedFile_GetItemChanges_Request) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_GetItemChanges_Request) ProtoMessage()    {}
+func (*CPublishedFile_GetItemChanges_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{61}
+}
+
+func (m *CPublishedFile_GetItemChanges_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetItemChanges_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetItemChanges_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetItemChanges_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetItemChanges_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetItemChanges_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetItemChanges_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetItemChanges_Request.Size(m)
+}
+func (m *CPublishedFile_GetItemChanges_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetItemChanges_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetItemChanges_Request proto.InternalMessageInfo
+
+const Default_CPublishedFile_GetItemChanges_Request_DesiredRevision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
+
+func (m *CPublishedFile_GetItemChanges_Request) GetAppid() uint32 {
+	if m != nil && m.Appid != nil {
+		return *m.Appid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetItemChanges_Request) GetLastTimeUpdated() uint32 {
+	if m != nil && m.LastTimeUpdated != nil {
+		return *m.LastTimeUpdated
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetItemChanges_Request) GetNumItemsMax() uint32 {
+	if m != nil && m.NumItemsMax != nil {
+		return *m.NumItemsMax
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetItemChanges_Request) GetDesiredRevision() EPublishedFileRevision {
+	if m != nil && m.DesiredRevision != nil {
+		return *m.DesiredRevision
+	}
+	return Default_CPublishedFile_GetItemChanges_Request_DesiredRevision
+}
+
+type CPublishedFile_GetItemChanges_Response struct {
+	UpdateTime           *uint32                                                    `protobuf:"varint,1,opt,name=update_time,json=updateTime" json:"update_time,omitempty"`
+	WorkshopItems        []*CPublishedFile_GetItemChanges_Response_WorkshopItemInfo `protobuf:"bytes,2,rep,name=workshop_items,json=workshopItems" json:"workshop_items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                   `json:"-"`
+	XXX_unrecognized     []byte                                                     `json:"-"`
+	XXX_sizecache        int32                                                      `json:"-"`
+}
+
+func (m *CPublishedFile_GetItemChanges_Response) Reset() {
+	*m = CPublishedFile_GetItemChanges_Response{}
+}
+func (m *CPublishedFile_GetItemChanges_Response) String() string { return proto.CompactTextString(m) }
+func (*CPublishedFile_GetItemChanges_Response) ProtoMessage()    {}
+func (*CPublishedFile_GetItemChanges_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{62}
+}
+
+func (m *CPublishedFile_GetItemChanges_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetItemChanges_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetItemChanges_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetItemChanges_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetItemChanges_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetItemChanges_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetItemChanges_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetItemChanges_Response.Size(m)
+}
+func (m *CPublishedFile_GetItemChanges_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetItemChanges_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetItemChanges_Response proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetItemChanges_Response) GetUpdateTime() uint32 {
+	if m != nil && m.UpdateTime != nil {
+		return *m.UpdateTime
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetItemChanges_Response) GetWorkshopItems() []*CPublishedFile_GetItemChanges_Response_WorkshopItemInfo {
+	if m != nil {
+		return m.WorkshopItems
+	}
+	return nil
+}
+
+type CPublishedFile_GetItemChanges_Response_WorkshopItemInfo struct {
+	PublishedFileId      *uint64                        `protobuf:"fixed64,1,opt,name=published_file_id,json=publishedFileId" json:"published_file_id,omitempty"`
+	TimeUpdated          *uint32                        `protobuf:"varint,2,opt,name=time_updated,json=timeUpdated" json:"time_updated,omitempty"`
+	ManifestId           *uint64                        `protobuf:"fixed64,3,opt,name=manifest_id,json=manifestId" json:"manifest_id,omitempty"`
+	AuthorSnapshots      []*PublishedFileAuthorSnapshot `protobuf:"bytes,4,rep,name=author_snapshots,json=authorSnapshots" json:"author_snapshots,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                       `json:"-"`
+	XXX_unrecognized     []byte                         `json:"-"`
+	XXX_sizecache        int32                          `json:"-"`
+}
+
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) Reset() {
+	*m = CPublishedFile_GetItemChanges_Response_WorkshopItemInfo{}
+}
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) ProtoMessage() {}
+func (*CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{62, 0}
+}
+
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetItemChanges_Response_WorkshopItemInfo.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetItemChanges_Response_WorkshopItemInfo.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetItemChanges_Response_WorkshopItemInfo.Merge(m, src)
+}
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetItemChanges_Response_WorkshopItemInfo.Size(m)
+}
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetItemChanges_Response_WorkshopItemInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetItemChanges_Response_WorkshopItemInfo proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) GetPublishedFileId() uint64 {
+	if m != nil && m.PublishedFileId != nil {
+		return *m.PublishedFileId
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) GetTimeUpdated() uint32 {
+	if m != nil && m.TimeUpdated != nil {
+		return *m.TimeUpdated
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) GetManifestId() uint64 {
+	if m != nil && m.ManifestId != nil {
+		return *m.ManifestId
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetItemChanges_Response_WorkshopItemInfo) GetAuthorSnapshots() []*PublishedFileAuthorSnapshot {
+	if m != nil {
+		return m.AuthorSnapshots
+	}
+	return nil
+}
+
+type CPublishedFile_GetContentDescriptors_Request struct {
+	Publishedfileid      *uint64  `protobuf:"fixed64,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_GetContentDescriptors_Request) Reset() {
+	*m = CPublishedFile_GetContentDescriptors_Request{}
+}
+func (m *CPublishedFile_GetContentDescriptors_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetContentDescriptors_Request) ProtoMessage() {}
+func (*CPublishedFile_GetContentDescriptors_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{63}
+}
+
+func (m *CPublishedFile_GetContentDescriptors_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetContentDescriptors_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetContentDescriptors_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetContentDescriptors_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetContentDescriptors_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetContentDescriptors_Request.Merge(m, src)
+}
+func (m *CPublishedFile_GetContentDescriptors_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetContentDescriptors_Request.Size(m)
+}
+func (m *CPublishedFile_GetContentDescriptors_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetContentDescriptors_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetContentDescriptors_Request proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetContentDescriptors_Request) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+type CPublishedFile_GetContentDescriptors_Response struct {
+	ContentDescriptors   []*CPublishedFile_GetContentDescriptors_Response_ContentDescriptor `protobuf:"bytes,1,rep,name=content_descriptors,json=contentDescriptors" json:"content_descriptors,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                           `json:"-"`
+	XXX_unrecognized     []byte                                                             `json:"-"`
+	XXX_sizecache        int32                                                              `json:"-"`
+}
+
+func (m *CPublishedFile_GetContentDescriptors_Response) Reset() {
+	*m = CPublishedFile_GetContentDescriptors_Response{}
+}
+func (m *CPublishedFile_GetContentDescriptors_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetContentDescriptors_Response) ProtoMessage() {}
+func (*CPublishedFile_GetContentDescriptors_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{64}
+}
+
+func (m *CPublishedFile_GetContentDescriptors_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetContentDescriptors_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetContentDescriptors_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response.Merge(m, src)
+}
+func (m *CPublishedFile_GetContentDescriptors_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response.Size(m)
+}
+func (m *CPublishedFile_GetContentDescriptors_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response proto.InternalMessageInfo
+
+func (m *CPublishedFile_GetContentDescriptors_Response) GetContentDescriptors() []*CPublishedFile_GetContentDescriptors_Response_ContentDescriptor {
+	if m != nil {
+		return m.ContentDescriptors
+	}
+	return nil
+}
+
+type CPublishedFile_GetContentDescriptors_Response_ContentDescriptor struct {
+	Descriptorid         *EContentDescriptorID `protobuf:"varint,1,opt,name=descriptorid,enum=EContentDescriptorID,def=1" json:"descriptorid,omitempty"`
+	Accountid            *uint32               `protobuf:"varint,2,opt,name=accountid" json:"accountid,omitempty"`
+	Timestamp            *uint32               `protobuf:"varint,3,opt,name=timestamp" json:"timestamp,omitempty"`
+	ModeratorSet         *bool                 `protobuf:"varint,4,opt,name=moderator_set,json=moderatorSet" json:"moderator_set,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) Reset() {
+	*m = CPublishedFile_GetContentDescriptors_Response_ContentDescriptor{}
+}
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) ProtoMessage() {}
+func (*CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{64, 0}
+}
+
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response_ContentDescriptor.Unmarshal(m, b)
+}
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response_ContentDescriptor.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response_ContentDescriptor.Merge(m, src)
+}
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response_ContentDescriptor.Size(m)
+}
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response_ContentDescriptor.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_GetContentDescriptors_Response_ContentDescriptor proto.InternalMessageInfo
+
+const Default_CPublishedFile_GetContentDescriptors_Response_ContentDescriptor_Descriptorid EContentDescriptorID = EContentDescriptorID_k_EContentDescriptor_NudityOrSexualContent
+
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) GetDescriptorid() EContentDescriptorID {
+	if m != nil && m.Descriptorid != nil {
+		return *m.Descriptorid
+	}
+	return Default_CPublishedFile_GetContentDescriptors_Response_ContentDescriptor_Descriptorid
+}
+
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) GetAccountid() uint32 {
+	if m != nil && m.Accountid != nil {
+		return *m.Accountid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) GetTimestamp() uint32 {
+	if m != nil && m.Timestamp != nil {
+		return *m.Timestamp
+	}
+	return 0
+}
+
+func (m *CPublishedFile_GetContentDescriptors_Response_ContentDescriptor) GetModeratorSet() bool {
+	if m != nil && m.ModeratorSet != nil {
+		return *m.ModeratorSet
+	}
+	return false
+}
+
+type CPublishedFile_UpdateContentDescriptors_Request struct {
+	Publishedfileid      *uint64                `protobuf:"fixed64,1,opt,name=publishedfileid" json:"publishedfileid,omitempty"`
+	DescriptorsToAdd     []EContentDescriptorID `protobuf:"varint,2,rep,name=descriptors_to_add,json=descriptorsToAdd,enum=EContentDescriptorID" json:"descriptors_to_add,omitempty"`
+	DescriptorsToRemove  []EContentDescriptorID `protobuf:"varint,3,rep,name=descriptors_to_remove,json=descriptorsToRemove,enum=EContentDescriptorID" json:"descriptors_to_remove,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}               `json:"-"`
+	XXX_unrecognized     []byte                 `json:"-"`
+	XXX_sizecache        int32                  `json:"-"`
+}
+
+func (m *CPublishedFile_UpdateContentDescriptors_Request) Reset() {
+	*m = CPublishedFile_UpdateContentDescriptors_Request{}
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_UpdateContentDescriptors_Request) ProtoMessage() {}
+func (*CPublishedFile_UpdateContentDescriptors_Request) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{65}
+}
+
+func (m *CPublishedFile_UpdateContentDescriptors_Request) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Request.Unmarshal(m, b)
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Request) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Request.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Request) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Request.Merge(m, src)
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Request) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Request.Size(m)
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Request) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Request.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Request proto.InternalMessageInfo
+
+func (m *CPublishedFile_UpdateContentDescriptors_Request) GetPublishedfileid() uint64 {
+	if m != nil && m.Publishedfileid != nil {
+		return *m.Publishedfileid
+	}
+	return 0
+}
+
+func (m *CPublishedFile_UpdateContentDescriptors_Request) GetDescriptorsToAdd() []EContentDescriptorID {
+	if m != nil {
+		return m.DescriptorsToAdd
+	}
+	return nil
+}
+
+func (m *CPublishedFile_UpdateContentDescriptors_Request) GetDescriptorsToRemove() []EContentDescriptorID {
+	if m != nil {
+		return m.DescriptorsToRemove
+	}
+	return nil
+}
+
+type CPublishedFile_UpdateContentDescriptors_Response struct {
+	TimestampUpdated     *uint32  `protobuf:"varint,1,opt,name=timestamp_updated,json=timestampUpdated" json:"timestamp_updated,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_UpdateContentDescriptors_Response) Reset() {
+	*m = CPublishedFile_UpdateContentDescriptors_Response{}
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Response) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_UpdateContentDescriptors_Response) ProtoMessage() {}
+func (*CPublishedFile_UpdateContentDescriptors_Response) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{66}
+}
+
+func (m *CPublishedFile_UpdateContentDescriptors_Response) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Response.Unmarshal(m, b)
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Response) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Response.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Response) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Response.Merge(m, src)
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Response) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Response.Size(m)
+}
+func (m *CPublishedFile_UpdateContentDescriptors_Response) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Response.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_UpdateContentDescriptors_Response proto.InternalMessageInfo
+
+func (m *CPublishedFile_UpdateContentDescriptors_Response) GetTimestampUpdated() uint32 {
+	if m != nil && m.TimestampUpdated != nil {
+		return *m.TimestampUpdated
+	}
+	return 0
+}
+
+type CPublishedFile_FileSubscribed_Notification struct {
+	PublishedFileId      *uint64                                                    `protobuf:"fixed64,1,opt,name=published_file_id,json=publishedFileId" json:"published_file_id,omitempty"`
+	AppId                *uint32                                                    `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	FileHcontent         *uint64                                                    `protobuf:"fixed64,3,opt,name=file_hcontent,json=fileHcontent" json:"file_hcontent,omitempty"`
+	FileSize             *uint32                                                    `protobuf:"varint,4,opt,name=file_size,json=fileSize" json:"file_size,omitempty"`
+	RtimeSubscribed      *uint32                                                    `protobuf:"varint,5,opt,name=rtime_subscribed,json=rtimeSubscribed" json:"rtime_subscribed,omitempty"`
+	IsDepotContent       *bool                                                      `protobuf:"varint,6,opt,name=is_depot_content,json=isDepotContent" json:"is_depot_content,omitempty"`
+	RtimeUpdated         *uint32                                                    `protobuf:"varint,7,opt,name=rtime_updated,json=rtimeUpdated" json:"rtime_updated,omitempty"`
+	Revision             *EPublishedFileRevision                                    `protobuf:"varint,9,opt,name=revision,enum=EPublishedFileRevision,def=0" json:"revision,omitempty"`
+	Revisions            []*CPublishedFile_FileSubscribed_Notification_RevisionData `protobuf:"bytes,8,rep,name=revisions" json:"revisions,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                                   `json:"-"`
+	XXX_unrecognized     []byte                                                     `json:"-"`
+	XXX_sizecache        int32                                                      `json:"-"`
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) Reset() {
+	*m = CPublishedFile_FileSubscribed_Notification{}
+}
+func (m *CPublishedFile_FileSubscribed_Notification) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_FileSubscribed_Notification) ProtoMessage() {}
+func (*CPublishedFile_FileSubscribed_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{67}
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_FileSubscribed_Notification.Unmarshal(m, b)
+}
+func (m *CPublishedFile_FileSubscribed_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_FileSubscribed_Notification.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_FileSubscribed_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_FileSubscribed_Notification.Merge(m, src)
+}
+func (m *CPublishedFile_FileSubscribed_Notification) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_FileSubscribed_Notification.Size(m)
+}
+func (m *CPublishedFile_FileSubscribed_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_FileSubscribed_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_FileSubscribed_Notification proto.InternalMessageInfo
+
+const Default_CPublishedFile_FileSubscribed_Notification_Revision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
+
+func (m *CPublishedFile_FileSubscribed_Notification) GetPublishedFileId() uint64 {
+	if m != nil && m.PublishedFileId != nil {
+		return *m.PublishedFileId
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) GetAppId() uint32 {
+	if m != nil && m.AppId != nil {
+		return *m.AppId
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) GetFileHcontent() uint64 {
+	if m != nil && m.FileHcontent != nil {
+		return *m.FileHcontent
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) GetFileSize() uint32 {
+	if m != nil && m.FileSize != nil {
+		return *m.FileSize
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) GetRtimeSubscribed() uint32 {
+	if m != nil && m.RtimeSubscribed != nil {
+		return *m.RtimeSubscribed
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) GetIsDepotContent() bool {
+	if m != nil && m.IsDepotContent != nil {
+		return *m.IsDepotContent
+	}
+	return false
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) GetRtimeUpdated() uint32 {
+	if m != nil && m.RtimeUpdated != nil {
+		return *m.RtimeUpdated
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) GetRevision() EPublishedFileRevision {
+	if m != nil && m.Revision != nil {
+		return *m.Revision
+	}
+	return Default_CPublishedFile_FileSubscribed_Notification_Revision
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification) GetRevisions() []*CPublishedFile_FileSubscribed_Notification_RevisionData {
+	if m != nil {
+		return m.Revisions
+	}
+	return nil
+}
+
+type CPublishedFile_FileSubscribed_Notification_RevisionData struct {
+	Revision             *EPublishedFileRevision `protobuf:"varint,1,opt,name=revision,enum=EPublishedFileRevision,def=0" json:"revision,omitempty"`
+	FileHcontent         *uint64                 `protobuf:"fixed64,2,opt,name=file_hcontent,json=fileHcontent" json:"file_hcontent,omitempty"`
+	RtimeUpdated         *uint32                 `protobuf:"varint,3,opt,name=rtime_updated,json=rtimeUpdated" json:"rtime_updated,omitempty"`
+	GameBranchMin        *string                 `protobuf:"bytes,4,opt,name=game_branch_min,json=gameBranchMin" json:"game_branch_min,omitempty"`
+	GameBranchMax        *string                 `protobuf:"bytes,5,opt,name=game_branch_max,json=gameBranchMax" json:"game_branch_max,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
+	XXX_unrecognized     []byte                  `json:"-"`
+	XXX_sizecache        int32                   `json:"-"`
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) Reset() {
+	*m = CPublishedFile_FileSubscribed_Notification_RevisionData{}
+}
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_FileSubscribed_Notification_RevisionData) ProtoMessage() {}
+func (*CPublishedFile_FileSubscribed_Notification_RevisionData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{67, 0}
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_FileSubscribed_Notification_RevisionData.Unmarshal(m, b)
+}
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_FileSubscribed_Notification_RevisionData.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_FileSubscribed_Notification_RevisionData.Merge(m, src)
+}
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_FileSubscribed_Notification_RevisionData.Size(m)
+}
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_FileSubscribed_Notification_RevisionData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_FileSubscribed_Notification_RevisionData proto.InternalMessageInfo
+
+const Default_CPublishedFile_FileSubscribed_Notification_RevisionData_Revision EPublishedFileRevision = EPublishedFileRevision_k_EPublishedFileRevision_Default
+
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) GetRevision() EPublishedFileRevision {
+	if m != nil && m.Revision != nil {
+		return *m.Revision
+	}
+	return Default_CPublishedFile_FileSubscribed_Notification_RevisionData_Revision
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) GetFileHcontent() uint64 {
+	if m != nil && m.FileHcontent != nil {
+		return *m.FileHcontent
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) GetRtimeUpdated() uint32 {
+	if m != nil && m.RtimeUpdated != nil {
+		return *m.RtimeUpdated
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) GetGameBranchMin() string {
+	if m != nil && m.GameBranchMin != nil {
+		return *m.GameBranchMin
+	}
+	return ""
+}
+
+func (m *CPublishedFile_FileSubscribed_Notification_RevisionData) GetGameBranchMax() string {
+	if m != nil && m.GameBranchMax != nil {
+		return *m.GameBranchMax
+	}
+	return ""
+}
+
+type CPublishedFile_FileUnsubscribed_Notification struct {
+	PublishedFileId      *uint64  `protobuf:"fixed64,1,opt,name=published_file_id,json=publishedFileId" json:"published_file_id,omitempty"`
+	AppId                *uint32  `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_FileUnsubscribed_Notification) Reset() {
+	*m = CPublishedFile_FileUnsubscribed_Notification{}
+}
+func (m *CPublishedFile_FileUnsubscribed_Notification) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_FileUnsubscribed_Notification) ProtoMessage() {}
+func (*CPublishedFile_FileUnsubscribed_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{68}
+}
+
+func (m *CPublishedFile_FileUnsubscribed_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_FileUnsubscribed_Notification.Unmarshal(m, b)
+}
+func (m *CPublishedFile_FileUnsubscribed_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_FileUnsubscribed_Notification.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_FileUnsubscribed_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_FileUnsubscribed_Notification.Merge(m, src)
+}
+func (m *CPublishedFile_FileUnsubscribed_Notification) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_FileUnsubscribed_Notification.Size(m)
+}
+func (m *CPublishedFile_FileUnsubscribed_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_FileUnsubscribed_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_FileUnsubscribed_Notification proto.InternalMessageInfo
+
+func (m *CPublishedFile_FileUnsubscribed_Notification) GetPublishedFileId() uint64 {
+	if m != nil && m.PublishedFileId != nil {
+		return *m.PublishedFileId
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileUnsubscribed_Notification) GetAppId() uint32 {
+	if m != nil && m.AppId != nil {
+		return *m.AppId
+	}
+	return 0
+}
+
+type CPublishedFile_FileDeleted_Client_Notification struct {
+	PublishedFileId      *uint64  `protobuf:"fixed64,1,opt,name=published_file_id,json=publishedFileId" json:"published_file_id,omitempty"`
+	AppId                *uint32  `protobuf:"varint,2,opt,name=app_id,json=appId" json:"app_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CPublishedFile_FileDeleted_Client_Notification) Reset() {
+	*m = CPublishedFile_FileDeleted_Client_Notification{}
+}
+func (m *CPublishedFile_FileDeleted_Client_Notification) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CPublishedFile_FileDeleted_Client_Notification) ProtoMessage() {}
+func (*CPublishedFile_FileDeleted_Client_Notification) Descriptor() ([]byte, []int) {
+	return fileDescriptor_bb56ea57a5e2aeda, []int{69}
+}
+
+func (m *CPublishedFile_FileDeleted_Client_Notification) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CPublishedFile_FileDeleted_Client_Notification.Unmarshal(m, b)
+}
+func (m *CPublishedFile_FileDeleted_Client_Notification) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CPublishedFile_FileDeleted_Client_Notification.Marshal(b, m, deterministic)
+}
+func (m *CPublishedFile_FileDeleted_Client_Notification) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CPublishedFile_FileDeleted_Client_Notification.Merge(m, src)
+}
+func (m *CPublishedFile_FileDeleted_Client_Notification) XXX_Size() int {
+	return xxx_messageInfo_CPublishedFile_FileDeleted_Client_Notification.Size(m)
+}
+func (m *CPublishedFile_FileDeleted_Client_Notification) XXX_DiscardUnknown() {
+	xxx_messageInfo_CPublishedFile_FileDeleted_Client_Notification.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CPublishedFile_FileDeleted_Client_Notification proto.InternalMessageInfo
+
+func (m *CPublishedFile_FileDeleted_Client_Notification) GetPublishedFileId() uint64 {
+	if m != nil && m.PublishedFileId != nil {
+		return *m.PublishedFileId
+	}
+	return 0
+}
+
+func (m *CPublishedFile_FileDeleted_Client_Notification) GetAppId() uint32 {
+	if m != nil && m.AppId != nil {
+		return *m.AppId
+	}
+	return 0
 }
 
 func init() {
+	proto.RegisterEnum("EPublishedFileRevision", EPublishedFileRevision_name, EPublishedFileRevision_value)
+	proto.RegisterEnum("EPublishedFileForSaleStatus", EPublishedFileForSaleStatus_name, EPublishedFileForSaleStatus_value)
+	proto.RegisterEnum("EQueryFilesSpecialFilter", EQueryFilesSpecialFilter_name, EQueryFilesSpecialFilter_value)
+	proto.RegisterEnum("EQueryFilesSearchTextTarget", EQueryFilesSearchTextTarget_name, EQueryFilesSearchTextTarget_value)
+	proto.RegisterType((*CPublishedFile_Vote_Request)(nil), "CPublishedFile_Vote_Request")
+	proto.RegisterType((*CPublishedFile_Vote_Response)(nil), "CPublishedFile_Vote_Response")
 	proto.RegisterType((*CPublishedFile_Subscribe_Request)(nil), "CPublishedFile_Subscribe_Request")
 	proto.RegisterType((*CPublishedFile_Subscribe_Response)(nil), "CPublishedFile_Subscribe_Response")
 	proto.RegisterType((*CPublishedFile_Unsubscribe_Request)(nil), "CPublishedFile_Unsubscribe_Request")
 	proto.RegisterType((*CPublishedFile_Unsubscribe_Response)(nil), "CPublishedFile_Unsubscribe_Response")
 	proto.RegisterType((*CPublishedFile_CanSubscribe_Request)(nil), "CPublishedFile_CanSubscribe_Request")
 	proto.RegisterType((*CPublishedFile_CanSubscribe_Response)(nil), "CPublishedFile_CanSubscribe_Response")
+	proto.RegisterType((*CPublishedFile_GetSubSectionData_Request)(nil), "CPublishedFile_GetSubSectionData_Request")
+	proto.RegisterType((*PublishedFileSubSection)(nil), "PublishedFileSubSection")
+	proto.RegisterType((*CPublishedFile_GetSubSectionData_Response)(nil), "CPublishedFile_GetSubSectionData_Response")
 	proto.RegisterType((*CPublishedFile_Publish_Request)(nil), "CPublishedFile_Publish_Request")
 	proto.RegisterType((*CPublishedFile_Publish_Response)(nil), "CPublishedFile_Publish_Response")
 	proto.RegisterType((*CPublishedFile_GetDetails_Request)(nil), "CPublishedFile_GetDetails_Request")
+	proto.RegisterType((*PublishedFileAuthorSnapshot)(nil), "PublishedFileAuthorSnapshot")
 	proto.RegisterType((*PublishedFileDetails)(nil), "PublishedFileDetails")
 	proto.RegisterType((*PublishedFileDetails_Tag)(nil), "PublishedFileDetails.Tag")
 	proto.RegisterType((*PublishedFileDetails_Preview)(nil), "PublishedFileDetails.Preview")
@@ -2941,6 +6895,7 @@ func init() {
 	proto.RegisterType((*PublishedFileDetails_VoteData)(nil), "PublishedFileDetails.VoteData")
 	proto.RegisterType((*PublishedFileDetails_ForSaleData)(nil), "PublishedFileDetails.ForSaleData")
 	proto.RegisterType((*PublishedFileDetails_PlaytimeStats)(nil), "PublishedFileDetails.PlaytimeStats")
+	proto.RegisterType((*PublishedFileDetails_Reaction)(nil), "PublishedFileDetails.Reaction")
 	proto.RegisterType((*CPublishedFile_GetDetails_Response)(nil), "CPublishedFile_GetDetails_Response")
 	proto.RegisterType((*CPublishedFile_GetItemInfo_Request)(nil), "CPublishedFile_GetItemInfo_Request")
 	proto.RegisterType((*CPublishedFile_GetItemInfo_Request_WorkshopItem)(nil), "CPublishedFile_GetItemInfo_Request.WorkshopItem")
@@ -2948,10 +6903,17 @@ func init() {
 	proto.RegisterType((*CPublishedFile_GetItemInfo_Response_WorkshopItemInfo)(nil), "CPublishedFile_GetItemInfo_Response.WorkshopItemInfo")
 	proto.RegisterType((*CPublishedFile_GetUserFiles_Request)(nil), "CPublishedFile_GetUserFiles_Request")
 	proto.RegisterType((*CPublishedFile_GetUserFiles_Request_KVTag)(nil), "CPublishedFile_GetUserFiles_Request.KVTag")
+	proto.RegisterType((*CPublishedFile_GetUserFiles_Request_TagGroup)(nil), "CPublishedFile_GetUserFiles_Request.TagGroup")
+	proto.RegisterType((*CPublishedFile_GetUserFiles_Request_DateRange)(nil), "CPublishedFile_GetUserFiles_Request.DateRange")
 	proto.RegisterType((*CPublishedFile_GetUserFiles_Response)(nil), "CPublishedFile_GetUserFiles_Response")
 	proto.RegisterType((*CPublishedFile_GetUserFiles_Response_App)(nil), "CPublishedFile_GetUserFiles_Response.App")
+	proto.RegisterType((*CPublishedFile_AreFilesInSubscriptionList_Request)(nil), "CPublishedFile_AreFilesInSubscriptionList_Request")
+	proto.RegisterType((*CPublishedFile_AreFilesInSubscriptionList_Response)(nil), "CPublishedFile_AreFilesInSubscriptionList_Response")
+	proto.RegisterType((*CPublishedFile_AreFilesInSubscriptionList_Response_InList)(nil), "CPublishedFile_AreFilesInSubscriptionList_Response.InList")
 	proto.RegisterType((*CPublishedFile_Update_Request)(nil), "CPublishedFile_Update_Request")
 	proto.RegisterType((*CPublishedFile_Update_Response)(nil), "CPublishedFile_Update_Response")
+	proto.RegisterType((*CPublishedFile_Delete_Request)(nil), "CPublishedFile_Delete_Request")
+	proto.RegisterType((*CPublishedFile_Delete_Response)(nil), "CPublishedFile_Delete_Response")
 	proto.RegisterType((*CPublishedFile_GetChangeHistoryEntry_Request)(nil), "CPublishedFile_GetChangeHistoryEntry_Request")
 	proto.RegisterType((*CPublishedFile_GetChangeHistoryEntry_Response)(nil), "CPublishedFile_GetChangeHistoryEntry_Response")
 	proto.RegisterType((*CPublishedFile_GetChangeHistory_Request)(nil), "CPublishedFile_GetChangeHistory_Request")
@@ -2961,6 +6923,8 @@ func init() {
 	proto.RegisterType((*CPublishedFile_RefreshVotingQueue_Response)(nil), "CPublishedFile_RefreshVotingQueue_Response")
 	proto.RegisterType((*CPublishedFile_QueryFiles_Request)(nil), "CPublishedFile_QueryFiles_Request")
 	proto.RegisterType((*CPublishedFile_QueryFiles_Request_KVTag)(nil), "CPublishedFile_QueryFiles_Request.KVTag")
+	proto.RegisterType((*CPublishedFile_QueryFiles_Request_TagGroup)(nil), "CPublishedFile_QueryFiles_Request.TagGroup")
+	proto.RegisterType((*CPublishedFile_QueryFiles_Request_DateRange)(nil), "CPublishedFile_QueryFiles_Request.DateRange")
 	proto.RegisterType((*CPublishedFile_QueryFiles_Response)(nil), "CPublishedFile_QueryFiles_Response")
 	proto.RegisterType((*CPublishedFile_AddAppRelationship_Request)(nil), "CPublishedFile_AddAppRelationship_Request")
 	proto.RegisterType((*CPublishedFile_AddAppRelationship_Response)(nil), "CPublishedFile_AddAppRelationship_Response")
@@ -2969,6 +6933,10 @@ func init() {
 	proto.RegisterType((*CPublishedFile_GetAppRelationships_Request)(nil), "CPublishedFile_GetAppRelationships_Request")
 	proto.RegisterType((*CPublishedFile_GetAppRelationships_Response)(nil), "CPublishedFile_GetAppRelationships_Response")
 	proto.RegisterType((*CPublishedFile_GetAppRelationships_Response_AppRelationship)(nil), "CPublishedFile_GetAppRelationships_Response.AppRelationship")
+	proto.RegisterType((*CPublishedFile_GetAppRelationshipsBatched_Request)(nil), "CPublishedFile_GetAppRelationshipsBatched_Request")
+	proto.RegisterType((*CPublishedFile_GetAppRelationshipsBatched_Response)(nil), "CPublishedFile_GetAppRelationshipsBatched_Response")
+	proto.RegisterType((*CPublishedFile_GetAppRelationshipsBatched_Response_AppRelationship)(nil), "CPublishedFile_GetAppRelationshipsBatched_Response.AppRelationship")
+	proto.RegisterType((*CPublishedFile_GetAppRelationshipsBatched_Response_PublishedFileAppRelationship)(nil), "CPublishedFile_GetAppRelationshipsBatched_Response.PublishedFileAppRelationship")
 	proto.RegisterType((*CPublishedFile_StartPlaytimeTracking_Request)(nil), "CPublishedFile_StartPlaytimeTracking_Request")
 	proto.RegisterType((*CPublishedFile_StartPlaytimeTracking_Response)(nil), "CPublishedFile_StartPlaytimeTracking_Response")
 	proto.RegisterType((*CPublishedFile_StopPlaytimeTracking_Request)(nil), "CPublishedFile_StopPlaytimeTracking_Request")
@@ -2982,433 +6950,458 @@ func init() {
 	proto.RegisterType((*CPublishedFile_AddChild_Response)(nil), "CPublishedFile_AddChild_Response")
 	proto.RegisterType((*CPublishedFile_RemoveChild_Request)(nil), "CPublishedFile_RemoveChild_Request")
 	proto.RegisterType((*CPublishedFile_RemoveChild_Response)(nil), "CPublishedFile_RemoveChild_Response")
-	proto.RegisterEnum("PublishedFileDetails_EPublishedFileForSaleStatus", PublishedFileDetails_EPublishedFileForSaleStatus_name, PublishedFileDetails_EPublishedFileForSaleStatus_value)
+	proto.RegisterType((*CPublishedFile_SetCollectionChildren_Request)(nil), "CPublishedFile_SetCollectionChildren_Request")
+	proto.RegisterType((*CPublishedFile_SetCollectionChildren_Response)(nil), "CPublishedFile_SetCollectionChildren_Response")
+	proto.RegisterType((*CPublishedFile_SetSubscriptionListFromCollection_Request)(nil), "CPublishedFile_SetSubscriptionListFromCollection_Request")
+	proto.RegisterType((*CPublishedFile_SetSubscriptionListFromCollection_Response)(nil), "CPublishedFile_SetSubscriptionListFromCollection_Response")
+	proto.RegisterType((*CPublishedFile_GetUserVoteSummary_Request)(nil), "CPublishedFile_GetUserVoteSummary_Request")
+	proto.RegisterType((*CPublishedFile_GetUserVoteSummary_Response)(nil), "CPublishedFile_GetUserVoteSummary_Response")
+	proto.RegisterType((*CPublishedFile_GetUserVoteSummary_Response_VoteSummary)(nil), "CPublishedFile_GetUserVoteSummary_Response.VoteSummary")
+	proto.RegisterType((*CPublishedFile_GetItemChanges_Request)(nil), "CPublishedFile_GetItemChanges_Request")
+	proto.RegisterType((*CPublishedFile_GetItemChanges_Response)(nil), "CPublishedFile_GetItemChanges_Response")
+	proto.RegisterType((*CPublishedFile_GetItemChanges_Response_WorkshopItemInfo)(nil), "CPublishedFile_GetItemChanges_Response.WorkshopItemInfo")
+	proto.RegisterType((*CPublishedFile_GetContentDescriptors_Request)(nil), "CPublishedFile_GetContentDescriptors_Request")
+	proto.RegisterType((*CPublishedFile_GetContentDescriptors_Response)(nil), "CPublishedFile_GetContentDescriptors_Response")
+	proto.RegisterType((*CPublishedFile_GetContentDescriptors_Response_ContentDescriptor)(nil), "CPublishedFile_GetContentDescriptors_Response.ContentDescriptor")
+	proto.RegisterType((*CPublishedFile_UpdateContentDescriptors_Request)(nil), "CPublishedFile_UpdateContentDescriptors_Request")
+	proto.RegisterType((*CPublishedFile_UpdateContentDescriptors_Response)(nil), "CPublishedFile_UpdateContentDescriptors_Response")
+	proto.RegisterType((*CPublishedFile_FileSubscribed_Notification)(nil), "CPublishedFile_FileSubscribed_Notification")
+	proto.RegisterType((*CPublishedFile_FileSubscribed_Notification_RevisionData)(nil), "CPublishedFile_FileSubscribed_Notification.RevisionData")
+	proto.RegisterType((*CPublishedFile_FileUnsubscribed_Notification)(nil), "CPublishedFile_FileUnsubscribed_Notification")
+	proto.RegisterType((*CPublishedFile_FileDeleted_Client_Notification)(nil), "CPublishedFile_FileDeleted_Client_Notification")
 }
 
-func init() { proto.RegisterFile("steammessages_publishedfile.steamclient.proto", publishedfile_fileDescriptor0) }
+func init() {
+	proto.RegisterFile("steammessages_publishedfile.steamclient.proto", fileDescriptor_bb56ea57a5e2aeda)
+}
 
-var publishedfile_fileDescriptor0 = []byte{
-	// 6739 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x5c, 0xcd, 0x73, 0x1c, 0xc7,
-	0x75, 0xcf, 0xe2, 0x83, 0x00, 0x1a, 0x00, 0x09, 0xb6, 0x00, 0x6a, 0xb4, 0xb4, 0xc8, 0xe1, 0x92,
-	0x12, 0x41, 0x11, 0x1c, 0x49, 0xd4, 0x37, 0x25, 0xcb, 0x02, 0x40, 0x42, 0x86, 0x24, 0x92, 0xd0,
-	0x00, 0x24, 0x2d, 0x59, 0xf2, 0xb8, 0xb1, 0xd3, 0xbb, 0x3b, 0xe2, 0xec, 0xcc, 0x68, 0xba, 0x17,
-	0xe0, 0xaa, 0x1c, 0x95, 0x3d, 0x89, 0x63, 0x57, 0x25, 0x29, 0xa7, 0x92, 0x54, 0x4a, 0xb9, 0x24,
-	0x07, 0xbb, 0x92, 0x6b, 0xaa, 0x5c, 0x7b, 0x4d, 0x7c, 0xf4, 0x25, 0x87, 0x54, 0xaa, 0x92, 0x5b,
-	0x6e, 0xc9, 0x2d, 0xb7, 0xfc, 0x01, 0xa9, 0x7e, 0xdd, 0x3d, 0x3b, 0x5f, 0x0b, 0x80, 0x94, 0x2c,
-	0xf9, 0x42, 0x62, 0xba, 0x5f, 0xbf, 0xf7, 0xba, 0xa7, 0x5f, 0xf7, 0xef, 0x7d, 0xec, 0xa0, 0x2b,
-	0x8c, 0x53, 0xd2, 0xed, 0x52, 0xc6, 0x48, 0x9b, 0x32, 0x27, 0xea, 0xed, 0xfa, 0x1e, 0xeb, 0x50,
-	0xb7, 0xe5, 0xf9, 0xd4, 0x82, 0xbe, 0xa6, 0xef, 0xd1, 0x80, 0x5b, 0x51, 0x1c, 0xf2, 0xb0, 0xbe,
-	0x92, 0x27, 0xef, 0x05, 0x5e, 0xcb, 0xa3, 0xae, 0xb3, 0x4b, 0x58, 0x05, 0x75, 0xe3, 0x57, 0x35,
-	0x64, 0xae, 0x6f, 0x69, 0x96, 0x1b, 0x9e, 0x4f, 0x9d, 0xed, 0xde, 0x2e, 0x6b, 0xc6, 0xde, 0x2e,
-	0x75, 0x6c, 0xfa, 0x69, 0x8f, 0x32, 0x8e, 0x97, 0xd1, 0x89, 0x9c, 0x54, 0xcf, 0x35, 0x6a, 0x66,
-	0x6d, 0x79, 0xc2, 0x2e, 0x36, 0xe3, 0xd3, 0x68, 0xc6, 0xf7, 0x18, 0x77, 0x78, 0x3f, 0xa2, 0xc6,
-	0x98, 0x59, 0x5b, 0x9e, 0xb7, 0xa7, 0x45, 0xc3, 0x4e, 0x3f, 0xa2, 0x78, 0x11, 0x4d, 0x92, 0x28,
-	0xf2, 0x5c, 0x63, 0xdc, 0xac, 0x2d, 0x4f, 0xda, 0xf2, 0x01, 0x9f, 0x47, 0xf3, 0x41, 0xc8, 0xbd,
-	0x56, 0xdf, 0x91, 0x8a, 0x19, 0x13, 0x66, 0x6d, 0x79, 0xda, 0x9e, 0x93, 0x8d, 0xeb, 0xd0, 0xd6,
-	0x38, 0x8f, 0xce, 0x1d, 0xa0, 0x25, 0x8b, 0xc2, 0x80, 0xd1, 0xc6, 0x3f, 0xd4, 0x50, 0xa3, 0x40,
-	0x75, 0x27, 0x60, 0xbf, 0x87, 0xb3, 0x79, 0x0a, 0x9d, 0x3f, 0x50, 0x4f, 0x35, 0x9f, 0xdb, 0x25,
-	0xb2, 0x75, 0x12, 0x7c, 0x89, 0xb7, 0xd3, 0x78, 0x17, 0x5d, 0x38, 0x98, 0xa1, 0x14, 0x2c, 0x26,
-	0xd1, 0x24, 0x81, 0x93, 0xaa, 0x04, 0xfc, 0xa6, 0xed, 0xb9, 0x66, 0x86, 0xba, 0xf1, 0x77, 0x73,
-	0xe8, 0x4c, 0x81, 0x9b, 0x7a, 0x4a, 0x35, 0x5b, 0xd7, 0x4b, 0x24, 0xc6, 0xcf, 0xaf, 0x5d, 0x49,
-	0x06, 0xc6, 0xa5, 0xd5, 0x28, 0x32, 0x37, 0x5d, 0x93, 0x77, 0x3c, 0x66, 0x0a, 0xb5, 0x4c, 0x8f,
-	0x99, 0xbb, 0xd4, 0x0b, 0xda, 0x66, 0xaa, 0xad, 0xb9, 0x61, 0xdf, 0xbe, 0x69, 0xe9, 0x15, 0xb5,
-	0xd1, 0xf1, 0x66, 0x18, 0xb0, 0x5e, 0x97, 0xc6, 0x8e, 0xe4, 0x06, 0x6f, 0x62, 0xed, 0x72, 0x32,
-	0x30, 0x2e, 0x1e, 0x85, 0xdb, 0xce, 0x6d, 0xcb, 0x9e, 0xd7, 0x2c, 0x56, 0x81, 0xe7, 0x87, 0x68,
-	0xbe, 0xe9, 0x87, 0x3d, 0x58, 0x97, 0x80, 0x74, 0x29, 0xbc, 0xc3, 0x99, 0xb5, 0x17, 0x93, 0x81,
-	0xf1, 0xdc, 0x2d, 0xd2, 0xa5, 0x66, 0xd8, 0x32, 0x79, 0x87, 0x4a, 0x96, 0x3c, 0xd4, 0xcc, 0x4c,
-	0x2f, 0x80, 0xe6, 0x1e, 0xa3, 0xf1, 0x45, 0x66, 0x02, 0x0b, 0xc1, 0x3b, 0xcb, 0x0a, 0x7f, 0x8a,
-	0x96, 0xa2, 0x98, 0xee, 0x79, 0x74, 0xdf, 0xc9, 0xcb, 0x98, 0x00, 0x19, 0x6f, 0x24, 0x03, 0xe3,
-	0xd5, 0x2a, 0x19, 0x3d, 0x46, 0x4d, 0xc2, 0xa0, 0x69, 0xa8, 0xbb, 0xe8, 0xbc, 0xc8, 0x4c, 0xc5,
-	0xd0, 0xb2, 0x17, 0xd5, 0x5f, 0xeb, 0x39, 0x91, 0x6f, 0xa0, 0x49, 0xee, 0x71, 0x9f, 0x1a, 0x93,
-	0x20, 0xe2, 0xe9, 0x64, 0x60, 0x34, 0x76, 0xe8, 0x03, 0x6e, 0x42, 0xab, 0xd9, 0x0a, 0xe3, 0x0a,
-	0xb6, 0x96, 0x2d, 0x07, 0xe1, 0x7b, 0x68, 0x41, 0x3c, 0x3b, 0x2e, 0x15, 0x6f, 0x36, 0xe2, 0x5e,
-	0x18, 0x18, 0xc7, 0x80, 0xd1, 0x4a, 0x32, 0x30, 0x96, 0x81, 0x51, 0xa6, 0x6f, 0x24, 0xbb, 0x13,
-	0xe2, 0xbf, 0xeb, 0x43, 0x42, 0x7c, 0x17, 0xcd, 0x00, 0x63, 0x30, 0x9f, 0x29, 0x78, 0x69, 0xaf,
-	0x25, 0x03, 0xe3, 0xa5, 0xe5, 0x1b, 0xf7, 0xc2, 0xf8, 0x3e, 0xeb, 0x84, 0x91, 0xd8, 0x35, 0xc2,
-	0x98, 0x2e, 0x99, 0xe2, 0x5f, 0xb1, 0x22, 0xba, 0xa7, 0xb8, 0xf4, 0x96, 0x3d, 0xdd, 0x52, 0xc4,
-	0xd8, 0x41, 0xa7, 0xd2, 0x1d, 0xc1, 0x3a, 0x61, 0xcc, 0x9b, 0x3d, 0xee, 0xc0, 0x12, 0x4f, 0x83,
-	0xda, 0x97, 0x92, 0x81, 0xf1, 0xd4, 0xb6, 0xea, 0x30, 0x45, 0xc7, 0x48, 0x9d, 0x17, 0x35, 0x23,
-	0x4d, 0x2e, 0xde, 0x0c, 0xfe, 0x10, 0x2d, 0xf4, 0xc3, 0x1e, 0xef, 0xed, 0x52, 0x47, 0xbc, 0x6a,
-	0x60, 0x3d, 0x03, 0xac, 0x9f, 0x4d, 0x06, 0xc6, 0xe5, 0xe5, 0xdb, 0x30, 0x3f, 0xe2, 0x5f, 0x32,
-	0xef, 0xc8, 0x9d, 0xf0, 0x41, 0xd8, 0xdb, 0xe9, 0xed, 0x52, 0x93, 0x34, 0x9b, 0x61, 0x2f, 0xe0,
-	0xa6, 0x1e, 0x65, 0xd9, 0x27, 0x14, 0xa3, 0x3b, 0xaa, 0x05, 0xfb, 0x48, 0x37, 0x39, 0x7b, 0x9e,
-	0x4b, 0x43, 0xcf, 0x35, 0x10, 0xb0, 0x5e, 0x4f, 0x06, 0xc6, 0x77, 0x32, 0xac, 0xef, 0x8a, 0x5e,
-	0xb1, 0xb9, 0xc3, 0x96, 0x49, 0x52, 0x09, 0x30, 0x46, 0x4d, 0xc7, 0x63, 0xa5, 0xf9, 0x1c, 0x57,
-	0xbc, 0xef, 0x4a, 0xd6, 0xf8, 0xcf, 0x6b, 0x08, 0xed, 0x79, 0xcc, 0xdb, 0xf5, 0x7c, 0x8f, 0xf7,
-	0x8d, 0x59, 0x78, 0x09, 0xdd, 0x64, 0x60, 0x78, 0xcb, 0x37, 0x6c, 0xda, 0x0d, 0x39, 0xdd, 0xe6,
-	0x61, 0x4c, 0xda, 0x34, 0x67, 0xc8, 0x77, 0xd3, 0x11, 0x42, 0x0d, 0xfd, 0xb7, 0xde, 0xb0, 0x79,
-	0x99, 0xe6, 0x72, 0x14, 0x7b, 0x7b, 0x84, 0xd3, 0x15, 0xb3, 0x15, 0x7b, 0x34, 0x70, 0xd9, 0x8a,
-	0xa4, 0x68, 0xae, 0x98, 0x94, 0x37, 0xad, 0x4b, 0x76, 0x46, 0x01, 0xfc, 0x00, 0xcd, 0xc5, 0xd4,
-	0xf5, 0x62, 0xda, 0xe4, 0x4e, 0x2f, 0xf6, 0x8c, 0x39, 0x98, 0xfa, 0x9d, 0x64, 0x60, 0xbc, 0x9f,
-	0x99, 0xfa, 0x66, 0xcb, 0x64, 0xbd, 0x28, 0xf2, 0x3d, 0xea, 0xae, 0x80, 0xc8, 0x98, 0xb2, 0x9e,
-	0xcf, 0xf3, 0x66, 0xad, 0x4c, 0x63, 0xd3, 0x15, 0x36, 0x4f, 0xa2, 0x88, 0x06, 0x2e, 0x75, 0xc5,
-	0x8e, 0x11, 0x03, 0xee, 0xd8, 0x9b, 0x96, 0x3d, 0xab, 0x45, 0xdd, 0x89, 0x3d, 0xfc, 0x0e, 0x9a,
-	0xe0, 0xa4, 0xcd, 0x8c, 0x79, 0x73, 0x7c, 0x79, 0x66, 0xed, 0xe5, 0x64, 0x60, 0x5c, 0x5d, 0x8d,
-	0x63, 0x22, 0x67, 0x05, 0xb6, 0x42, 0xda, 0x4c, 0x0c, 0x27, 0x51, 0xe4, 0xf7, 0x35, 0x9f, 0xe2,
-	0xfa, 0x02, 0x0f, 0xec, 0xa1, 0x13, 0xcd, 0xd0, 0xf7, 0x69, 0x53, 0x28, 0x2c, 0xb7, 0xf7, 0x71,
-	0x98, 0xc8, 0x5b, 0xc9, 0xc0, 0x78, 0x23, 0x33, 0x11, 0xbd, 0xab, 0x87, 0xd4, 0x55, 0x2b, 0x18,
-	0xd3, 0x28, 0xa6, 0x8c, 0x06, 0x9c, 0x59, 0xf6, 0xf1, 0x21, 0x29, 0xec, 0xf5, 0x7b, 0x68, 0xa6,
-	0x4d, 0xba, 0xca, 0x86, 0x4e, 0x80, 0x90, 0x6b, 0xc9, 0xc0, 0x78, 0xb9, 0x42, 0x88, 0xa0, 0x3b,
-	0x8c, 0xfd, 0xb4, 0x20, 0x02, 0xc6, 0x3f, 0x44, 0xe3, 0xbd, 0xd8, 0x37, 0x16, 0x80, 0xe5, 0xad,
-	0x64, 0x60, 0xbc, 0x93, 0x7f, 0x01, 0xb0, 0xbd, 0x86, 0x43, 0x4d, 0x02, 0xfc, 0x57, 0x64, 0xbb,
-	0xc7, 0xd4, 0x2a, 0xbf, 0x27, 0x17, 0x8a, 0x70, 0xe8, 0x15, 0x27, 0x15, 0x69, 0x53, 0xcb, 0x16,
-	0xac, 0x1b, 0x01, 0x3a, 0x3b, 0xf2, 0x7e, 0x50, 0x17, 0xcd, 0xd1, 0xaf, 0xe2, 0x73, 0x85, 0x8d,
-	0x23, 0xee, 0x80, 0x99, 0xdc, 0x1b, 0x6e, 0xfc, 0xf5, 0x4c, 0x09, 0x24, 0xbc, 0x4d, 0xf9, 0x75,
-	0xca, 0x89, 0xe7, 0xb3, 0xf4, 0x4e, 0xda, 0x45, 0x0b, 0x05, 0xde, 0xcc, 0xa8, 0x99, 0xe3, 0xcb,
-	0xc7, 0xe4, 0x9e, 0xd8, 0xa6, 0x5c, 0xac, 0x65, 0x61, 0x09, 0x37, 0x5d, 0xd8, 0x1a, 0x31, 0xe5,
-	0xb1, 0x47, 0xf7, 0xa8, 0xe9, 0x4a, 0xa6, 0xc2, 0x0e, 0x2d, 0xbb, 0xc4, 0x0f, 0xff, 0x00, 0xcd,
-	0x7a, 0x41, 0xd3, 0xef, 0x09, 0xb2, 0x36, 0x03, 0x5d, 0xa7, 0xe5, 0xc1, 0x2f, 0x16, 0x36, 0xee,
-	0xd1, 0x15, 0xc1, 0xaa, 0x17, 0x07, 0x62, 0xd3, 0x99, 0x5e, 0xd0, 0x0a, 0xe3, 0x2e, 0x81, 0xdd,
-	0xa1, 0x2e, 0x18, 0xd9, 0x4b, 0x5d, 0x2d, 0xc8, 0xb2, 0xb3, 0x0c, 0xf1, 0xe7, 0xe8, 0x09, 0xf5,
-	0x48, 0x5c, 0xd7, 0x93, 0x2f, 0x4d, 0x5d, 0x0c, 0x0c, 0xae, 0xb2, 0x69, 0xb9, 0x13, 0x8b, 0xd2,
-	0x14, 0xcd, 0xd1, 0x24, 0x8e, 0x16, 0x81, 0x1d, 0x74, 0x42, 0x75, 0x36, 0x3b, 0x9e, 0xef, 0xc6,
-	0x34, 0x90, 0x30, 0x67, 0xed, 0xa5, 0x64, 0x60, 0x3c, 0x5f, 0x94, 0xaa, 0x69, 0x46, 0x8b, 0x2a,
-	0x72, 0xc3, 0x04, 0xcd, 0xab, 0xa6, 0xfb, 0x7b, 0xb0, 0x84, 0x93, 0xc0, 0xfe, 0xf5, 0x64, 0x60,
-	0xbc, 0x52, 0x64, 0x7f, 0x9f, 0xf6, 0xcd, 0x3d, 0xe2, 0xf7, 0xa8, 0xb4, 0xe0, 0x91, 0x42, 0xf2,
-	0x1c, 0xf1, 0x87, 0x68, 0x4e, 0x35, 0xec, 0x85, 0x9c, 0x32, 0xb8, 0xf1, 0xa6, 0xe5, 0x1e, 0x28,
-	0x4a, 0x10, 0x04, 0xa6, 0x4b, 0x38, 0x19, 0xcd, 0x3c, 0xc7, 0x0b, 0xf7, 0xd0, 0x49, 0xb8, 0x97,
-	0x72, 0x57, 0xea, 0x34, 0x08, 0xf8, 0x6e, 0x32, 0x30, 0xae, 0x17, 0x05, 0x10, 0x13, 0xc8, 0x73,
-	0xb7, 0xac, 0x17, 0x08, 0xb0, 0xee, 0xa6, 0x28, 0xa1, 0xe7, 0xfb, 0xd9, 0x7e, 0xcb, 0x5e, 0x80,
-	0x31, 0xd9, 0xfb, 0xf6, 0x87, 0x08, 0x2b, 0x35, 0x5a, 0x61, 0xcc, 0x88, 0x4f, 0x85, 0xce, 0x70,
-	0xbb, 0x4c, 0xaf, 0x3d, 0x97, 0x0c, 0x8c, 0x95, 0xf2, 0x7e, 0xf0, 0x9a, 0xe2, 0x50, 0x15, 0x74,
-	0x2b, 0xa6, 0xd7, 0x82, 0xb3, 0xcf, 0x6b, 0x92, 0x5d, 0x71, 0xd4, 0x55, 0xf0, 0xc2, 0xdb, 0xe9,
-	0x8b, 0xef, 0x52, 0x4e, 0x80, 0xfd, 0x2c, 0xb0, 0x87, 0x2b, 0x37, 0x65, 0x1f, 0x85, 0x51, 0xcf,
-	0x27, 0x5c, 0x9e, 0x46, 0x9a, 0xd2, 0x6c, 0x79, 0xd4, 0x77, 0x87, 0x2f, 0x5b, 0xb7, 0x63, 0x07,
-	0x4d, 0xfb, 0x24, 0x68, 0xf7, 0x48, 0x9b, 0xc2, 0x7d, 0x30, 0x79, 0xad, 0xf6, 0x9c, 0xdc, 0xbf,
-	0xdb, 0x11, 0x6d, 0x0a, 0xef, 0x45, 0x9e, 0x36, 0x7e, 0xd8, 0x24, 0xbe, 0xf7, 0x99, 0x38, 0xe4,
-	0xe1, 0xbc, 0x0e, 0xd5, 0x34, 0x2c, 0xf3, 0x3a, 0x6d, 0x91, 0x9e, 0xcf, 0xc1, 0x46, 0x6f, 0x04,
-	0x6d, 0x85, 0x17, 0x34, 0x53, 0xfc, 0x23, 0xb4, 0x24, 0x29, 0x9d, 0xc8, 0x27, 0x7d, 0xee, 0x75,
-	0xa9, 0xc3, 0x38, 0xe1, 0xe2, 0x2e, 0x10, 0xd7, 0x21, 0xbc, 0x12, 0x5b, 0xad, 0x88, 0x22, 0x30,
-	0x81, 0x20, 0x85, 0x0d, 0x4c, 0x29, 0xe2, 0x9a, 0x41, 0xaf, 0xbb, 0x4b, 0x63, 0xf1, 0x56, 0x5c,
-	0xd2, 0x17, 0x58, 0xb3, 0x15, 0xc6, 0x02, 0xa7, 0xb8, 0xa4, 0x6f, 0xd9, 0x8f, 0x49, 0x31, 0x5b,
-	0x8a, 0xc9, 0xb6, 0xe0, 0xd1, 0xf8, 0x9f, 0x33, 0x68, 0x31, 0x77, 0x2a, 0xa9, 0x13, 0x09, 0x9f,
-	0x42, 0xc7, 0xe4, 0xbd, 0x26, 0xe1, 0xb1, 0xad, 0x9e, 0xaa, 0x0e, 0xc5, 0xb1, 0xea, 0x43, 0xd1,
-	0x40, 0x53, 0xcd, 0x98, 0x12, 0x1e, 0xc6, 0x60, 0xf5, 0xc7, 0x6c, 0xfd, 0x08, 0x08, 0x5e, 0xfe,
-	0xa9, 0x30, 0xf3, 0x04, 0x88, 0x98, 0x53, 0x8d, 0x12, 0x05, 0x3f, 0x55, 0x42, 0xd6, 0x93, 0x40,
-	0x55, 0x00, 0xcb, 0xcf, 0xa2, 0xc7, 0x4a, 0x70, 0xcb, 0x73, 0xc1, 0x60, 0xe6, 0x6d, 0x5c, 0x04,
-	0x50, 0x9e, 0x8b, 0xeb, 0x68, 0x3a, 0x05, 0xbd, 0x53, 0x70, 0x4e, 0xa7, 0xcf, 0xc2, 0xa5, 0x02,
-	0x4c, 0xc8, 0xbc, 0xcf, 0x24, 0x5c, 0x9b, 0x90, 0x9d, 0xdb, 0xde, 0x67, 0x14, 0x3f, 0x83, 0x4e,
-	0x6a, 0xe8, 0x3c, 0x24, 0x9a, 0x51, 0x73, 0x97, 0x1d, 0x1b, 0x9a, 0xf6, 0x09, 0x29, 0xc4, 0x11,
-	0x97, 0x18, 0x00, 0x28, 0x7b, 0x4a, 0x3c, 0xdf, 0x89, 0x7d, 0x7c, 0x16, 0xcd, 0x6a, 0x36, 0xa2,
-	0x77, 0x16, 0x7a, 0x91, 0x6a, 0x12, 0x04, 0x4f, 0x23, 0x8d, 0x93, 0x34, 0x04, 0x03, 0x1c, 0x62,
-	0x17, 0x5a, 0xf1, 0x82, 0xbc, 0x23, 0xe7, 0xa1, 0x53, 0xfc, 0x29, 0xd6, 0xb5, 0xd3, 0x0c, 0x03,
-	0x4e, 0x03, 0x0e, 0x2a, 0xc2, 0xbd, 0x7f, 0xcc, 0x9e, 0xd3, 0x8d, 0x42, 0x3d, 0x7c, 0x09, 0x2d,
-	0xa4, 0x44, 0x4a, 0x2a, 0x5c, 0xdd, 0xc7, 0xec, 0x13, 0xba, 0x7d, 0x4b, 0x36, 0x0b, 0x27, 0x52,
-	0x22, 0x77, 0xb8, 0x87, 0x35, 0x22, 0xbf, 0x54, 0x81, 0xc8, 0x4f, 0x02, 0x41, 0x09, 0x63, 0x5f,
-	0xae, 0x3a, 0x6a, 0x30, 0xd0, 0x96, 0x0f, 0x88, 0x73, 0x68, 0x0e, 0x76, 0x3f, 0xec, 0x02, 0xea,
-	0x1a, 0x8f, 0xc1, 0x2b, 0x9c, 0x15, 0x6d, 0xeb, 0xb2, 0x29, 0x25, 0xe9, 0x45, 0x2e, 0x90, 0x2c,
-	0x0e, 0x49, 0xee, 0xc8, 0x26, 0x7c, 0x26, 0x07, 0x29, 0x97, 0x80, 0x20, 0x8b, 0xf1, 0x16, 0xd1,
-	0x64, 0xcb, 0x17, 0x87, 0xf6, 0x29, 0xe8, 0x92, 0x0f, 0x62, 0xe5, 0xf6, 0x15, 0xb6, 0x97, 0x2b,
-	0xf7, 0xb8, 0xf4, 0x29, 0xf7, 0x33, 0xae, 0x80, 0x98, 0x4d, 0x4a, 0x44, 0x9a, 0x4d, 0x1a, 0x09,
-	0x15, 0x0c, 0x20, 0x5c, 0xd0, 0x1d, 0xab, 0xaa, 0x1d, 0xaf, 0x20, 0xcc, 0x3a, 0xe1, 0xfe, 0xd0,
-	0x4d, 0x75, 0x88, 0xef, 0x1b, 0x4f, 0x48, 0x6a, 0xd1, 0x93, 0xfa, 0xaa, 0xab, 0xbe, 0x8f, 0x5f,
-	0x44, 0xa7, 0x82, 0x5e, 0xd7, 0x69, 0x86, 0xdd, 0xae, 0xc0, 0x33, 0x8e, 0x4b, 0xf7, 0xa8, 0x1f,
-	0x46, 0x34, 0x36, 0xea, 0xe0, 0xbf, 0x2f, 0x06, 0xbd, 0xee, 0xba, 0xea, 0xbc, 0xae, 0xfb, 0xb0,
-	0x85, 0x1e, 0xcb, 0x8d, 0x92, 0xc8, 0xd6, 0x38, 0x0d, 0x43, 0x4e, 0x66, 0x86, 0x80, 0x85, 0x37,
-	0x85, 0x4d, 0xef, 0x92, 0x20, 0xa0, 0xae, 0xf1, 0x2d, 0xd0, 0x43, 0x3d, 0xe1, 0x27, 0x11, 0xda,
-	0x25, 0x81, 0x13, 0x53, 0xc2, 0xc2, 0xc0, 0x78, 0x12, 0xde, 0xcf, 0xcc, 0x2e, 0x09, 0x6c, 0x68,
-	0x48, 0x87, 0xc5, 0xc6, 0x19, 0xd8, 0x27, 0xea, 0x09, 0x5f, 0x40, 0xc7, 0x85, 0x23, 0xbe, 0x2b,
-	0xb6, 0x82, 0x4f, 0xc5, 0x62, 0x9c, 0x4d, 0x3d, 0xf1, 0x35, 0x7a, 0x5d, 0xb6, 0xe1, 0x06, 0x5c,
-	0x65, 0x61, 0x37, 0x22, 0xdc, 0xdb, 0xf5, 0xa9, 0x61, 0x4a, 0x9a, 0x6c, 0x9b, 0x30, 0x17, 0x12,
-	0x45, 0xd2, 0x4b, 0x3a, 0x27, 0xcd, 0x85, 0x44, 0xd1, 0xad, 0xac, 0x49, 0x02, 0xc4, 0x6c, 0xc8,
-	0x28, 0x47, 0xea, 0x6b, 0x95, 0x42, 0x01, 0xe7, 0xcb, 0xa1, 0x00, 0x7c, 0x01, 0xcd, 0x2b, 0x02,
-	0xd8, 0x67, 0xcc, 0xb8, 0x20, 0xcf, 0x91, 0x5c, 0x23, 0xfe, 0x16, 0x9a, 0x69, 0x91, 0xbd, 0x30,
-	0xf6, 0xc4, 0x3c, 0x9e, 0x02, 0x8a, 0x61, 0x03, 0xf4, 0x86, 0xbe, 0x1f, 0xee, 0xd3, 0x98, 0x19,
-	0x4f, 0xab, 0x5e, 0xdd, 0x80, 0x5f, 0x42, 0xa7, 0x7c, 0xaf, 0x45, 0xe5, 0xd9, 0x9d, 0x13, 0x75,
-	0x11, 0x48, 0x97, 0x74, 0xef, 0x76, 0x4e, 0xe4, 0x15, 0x84, 0xd3, 0x61, 0x43, 0xd9, 0xcb, 0x30,
-	0xe4, 0xa4, 0xee, 0xd9, 0x48, 0x75, 0xc8, 0x91, 0xa7, 0xca, 0x5c, 0x2a, 0x90, 0xa7, 0x4a, 0x5d,
-	0x46, 0x69, 0x63, 0x7a, 0xb3, 0x18, 0x6f, 0xc2, 0x71, 0xb5, 0xa0, 0x3b, 0xf4, 0x5d, 0x80, 0xdf,
-	0x40, 0xf5, 0x12, 0xb1, 0xc3, 0x28, 0x63, 0x30, 0x8b, 0xef, 0xc0, 0x28, 0xa3, 0x38, 0x6a, 0x5b,
-	0xf5, 0x0b, 0x9b, 0x92, 0xe8, 0xee, 0x19, 0x69, 0x53, 0x12, 0x87, 0x9d, 0x45, 0xb3, 0x5e, 0x97,
-	0xb4, 0xa9, 0xb3, 0xef, 0xb9, 0xbc, 0x63, 0x5c, 0x96, 0xa6, 0x08, 0x4d, 0xf7, 0x44, 0x8b, 0xb0,
-	0x66, 0x49, 0xd0, 0xa1, 0x5e, 0xbb, 0xc3, 0x8d, 0x15, 0x69, 0xcd, 0xd0, 0xf6, 0x5d, 0x68, 0x12,
-	0x6f, 0x5f, 0x92, 0x88, 0x93, 0xee, 0x8a, 0x3c, 0xad, 0xa1, 0x41, 0x9d, 0xa4, 0x2c, 0x0a, 0x3d,
-	0x9f, 0xc6, 0x0e, 0x27, 0x6d, 0xc3, 0x82, 0x77, 0x8f, 0x54, 0xd3, 0x0e, 0x69, 0x8b, 0xb3, 0x20,
-	0x73, 0x25, 0x3c, 0x2b, 0x15, 0x18, 0xb6, 0x88, 0xad, 0xa9, 0x9f, 0x60, 0xeb, 0x3d, 0x07, 0x02,
-	0x72, 0x6d, 0x42, 0x49, 0xb0, 0x31, 0x0d, 0x25, 0x9f, 0x97, 0x4a, 0x0a, 0xe3, 0xd2, 0x78, 0xf0,
-	0x2c, 0x12, 0x8f, 0x4e, 0x4c, 0xa3, 0x30, 0xe6, 0xcc, 0xb8, 0x2a, 0xe5, 0x04, 0xbd, 0xae, 0x2d,
-	0x5b, 0xf0, 0x6b, 0x68, 0x3a, 0x05, 0xc0, 0x2f, 0x98, 0xe3, 0xcb, 0xb3, 0x57, 0x9f, 0xb4, 0xaa,
-	0x2e, 0x5d, 0x4b, 0x1d, 0xbc, 0x76, 0x4a, 0x8e, 0xaf, 0x28, 0xc7, 0xf0, 0x45, 0x18, 0xf6, 0x44,
-	0xf5, 0xb0, 0x1d, 0xd2, 0x56, 0xbe, 0xdf, 0x2b, 0x68, 0x3a, 0xd5, 0xf4, 0x25, 0x18, 0x72, 0xba,
-	0x7a, 0x08, 0x28, 0x6f, 0xa7, 0xc4, 0xf8, 0x05, 0x74, 0x4c, 0x81, 0xd9, 0x97, 0x0f, 0x1a, 0xf6,
-	0xee, 0x5d, 0x21, 0x4b, 0x91, 0xe2, 0xd7, 0xd1, 0x8c, 0x80, 0x94, 0x0e, 0x40, 0xad, 0x57, 0xcc,
-	0xda, 0xf2, 0xec, 0xd5, 0x33, 0xd5, 0xe3, 0xee, 0x86, 0x9c, 0x5e, 0x27, 0x9c, 0xd8, 0xd3, 0x7b,
-	0xea, 0x2f, 0xfc, 0x0e, 0x3a, 0x5e, 0x00, 0x3c, 0x6f, 0x01, 0x87, 0xf3, 0x23, 0x96, 0x26, 0x0b,
-	0x5b, 0xec, 0xf9, 0x28, 0xfb, 0x88, 0x93, 0x1a, 0x3a, 0x91, 0xb5, 0xbe, 0x5d, 0xea, 0x1a, 0xaf,
-	0x02, 0x7c, 0xfa, 0x20, 0x19, 0x18, 0x77, 0x6e, 0x07, 0x3e, 0xa0, 0x70, 0xcf, 0x15, 0x18, 0x39,
-	0xc7, 0xde, 0x7a, 0x9b, 0xf2, 0x3b, 0x8c, 0xc6, 0xe2, 0x6f, 0x66, 0x92, 0xc0, 0x35, 0x83, 0x90,
-	0x9b, 0x81, 0x70, 0x40, 0xfc, 0x32, 0xa5, 0x54, 0xc6, 0x6c, 0x12, 0xdf, 0x67, 0xf6, 0xf1, 0x8c,
-	0x45, 0xef, 0x52, 0x17, 0x07, 0x68, 0xbe, 0x15, 0xc6, 0x8e, 0x80, 0xa3, 0x72, 0x45, 0x5e, 0x83,
-	0xf9, 0x9c, 0xab, 0x9e, 0xcf, 0x46, 0x18, 0x6f, 0x13, 0x1f, 0x96, 0x62, 0xed, 0x62, 0x32, 0x30,
-	0xce, 0x6f, 0x29, 0xb8, 0x9b, 0x71, 0x7f, 0x4a, 0xa8, 0x77, 0xb6, 0x35, 0x1c, 0x85, 0x57, 0xd1,
-	0x74, 0x8a, 0x73, 0xaf, 0x81, 0xa3, 0xfc, 0x54, 0x32, 0x30, 0xce, 0xdd, 0xd4, 0x88, 0x96, 0x30,
-	0x16, 0x36, 0x3d, 0x71, 0x29, 0x9a, 0xfb, 0x1e, 0xef, 0x00, 0x54, 0xf4, 0x38, 0xed, 0xda, 0xe9,
-	0x30, 0x71, 0xa4, 0x64, 0xcf, 0x61, 0x87, 0x34, 0x05, 0x5a, 0x7b, 0x1d, 0x4e, 0xf9, 0x93, 0xd9,
-	0x9e, 0x55, 0xd1, 0x21, 0xce, 0xb9, 0x1c, 0xb9, 0x58, 0x00, 0xc6, 0x49, 0x37, 0x32, 0xde, 0x90,
-	0xe7, 0x5c, 0xb6, 0x77, 0x47, 0x77, 0xe2, 0x9b, 0x19, 0x08, 0xfd, 0x6d, 0x0d, 0xa1, 0xad, 0x64,
-	0x60, 0x3c, 0xb3, 0x23, 0x80, 0xb3, 0xea, 0xd2, 0xbe, 0x84, 0x8c, 0x0a, 0x8a, 0x37, 0x91, 0x73,
-	0x28, 0x52, 0x16, 0xf5, 0x97, 0xd0, 0xb8, 0x30, 0xee, 0x05, 0x34, 0x2e, 0xac, 0xbe, 0x26, 0xe1,
-	0x0f, 0x27, 0x6d, 0x71, 0x48, 0x13, 0xb7, 0xeb, 0x05, 0x61, 0xe0, 0xf7, 0xa5, 0x5b, 0x6b, 0x0f,
-	0x1b, 0xea, 0x3f, 0x19, 0x43, 0x53, 0x1a, 0xd8, 0x7c, 0x0b, 0xcd, 0x28, 0x0b, 0x4b, 0x7d, 0xfa,
-	0x61, 0x83, 0xe8, 0x65, 0x61, 0xcc, 0xc3, 0xd8, 0xa5, 0xb1, 0x0a, 0xac, 0x0f, 0x1b, 0x34, 0xec,
-	0x1a, 0x1f, 0xc2, 0x2e, 0x8c, 0x26, 0x00, 0x0b, 0x4a, 0x14, 0x0b, 0x7f, 0xe7, 0x50, 0xe6, 0x64,
-	0x01, 0x65, 0x96, 0x01, 0xde, 0xb1, 0x4a, 0x80, 0x77, 0x0e, 0xcd, 0x69, 0xa4, 0x38, 0x0c, 0x52,
-	0xda, 0x1a, 0x3d, 0xc2, 0x05, 0x78, 0x05, 0x61, 0xfa, 0x80, 0xd3, 0x38, 0x20, 0xbe, 0x13, 0xd3,
-	0x16, 0x8d, 0x69, 0xd0, 0x54, 0x81, 0x46, 0xfb, 0xa4, 0xee, 0xb1, 0x75, 0x47, 0xdd, 0x47, 0x93,
-	0x60, 0xf8, 0x0f, 0x11, 0xda, 0x38, 0x78, 0x31, 0x72, 0xb7, 0xf3, 0x78, 0xfe, 0x76, 0xae, 0x3f,
-	0x8b, 0x26, 0xe1, 0xbc, 0x10, 0x4b, 0x76, 0x9f, 0xf6, 0xf5, 0xab, 0xba, 0x4f, 0x01, 0x85, 0x81,
-	0x57, 0xac, 0x22, 0x25, 0xf2, 0xa1, 0xfe, 0x21, 0x9a, 0xd6, 0x07, 0x85, 0xa0, 0x60, 0xcd, 0x30,
-	0x96, 0xd1, 0xfd, 0x31, 0x5b, 0x3e, 0x08, 0xa0, 0x00, 0x4e, 0xac, 0xd3, 0x8b, 0x94, 0x32, 0x53,
-	0xf0, 0x7c, 0x27, 0x12, 0x20, 0x46, 0x76, 0xb9, 0xe1, 0x7e, 0xa0, 0x74, 0x81, 0xe3, 0x89, 0x5d,
-	0x0f, 0xf7, 0x83, 0xfa, 0xbf, 0x8f, 0xa1, 0xd9, 0x8c, 0xcd, 0xe1, 0x33, 0x68, 0xd6, 0x63, 0x8e,
-	0x36, 0x58, 0x95, 0x43, 0x98, 0xf1, 0x98, 0xa2, 0x11, 0xee, 0x87, 0x70, 0x40, 0xa9, 0xd3, 0x24,
-	0x9c, 0xb6, 0xc3, 0xb8, 0xaf, 0xe4, 0xcd, 0x43, 0xeb, 0xba, 0x6a, 0xc4, 0x0e, 0x9a, 0x12, 0xbb,
-	0x9c, 0xf7, 0x64, 0x68, 0xe3, 0xf8, 0xd5, 0xe7, 0xab, 0xcd, 0xfd, 0x46, 0xae, 0x55, 0x09, 0xd9,
-	0x86, 0x81, 0xd7, 0xf0, 0x7d, 0x67, 0x6b, 0x63, 0x63, 0x7b, 0xdb, 0xb9, 0x15, 0x72, 0xd5, 0x63,
-	0x6b, 0xae, 0xf8, 0x39, 0xb4, 0x98, 0xd7, 0xc3, 0x69, 0xf9, 0x61, 0x18, 0xab, 0xcd, 0x86, 0x73,
-	0xda, 0x6c, 0x88, 0x1e, 0xfc, 0x1a, 0xaa, 0xcb, 0x11, 0x1e, 0x73, 0x22, 0xd2, 0x77, 0xf6, 0x3b,
-	0x84, 0x3b, 0xfd, 0xb0, 0xe7, 0xec, 0x93, 0x80, 0xcb, 0x58, 0x85, 0xbd, 0x04, 0x14, 0x9b, 0x6c,
-	0x8b, 0xf4, 0xef, 0x75, 0x08, 0xff, 0x20, 0xec, 0xdd, 0x23, 0x01, 0x17, 0xce, 0x94, 0xeb, 0x31,
-	0x88, 0x12, 0x3b, 0x11, 0x8d, 0x9b, 0x34, 0xe0, 0xc2, 0x68, 0x95, 0x33, 0xa5, 0xbb, 0xb6, 0xd2,
-	0x9e, 0xfa, 0xc7, 0x68, 0x3e, 0x77, 0x30, 0x0b, 0xe7, 0x20, 0x83, 0x1f, 0x9a, 0x61, 0x00, 0x01,
-	0x2c, 0xb9, 0xb3, 0x52, 0xd8, 0x00, 0xcd, 0xfa, 0x66, 0x4d, 0x51, 0x86, 0x74, 0x23, 0xc5, 0x55,
-	0xaa, 0x81, 0x45, 0xe3, 0xb7, 0x35, 0x74, 0xfa, 0x80, 0x95, 0xc3, 0xa7, 0x50, 0xc5, 0xda, 0x2d,
-	0xfc, 0x01, 0x3e, 0x8d, 0x1e, 0xd7, 0xed, 0x5b, 0x34, 0x70, 0xbd, 0xa0, 0xbd, 0x1a, 0x45, 0x71,
-	0xb8, 0x47, 0xfc, 0x85, 0x5a, 0xb6, 0x53, 0xb6, 0x52, 0x57, 0x8f, 0x1c, 0xcb, 0x76, 0xda, 0xf4,
-	0x13, 0xda, 0xe4, 0xc3, 0xce, 0xf1, 0x6c, 0xe7, 0xad, 0xf0, 0xbd, 0x30, 0x68, 0xd3, 0x58, 0x77,
-	0x4e, 0xe0, 0x27, 0xd1, 0x13, 0xba, 0x73, 0x47, 0xac, 0x0e, 0xf7, 0xf6, 0x68, 0x2a, 0x75, 0xb2,
-	0x11, 0x96, 0xb2, 0x7f, 0xb9, 0xf0, 0x9f, 0x0a, 0x39, 0x6e, 0xa2, 0xc5, 0x9c, 0x01, 0xaa, 0x10,
-	0x0e, 0xc4, 0x00, 0x67, 0xaf, 0x2e, 0x55, 0xee, 0x2d, 0xbb, 0x72, 0x48, 0xe3, 0xef, 0xc7, 0xaa,
-	0x24, 0x6e, 0x72, 0xda, 0xdd, 0x0c, 0x5a, 0x61, 0x1a, 0x71, 0x5c, 0x42, 0xc7, 0x04, 0xf4, 0xd6,
-	0x69, 0x30, 0xc8, 0x6b, 0x6d, 0xba, 0xc2, 0xd9, 0xf5, 0x09, 0xe3, 0x4e, 0xce, 0xdd, 0x92, 0x16,
-	0x70, 0x42, 0x74, 0xec, 0x64, 0x5c, 0xae, 0x7b, 0xe8, 0x78, 0xea, 0x17, 0x89, 0x0b, 0x46, 0x98,
-	0x82, 0x50, 0xf7, 0x39, 0xeb, 0x70, 0xf9, 0x96, 0x4e, 0xa9, 0x88, 0x0e, 0x3b, 0x75, 0xc2, 0xc4,
-	0x13, 0xab, 0x7f, 0x8c, 0xe6, 0xb2, 0xdd, 0xe0, 0x81, 0x6b, 0x86, 0xd2, 0x07, 0x57, 0x6a, 0x1f,
-	0xcb, 0x9c, 0x5b, 0x42, 0xd2, 0x66, 0xd9, 0x55, 0x1c, 0x2b, 0xb9, 0x8a, 0x8d, 0x7f, 0x19, 0x2b,
-	0xa5, 0x30, 0xf3, 0x1a, 0xaa, 0x97, 0x72, 0x16, 0xcd, 0x4a, 0x2e, 0xb0, 0x1a, 0x6a, 0x9d, 0x90,
-	0x6c, 0x12, 0xeb, 0x80, 0x3f, 0x2a, 0x2d, 0xc0, 0x18, 0x2c, 0xc0, 0x4b, 0xd6, 0x11, 0xd8, 0xe7,
-	0x56, 0x40, 0xf4, 0x14, 0x57, 0xe1, 0x8b, 0x1a, 0x5a, 0x28, 0xd2, 0x7c, 0xc5, 0x4b, 0x21, 0xa6,
-	0xd8, 0x25, 0x81, 0xd7, 0xa2, 0x8c, 0x3b, 0x2a, 0x69, 0x7c, 0xcc, 0x46, 0xba, 0x69, 0xd3, 0x1d,
-	0xba, 0xcd, 0x13, 0x19, 0xb7, 0xb9, 0xf1, 0xaf, 0x8b, 0x55, 0x2b, 0x98, 0xe2, 0xa9, 0x74, 0x93,
-	0x6d, 0xa3, 0x29, 0x48, 0xee, 0x6b, 0x1d, 0x65, 0xa6, 0x6d, 0x5b, 0x34, 0x99, 0x9b, 0xd7, 0xf5,
-	0xcd, 0xdf, 0x63, 0x34, 0x36, 0xf7, 0x3b, 0x21, 0x93, 0x69, 0x47, 0x66, 0x92, 0x98, 0xaa, 0x7c,
-	0x69, 0x2c, 0x19, 0x51, 0xd7, 0xb2, 0x35, 0x27, 0x7c, 0x53, 0xe7, 0x6f, 0x65, 0xc6, 0xf5, 0x95,
-	0x64, 0x60, 0xbc, 0xa0, 0x32, 0xae, 0x8a, 0x21, 0x89, 0x22, 0x19, 0xfe, 0xd7, 0x99, 0x4c, 0x66,
-	0xee, 0xd3, 0x38, 0x9b, 0x82, 0xe0, 0x61, 0x9a, 0xc9, 0x7d, 0x0b, 0x4d, 0x44, 0xe2, 0xb0, 0x83,
-	0x09, 0x5e, 0xab, 0x3d, 0x2f, 0xa3, 0x86, 0x99, 0xb4, 0xc3, 0x36, 0x27, 0xb1, 0xcc, 0xf2, 0x08,
-	0xb4, 0xd2, 0x0a, 0x63, 0x95, 0xf8, 0x61, 0x96, 0x0d, 0x23, 0xf1, 0x47, 0x48, 0x80, 0xfe, 0x88,
-	0xc6, 0xc0, 0x67, 0x52, 0xf3, 0x91, 0x59, 0xc5, 0x4c, 0x46, 0xa4, 0x43, 0x33, 0x81, 0x3a, 0xc5,
-	0x63, 0xc5, 0x8c, 0x68, 0x2c, 0x39, 0x0f, 0x43, 0x87, 0x76, 0x86, 0x1f, 0xde, 0x44, 0x13, 0x70,
-	0xcb, 0x02, 0x56, 0xb8, 0x36, 0xd5, 0xed, 0xc3, 0x84, 0x64, 0x16, 0xb4, 0x22, 0xdf, 0x22, 0xa7,
-	0xcb, 0x43, 0x73, 0x77, 0x18, 0x11, 0xb6, 0x6c, 0x60, 0x81, 0x29, 0x42, 0xe2, 0x0a, 0xef, 0x52,
-	0xde, 0x09, 0x5d, 0x19, 0x04, 0xbb, 0x36, 0x2b, 0xac, 0x5a, 0xed, 0x90, 0xb5, 0x57, 0x93, 0x81,
-	0xf1, 0x62, 0x76, 0xea, 0xa1, 0x9c, 0xb9, 0x1c, 0xa1, 0xf3, 0xc1, 0x61, 0x30, 0x8c, 0x35, 0xc3,
-	0x05, 0xce, 0x2c, 0x3b, 0xc3, 0x18, 0x5f, 0x47, 0x53, 0x90, 0x7d, 0x6b, 0xf6, 0x21, 0x4c, 0x36,
-	0xbf, 0xf6, 0x4c, 0x32, 0x30, 0x9e, 0x5e, 0x0e, 0x53, 0xb6, 0x1b, 0x9e, 0xcf, 0x69, 0x6c, 0xee,
-	0xf6, 0x4d, 0x45, 0x67, 0x32, 0xca, 0x85, 0x20, 0x66, 0xd9, 0x7a, 0x28, 0xde, 0x43, 0x73, 0xe2,
-	0xed, 0x7b, 0x31, 0x75, 0xc1, 0x3f, 0x41, 0x90, 0x22, 0xb3, 0x93, 0x81, 0x71, 0x2b, 0x3b, 0x6d,
-	0xc8, 0x8f, 0x89, 0x77, 0xdd, 0xed, 0x31, 0x2e, 0x26, 0xad, 0x72, 0x43, 0x42, 0x4b, 0x52, 0xcc,
-	0x98, 0xf0, 0xd0, 0x64, 0x84, 0x7b, 0xac, 0xd5, 0x87, 0xad, 0xf1, 0x69, 0x8f, 0xc6, 0x7d, 0xcb,
-	0xce, 0xc9, 0xc1, 0x9f, 0xa1, 0x39, 0xfa, 0x00, 0x62, 0xc1, 0x52, 0xee, 0x2c, 0xc8, 0xbd, 0x9b,
-	0x0c, 0x0c, 0x7b, 0xb4, 0xdc, 0x5b, 0xb7, 0x77, 0x1e, 0x51, 0x76, 0x56, 0x16, 0xfe, 0x1c, 0x2d,
-	0x68, 0x5d, 0x9c, 0xfb, 0x7b, 0x0e, 0xc8, 0x3f, 0x03, 0x47, 0xca, 0x33, 0xd6, 0x11, 0xec, 0x4d,
-	0xba, 0x69, 0x6b, 0xcb, 0xc9, 0xc0, 0xb8, 0x60, 0x2b, 0x3e, 0xe6, 0x7d, 0xda, 0xbf, 0x92, 0xc9,
-	0x44, 0xf0, 0xd0, 0xec, 0x12, 0xde, 0xec, 0x98, 0x02, 0x5c, 0x1f, 0xd7, 0xd2, 0xde, 0xdd, 0x13,
-	0x13, 0xc2, 0x6f, 0x4b, 0xf4, 0x9a, 0xe6, 0x0e, 0x55, 0x3d, 0x43, 0x66, 0xde, 0x1b, 0x30, 0x15,
-	0xb1, 0xd7, 0x52, 0x46, 0x7a, 0xc7, 0xa9, 0x64, 0x38, 0xec, 0xb4, 0xb0, 0x18, 0xe9, 0x3d, 0x01,
-	0xdc, 0xde, 0x49, 0x06, 0xc6, 0xc6, 0x08, 0x5b, 0xcd, 0x18, 0xa7, 0xb6, 0xda, 0x15, 0x53, 0x20,
-	0x78, 0x29, 0x86, 0xba, 0xc2, 0x29, 0x4a, 0x43, 0xde, 0x56, 0x21, 0x6a, 0xfc, 0x31, 0x5a, 0x04,
-	0x32, 0x59, 0xdd, 0xe0, 0xa4, 0x18, 0x5c, 0x66, 0x12, 0x61, 0x16, 0x37, 0x41, 0x5b, 0xc8, 0x14,
-	0x02, 0x91, 0xa9, 0x89, 0x0a, 0x8c, 0x31, 0x30, 0x82, 0x5a, 0x86, 0x0d, 0x0d, 0xdd, 0x3f, 0x47,
-	0x4b, 0x4d, 0xd2, 0xec, 0x50, 0xa7, 0x4b, 0x1e, 0x38, 0xa4, 0x3d, 0xc4, 0x38, 0xa7, 0xa5, 0xb5,
-	0x3f, 0x27, 0xe3, 0xf5, 0xab, 0xbe, 0x1f, 0xee, 0x9b, 0x8c, 0x13, 0x5f, 0xa5, 0x66, 0xf2, 0x76,
-	0x78, 0x60, 0xe4, 0x5e, 0x71, 0xb4, 0x6c, 0x0c, 0x92, 0x6e, 0x92, 0x07, 0xab, 0xed, 0x14, 0x33,
-	0x65, 0xb3, 0x11, 0x4f, 0xfe, 0x2e, 0xb2, 0x11, 0x1c, 0xcd, 0xf0, 0x90, 0x13, 0x1f, 0x7c, 0xa8,
-	0x93, 0x90, 0x3d, 0x29, 0x6e, 0xf9, 0x34, 0x91, 0x02, 0x2f, 0x45, 0xa7, 0x0a, 0x85, 0xe7, 0x26,
-	0x06, 0x66, 0x66, 0xa2, 0x36, 0x84, 0x78, 0xa9, 0xc3, 0x1d, 0xef, 0x31, 0xbd, 0xe5, 0x87, 0x82,
-	0xf0, 0x3e, 0x9a, 0xf6, 0x5c, 0xe6, 0x80, 0x50, 0x0c, 0x42, 0x3f, 0x4a, 0x06, 0xc6, 0xf7, 0x8e,
-	0x22, 0xb4, 0x60, 0x5d, 0x9e, 0xcb, 0x8e, 0x20, 0x7a, 0xca, 0x73, 0xd9, 0x6d, 0x21, 0xf8, 0xba,
-	0x30, 0x34, 0x48, 0xbe, 0x0c, 0x03, 0x19, 0x8f, 0x09, 0x05, 0xae, 0x4d, 0x08, 0x71, 0x6b, 0x8b,
-	0xc9, 0xc0, 0x58, 0xb0, 0x0b, 0x89, 0x36, 0x61, 0x2e, 0xa2, 0x25, 0xf5, 0x55, 0xae, 0xa3, 0x59,
-	0xc5, 0x05, 0x2c, 0x75, 0x11, 0x66, 0x70, 0x3e, 0x19, 0x18, 0x67, 0xed, 0x34, 0x91, 0x9a, 0xe6,
-	0xfe, 0x40, 0x4d, 0x05, 0xd2, 0x6c, 0x24, 0xc7, 0x81, 0xd1, 0x7d, 0x80, 0x14, 0xdf, 0xd4, 0xe4,
-	0x97, 0x32, 0x9a, 0x40, 0x79, 0x92, 0x9d, 0x26, 0x15, 0xaf, 0x94, 0x93, 0x8a, 0x39, 0xc6, 0x73,
-	0x92, 0x95, 0xb2, 0xe7, 0x36, 0x3a, 0xa1, 0x73, 0x4c, 0x3a, 0x0e, 0x75, 0x0a, 0x94, 0x7c, 0x33,
-	0x19, 0x18, 0xd7, 0xec, 0x42, 0xfe, 0xb5, 0x2b, 0x6e, 0x21, 0xe1, 0x80, 0xcb, 0x72, 0x0e, 0x9d,
-	0x4e, 0xae, 0x12, 0xa3, 0x34, 0xde, 0xd2, 0xe1, 0xaa, 0xbb, 0xa9, 0xa0, 0x34, 0x0c, 0x05, 0x91,
-	0xf4, 0x9c, 0xfa, 0xd0, 0x05, 0xa1, 0x08, 0x78, 0x5d, 0x07, 0xf0, 0x4d, 0x43, 0x6c, 0x7f, 0x5c,
-	0x43, 0x86, 0x62, 0x5c, 0x4e, 0x28, 0x18, 0x99, 0x65, 0xba, 0x9e, 0x0c, 0x8c, 0xb7, 0xb6, 0xb2,
-	0x19, 0xbe, 0x12, 0xbd, 0x4c, 0xf5, 0x65, 0x53, 0x98, 0xc5, 0x74, 0x86, 0x7d, 0x4a, 0xca, 0xda,
-	0x2e, 0xa6, 0x28, 0x7e, 0x80, 0x16, 0x95, 0x16, 0xf9, 0x48, 0x4f, 0xbd, 0x34, 0xc7, 0xe8, 0xd0,
-	0x68, 0x8e, 0x7d, 0x52, 0xb2, 0xca, 0x3a, 0xa5, 0xb7, 0xd3, 0xe5, 0x4b, 0x23, 0x3b, 0x10, 0xa9,
-	0xbf, 0x36, 0xd9, 0x22, 0x3e, 0xa3, 0x6b, 0x67, 0x93, 0x81, 0x71, 0x7a, 0x6b, 0x74, 0xfe, 0x52,
-	0xaf, 0x9b, 0x8e, 0x01, 0x8d, 0x4e, 0x2e, 0x9e, 0xfd, 0x1a, 0x92, 0x8b, 0x0f, 0x1d, 0x00, 0x68,
-	0xfc, 0xdb, 0x58, 0xa9, 0x06, 0xb0, 0x70, 0xbf, 0x29, 0x48, 0xbe, 0x88, 0x26, 0xe1, 0xf4, 0xd0,
-	0x4e, 0x0b, 0x3c, 0x40, 0xbc, 0x57, 0x82, 0x34, 0x97, 0x3e, 0x50, 0x30, 0x37, 0xd3, 0x32, 0xd2,
-	0xbb, 0x1a, 0x7f, 0x68, 0xef, 0x0a, 0x7f, 0x1b, 0x4d, 0x90, 0x28, 0x12, 0x70, 0x58, 0x0c, 0xbd,
-	0x64, 0x1d, 0x45, 0x6b, 0x6b, 0x35, 0x8a, 0x6c, 0x18, 0x56, 0xf7, 0xd0, 0xf8, 0x6a, 0x14, 0x0d,
-	0xab, 0x34, 0x87, 0xbe, 0x97, 0xe7, 0x62, 0x8c, 0x26, 0xe0, 0xce, 0x92, 0x4b, 0x03, 0x7f, 0x17,
-	0x42, 0xd9, 0xe3, 0xa5, 0x50, 0xb6, 0xa1, 0xb0, 0x16, 0xa7, 0xaa, 0xa6, 0x53, 0x3f, 0x36, 0x7e,
-	0x36, 0x85, 0x9e, 0x2c, 0xd6, 0x73, 0x4a, 0x6f, 0x46, 0xa3, 0xf3, 0xb7, 0xf2, 0x85, 0x90, 0x80,
-	0xd2, 0xb2, 0xa5, 0x8b, 0x85, 0x23, 0x76, 0x97, 0xfa, 0x61, 0xd0, 0x66, 0x59, 0xec, 0xfc, 0x71,
-	0x75, 0x52, 0xf8, 0xd8, 0xda, 0x0b, 0xc9, 0xc0, 0x78, 0x76, 0xab, 0x78, 0x44, 0xe7, 0x8a, 0x0b,
-	0xf7, 0xe9, 0x45, 0xd7, 0xf4, 0xbd, 0xfb, 0xd4, 0x94, 0xe8, 0xd3, 0x2a, 0xc7, 0xa0, 0x56, 0x75,
-	0x1e, 0x72, 0x7c, 0x78, 0x8b, 0x67, 0x31, 0x18, 0x44, 0x0c, 0x2b, 0xeb, 0xbf, 0xd2, 0x32, 0xc2,
-	0x8f, 0x2a, 0x92, 0x96, 0xb2, 0xe4, 0xf1, 0xf9, 0x64, 0x60, 0x5c, 0xc9, 0x70, 0xcb, 0xd8, 0xfb,
-	0x28, 0x9e, 0xa5, 0x3c, 0xe7, 0x56, 0x2e, 0xe9, 0x08, 0xc8, 0x5f, 0xd6, 0x34, 0xe4, 0x2a, 0xe6,
-	0x0e, 0x2e, 0x55, 0xb3, 0x72, 0x69, 0xca, 0x0d, 0x15, 0xf7, 0x3f, 0x06, 0xa8, 0xf3, 0x6a, 0x32,
-	0x30, 0xac, 0x2c, 0x1e, 0x97, 0x75, 0x40, 0x70, 0xfa, 0x8f, 0x2a, 0x1e, 0x94, 0x09, 0x81, 0x77,
-	0x8b, 0xd9, 0xee, 0x52, 0x91, 0xa0, 0xc6, 0x36, 0x23, 0x19, 0x0d, 0x03, 0x97, 0xbb, 0x68, 0x21,
-	0x9b, 0x01, 0xcf, 0x14, 0x35, 0x82, 0xf3, 0x95, 0x61, 0xaa, 0x2e, 0x84, 0x21, 0xb4, 0x1a, 0x59,
-	0x96, 0x99, 0xc9, 0x9c, 0x83, 0x8c, 0x4f, 0xf2, 0x59, 0x23, 0x89, 0x17, 0x37, 0x93, 0x81, 0x71,
-	0xa3, 0xa2, 0x02, 0xcc, 0x63, 0x26, 0x09, 0xd4, 0x85, 0x25, 0xf8, 0xad, 0x98, 0xfd, 0xb0, 0x67,
-	0x36, 0x49, 0xa0, 0x8e, 0x2d, 0x09, 0xb1, 0x65, 0x3f, 0xf0, 0xb3, 0x72, 0x09, 0xa8, 0x6e, 0x21,
-	0x01, 0xb5, 0x30, 0x04, 0xa7, 0x5f, 0x52, 0x98, 0x64, 0x68, 0xe5, 0x92, 0x59, 0x0d, 0xb3, 0x54,
-	0x92, 0x9c, 0x1a, 0xa2, 0xaa, 0xa9, 0xfe, 0xaf, 0x1a, 0x5a, 0x29, 0x9f, 0x24, 0xeb, 0x1d, 0x12,
-	0xb4, 0xe9, 0x77, 0x3d, 0xc6, 0xc3, 0xb8, 0x7f, 0x23, 0xe0, 0x71, 0x3f, 0x35, 0x5d, 0x5e, 0x1d,
-	0xc7, 0x3d, 0x26, 0x27, 0x71, 0x54, 0xc3, 0xe3, 0xa1, 0xd9, 0xa6, 0xd2, 0x4b, 0x6e, 0x82, 0x2c,
-	0xb3, 0x23, 0x85, 0xc9, 0x12, 0xb2, 0xaa, 0x98, 0xf0, 0x30, 0xf4, 0xaf, 0x62, 0xc2, 0x69, 0x03,
-	0xae, 0x67, 0x30, 0xaa, 0xac, 0x3e, 0x4f, 0x9f, 0x1b, 0x9f, 0xa1, 0x2b, 0x47, 0x9c, 0x9f, 0x3a,
-	0xe8, 0xaf, 0x20, 0x2c, 0x55, 0xca, 0x59, 0xae, 0xbc, 0x48, 0x4e, 0xca, 0x9e, 0xac, 0x21, 0x66,
-	0x65, 0x8f, 0x15, 0x64, 0xff, 0xe7, 0x18, 0xba, 0x78, 0x88, 0xf0, 0x6f, 0x78, 0x5d, 0xdf, 0x45,
-	0x08, 0x2e, 0x32, 0x67, 0x98, 0xc1, 0x90, 0xfe, 0xbd, 0x3d, 0x1a, 0x64, 0x4b, 0xc6, 0x0c, 0x70,
-	0xb1, 0xc6, 0xd4, 0x00, 0x6d, 0xf3, 0x97, 0xe1, 0x78, 0xe9, 0x32, 0x5c, 0x44, 0x93, 0x10, 0xcd,
-	0xd5, 0x11, 0x1d, 0x78, 0xc0, 0x2f, 0x64, 0x16, 0x70, 0x52, 0x3b, 0x18, 0x80, 0x82, 0xaf, 0x53,
-	0x06, 0x7e, 0xa4, 0xee, 0xce, 0xac, 0xec, 0x4f, 0xc7, 0xd0, 0xf2, 0xe1, 0x2b, 0xab, 0xde, 0xe8,
-	0x4d, 0x34, 0xa5, 0x74, 0x56, 0x51, 0xcd, 0x17, 0xac, 0xa3, 0x8e, 0xb5, 0x64, 0xf3, 0x7b, 0x61,
-	0xdb, 0xd6, 0x3c, 0x86, 0x48, 0x60, 0x2c, 0x83, 0x04, 0xea, 0x1c, 0xcd, 0xa4, 0xb4, 0xf9, 0xed,
-	0x5a, 0x2b, 0x6e, 0xd7, 0xea, 0x1d, 0x36, 0x76, 0x94, 0x1d, 0x56, 0xdc, 0xdd, 0x3f, 0x9f, 0x44,
-	0x97, 0x0a, 0x73, 0xb1, 0x69, 0x2b, 0xa6, 0xac, 0x73, 0x37, 0xe4, 0x5e, 0xd0, 0x7e, 0xbf, 0x47,
-	0x7b, 0xc3, 0x6b, 0xb7, 0xfa, 0xf2, 0xdf, 0x41, 0xd2, 0xef, 0xf4, 0x82, 0xb6, 0x33, 0x4c, 0xad,
-	0xc8, 0x10, 0x17, 0x94, 0xce, 0xe7, 0xe3, 0xe1, 0x9b, 0x41, 0x2b, 0xbc, 0xa9, 0xe8, 0x75, 0xbd,
-	0xba, 0xbd, 0xd0, 0x2d, 0xb4, 0xe0, 0x58, 0x5d, 0x27, 0xe3, 0x70, 0x9d, 0xfc, 0x20, 0x19, 0x18,
-	0x1f, 0x6e, 0xca, 0x42, 0xb7, 0xac, 0xab, 0xd4, 0x21, 0x7b, 0xd4, 0x24, 0xbe, 0x2f, 0x37, 0x9a,
-	0xb8, 0x5c, 0xc2, 0xd8, 0x24, 0x41, 0x7a, 0x61, 0x49, 0x6f, 0xa3, 0x25, 0x1d, 0x71, 0x87, 0xf8,
-	0xbe, 0x23, 0x5b, 0x98, 0xc9, 0x28, 0x38, 0x99, 0x80, 0x52, 0xf5, 0xd5, 0xf3, 0xcb, 0x1a, 0x3a,
-	0x9e, 0xa7, 0x94, 0xd0, 0x44, 0x21, 0xf5, 0xfd, 0x64, 0x60, 0xb0, 0xd4, 0xad, 0xe3, 0x1d, 0x1a,
-	0x28, 0x55, 0x20, 0x90, 0x52, 0x56, 0x65, 0xe8, 0x99, 0x9b, 0xe2, 0x48, 0x06, 0x51, 0x6a, 0x5c,
-	0x66, 0x04, 0x37, 0x7d, 0x4a, 0x18, 0x37, 0xc3, 0x80, 0xe6, 0xb4, 0xce, 0x06, 0x0c, 0x40, 0xa9,
-	0x55, 0xdf, 0x07, 0xd7, 0xe8, 0x1e, 0x9a, 0xd7, 0xa1, 0x17, 0x47, 0x15, 0x73, 0xa6, 0x37, 0xee,
-	0x0d, 0xd9, 0x01, 0x4b, 0x50, 0x5a, 0xa6, 0x74, 0x59, 0x98, 0x14, 0x91, 0x89, 0xe1, 0x00, 0xe3,
-	0x1f, 0x21, 0xec, 0x4a, 0x93, 0x71, 0x3e, 0x85, 0xf7, 0x0e, 0x39, 0x42, 0x48, 0xa5, 0xc8, 0x8a,
-	0x66, 0x6d, 0x50, 0x43, 0x5b, 0x86, 0xd8, 0xb1, 0xf6, 0x87, 0xf6, 0x60, 0xcb, 0x98, 0x30, 0xd6,
-	0x32, 0xcd, 0x9b, 0xa4, 0x6f, 0xee, 0x52, 0xb3, 0xe9, 0x93, 0x6e, 0x44, 0x5d, 0x73, 0x57, 0xde,
-	0x36, 0x8c, 0xc6, 0x7b, 0x34, 0xb6, 0x17, 0x94, 0x24, 0xd8, 0x60, 0xdb, 0xde, 0x67, 0xb4, 0xb1,
-	0x82, 0x9e, 0x39, 0xca, 0x4e, 0x54, 0xf7, 0xce, 0x7f, 0x3c, 0x5e, 0x2a, 0x4e, 0x7e, 0x5f, 0x78,
-	0xca, 0xf9, 0x28, 0xee, 0x3d, 0x84, 0xc0, 0x7f, 0x96, 0x5b, 0x52, 0x82, 0x45, 0x88, 0x14, 0xd2,
-	0xa0, 0xd7, 0xa5, 0xb1, 0xac, 0xd8, 0xcd, 0x6f, 0x4f, 0xe0, 0x02, 0x21, 0x49, 0x2f, 0x30, 0xe5,
-	0x6f, 0x8e, 0x04, 0x31, 0xb3, 0x3a, 0xf6, 0xcc, 0xa7, 0xba, 0x0f, 0x5f, 0x50, 0xa1, 0x57, 0xb9,
-	0xcb, 0x17, 0x92, 0x81, 0x31, 0xb7, 0xde, 0x8b, 0x63, 0x1a, 0x70, 0x88, 0x88, 0x56, 0x86, 0x57,
-	0xc7, 0xbf, 0xe2, 0xf0, 0xea, 0x7a, 0x65, 0x4d, 0xe2, 0xda, 0x99, 0x64, 0x60, 0xd4, 0x57, 0x75,
-	0x6c, 0x4a, 0x95, 0xa6, 0x0d, 0x23, 0x53, 0x85, 0xe8, 0xd3, 0x4b, 0xda, 0xa4, 0x25, 0x04, 0x04,
-	0x77, 0x6d, 0x38, 0x58, 0xd6, 0x22, 0xb2, 0xcc, 0x68, 0x65, 0xf3, 0x1f, 0x15, 0x42, 0x9c, 0x12,
-	0xf4, 0xc1, 0xd2, 0xee, 0x14, 0x63, 0x75, 0xe6, 0x36, 0xa5, 0x45, 0x03, 0x8c, 0x48, 0x4c, 0xba,
-	0x14, 0x42, 0xa9, 0xd4, 0x0f, 0xf7, 0x0f, 0x09, 0x64, 0x4e, 0x7d, 0x8d, 0x81, 0xcc, 0x2f, 0xca,
-	0x67, 0xc0, 0x74, 0xe6, 0x0c, 0xf0, 0x93, 0x81, 0xd1, 0xc9, 0x9f, 0x01, 0xd2, 0x06, 0x0e, 0x3b,
-	0x03, 0x56, 0xcc, 0x90, 0x77, 0x68, 0xbc, 0xef, 0x31, 0x70, 0x83, 0xfb, 0x47, 0x38, 0x02, 0x8a,
-	0x86, 0xff, 0x43, 0x94, 0x46, 0x3d, 0x1d, 0x99, 0xda, 0x98, 0x81, 0x85, 0x81, 0xfd, 0x94, 0x46,
-	0x4d, 0xa1, 0x27, 0x1f, 0x58, 0x16, 0x67, 0x9d, 0x58, 0x8f, 0xa0, 0x3f, 0x0c, 0xe8, 0x81, 0xd6,
-	0xf6, 0xbc, 0x66, 0xb8, 0xe1, 0xcb, 0x80, 0xce, 0x7c, 0xd8, 0xf5, 0x38, 0x4f, 0x05, 0xc8, 0xd0,
-	0x35, 0xfc, 0x8e, 0x6b, 0xa3, 0xc0, 0x37, 0x08, 0x0f, 0xe1, 0x3d, 0xa7, 0x58, 0x49, 0xd6, 0x77,
-	0xd0, 0x2c, 0xa3, 0x24, 0x6e, 0x76, 0x1c, 0x4e, 0x1f, 0x70, 0x59, 0x44, 0x2a, 0x19, 0xef, 0xa8,
-	0x78, 0x9f, 0xdc, 0x30, 0xea, 0x2c, 0x11, 0x2c, 0x2e, 0x32, 0x55, 0x5a, 0x11, 0xc6, 0xd9, 0xca,
-	0x0a, 0x1b, 0x49, 0x46, 0x62, 0x1c, 0x5e, 0xcb, 0xc4, 0x7d, 0xe7, 0x1e, 0xea, 0xca, 0x19, 0x86,
-	0x7c, 0x5b, 0x68, 0x09, 0x02, 0x3c, 0x4e, 0x11, 0x40, 0xcd, 0x03, 0x80, 0x02, 0x77, 0x6b, 0xc3,
-	0x0b, 0x5c, 0x78, 0xb3, 0xf2, 0x6d, 0xc3, 0x32, 0xa4, 0xe5, 0x0b, 0xa0, 0x71, 0xdb, 0xdb, 0x53,
-	0x9b, 0xc1, 0xb2, 0x17, 0x81, 0xdf, 0x56, 0x01, 0x2c, 0xfd, 0xbc, 0x86, 0x26, 0x5c, 0xd2, 0x67,
-	0x2a, 0x40, 0xcd, 0x93, 0x81, 0x11, 0x6d, 0xb6, 0xcc, 0xe1, 0x09, 0x25, 0xee, 0xa5, 0xfb, 0x4e,
-	0xf5, 0x71, 0xe4, 0xd8, 0x24, 0xb8, 0x4f, 0xdd, 0xb5, 0xfe, 0x4e, 0x4c, 0x03, 0x57, 0x6d, 0xbd,
-	0xec, 0x8f, 0x47, 0x0a, 0xc1, 0x0e, 0x85, 0xe4, 0xa0, 0x9c, 0x00, 0x7c, 0x99, 0xef, 0x3f, 0xbf,
-	0xf2, 0xca, 0xc7, 0x96, 0x0d, 0x1a, 0xe0, 0xdf, 0xd6, 0xd2, 0x9f, 0x3c, 0x38, 0x31, 0x6d, 0xd2,
-	0x80, 0x3b, 0xb2, 0x14, 0x01, 0x70, 0xdc, 0x09, 0xc0, 0x71, 0x7f, 0x56, 0x4b, 0x06, 0xc6, 0xcf,
-	0x6a, 0x5f, 0x4e, 0x43, 0xdf, 0xeb, 0x7a, 0x5c, 0x9d, 0x69, 0xb0, 0x57, 0x3e, 0x11, 0x7b, 0x87,
-	0x87, 0xd9, 0x75, 0x04, 0x23, 0x90, 0x8a, 0xee, 0x7b, 0xbc, 0xa3, 0x76, 0x80, 0x4b, 0xfa, 0x66,
-	0x0c, 0x10, 0x14, 0x56, 0xd6, 0x3e, 0xa5, 0xf4, 0xb5, 0x41, 0xdd, 0xbb, 0x82, 0x1c, 0x50, 0xe3,
-	0xc8, 0x00, 0xf7, 0xd9, 0xaf, 0x27, 0xc0, 0xfd, 0x49, 0x06, 0x5e, 0x9d, 0xd3, 0xf8, 0xf3, 0xdd,
-	0x64, 0x60, 0xbc, 0xfd, 0x9e, 0xae, 0x13, 0x12, 0xe7, 0x0e, 0x6c, 0x59, 0xb1, 0xbb, 0x09, 0x6c,
-	0x24, 0x16, 0x9a, 0xfb, 0xf0, 0x33, 0x1f, 0xca, 0xd9, 0x30, 0xdb, 0x75, 0x78, 0xe5, 0x7d, 0x39,
-	0xcb, 0xd2, 0x00, 0x48, 0xba, 0x6c, 0x1d, 0x7a, 0x1b, 0x7e, 0xe9, 0x1c, 0x4b, 0x2e, 0xd2, 0xbe,
-	0xf0, 0x4d, 0x44, 0xda, 0xcf, 0x7f, 0x9d, 0x91, 0xf6, 0x37, 0x2b, 0x22, 0xed, 0x32, 0xbf, 0xf0,
-	0x48, 0x31, 0x76, 0xfc, 0x68, 0x31, 0xf6, 0xed, 0x52, 0x8c, 0xfd, 0xb1, 0x52, 0xe8, 0xf6, 0xab,
-	0x88, 0xae, 0x2f, 0x7e, 0x5d, 0xd1, 0xf5, 0xa5, 0xaf, 0x22, 0xba, 0xfe, 0xf9, 0x01, 0xc1, 0x75,
-	0x99, 0x27, 0xf8, 0x66, 0xc2, 0xea, 0x67, 0xbe, 0xa2, 0xb0, 0xfa, 0x66, 0x39, 0xac, 0x6e, 0x66,
-	0xc3, 0xea, 0x4f, 0x24, 0x03, 0x63, 0xa9, 0x32, 0xac, 0x7e, 0xf4, 0x80, 0xfa, 0x85, 0xdf, 0xcb,
-	0x80, 0xfa, 0x3f, 0x96, 0x8b, 0x80, 0x72, 0x47, 0x99, 0xf2, 0xc9, 0xbf, 0x9f, 0x0b, 0xa7, 0xaf,
-	0xdd, 0x48, 0x06, 0xc6, 0xea, 0xad, 0x54, 0x3b, 0x99, 0x77, 0x15, 0x33, 0xe8, 0x89, 0x9b, 0x08,
-	0x0a, 0x64, 0x69, 0x93, 0x32, 0x46, 0x62, 0xcf, 0xef, 0x97, 0xfc, 0x17, 0x7d, 0xfe, 0xea, 0xa8,
-	0xfc, 0x2f, 0x6b, 0x23, 0xc2, 0xee, 0x63, 0x07, 0x84, 0xdd, 0xd7, 0xbe, 0x97, 0x0c, 0x8c, 0x9d,
-	0x1b, 0x44, 0xe5, 0x95, 0x53, 0x33, 0xd9, 0xf7, 0x7c, 0x1f, 0x80, 0xa9, 0x7a, 0x5b, 0xee, 0x8a,
-	0xe9, 0xd2, 0x48, 0xd6, 0x78, 0x09, 0xe4, 0xb4, 0x2f, 0xa1, 0x84, 0x3c, 0x4c, 0xa0, 0x26, 0x41,
-	0x96, 0x7c, 0x64, 0x0a, 0x48, 0xaa, 0xcb, 0xa5, 0x7e, 0x51, 0x2b, 0xf9, 0xee, 0xab, 0xae, 0xbb,
-	0x1a, 0x45, 0x36, 0xf5, 0x61, 0x9f, 0xb1, 0x8e, 0x17, 0x3d, 0xc2, 0x57, 0x1a, 0x16, 0x73, 0x55,
-	0x2a, 0x1a, 0xf1, 0x37, 0x04, 0xe2, 0x1f, 0xf2, 0x55, 0xe1, 0x99, 0x5c, 0x5b, 0x85, 0x0b, 0x57,
-	0xa9, 0x90, 0x72, 0xe1, 0xfe, 0xb2, 0x1c, 0x3a, 0xb4, 0x69, 0x37, 0x84, 0x1a, 0xb4, 0x6f, 0x6c,
-	0x0a, 0xcf, 0x96, 0xc2, 0x7d, 0xa3, 0x74, 0x52, 0xb3, 0xb8, 0x5b, 0x9a, 0xf3, 0xdb, 0x94, 0x17,
-	0xa8, 0xd9, 0x23, 0x7c, 0x5b, 0xe2, 0xbf, 0x6b, 0xe8, 0xf2, 0x91, 0x18, 0x2b, 0x83, 0xf0, 0xd0,
-	0x49, 0x12, 0x45, 0x4e, 0x76, 0x32, 0x3a, 0x4d, 0xf4, 0x86, 0xf5, 0x10, 0x8c, 0xac, 0x42, 0x8f,
-	0xbd, 0x40, 0x0a, 0xa4, 0xf5, 0x77, 0xd1, 0x89, 0x02, 0xd1, 0x88, 0xc8, 0x50, 0x71, 0xc1, 0xc7,
-	0x2a, 0x16, 0x3c, 0x2a, 0x6d, 0x02, 0xa8, 0x5a, 0xd2, 0xa7, 0xc8, 0x4e, 0x4c, 0x9a, 0xf7, 0xbd,
-	0xa0, 0x7d, 0x48, 0x0c, 0xea, 0x99, 0x8a, 0x5f, 0x21, 0x0b, 0x63, 0x9d, 0x28, 0xff, 0x9a, 0xb8,
-	0xe2, 0x15, 0x8f, 0x92, 0xa8, 0x5e, 0x71, 0x58, 0x7a, 0x13, 0xdb, 0x3c, 0x8c, 0x7e, 0x87, 0x1a,
-	0x5a, 0x15, 0x6b, 0x52, 0x29, 0x50, 0x29, 0xf8, 0x3e, 0x7a, 0xed, 0x08, 0xf4, 0x1b, 0x61, 0xbc,
-	0xea, 0xfb, 0xab, 0x91, 0x2c, 0xd2, 0x3b, 0x58, 0xdd, 0xc6, 0x1b, 0xe8, 0xda, 0xa3, 0xb0, 0x54,
-	0x0a, 0xfd, 0x66, 0x0c, 0xbd, 0x5c, 0x1c, 0x4e, 0xd3, 0x15, 0xde, 0x08, 0xe3, 0xf5, 0x30, 0xe0,
-	0x71, 0xe8, 0xfb, 0x54, 0xfc, 0xd5, 0xf2, 0xda, 0x87, 0xa8, 0x83, 0x7f, 0x5a, 0x43, 0x8f, 0x37,
-	0xd3, 0x31, 0x4e, 0x13, 0x06, 0x39, 0x3d, 0x26, 0x63, 0x30, 0x62, 0x93, 0xdf, 0xb4, 0x1e, 0x4d,
-	0xa0, 0x55, 0xec, 0xb9, 0x23, 0x98, 0xda, 0x4b, 0xcd, 0xaa, 0xe6, 0x7a, 0x07, 0x2d, 0x55, 0xd2,
-	0x3f, 0xc4, 0xd9, 0xf4, 0x14, 0x3a, 0xae, 0xfc, 0x09, 0x87, 0x34, 0xb9, 0xb7, 0x27, 0xef, 0xbf,
-	0x31, 0x7b, 0x5e, 0xb5, 0xae, 0x42, 0x63, 0xe3, 0x35, 0xf4, 0xca, 0x43, 0x4f, 0x48, 0xad, 0xfe,
-	0x8f, 0x6b, 0xa5, 0x2f, 0x05, 0xac, 0xba, 0x2e, 0x60, 0xa7, 0x47, 0x38, 0x4b, 0x5f, 0x18, 0xe5,
-	0x1d, 0xcb, 0xea, 0xe7, 0x4a, 0x57, 0xb7, 0xd1, 0x28, 0x7d, 0x05, 0x29, 0xa3, 0x81, 0x52, 0xf3,
-	0x8f, 0xca, 0x9f, 0x17, 0x92, 0x67, 0xed, 0xd7, 0xaa, 0x69, 0xf9, 0xdb, 0x41, 0x79, 0x25, 0xa4,
-	0xb2, 0x57, 0xff, 0xef, 0x34, 0x9a, 0xcf, 0x91, 0xe1, 0x9f, 0xd4, 0xd0, 0xcc, 0xf0, 0x27, 0x7b,
-	0xe7, 0xac, 0xc3, 0xbe, 0xfa, 0x54, 0x6f, 0x58, 0x87, 0x7f, 0x72, 0x09, 0x90, 0x63, 0xda, 0xce,
-	0x86, 0x45, 0xa6, 0x95, 0xdf, 0xcf, 0xc0, 0x7f, 0x5a, 0x43, 0xb3, 0x99, 0x4f, 0x1d, 0xe1, 0xf3,
-	0xd6, 0xe1, 0xdf, 0x6b, 0xaa, 0x5f, 0xb0, 0x8e, 0xf2, 0xb1, 0x24, 0x88, 0x7a, 0x64, 0x7a, 0x32,
-	0xba, 0xb4, 0xe2, 0xb0, 0x5b, 0xa5, 0xcd, 0xdf, 0xd4, 0xd0, 0xdc, 0x7a, 0xee, 0x77, 0x8c, 0xd6,
-	0x11, 0xbe, 0xb7, 0x54, 0x7f, 0xca, 0x3a, 0xca, 0x47, 0x94, 0x1a, 0x10, 0xe5, 0x5a, 0xef, 0xd0,
-	0xe6, 0x7d, 0x01, 0x9f, 0x53, 0x65, 0x20, 0x9b, 0xa9, 0xa9, 0x47, 0x2c, 0xd3, 0x8f, 0x6b, 0x68,
-	0x4a, 0x89, 0xc0, 0x67, 0xad, 0x83, 0x3f, 0xb2, 0x54, 0x37, 0xad, 0x43, 0xbe, 0xb2, 0xd1, 0x80,
-	0x48, 0xbb, 0xa6, 0x61, 0x26, 0x91, 0x45, 0x79, 0xd4, 0x55, 0xab, 0xa3, 0x22, 0x8d, 0x42, 0x0f,
-	0x5d, 0x04, 0x6d, 0xe1, 0xbf, 0xa8, 0x21, 0x34, 0x2c, 0x9f, 0xc7, 0x0d, 0xeb, 0xd0, 0x2f, 0x6b,
-	0xd4, 0xcf, 0x5b, 0x87, 0x97, 0xdf, 0x37, 0x54, 0xec, 0x4f, 0x7e, 0x47, 0x83, 0xe5, 0xbe, 0x44,
-	0x41, 0x76, 0xc3, 0x1e, 0x37, 0x89, 0x8c, 0xd0, 0x15, 0x3f, 0xc1, 0xc1, 0x2c, 0xfc, 0x57, 0x35,
-	0x34, 0x9b, 0x29, 0xef, 0xc6, 0xe7, 0x8f, 0x50, 0xfc, 0x5e, 0xde, 0x3c, 0x55, 0x05, 0xe2, 0x5f,
-	0x46, 0xab, 0x9f, 0xd6, 0xd0, 0x5c, 0xb6, 0x16, 0x05, 0x5f, 0x38, 0x4a, 0xfd, 0x68, 0x79, 0x13,
-	0x55, 0xd6, 0xb3, 0x34, 0x54, 0xf0, 0x43, 0x2b, 0x26, 0x43, 0x01, 0x43, 0x1d, 0x76, 0xfb, 0x26,
-	0x81, 0xb7, 0x68, 0xe1, 0xcf, 0xd0, 0x31, 0x99, 0xeb, 0xc6, 0x67, 0xac, 0x03, 0x8b, 0x51, 0xea,
-	0x67, 0xad, 0x43, 0x72, 0xe4, 0x50, 0xbf, 0x20, 0x1b, 0xab, 0xd7, 0xa2, 0x50, 0x62, 0x80, 0x7f,
-	0x53, 0x43, 0x4b, 0x95, 0x59, 0x66, 0x7c, 0xc5, 0x7a, 0x98, 0x64, 0x7b, 0xdd, 0xb2, 0x1e, 0x2a,
-	0x77, 0xdd, 0xc8, 0x38, 0x83, 0x4c, 0x46, 0xc9, 0x20, 0x8c, 0xae, 0x1c, 0xc0, 0x66, 0x31, 0x27,
-	0x4c, 0xc5, 0x68, 0x70, 0x13, 0x8b, 0x73, 0xc0, 0xbf, 0xaa, 0xa1, 0x85, 0xa2, 0x30, 0xbc, 0x6c,
-	0x1d, 0x31, 0x9b, 0x5d, 0xbf, 0x74, 0xe4, 0x0c, 0x6b, 0x03, 0x3e, 0x62, 0x52, 0xd4, 0xb9, 0x3a,
-	0x81, 0x5d, 0x56, 0xf3, 0x8b, 0x1a, 0xc2, 0xe5, 0x34, 0x13, 0x2e, 0xd5, 0x2c, 0x8f, 0x4e, 0x8a,
-	0xd6, 0x2f, 0x5b, 0x0f, 0x91, 0xb6, 0x82, 0x0a, 0x7d, 0x45, 0x50, 0xca, 0x99, 0xa5, 0x0e, 0xb7,
-	0xd8, 0x81, 0xf8, 0x4f, 0x6a, 0x08, 0x0d, 0x3d, 0xdf, 0xf2, 0x89, 0x51, 0x0e, 0xf0, 0x95, 0x4f,
-	0x8c, 0x0a, 0xcf, 0x59, 0xee, 0xc6, 0x2d, 0x1a, 0x8b, 0x6d, 0xc8, 0xc0, 0x10, 0x21, 0x32, 0x09,
-	0xd1, 0x2f, 0xd0, 0xa0, 0x60, 0x92, 0xf8, 0xd7, 0x35, 0x84, 0xcb, 0x7e, 0x5c, 0x79, 0x8d, 0x46,
-	0x3b, 0x9f, 0xe5, 0x35, 0x3a, 0xc8, 0x2f, 0x84, 0xc8, 0xcd, 0xaa, 0xeb, 0x0a, 0xe5, 0xb2, 0xae,
-	0x82, 0xb9, 0x4b, 0xf9, 0x3e, 0xa5, 0x95, 0xa1, 0x3d, 0x12, 0xb8, 0x99, 0x20, 0x3c, 0x89, 0x22,
-	0xfc, 0xcf, 0x35, 0xb4, 0x54, 0xe9, 0xba, 0x95, 0x6d, 0xe8, 0x40, 0xaf, 0xb3, 0x6c, 0x43, 0x87,
-	0x38, 0x84, 0x1b, 0xc9, 0xc0, 0x58, 0x93, 0x34, 0x5f, 0x6a, 0x02, 0xbf, 0xae, 0xa1, 0xc7, 0x2a,
-	0x1c, 0x35, 0x7c, 0xd9, 0x3a, 0xba, 0xbf, 0x59, 0x5f, 0x79, 0x18, 0xd7, 0xaf, 0xb1, 0x9a, 0x0c,
-	0x8c, 0x6f, 0x6b, 0x53, 0x82, 0xa2, 0x6c, 0x8f, 0xc1, 0x29, 0x4d, 0xa2, 0x28, 0x37, 0x13, 0x36,
-	0xea, 0x8b, 0x69, 0x42, 0xeb, 0xa5, 0x4a, 0x77, 0xaa, 0xbc, 0xec, 0x07, 0xfa, 0x79, 0xe5, 0x65,
-	0x3f, 0xc4, 0x49, 0x83, 0x63, 0x00, 0x68, 0x4c, 0x70, 0x0b, 0x4c, 0xae, 0x48, 0x94, 0xe1, 0xcb,
-	0x85, 0xad, 0xbe, 0x75, 0xf0, 0x3f, 0xd5, 0xd0, 0x62, 0x95, 0x7f, 0x83, 0x57, 0xac, 0x87, 0xf0,
-	0xfc, 0xea, 0x57, 0xac, 0x87, 0x72, 0xdb, 0x94, 0xca, 0x61, 0xc4, 0x1e, 0x41, 0xe5, 0xff, 0xad,
-	0xa1, 0xc6, 0xe1, 0x2e, 0x19, 0xbe, 0x66, 0x3d, 0xb2, 0x67, 0x58, 0x7f, 0xdd, 0xfa, 0x12, 0x2e,
-	0x20, 0x14, 0x0c, 0x8c, 0x9e, 0x5c, 0x9a, 0x49, 0x6b, 0xca, 0xb4, 0xb9, 0xdf, 0x97, 0x04, 0x95,
-	0x99, 0x18, 0x61, 0x0e, 0x5f, 0x8c, 0xa1, 0xb3, 0x87, 0x78, 0x40, 0xf8, 0x95, 0x47, 0xf4, 0x01,
-	0xeb, 0xaf, 0x5a, 0x8f, 0xea, 0x6b, 0xfd, 0xa4, 0x96, 0x0c, 0x8c, 0x3f, 0xac, 0x9c, 0xa7, 0x98,
-	0xe3, 0xd0, 0x8b, 0x34, 0xa5, 0xcf, 0x3a, 0x8c, 0xaa, 0xa6, 0x96, 0x0e, 0xb6, 0xcf, 0x54, 0xd5,
-	0x95, 0xe2, 0xe1, 0x65, 0x0a, 0x10, 0xf3, 0x03, 0xca, 0x1c, 0xf1, 0x2f, 0x6a, 0x68, 0x5a, 0xbb,
-	0x57, 0xd8, 0xb4, 0x0e, 0x71, 0xfd, 0xea, 0xe7, 0xac, 0x43, 0x5d, 0x33, 0x48, 0x03, 0xa8, 0x23,
-	0x38, 0x22, 0xe2, 0xfd, 0x5c, 0x79, 0x53, 0x46, 0xe9, 0x47, 0x9e, 0x67, 0xc3, 0xf4, 0x27, 0xb3,
-	0xf0, 0xdf, 0xd6, 0xd0, 0x6c, 0xc6, 0x8d, 0x2a, 0x43, 0xcb, 0x0a, 0x47, 0xaf, 0x0c, 0x2d, 0xab,
-	0x1c, 0xb1, 0xc6, 0x77, 0x92, 0x81, 0xf1, 0xba, 0xec, 0x61, 0x8f, 0xa2, 0x5b, 0x5d, 0x7e, 0xe7,
-	0x14, 0xea, 0x50, 0xbc, 0x26, 0x20, 0x75, 0xd2, 0x6c, 0x52, 0x56, 0x2a, 0x1a, 0x16, 0x50, 0x62,
-	0x6d, 0xfc, 0xc7, 0xb5, 0xda, 0xff, 0x07, 0x00, 0x00, 0xff, 0xff, 0x2f, 0x1c, 0xc6, 0xa6, 0x31,
-	0x58, 0x00, 0x00,
+var fileDescriptor_bb56ea57a5e2aeda = []byte{
+	// 6826 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x7d, 0x49, 0x6c, 0x1c, 0x49,
+	0x76, 0x68, 0xd7, 0xc2, 0xed, 0x15, 0x97, 0x62, 0x88, 0x94, 0xaa, 0x53, 0x0b, 0xa9, 0xa2, 0x16,
+	0x8a, 0x12, 0x53, 0x5b, 0xf7, 0x74, 0x8b, 0xdd, 0x33, 0xbf, 0x29, 0x4a, 0x54, 0xb3, 0x17, 0x49,
+	0x9d, 0x24, 0xd5, 0x3d, 0xcb, 0x47, 0x3a, 0x59, 0x19, 0x2c, 0xe6, 0x28, 0x2b, 0x33, 0x95, 0x99,
+	0x45, 0x91, 0x73, 0xf1, 0x18, 0xf6, 0xc0, 0xc0, 0xf8, 0xe0, 0x05, 0x86, 0x07, 0x30, 0xc6, 0x80,
+	0x4f, 0x06, 0x0c, 0xdf, 0x0c, 0x18, 0x98, 0x93, 0x31, 0x80, 0x0f, 0x36, 0x60, 0xc3, 0x86, 0xe7,
+	0x32, 0x36, 0xbc, 0xdc, 0x0c, 0x18, 0x98, 0xa3, 0x2f, 0xbe, 0xd9, 0x88, 0x17, 0x11, 0x59, 0xb9,
+	0xd5, 0xc6, 0xa6, 0xc7, 0xe3, 0x0b, 0x51, 0xf9, 0xde, 0x8b, 0xfd, 0xc5, 0x8b, 0xb7, 0x45, 0x10,
+	0x56, 0x83, 0x90, 0x1a, 0xad, 0x16, 0x0d, 0x02, 0xa3, 0x49, 0x03, 0xdd, 0x6b, 0xef, 0xd9, 0x56,
+	0x70, 0x40, 0xcd, 0x7d, 0xcb, 0xa6, 0x2a, 0xe2, 0x1a, 0xb6, 0x45, 0x9d, 0x50, 0xf5, 0x7c, 0x37,
+	0x74, 0x95, 0x5a, 0x92, 0x7c, 0xcf, 0x08, 0xa8, 0xc0, 0xdc, 0x4a, 0x62, 0xda, 0x8e, 0xb5, 0x6f,
+	0x51, 0x93, 0x53, 0x64, 0xeb, 0x39, 0x47, 0x9d, 0x76, 0x2b, 0xd0, 0x3d, 0xdf, 0x35, 0xdb, 0x8d,
+	0xd0, 0x72, 0xf6, 0x5d, 0x8e, 0xa8, 0xff, 0x12, 0x9c, 0xdf, 0x78, 0x2e, 0x3b, 0xb1, 0x69, 0xd9,
+	0x54, 0x7f, 0xe1, 0x86, 0x54, 0xd7, 0xe8, 0xab, 0x36, 0x0d, 0x42, 0xb2, 0x0c, 0x33, 0x89, 0x2e,
+	0x5a, 0x66, 0xad, 0xb0, 0x58, 0x58, 0x2e, 0x6b, 0x69, 0x30, 0x39, 0x07, 0x63, 0x87, 0xac, 0x64,
+	0xdb, 0xab, 0x15, 0x17, 0x0b, 0xcb, 0xe3, 0xda, 0x28, 0xfb, 0xdc, 0xf5, 0xea, 0x97, 0xe0, 0x42,
+	0x7e, 0x0b, 0x81, 0xe7, 0x3a, 0x01, 0xad, 0xff, 0xb4, 0x00, 0x8b, 0x29, 0x82, 0xed, 0xf6, 0x5e,
+	0xd0, 0xf0, 0xad, 0xbd, 0x93, 0xf4, 0xe3, 0x3c, 0x4c, 0xd8, 0x56, 0x10, 0xea, 0xe1, 0xb1, 0x47,
+	0xb1, 0x27, 0x53, 0xda, 0x38, 0x03, 0xec, 0x1c, 0x7b, 0x94, 0xcc, 0xc1, 0x88, 0xe1, 0x79, 0x96,
+	0x59, 0x2b, 0x2d, 0x16, 0x96, 0x47, 0x34, 0xfe, 0x41, 0x96, 0x60, 0xca, 0x71, 0x43, 0x6b, 0xff,
+	0x58, 0xe7, 0x73, 0x56, 0x2b, 0xe3, 0x00, 0x26, 0x39, 0x70, 0x03, 0x61, 0xe4, 0x2e, 0xcc, 0x59,
+	0x4e, 0xc3, 0x6e, 0x9b, 0x54, 0x37, 0xa9, 0x47, 0x1d, 0x93, 0x3a, 0x0d, 0x8b, 0x06, 0xb5, 0x11,
+	0xa4, 0x3d, 0x23, 0x70, 0x8f, 0x62, 0xa8, 0xfa, 0x12, 0x5c, 0xee, 0x31, 0x30, 0x31, 0xfc, 0x3f,
+	0x2a, 0x40, 0x3d, 0x45, 0xb5, 0xeb, 0x04, 0xbf, 0x78, 0x13, 0x50, 0xbf, 0x0a, 0x4b, 0x3d, 0xfb,
+	0x29, 0xc6, 0xf3, 0x2c, 0x43, 0xb6, 0x61, 0x38, 0x5f, 0x62, 0x41, 0xeb, 0x1f, 0xc3, 0x95, 0xde,
+	0x15, 0xf2, 0x86, 0xd9, 0x20, 0x1a, 0x86, 0xa3, 0x47, 0x5d, 0xc2, 0xfa, 0xc6, 0xb5, 0xc9, 0x46,
+	0x8c, 0xba, 0xfe, 0xc3, 0x22, 0x2c, 0xa7, 0x6a, 0x7b, 0x42, 0xc3, 0xed, 0xf6, 0xde, 0x36, 0x6d,
+	0x84, 0x96, 0xeb, 0x3c, 0x32, 0x42, 0xe3, 0x04, 0x73, 0x7e, 0x17, 0xe6, 0xf7, 0x5d, 0x5f, 0x0f,
+	0x8d, 0x3d, 0x9b, 0xea, 0xee, 0xbe, 0xde, 0x70, 0x9d, 0x90, 0x3a, 0x61, 0x20, 0xb6, 0x02, 0xd9,
+	0x77, 0xfd, 0x1d, 0x86, 0x7b, 0xb6, 0xbf, 0x21, 0x30, 0x64, 0x15, 0x48, 0xe0, 0xd1, 0x86, 0xb5,
+	0x6f, 0x35, 0xf4, 0x80, 0x37, 0x2e, 0x96, 0xa5, 0xac, 0xcd, 0x4a, 0xcc, 0xb6, 0x44, 0x10, 0x13,
+	0xaa, 0x26, 0x0d, 0x2c, 0x9f, 0x9a, 0xba, 0x4f, 0x0f, 0xad, 0xc0, 0x72, 0x1d, 0x5c, 0xa5, 0xe9,
+	0x7b, 0xe7, 0xd4, 0xc7, 0x89, 0x01, 0x69, 0x02, 0xbd, 0xb6, 0xf8, 0x52, 0xcf, 0xc7, 0xe8, 0x8f,
+	0xe8, 0xbe, 0xd1, 0xb6, 0x43, 0x6d, 0x46, 0x54, 0x29, 0x11, 0xf5, 0x1f, 0x14, 0xe0, 0x5c, 0xa2,
+	0x48, 0x67, 0x66, 0xc8, 0x05, 0x98, 0xe8, 0xf4, 0x93, 0xcf, 0x43, 0x07, 0xc0, 0x18, 0x2b, 0xb4,
+	0x42, 0x9b, 0x73, 0xdc, 0x84, 0xc6, 0x3f, 0xc8, 0x0d, 0xec, 0x75, 0xc3, 0xb7, 0x3c, 0x46, 0xa6,
+	0x87, 0xf4, 0x28, 0xc4, 0x21, 0x4e, 0x60, 0xd3, 0x12, 0xbe, 0x43, 0x8f, 0x42, 0x72, 0x11, 0x20,
+	0x70, 0xfd, 0x50, 0x77, 0x7d, 0x93, 0xfa, 0x38, 0xb4, 0x29, 0x6d, 0x82, 0x41, 0x9e, 0x31, 0x40,
+	0xfd, 0x00, 0x6e, 0x0c, 0xb0, 0x6e, 0x82, 0x15, 0xde, 0x83, 0xc9, 0xa0, 0xbd, 0x27, 0xa7, 0x35,
+	0xa8, 0x15, 0x16, 0x4b, 0xcb, 0x95, 0x7b, 0x35, 0xb5, 0xcb, 0xd0, 0xb4, 0x4a, 0x10, 0xfd, 0x0e,
+	0xea, 0x7f, 0x57, 0x86, 0x4b, 0xa9, 0xa6, 0xc4, 0x57, 0xc4, 0x18, 0xd1, 0x2e, 0x2a, 0x60, 0x37,
+	0xc5, 0x2e, 0xba, 0x0a, 0xd3, 0x0d, 0xd7, 0x09, 0xda, 0x2d, 0xea, 0xeb, 0x1c, 0xcd, 0x77, 0xdf,
+	0x94, 0x84, 0xae, 0x23, 0xd9, 0x15, 0x98, 0x6a, 0xd8, 0x6e, 0x1b, 0x59, 0xc7, 0x31, 0x5a, 0x54,
+	0x4c, 0x48, 0x12, 0x48, 0xee, 0xc3, 0xbc, 0xc7, 0x16, 0x9a, 0xbe, 0xd6, 0x93, 0xd4, 0x65, 0xa4,
+	0x9e, 0x13, 0xc8, 0x8d, 0x44, 0xa1, 0x68, 0x11, 0x46, 0x52, 0x8b, 0xc0, 0x28, 0xf4, 0xd8, 0x8c,
+	0xd7, 0x46, 0xf9, 0x22, 0x30, 0xf8, 0xa3, 0x0e, 0x98, 0xc9, 0x0e, 0x24, 0x45, 0xd9, 0x31, 0xc6,
+	0x65, 0x07, 0x03, 0xa0, 0xec, 0x78, 0x0b, 0xce, 0x46, 0xe3, 0x0b, 0x0e, 0x5c, 0x3f, 0x6c, 0xb4,
+	0x43, 0x1d, 0xfb, 0x34, 0xce, 0xfb, 0x24, 0xb1, 0xdb, 0x02, 0xf9, 0x94, 0xf5, 0xe9, 0x06, 0x54,
+	0x8f, 0xdd, 0x76, 0xd8, 0xde, 0xa3, 0x7a, 0x3b, 0xa0, 0x3e, 0xd2, 0x4f, 0xf0, 0xd6, 0x05, 0x7c,
+	0x57, 0x80, 0xc9, 0x75, 0x90, 0x20, 0xfd, 0xd0, 0x32, 0xa9, 0x6b, 0x99, 0x35, 0x40, 0xca, 0x69,
+	0x01, 0x7e, 0xc1, 0xa1, 0xe4, 0x12, 0x00, 0x63, 0xd8, 0x3d, 0xcb, 0xb6, 0xc2, 0xe3, 0x5a, 0x05,
+	0xfb, 0x19, 0x83, 0x90, 0xcb, 0x30, 0xe9, 0x53, 0xd3, 0xf2, 0x69, 0x23, 0xd4, 0xdb, 0xbe, 0x55,
+	0x9b, 0xc4, 0x5a, 0x2a, 0x12, 0xb6, 0xeb, 0x5b, 0x84, 0x40, 0x39, 0x34, 0x9a, 0x41, 0x6d, 0x6a,
+	0xb1, 0xb4, 0x3c, 0xa1, 0xe1, 0x6f, 0xd6, 0x7e, 0xc3, 0xb5, 0x6d, 0xce, 0x08, 0x7c, 0x0e, 0xa6,
+	0x79, 0xfb, 0x1d, 0x30, 0xce, 0xc4, 0x79, 0x98, 0x68, 0x1a, 0x2d, 0x31, 0x4d, 0x33, 0x48, 0x32,
+	0xce, 0x00, 0x88, 0xac, 0x42, 0xa9, 0xed, 0xdb, 0xb5, 0x2a, 0x82, 0xd9, 0xcf, 0xba, 0x03, 0x0b,
+	0x5d, 0x19, 0x4a, 0x70, 0xec, 0xe0, 0xa2, 0x26, 0x3d, 0xb6, 0x62, 0x66, 0x6c, 0xf5, 0x5f, 0x1f,
+	0xcd, 0x1c, 0x3c, 0x4f, 0x68, 0xf8, 0x88, 0x86, 0x86, 0x65, 0x07, 0x11, 0x13, 0xaf, 0x40, 0x35,
+	0x55, 0x37, 0xdf, 0x28, 0xa3, 0x5a, 0x06, 0x4e, 0x16, 0xa1, 0x22, 0x0e, 0x38, 0x9c, 0x34, 0x2e,
+	0xd5, 0xe2, 0x20, 0xf2, 0x3e, 0xbc, 0x29, 0x3e, 0x0d, 0xd3, 0xb4, 0xd8, 0x4c, 0x19, 0xb6, 0xe0,
+	0xd1, 0x00, 0x39, 0x7c, 0x5c, 0xeb, 0x4e, 0xc0, 0x86, 0x2f, 0x90, 0x8d, 0x03, 0xcb, 0x36, 0x7d,
+	0xea, 0x88, 0x23, 0x28, 0x0d, 0x66, 0xbb, 0x47, 0x80, 0x5e, 0x1e, 0x62, 0x5f, 0xf8, 0xf9, 0x9b,
+	0x04, 0x92, 0x3a, 0x4c, 0x0a, 0x00, 0x53, 0x42, 0x02, 0x64, 0xf7, 0x71, 0x2d, 0x01, 0x23, 0x37,
+	0x61, 0x16, 0xb9, 0x38, 0xb1, 0x2f, 0xc6, 0x91, 0xb0, 0x8a, 0x88, 0xf8, 0xc6, 0x50, 0x81, 0x88,
+	0xc2, 0xfb, 0xae, 0x1f, 0x18, 0x36, 0x35, 0x8d, 0xd0, 0x40, 0xee, 0x1c, 0xd7, 0x72, 0x30, 0xb1,
+	0x01, 0xb5, 0x68, 0x68, 0x20, 0x71, 0x25, 0x31, 0x20, 0x09, 0x26, 0x17, 0x61, 0xdc, 0x36, 0x9c,
+	0x66, 0xdb, 0x68, 0x52, 0xe4, 0xd3, 0x91, 0xb5, 0xc2, 0x1d, 0x2d, 0x02, 0x91, 0x7b, 0x30, 0xef,
+	0xd3, 0xb0, 0xed, 0x3b, 0xba, 0x67, 0x1b, 0xc7, 0xa1, 0xd5, 0xa2, 0x7a, 0x10, 0x1a, 0x21, 0x63,
+	0x5c, 0xc6, 0xf5, 0x67, 0x38, 0xf2, 0xb9, 0xc0, 0x6d, 0x33, 0x54, 0x47, 0x3c, 0x4d, 0xc7, 0xc5,
+	0xd3, 0xbb, 0x50, 0x0b, 0x42, 0xdf, 0xf2, 0xe2, 0xe3, 0xd5, 0xf7, 0xf6, 0x1a, 0xae, 0xc9, 0x79,
+	0x78, 0x5c, 0x3b, 0x8b, 0xf8, 0xd8, 0xb0, 0x1f, 0x22, 0x36, 0xf7, 0xec, 0xa9, 0x9e, 0xf6, 0xd9,
+	0x43, 0xee, 0x42, 0x55, 0xcc, 0x8d, 0x4f, 0x0d, 0x21, 0xb8, 0x67, 0x59, 0xbf, 0xd6, 0x46, 0xf6,
+	0x0d, 0x3b, 0xa0, 0x5a, 0x06, 0x4d, 0x16, 0xa0, 0x62, 0x98, 0x2d, 0xcb, 0xd1, 0x5f, 0xb5, 0xa9,
+	0x7f, 0x5c, 0x23, 0x38, 0x0a, 0x40, 0xd0, 0x67, 0x0c, 0x52, 0xff, 0x93, 0x02, 0x9c, 0x4f, 0x74,
+	0x63, 0xbd, 0x1d, 0x1e, 0xb8, 0xfe, 0xb6, 0x63, 0x78, 0xc1, 0x81, 0x1b, 0xb2, 0x33, 0x8d, 0x4d,
+	0x5b, 0x10, 0x1a, 0x2d, 0x4f, 0x08, 0xf3, 0x0e, 0x80, 0x5c, 0x83, 0x19, 0xdc, 0xe6, 0x7b, 0xbe,
+	0xe1, 0x34, 0x0e, 0xf4, 0x96, 0xe5, 0x88, 0xdd, 0x36, 0xc5, 0xc0, 0x0f, 0x11, 0xfa, 0xa9, 0xe5,
+	0x64, 0xe8, 0x8c, 0x23, 0x29, 0xd3, 0x63, 0x74, 0xc6, 0x11, 0x13, 0x5b, 0x2d, 0xc3, 0xb1, 0xf6,
+	0x69, 0x10, 0x5a, 0x26, 0x32, 0xf8, 0xa8, 0x16, 0x83, 0xd4, 0x7f, 0xa3, 0x0e, 0x73, 0x89, 0xde,
+	0x8a, 0x2d, 0x4b, 0xce, 0xc2, 0xa8, 0x4f, 0x83, 0xb6, 0x1d, 0x8a, 0x3e, 0x8a, 0xaf, 0x3c, 0xa9,
+	0x51, 0xcc, 0x97, 0x1a, 0x35, 0x18, 0x6b, 0xf8, 0xd4, 0x08, 0x5d, 0x1f, 0xbb, 0x36, 0xaa, 0xc9,
+	0x4f, 0x54, 0x9b, 0xf8, 0x4f, 0x71, 0x68, 0xf1, 0xa3, 0x77, 0x52, 0x00, 0xd7, 0xbb, 0x1c, 0x6d,
+	0x23, 0x79, 0x47, 0xdb, 0x6d, 0x38, 0x93, 0x39, 0x21, 0x2c, 0x13, 0x77, 0xdf, 0x94, 0x46, 0xd2,
+	0xc7, 0x83, 0x65, 0x12, 0x05, 0xc6, 0xa3, 0x83, 0x6d, 0x8c, 0xcb, 0xd1, 0xe8, 0x30, 0x93, 0x67,
+	0x51, 0x60, 0x7d, 0x87, 0x9f, 0x30, 0x65, 0x8e, 0xdc, 0xb6, 0xbe, 0x43, 0xc9, 0x0a, 0xcc, 0xca,
+	0xe3, 0xb1, 0x43, 0x34, 0x21, 0xc6, 0xce, 0x11, 0x9b, 0x92, 0xf6, 0x4d, 0xde, 0x88, 0xce, 0xa4,
+	0x32, 0x3f, 0x4f, 0xc6, 0xd8, 0xf7, 0xae, 0x6f, 0x33, 0x06, 0x92, 0xd5, 0x30, 0x6c, 0x05, 0xb1,
+	0x20, 0x40, 0x8c, 0xe0, 0x1a, 0xc8, 0xb3, 0x47, 0x9e, 0x48, 0x93, 0x89, 0x13, 0x49, 0x40, 0xa5,
+	0xd0, 0x9f, 0x8a, 0x84, 0x3e, 0x9b, 0xd7, 0x03, 0xa1, 0x06, 0x62, 0x17, 0x71, 0x33, 0x8e, 0x6a,
+	0x93, 0x12, 0xc8, 0xba, 0xc7, 0x0e, 0xc7, 0x88, 0x48, 0xb4, 0x8a, 0x7b, 0x71, 0x54, 0x9b, 0x91,
+	0xf0, 0xe7, 0x1c, 0xdc, 0x39, 0xdb, 0xab, 0xfd, 0xce, 0xf6, 0xd9, 0xfc, 0xb3, 0x3d, 0x57, 0xde,
+	0x11, 0xa4, 0xcd, 0xca, 0xbb, 0xcb, 0x30, 0x89, 0xb2, 0x06, 0xb9, 0x80, 0x9a, 0xb5, 0x33, 0xb8,
+	0x84, 0x15, 0x06, 0xdb, 0xe0, 0xa0, 0x88, 0xa4, 0xed, 0x99, 0x48, 0x32, 0xd7, 0x21, 0xd9, 0xe5,
+	0xa0, 0xd4, 0x39, 0x3d, 0x9f, 0x39, 0xa7, 0xe7, 0x60, 0x64, 0xdf, 0x66, 0x42, 0xfc, 0x2c, 0x17,
+	0x54, 0xf8, 0xc1, 0x66, 0xee, 0xb5, 0xeb, 0xbf, 0x0c, 0x0e, 0x5c, 0x8f, 0xcf, 0xdc, 0x39, 0x2e,
+	0xbd, 0x25, 0x10, 0x67, 0xee, 0x26, 0xcc, 0x46, 0x44, 0x46, 0xa3, 0x41, 0x3d, 0xd6, 0x85, 0x1a,
+	0x97, 0xde, 0x12, 0xb1, 0x2e, 0xe0, 0xe4, 0x16, 0x90, 0xe0, 0xc0, 0x7d, 0xdd, 0xb1, 0x0d, 0x74,
+	0xc3, 0xb6, 0x6b, 0x6f, 0x46, 0xb2, 0xfe, 0x75, 0x64, 0x20, 0xac, 0xdb, 0x36, 0xd3, 0x73, 0x9c,
+	0x76, 0x4b, 0x6f, 0xb8, 0xad, 0x16, 0xd3, 0xd4, 0x75, 0x93, 0x1e, 0x52, 0xdb, 0xf5, 0xa8, 0x5f,
+	0x53, 0xd0, 0x68, 0x9a, 0x73, 0xda, 0xad, 0x0d, 0x81, 0x7c, 0x24, 0x71, 0x44, 0x85, 0x33, 0x89,
+	0x52, 0xb8, 0x03, 0x1b, 0xb5, 0xf3, 0x58, 0x64, 0x36, 0x56, 0x04, 0x77, 0x78, 0x83, 0xed, 0xe9,
+	0x3d, 0xc3, 0x71, 0xa8, 0x59, 0xbb, 0xc0, 0xcd, 0x65, 0xfe, 0xc5, 0xf4, 0xe0, 0x3d, 0xc3, 0xd1,
+	0x7d, 0x6a, 0x04, 0xae, 0x53, 0xbb, 0x88, 0xeb, 0x33, 0xb1, 0x67, 0x38, 0x1a, 0x02, 0xa2, 0x62,
+	0x7e, 0xed, 0x12, 0xf2, 0x89, 0xf8, 0x22, 0x57, 0x60, 0x9a, 0x59, 0x3f, 0x7b, 0x8c, 0x15, 0x6c,
+	0xca, 0x26, 0x63, 0x21, 0x32, 0x7f, 0x1e, 0xd2, 0x47, 0x1c, 0x26, 0xce, 0x45, 0xb7, 0xe5, 0x19,
+	0xa1, 0xb5, 0x67, 0xd3, 0xda, 0x62, 0x74, 0x2e, 0x46, 0x30, 0xb6, 0x5d, 0x0c, 0xcf, 0xe3, 0x8a,
+	0xdd, 0x65, 0xbe, 0x5d, 0x0c, 0xcf, 0x7b, 0x1a, 0xdf, 0x92, 0xa8, 0xf7, 0xd4, 0x53, 0xea, 0x61,
+	0xc6, 0xfe, 0x5a, 0xca, 0xda, 0x5f, 0xec, 0xf8, 0x16, 0x04, 0x1e, 0x97, 0xf0, 0x57, 0xb8, 0x1c,
+	0x49, 0x00, 0x99, 0x58, 0xde, 0x37, 0x0e, 0x5d, 0xdf, 0x62, 0xe3, 0xb8, 0xca, 0xc5, 0x72, 0x04,
+	0x40, 0xac, 0x6b, 0xdb, 0xee, 0x6b, 0xea, 0x07, 0xb5, 0x6b, 0x02, 0x2b, 0x01, 0xe4, 0x6d, 0x38,
+	0x6b, 0x5b, 0xfb, 0x94, 0x9f, 0x94, 0x89, 0xa6, 0xae, 0x23, 0xe9, 0xbc, 0xc4, 0x6e, 0x27, 0x9a,
+	0x5c, 0x05, 0x12, 0x15, 0xeb, 0xb4, 0xbd, 0x8c, 0x45, 0x66, 0x25, 0x66, 0x33, 0xea, 0x43, 0x82,
+	0x3c, 0xea, 0xcc, 0x8d, 0x14, 0x79, 0xd4, 0xa9, 0x9b, 0x10, 0x01, 0xa3, 0x73, 0xbc, 0xf6, 0x35,
+	0x14, 0x57, 0x55, 0x89, 0x90, 0x67, 0x38, 0x79, 0x1f, 0x94, 0x0c, 0xb1, 0x1e, 0xd0, 0x20, 0xc0,
+	0x51, 0xfc, 0x3f, 0x2c, 0x55, 0x4b, 0x97, 0xda, 0x16, 0x78, 0xb6, 0xa7, 0xb8, 0xd2, 0xb5, 0xc2,
+	0xf7, 0x14, 0x57, 0xb0, 0x16, 0xa0, 0x62, 0xb5, 0x8c, 0x26, 0xd5, 0x5f, 0x5b, 0x66, 0x78, 0x50,
+	0xbb, 0xc9, 0xb7, 0x22, 0x82, 0x3e, 0x67, 0x10, 0xb6, 0x9b, 0x39, 0xc1, 0x01, 0xb5, 0x9a, 0x07,
+	0x61, 0xed, 0x16, 0xdf, 0xcd, 0x08, 0xfb, 0x10, 0x41, 0x6c, 0xf5, 0x39, 0x09, 0x93, 0x74, 0xab,
+	0x5c, 0x5a, 0x23, 0x40, 0x48, 0xd2, 0xc0, 0x73, 0x2d, 0x9b, 0x32, 0x2b, 0xb8, 0x59, 0x53, 0xf9,
+	0x51, 0x2c, 0x40, 0x3b, 0x46, 0x93, 0xc9, 0x82, 0xd8, 0x91, 0x70, 0x9b, 0x77, 0xa0, 0x03, 0x61,
+	0xac, 0x29, 0xbf, 0x90, 0xf5, 0xee, 0x60, 0x03, 0x09, 0x18, 0xeb, 0x24, 0xee, 0x31, 0xa9, 0x23,
+	0xde, 0xe5, 0x9d, 0x64, 0x9b, 0x4b, 0xea, 0x87, 0x0b, 0xc0, 0x3e, 0x75, 0x9f, 0x7a, 0xae, 0x1f,
+	0x06, 0xb5, 0x7b, 0xbc, 0x1d, 0xa7, 0xdd, 0xd2, 0x38, 0x84, 0x3c, 0x80, 0xf1, 0x48, 0x2f, 0xbd,
+	0x8f, 0x76, 0xe1, 0x45, 0x35, 0xef, 0xd0, 0x55, 0x85, 0xe0, 0xd5, 0x22, 0x72, 0xb2, 0x2a, 0x6c,
+	0x86, 0xb7, 0xb0, 0xd8, 0x9b, 0xf9, 0xc5, 0x76, 0x8c, 0xa6, 0x30, 0x27, 0xde, 0x81, 0xf1, 0xa8,
+	0xa7, 0x6f, 0x63, 0x91, 0xf3, 0xf9, 0x45, 0xb0, 0xf3, 0x5a, 0x44, 0x4c, 0xee, 0xc3, 0xa8, 0x50,
+	0x6e, 0xbf, 0xd2, 0xab, 0xd8, 0xc7, 0x2f, 0x58, 0x5b, 0x82, 0x94, 0xbc, 0x07, 0x13, 0xe8, 0x7f,
+	0x43, 0x5d, 0xf3, 0x9d, 0xc5, 0xc2, 0x72, 0xe5, 0xde, 0xa5, 0xfc, 0x72, 0x2f, 0xdc, 0x90, 0x32,
+	0x7b, 0x59, 0x1b, 0x3f, 0x14, 0xbf, 0xc8, 0x47, 0x30, 0x9d, 0x52, 0x2f, 0x3f, 0xc0, 0x1a, 0x96,
+	0xba, 0x4c, 0x4d, 0x5c, 0xdd, 0xd4, 0xa6, 0xbc, 0x84, 0xf6, 0x79, 0x1d, 0x66, 0xe2, 0x9b, 0x6f,
+	0x8f, 0x9a, 0xb5, 0x77, 0x71, 0x15, 0xa6, 0x63, 0xbb, 0x6e, 0x8f, 0x9a, 0xe4, 0x31, 0x4c, 0xed,
+	0xbb, 0xbe, 0xce, 0x74, 0x66, 0xde, 0xeb, 0x07, 0xd8, 0xe6, 0xe5, 0xfc, 0x36, 0x37, 0x5d, 0x7f,
+	0xdb, 0xb0, 0x79, 0xc7, 0x2b, 0xfb, 0x9d, 0x0f, 0xa6, 0x43, 0x44, 0x3a, 0xf6, 0x1a, 0xe7, 0xca,
+	0x5c, 0xe5, 0xfa, 0xab, 0x59, 0xe5, 0xfa, 0x2b, 0x70, 0xae, 0x65, 0x1c, 0xef, 0x51, 0xdd, 0x72,
+	0x0c, 0xcf, 0xf3, 0x5d, 0xcf, 0xb7, 0x8c, 0x90, 0xed, 0xb5, 0xa3, 0xda, 0x3a, 0x32, 0xf0, 0x3c,
+	0xa2, 0xb7, 0xe2, 0xd8, 0x6d, 0x7a, 0x44, 0x3e, 0x80, 0x0b, 0x79, 0xe5, 0x0e, 0x2d, 0xd7, 0xa6,
+	0x4e, 0x83, 0xd6, 0x1e, 0x62, 0x61, 0x25, 0x5b, 0xf8, 0x85, 0xa0, 0x20, 0x1f, 0xc1, 0xbc, 0x3c,
+	0xf7, 0xe5, 0x71, 0xec, 0xfa, 0xcc, 0x02, 0xfb, 0x70, 0xb1, 0xb4, 0x3c, 0x7d, 0x6f, 0x5e, 0x7d,
+	0x2c, 0x1c, 0x45, 0x8f, 0x22, 0xec, 0xd6, 0x23, 0xb4, 0xb0, 0x93, 0x40, 0x66, 0x9c, 0xbd, 0x05,
+	0x67, 0xa5, 0x5a, 0xae, 0x37, 0x0e, 0x0c, 0xa7, 0x49, 0x75, 0xa7, 0xdd, 0xda, 0xa3, 0x7e, 0x6d,
+	0x03, 0x65, 0xc5, 0x9c, 0xc4, 0x6e, 0x20, 0xf2, 0x29, 0xe2, 0xc8, 0x2e, 0x8c, 0x47, 0xca, 0xfc,
+	0xa3, 0x2f, 0xab, 0xcc, 0x47, 0x55, 0x91, 0x0f, 0xe1, 0x8c, 0x71, 0x68, 0x58, 0x36, 0x7a, 0xc2,
+	0x24, 0x34, 0xa8, 0x3d, 0xc6, 0x61, 0x75, 0x6b, 0x41, 0x23, 0x51, 0x19, 0x09, 0x62, 0x16, 0xe5,
+	0x44, 0xc7, 0x10, 0xd8, 0xc4, 0x8d, 0xd0, 0x85, 0xa1, 0x35, 0x41, 0xa6, 0x75, 0x0a, 0x10, 0x17,
+	0xe6, 0xd9, 0x31, 0x1a, 0xd2, 0xa3, 0x50, 0x6f, 0x1c, 0xd0, 0xc6, 0x4b, 0x5d, 0x68, 0xd0, 0x4f,
+	0xe4, 0x58, 0x1f, 0x1a, 0x8e, 0x98, 0xe3, 0x0d, 0x86, 0xd7, 0x10, 0xbd, 0xb6, 0xf4, 0x52, 0xcf,
+	0xc7, 0xe8, 0x4f, 0xdd, 0x70, 0xbb, 0x81, 0x67, 0xb4, 0x46, 0xf6, 0x0c, 0x74, 0x5a, 0xc5, 0xd0,
+	0x4c, 0x36, 0x05, 0xd4, 0xf0, 0x1b, 0x07, 0x7a, 0xd0, 0x70, 0x7d, 0x5a, 0xdb, 0x5a, 0x2c, 0x2c,
+	0x17, 0xb5, 0x0a, 0x87, 0x6d, 0x33, 0x10, 0x53, 0x5a, 0xe9, 0x51, 0x48, 0x7d, 0xc7, 0xb0, 0x75,
+	0x23, 0x08, 0x68, 0xa8, 0x5b, 0x66, 0xed, 0x23, 0xae, 0xb4, 0x4a, 0xc4, 0x3a, 0x83, 0x6f, 0x99,
+	0xe4, 0x09, 0x54, 0x0d, 0xb4, 0x55, 0xf4, 0x40, 0x18, 0x2b, 0x41, 0xed, 0x63, 0x9c, 0x84, 0x0b,
+	0x6a, 0x0f, 0x8b, 0x46, 0x9b, 0x31, 0x12, 0xdf, 0x81, 0xf2, 0x05, 0x94, 0x98, 0xf8, 0xad, 0x42,
+	0x89, 0xc9, 0xe5, 0x02, 0x57, 0x50, 0x43, 0xa3, 0xc9, 0x8e, 0x51, 0xb4, 0x94, 0x5c, 0xc7, 0x3e,
+	0x16, 0x16, 0x7d, 0x07, 0xc0, 0x86, 0x63, 0x5a, 0x01, 0xdb, 0xd9, 0x7a, 0xcc, 0x49, 0x55, 0x11,
+	0x30, 0xa6, 0x0d, 0x28, 0xbf, 0x52, 0x84, 0x31, 0xa9, 0x9d, 0x5e, 0x80, 0x09, 0x21, 0x26, 0x3b,
+	0xce, 0xc1, 0x08, 0x80, 0xae, 0x43, 0xd7, 0x0f, 0xb9, 0x6b, 0xaf, 0xd8, 0x71, 0xed, 0x21, 0x40,
+	0xea, 0xce, 0xa5, 0x8e, 0xee, 0x4c, 0xa0, 0x8c, 0x0a, 0x3d, 0x37, 0x45, 0xf0, 0x77, 0xc2, 0x54,
+	0x18, 0x49, 0x99, 0x0a, 0x59, 0x2d, 0x7d, 0x34, 0x57, 0x4b, 0xbf, 0x0c, 0x93, 0x52, 0xdd, 0x8f,
+	0x79, 0xb8, 0xa4, 0x09, 0x80, 0x5a, 0xcc, 0x2a, 0x90, 0x68, 0x8d, 0x7c, 0xba, 0x4f, 0x7d, 0xdc,
+	0xd0, 0xdc, 0xc1, 0x15, 0xad, 0x9e, 0x26, 0x11, 0x8a, 0x0d, 0x23, 0x28, 0xbd, 0x87, 0x70, 0xe0,
+	0xf4, 0x9e, 0x8c, 0x84, 0x8a, 0x55, 0x4a, 0xaa, 0x58, 0xca, 0x6d, 0x18, 0x41, 0xa1, 0xcf, 0xa6,
+	0xec, 0x25, 0x3d, 0x96, 0xab, 0xf9, 0x92, 0xa2, 0x2a, 0x7d, 0x68, 0xd8, 0xed, 0xc8, 0xff, 0x8a,
+	0x1f, 0xca, 0x4f, 0x0b, 0x30, 0x2e, 0xc5, 0x3d, 0x23, 0xe1, 0xac, 0x59, 0x40, 0xd6, 0xe4, 0x1f,
+	0x4c, 0xdd, 0x43, 0x7f, 0x88, 0x0c, 0xdc, 0x4c, 0x69, 0x18, 0xc7, 0x09, 0x76, 0x3d, 0xa6, 0x8a,
+	0x72, 0x94, 0xe9, 0xbe, 0x76, 0x44, 0x67, 0xf0, 0x90, 0x09, 0x1e, 0xb9, 0xaf, 0x1d, 0xa6, 0xf0,
+	0x85, 0x7e, 0x3b, 0x08, 0xa9, 0x29, 0x58, 0xbe, 0x8c, 0xf5, 0x4e, 0x0a, 0x20, 0xe7, 0xf9, 0x65,
+	0xa8, 0x4a, 0xa2, 0xa8, 0x99, 0x11, 0x71, 0x1c, 0x70, 0xf8, 0x0b, 0xd1, 0xda, 0x2d, 0x20, 0x49,
+	0x4a, 0x6c, 0x95, 0xdb, 0x8e, 0xd5, 0x38, 0x2d, 0x6b, 0x5c, 0xf9, 0xf3, 0x22, 0x54, 0x62, 0x47,
+	0x02, 0xb9, 0x04, 0x15, 0x2b, 0xd0, 0xe5, 0x79, 0x22, 0x7c, 0xff, 0x13, 0x56, 0x20, 0x68, 0x98,
+	0x05, 0xeb, 0xf9, 0x56, 0x83, 0xea, 0x0d, 0x23, 0xa4, 0x4d, 0xd7, 0x3f, 0x96, 0xce, 0x59, 0x84,
+	0x6e, 0x08, 0x20, 0xf9, 0x08, 0xc6, 0x98, 0xf1, 0x1f, 0xb6, 0xb9, 0xd3, 0x6a, 0xfa, 0xde, 0x85,
+	0x94, 0xc8, 0x12, 0xf5, 0x6d, 0x23, 0xcd, 0x1a, 0x79, 0xa9, 0x3f, 0xdf, 0xdc, 0xdc, 0xde, 0x66,
+	0xc2, 0x41, 0x60, 0x34, 0x59, 0x01, 0xb9, 0x03, 0x73, 0xc9, 0x26, 0xf5, 0x7d, 0xdb, 0x75, 0xa5,
+	0x6f, 0x9b, 0x24, 0x1a, 0xde, 0x64, 0x18, 0xf2, 0x00, 0x14, 0x5e, 0xc2, 0x0a, 0x74, 0xcf, 0x38,
+	0xd6, 0x5f, 0x1f, 0x18, 0xa1, 0x7e, 0xec, 0xb6, 0xf5, 0xd7, 0x86, 0x13, 0x0a, 0x4f, 0xd7, 0x3c,
+	0x52, 0x6c, 0x05, 0xcf, 0x8d, 0xe3, 0xcf, 0x0f, 0x8c, 0xf0, 0xeb, 0x6e, 0xfb, 0x73, 0xc3, 0x09,
+	0x99, 0xe9, 0x6d, 0x5a, 0x41, 0xc3, 0x6d, 0x33, 0x4b, 0x92, 0xfa, 0x0d, 0xea, 0x84, 0xec, 0xd0,
+	0x13, 0xa6, 0xb7, 0x44, 0x3d, 0x8f, 0x30, 0xca, 0xff, 0x87, 0xa9, 0xa4, 0xd7, 0xe8, 0x06, 0x54,
+	0x63, 0xda, 0x66, 0xc3, 0x75, 0xd0, 0x1f, 0xc8, 0x59, 0x38, 0x52, 0x32, 0x11, 0x2c, 0xf5, 0xb0,
+	0x48, 0x27, 0xe5, 0x4e, 0x07, 0xa6, 0x78, 0x49, 0x35, 0x54, 0xf9, 0x00, 0xc6, 0xa5, 0x58, 0x66,
+	0xaa, 0x9f, 0x14, 0xcc, 0x91, 0xcf, 0x3c, 0x06, 0x61, 0x8c, 0x89, 0xbd, 0x13, 0x4b, 0xc2, 0x3f,
+	0xea, 0x6e, 0x26, 0x2e, 0x96, 0x70, 0x62, 0x0a, 0xc7, 0xe9, 0x16, 0xcc, 0x25, 0x36, 0x98, 0xc9,
+	0x09, 0x84, 0xcb, 0x7f, 0x3e, 0xf7, 0xc0, 0xd0, 0x72, 0x8b, 0xd4, 0x7f, 0x56, 0xca, 0x6b, 0x71,
+	0x2b, 0xa4, 0xad, 0x2d, 0x67, 0xdf, 0xed, 0xe3, 0xfc, 0x5f, 0x81, 0x59, 0xdb, 0x08, 0x42, 0x3d,
+	0x61, 0x12, 0xf3, 0xf1, 0xcc, 0x30, 0xc4, 0x4e, 0xcc, 0x2c, 0xfe, 0x1c, 0xa6, 0x23, 0xdb, 0xd5,
+	0x0a, 0x69, 0x8b, 0xf1, 0x1a, 0xeb, 0xed, 0x1d, 0xb5, 0x7f, 0xf3, 0xea, 0xe7, 0xa2, 0x24, 0x43,
+	0x68, 0x91, 0xa1, 0xcc, 0xbe, 0x82, 0x9f, 0x4f, 0x90, 0x48, 0xf9, 0x8b, 0x02, 0x4c, 0xc6, 0x7b,
+	0x81, 0xce, 0x18, 0x59, 0x05, 0x77, 0xc7, 0x88, 0xd9, 0x19, 0x8d, 0x49, 0x3f, 0x56, 0xf7, 0x56,
+	0xd6, 0x6b, 0x50, 0xcc, 0x7a, 0x0d, 0xf2, 0x46, 0x51, 0x3a, 0xf5, 0x50, 0xd7, 0xaf, 0x95, 0x33,
+	0x81, 0xca, 0xe4, 0x74, 0x0b, 0x06, 0x5b, 0x80, 0x0a, 0xef, 0x2b, 0x2e, 0xad, 0xe4, 0x5e, 0x0e,
+	0x62, 0x8b, 0x4a, 0xbe, 0x95, 0x59, 0xcd, 0x22, 0xae, 0xe6, 0xdb, 0xea, 0x00, 0xd5, 0x27, 0x96,
+	0x93, 0x61, 0xd2, 0x4b, 0xba, 0x04, 0x4c, 0x42, 0x1d, 0xb2, 0xf6, 0x3b, 0xac, 0x32, 0xaa, 0x4d,
+	0x0a, 0x20, 0x12, 0x29, 0x3f, 0x2a, 0x42, 0x35, 0x5d, 0xd1, 0x69, 0xaf, 0xca, 0x02, 0x54, 0xa4,
+	0xab, 0x52, 0x17, 0x81, 0xca, 0x98, 0xf7, 0x72, 0xcb, 0xec, 0x38, 0x73, 0xca, 0x71, 0x67, 0x4e,
+	0x5c, 0xcd, 0x1c, 0x39, 0x3d, 0x35, 0x33, 0x4f, 0x3d, 0x1a, 0x3d, 0x81, 0x7a, 0x54, 0xff, 0xe3,
+	0x99, 0x3c, 0x36, 0xd8, 0x0d, 0xa8, 0xcf, 0x7e, 0x77, 0xa2, 0x25, 0x35, 0x18, 0xc3, 0xac, 0x8a,
+	0x68, 0x0e, 0xe5, 0x67, 0x47, 0x1e, 0x14, 0xe3, 0xf2, 0x20, 0x69, 0xee, 0x96, 0x32, 0xe6, 0xee,
+	0x3c, 0x94, 0x3d, 0x26, 0xa0, 0x71, 0xb2, 0xd6, 0x0a, 0x77, 0x35, 0xfc, 0x24, 0x97, 0x81, 0xd9,
+	0xaa, 0x1e, 0xf5, 0x11, 0x39, 0x22, 0x91, 0x31, 0x20, 0x39, 0x0f, 0x65, 0x54, 0x0e, 0x50, 0xc5,
+	0x59, 0x1b, 0x6b, 0x1d, 0xb3, 0xb5, 0x0d, 0x34, 0x04, 0x92, 0x9b, 0x3c, 0x8a, 0xda, 0xa2, 0xe1,
+	0x81, 0x6b, 0x72, 0x97, 0xea, 0x5a, 0x85, 0xc9, 0x1f, 0xb1, 0xb2, 0x5a, 0x0c, 0xcd, 0xc6, 0x84,
+	0x6c, 0xd4, 0x38, 0x46, 0xd7, 0xe9, 0x94, 0x26, 0x3f, 0x99, 0x31, 0xee, 0xd3, 0x57, 0x6d, 0xb6,
+	0x61, 0xd0, 0x0e, 0x05, 0x8c, 0x92, 0x25, 0x60, 0x8c, 0x86, 0x1e, 0xa1, 0x43, 0x9e, 0xd3, 0x54,
+	0x38, 0x4d, 0x1c, 0x46, 0x76, 0xa0, 0x2a, 0xcb, 0xe8, 0x2f, 0x0f, 0x75, 0xa4, 0xbb, 0x84, 0xcb,
+	0xb4, 0xa2, 0x0e, 0x30, 0xeb, 0xc2, 0xc4, 0x9d, 0x96, 0x75, 0x7c, 0x7c, 0xb8, 0xc3, 0x6a, 0x15,
+	0xaa, 0x60, 0x14, 0xa0, 0x13, 0x2a, 0x52, 0x28, 0xbd, 0x50, 0x09, 0x77, 0xf6, 0x4c, 0x8e, 0x3b,
+	0xfb, 0x0e, 0xcc, 0xb5, 0x8c, 0xb0, 0x71, 0xc0, 0x43, 0xab, 0x7a, 0xa4, 0x57, 0x72, 0xd7, 0x2a,
+	0x41, 0x1c, 0x46, 0x56, 0x37, 0xa5, 0x86, 0xf9, 0x16, 0xcc, 0x37, 0x8c, 0xc6, 0x01, 0xd5, 0x5b,
+	0xc6, 0x91, 0x6e, 0x34, 0x3b, 0x27, 0xe4, 0x79, 0xbe, 0x44, 0x77, 0x34, 0x82, 0xf8, 0x4f, 0x8d,
+	0xa3, 0xf5, 0x66, 0x74, 0x4e, 0xc6, 0xcd, 0xcf, 0x8b, 0x59, 0xf3, 0xf3, 0x63, 0x98, 0x08, 0x8d,
+	0x66, 0xd3, 0x77, 0xdb, 0x5e, 0x50, 0xab, 0xe3, 0xb4, 0xac, 0x0e, 0x34, 0x2d, 0x3b, 0x46, 0xf3,
+	0x09, 0x2b, 0xa5, 0x75, 0xca, 0x93, 0x6f, 0x01, 0x41, 0x29, 0xe5, 0xa3, 0x01, 0x28, 0xfd, 0xb6,
+	0xd7, 0xd1, 0xa4, 0x56, 0x07, 0xaa, 0xf5, 0x91, 0x11, 0x52, 0x8d, 0x95, 0xd6, 0xaa, 0xa6, 0xfc,
+	0x29, 0x9d, 0xbd, 0xc9, 0xda, 0xa5, 0x98, 0x58, 0xfe, 0x92, 0xb5, 0x77, 0x0e, 0xc4, 0x0b, 0x92,
+	0x6d, 0xf4, 0xac, 0x59, 0x1c, 0xd4, 0xae, 0xf6, 0x32, 0x8a, 0x15, 0x59, 0x34, 0x83, 0xcc, 0x04,
+	0x88, 0xae, 0xa5, 0x03, 0x44, 0x18, 0x00, 0x72, 0x43, 0xc3, 0x46, 0x23, 0x68, 0x96, 0x2b, 0x8d,
+	0x11, 0x80, 0xe9, 0xc6, 0x96, 0x19, 0xe8, 0x88, 0xe4, 0xc1, 0xa5, 0x31, 0xcb, 0x0c, 0x9e, 0x31,
+	0x94, 0xca, 0x38, 0x1b, 0xe3, 0x72, 0x1d, 0xaf, 0xcb, 0x19, 0x8c, 0x56, 0x95, 0x43, 0xbf, 0x4d,
+	0x19, 0xcf, 0x32, 0x6c, 0xa4, 0x7c, 0x2f, 0x40, 0x45, 0xd0, 0xe3, 0x26, 0x98, 0xe3, 0x3d, 0xe1,
+	0x20, 0x64, 0xea, 0x15, 0x10, 0x45, 0xa2, 0x8d, 0x32, 0x1f, 0xab, 0x6e, 0x92, 0xe3, 0xc4, 0x06,
+	0xb8, 0x0e, 0x33, 0x32, 0x28, 0x28, 0x5d, 0x59, 0x67, 0xb1, 0x42, 0x51, 0xc5, 0x73, 0xe9, 0xb1,
+	0xea, 0x10, 0x46, 0x9e, 0xa8, 0x73, 0x71, 0xc2, 0xc8, 0x6d, 0xf6, 0x35, 0xa8, 0x09, 0xc2, 0x6c,
+	0x8c, 0xa0, 0x16, 0xeb, 0xc7, 0x59, 0x4e, 0xb5, 0x9d, 0x8e, 0x17, 0xdc, 0x86, 0x39, 0x51, 0x3e,
+	0xe9, 0xd2, 0x51, 0xb0, 0xb5, 0x59, 0x8e, 0x8b, 0xeb, 0xeb, 0x6a, 0xd4, 0xb3, 0xc8, 0x79, 0x73,
+	0x21, 0x1e, 0xec, 0x13, 0x1d, 0xfc, 0x54, 0x7a, 0x72, 0xba, 0xc6, 0x41, 0x17, 0xba, 0xc7, 0x41,
+	0x7b, 0x45, 0x3c, 0x17, 0x7b, 0x46, 0x3c, 0xef, 0x44, 0xab, 0xdb, 0x71, 0x41, 0x2c, 0xc5, 0xbb,
+	0x27, 0x3a, 0xaf, 0x45, 0xfe, 0x86, 0xdb, 0x70, 0x26, 0x08, 0x0d, 0x3f, 0xb4, 0x1c, 0x93, 0x1e,
+	0xe9, 0xee, 0x21, 0xf5, 0x7d, 0xcb, 0xa4, 0x18, 0x63, 0x98, 0xd2, 0x48, 0x07, 0xf5, 0x4c, 0x60,
+	0x72, 0xb5, 0x9c, 0xcb, 0xa7, 0x1e, 0x54, 0xed, 0xb0, 0x9d, 0xe1, 0x79, 0xdc, 0xdb, 0x1e, 0xb1,
+	0xdd, 0xba, 0xe7, 0x05, 0xc3, 0x9b, 0x94, 0x97, 0x60, 0x5c, 0x8a, 0x9f, 0x28, 0x89, 0xa2, 0xd0,
+	0x49, 0xa2, 0x50, 0xbe, 0x0e, 0x13, 0xd1, 0x56, 0x97, 0xbe, 0x40, 0x0c, 0xa7, 0xea, 0x38, 0x09,
+	0x42, 0x81, 0x9a, 0x8e, 0xc0, 0xdb, 0x0c, 0x8a, 0xb6, 0x64, 0x44, 0x48, 0x1d, 0x79, 0x98, 0x4e,
+	0x46, 0xc0, 0xc7, 0x8e, 0x59, 0xff, 0xfb, 0x62, 0x26, 0x15, 0x2c, 0x25, 0x6a, 0x84, 0xce, 0x36,
+	0x07, 0x23, 0xb8, 0x89, 0xa5, 0x8a, 0x8e, 0x1f, 0x78, 0x24, 0x47, 0xeb, 0x20, 0x1a, 0x88, 0x41,
+	0xba, 0x9a, 0x12, 0xa5, 0xa1, 0x4d, 0x09, 0xf2, 0x55, 0x28, 0xe3, 0x7c, 0x97, 0xb1, 0xe8, 0x0d,
+	0x75, 0x90, 0x5e, 0xab, 0xeb, 0x9e, 0xa7, 0x61, 0x31, 0xc5, 0x82, 0xd2, 0xba, 0xe7, 0x75, 0xb1,
+	0x34, 0x08, 0x94, 0xf1, 0xb0, 0xe2, 0xab, 0x82, 0xbf, 0xfb, 0x6a, 0x1b, 0xf2, 0xa4, 0x0f, 0xa9,
+	0xc8, 0xab, 0x90, 0x9f, 0xf5, 0x7f, 0x2c, 0xc0, 0xdd, 0x54, 0xef, 0xd6, 0x7d, 0x8a, 0x3d, 0xdb,
+	0x72, 0xe2, 0x21, 0x92, 0x4f, 0xac, 0x20, 0xec, 0x6b, 0x03, 0x65, 0x33, 0x4a, 0x8a, 0x5d, 0x32,
+	0x4a, 0x14, 0xc0, 0xa4, 0xc4, 0xb8, 0x9b, 0x43, 0x7e, 0x27, 0xce, 0xf7, 0x72, 0xea, 0x7c, 0x5f,
+	0x81, 0x28, 0xbc, 0x17, 0xd1, 0x70, 0x7f, 0x42, 0x06, 0x5e, 0xff, 0x49, 0x01, 0xee, 0x0d, 0x33,
+	0x36, 0xc1, 0x3d, 0xcf, 0x61, 0x04, 0x55, 0x2a, 0x61, 0x43, 0xae, 0xa9, 0xc3, 0xd7, 0xa1, 0x6e,
+	0xe1, 0xb7, 0xc6, 0x2b, 0x52, 0x3e, 0x82, 0x51, 0x0e, 0xe8, 0xe6, 0x26, 0x1a, 0xcd, 0xba, 0x89,
+	0xce, 0xc2, 0xa8, 0xe5, 0xb0, 0x29, 0x91, 0xe9, 0xb4, 0xfc, 0xab, 0xfe, 0xc3, 0x12, 0x5c, 0x4c,
+	0xe7, 0x61, 0x72, 0xfb, 0xa4, 0xf7, 0xe2, 0x74, 0xc9, 0x15, 0xc8, 0x69, 0x39, 0x8a, 0x34, 0x97,
+	0xfa, 0x45, 0x9a, 0xcb, 0xf9, 0x91, 0xe6, 0x64, 0xd8, 0x77, 0x24, 0x13, 0xf6, 0x95, 0x62, 0x63,
+	0x34, 0x96, 0x7b, 0xd5, 0x2b, 0x13, 0xe0, 0x06, 0x54, 0xe3, 0xc1, 0xfe, 0x58, 0xca, 0x59, 0x3c,
+	0xd6, 0x8f, 0xa4, 0xa9, 0x30, 0x14, 0x64, 0xc2, 0x50, 0xa9, 0x40, 0xd8, 0x4c, 0xdf, 0x40, 0x58,
+	0x35, 0x1b, 0x08, 0x53, 0x62, 0x6a, 0xdd, 0x2c, 0xc6, 0x77, 0xa3, 0xef, 0xfa, 0x62, 0x26, 0x79,
+	0x30, 0x5a, 0x1d, 0x91, 0x20, 0xab, 0x67, 0xd6, 0x8f, 0x47, 0x67, 0xfb, 0xa5, 0x9d, 0xe6, 0xaf,
+	0x54, 0x3c, 0x1b, 0x83, 0x7f, 0xe4, 0x74, 0x21, 0x6a, 0x40, 0x74, 0xe1, 0x77, 0x0a, 0x70, 0x2b,
+	0x2b, 0x92, 0x78, 0x78, 0xe0, 0x43, 0x2b, 0x08, 0x5d, 0xff, 0xf8, 0xb1, 0x13, 0xfa, 0xc7, 0x27,
+	0xe8, 0x52, 0x22, 0xa3, 0xa6, 0x98, 0xce, 0xa8, 0x89, 0xcf, 0x5c, 0x29, 0x35, 0x73, 0x3f, 0x29,
+	0xc2, 0xea, 0x80, 0x9d, 0x12, 0x1b, 0x75, 0x15, 0x88, 0x88, 0x77, 0xc4, 0x99, 0x92, 0x9f, 0x60,
+	0xb3, 0x1c, 0x13, 0x67, 0xcb, 0x78, 0xe3, 0xc5, 0x64, 0xe3, 0xe4, 0x2a, 0x4c, 0x07, 0xc6, 0x21,
+	0x35, 0x23, 0x73, 0x52, 0xe4, 0xac, 0x4d, 0x21, 0x34, 0xca, 0x17, 0x7a, 0x07, 0x6a, 0x92, 0x40,
+	0x4f, 0xa7, 0x06, 0xf1, 0xcd, 0x30, 0x2f, 0xf1, 0x4f, 0x12, 0x29, 0x42, 0x5d, 0x0b, 0x1a, 0x47,
+	0xc2, 0x9b, 0x9d, 0x57, 0xd0, 0x38, 0x4a, 0x9b, 0xdd, 0xa3, 0x19, 0xb3, 0xfb, 0x02, 0x4c, 0x18,
+	0x0d, 0xf4, 0x98, 0x59, 0xa6, 0x70, 0x68, 0x77, 0x00, 0xf5, 0xbf, 0x2c, 0xc0, 0xf5, 0x3e, 0x93,
+	0x7a, 0x82, 0x45, 0xbe, 0x08, 0x80, 0x47, 0xaa, 0x1e, 0x8f, 0x1d, 0x20, 0x04, 0x75, 0xe3, 0xe4,
+	0x41, 0x5b, 0xca, 0x1c, 0xb4, 0x91, 0xbf, 0xaf, 0x1c, 0xf3, 0xf7, 0x25, 0x8c, 0xa5, 0x91, 0x8c,
+	0xb1, 0x54, 0xff, 0xd7, 0x52, 0x5e, 0xe6, 0x76, 0x7a, 0x24, 0x82, 0x33, 0x3e, 0x85, 0x31, 0xbe,
+	0xfe, 0x52, 0x88, 0xdf, 0x57, 0x07, 0x2d, 0xab, 0x72, 0xf0, 0x27, 0x6e, 0x53, 0x93, 0x75, 0x74,
+	0xf4, 0x89, 0x62, 0x4c, 0x9f, 0x50, 0xfe, 0xa6, 0x08, 0x13, 0x11, 0x71, 0x9f, 0x54, 0xb2, 0x7c,
+	0x56, 0x2d, 0x0e, 0xc2, 0xaa, 0xa5, 0xbe, 0xac, 0x5a, 0x1e, 0x96, 0x55, 0x47, 0x4e, 0xca, 0xaa,
+	0xa3, 0x43, 0xb0, 0xea, 0x58, 0x6f, 0x56, 0x1d, 0x4f, 0xb3, 0xea, 0xbf, 0x17, 0x33, 0x29, 0xde,
+	0x1a, 0xdd, 0xf7, 0x69, 0x70, 0xf0, 0xc2, 0x0d, 0x2d, 0xa7, 0xf9, 0x59, 0x9b, 0xb6, 0xfb, 0x1d,
+	0x72, 0xb7, 0x80, 0x1b, 0xef, 0x96, 0xd3, 0xd4, 0x3b, 0x61, 0x14, 0xbe, 0x6a, 0x55, 0x89, 0xd9,
+	0x94, 0x19, 0x2b, 0xf2, 0x1c, 0x2a, 0xc5, 0xce, 0xa1, 0x15, 0x98, 0xe6, 0xae, 0x01, 0xc3, 0xb6,
+	0xb9, 0x19, 0x56, 0x8e, 0x9b, 0x61, 0x88, 0x5b, 0xb7, 0xed, 0x1d, 0x91, 0xa8, 0x14, 0x99, 0xad,
+	0x22, 0x17, 0x35, 0xe1, 0x02, 0x41, 0xa2, 0x5b, 0x40, 0xa4, 0x9e, 0xff, 0x0a, 0x47, 0x80, 0x91,
+	0x2d, 0x11, 0xd6, 0x10, 0x18, 0x1c, 0x1a, 0xe6, 0xaa, 0xe5, 0x59, 0x05, 0xe3, 0xa7, 0xee, 0xfb,
+	0xbc, 0x05, 0x2b, 0x83, 0xcc, 0xb4, 0x38, 0x2d, 0x7e, 0x44, 0x32, 0xe9, 0xc4, 0x68, 0x3c, 0x27,
+	0x1d, 0x64, 0x17, 0x01, 0xd0, 0xc8, 0xe6, 0x53, 0x2e, 0x36, 0x00, 0x42, 0xe4, 0x5c, 0x7b, 0x52,
+	0xf0, 0x4e, 0x09, 0x67, 0xd7, 0x59, 0x18, 0x6d, 0xb4, 0xfd, 0xc0, 0xf5, 0xd1, 0x4d, 0x31, 0xa1,
+	0x89, 0xaf, 0x94, 0x13, 0xac, 0x94, 0xe7, 0x04, 0x1b, 0x28, 0x6b, 0x31, 0xf7, 0x78, 0xcc, 0xf8,
+	0xb6, 0x46, 0x07, 0xf0, 0x6d, 0x8d, 0xe5, 0xf8, 0xb6, 0xb2, 0x9c, 0x32, 0xde, 0x95, 0x53, 0xae,
+	0x42, 0xe4, 0xc3, 0xd2, 0xb9, 0x93, 0x74, 0x02, 0x6b, 0x9c, 0x92, 0xd0, 0x4d, 0x99, 0xf9, 0xe6,
+	0xb6, 0xac, 0x30, 0x8c, 0xa8, 0x84, 0xdf, 0x4d, 0x00, 0x39, 0x11, 0x53, 0x71, 0x78, 0xa0, 0x19,
+	0xaf, 0x53, 0x88, 0x9c, 0x45, 0x0e, 0xc2, 0x9b, 0x14, 0x71, 0xf5, 0x79, 0x32, 0xa5, 0x3e, 0xdf,
+	0x87, 0x79, 0xf4, 0x04, 0xe8, 0x69, 0x49, 0x3f, 0x85, 0xbb, 0x75, 0x0e, 0x91, 0xcf, 0x53, 0xe2,
+	0x9e, 0x40, 0xd9, 0x34, 0x8e, 0x03, 0xe1, 0x6b, 0xc3, 0xdf, 0xe4, 0x41, 0x94, 0xef, 0xad, 0xfb,
+	0xb4, 0x41, 0x9d, 0x50, 0x04, 0xed, 0xf0, 0x44, 0x10, 0xe9, 0xc4, 0x82, 0x40, 0x43, 0x3c, 0x86,
+	0xee, 0xf0, 0x78, 0xe8, 0xea, 0x4b, 0x5b, 0x18, 0xd4, 0x97, 0x76, 0x39, 0xeb, 0x4b, 0xd3, 0x72,
+	0x3c, 0x8d, 0xdc, 0xa5, 0xb6, 0xac, 0xf6, 0x65, 0xde, 0x2e, 0x7e, 0xc6, 0xad, 0xb8, 0x7f, 0x6e,
+	0x05, 0x2b, 0xbb, 0x39, 0x40, 0x65, 0x79, 0xde, 0xb9, 0x6f, 0xe4, 0x7a, 0xe7, 0x6e, 0xa1, 0xff,
+	0xec, 0xd6, 0x00, 0x75, 0xf6, 0xf2, 0xcd, 0x7d, 0x23, 0xd7, 0x37, 0xb7, 0xfa, 0xa5, 0xea, 0x1e,
+	0xd4, 0x33, 0xa7, 0x9e, 0x92, 0x67, 0xee, 0x76, 0xc6, 0x33, 0x67, 0xc0, 0x34, 0xde, 0x82, 0x32,
+	0x6c, 0x26, 0xc9, 0x43, 0xea, 0x63, 0x46, 0xd8, 0xf4, 0xbd, 0x37, 0xd5, 0xc7, 0x9d, 0x31, 0x6c,
+	0x73, 0x8a, 0x4d, 0x24, 0x58, 0x5b, 0x78, 0xa9, 0x77, 0xc3, 0xe9, 0x4f, 0x5d, 0x87, 0x6a, 0x53,
+	0x41, 0x1c, 0x46, 0xde, 0x86, 0x73, 0x28, 0x12, 0x02, 0xbd, 0xb3, 0x39, 0x5d, 0x5f, 0x6f, 0x07,
+	0xb4, 0x76, 0x77, 0xb1, 0xb4, 0x3c, 0xa5, 0xcd, 0x71, 0xb4, 0x26, 0x37, 0xa9, 0xeb, 0xef, 0x06,
+	0x94, 0x6c, 0xc2, 0x62, 0x34, 0x27, 0xdd, 0xca, 0xdf, 0xc7, 0xf2, 0xd1, 0xdc, 0xad, 0xe7, 0xd5,
+	0xf3, 0x0a, 0x48, 0x6c, 0x23, 0xeb, 0xa1, 0xe1, 0x37, 0x69, 0x88, 0x19, 0x6b, 0x18, 0x76, 0x8e,
+	0x8d, 0x24, 0xda, 0xdb, 0x3b, 0x48, 0xb3, 0x76, 0x35, 0x39, 0xd0, 0x14, 0x5a, 0x67, 0x52, 0x87,
+	0x1e, 0x85, 0x5a, 0x35, 0x48, 0x61, 0x92, 0xee, 0xce, 0x6a, 0x2f, 0x77, 0xe7, 0x52, 0xd2, 0xdd,
+	0xb9, 0x9c, 0xe3, 0xee, 0x9c, 0x8d, 0x7b, 0x12, 0xbb, 0x39, 0x3a, 0x49, 0xc6, 0xd1, 0x79, 0x25,
+	0xe3, 0xe8, 0x3c, 0xc3, 0x13, 0x45, 0xfb, 0xb9, 0x38, 0xe7, 0x06, 0x75, 0x71, 0xce, 0xe7, 0xba,
+	0x38, 0xdf, 0xed, 0xe1, 0xe2, 0xe4, 0xde, 0xd3, 0x61, 0x9d, 0x9b, 0x97, 0x86, 0x70, 0x6e, 0x2e,
+	0x9e, 0xc8, 0xb9, 0x79, 0xa5, 0xbb, 0x73, 0xf3, 0x6a, 0x34, 0x8d, 0xd2, 0x4f, 0x75, 0x95, 0xab,
+	0x81, 0x1c, 0x2a, 0xaf, 0x0e, 0xf4, 0xf2, 0x81, 0x5e, 0x1b, 0xfa, 0xd6, 0xc7, 0xf2, 0xa9, 0x3b,
+	0x28, 0xf3, 0x3c, 0xad, 0x37, 0x7b, 0x79, 0x5a, 0xff, 0x4f, 0x79, 0x2c, 0x73, 0x2e, 0xf7, 0x26,
+	0x04, 0x70, 0x4f, 0x7f, 0x65, 0x37, 0x7f, 0x64, 0x71, 0x78, 0x7f, 0xe4, 0x02, 0x54, 0x1c, 0xcc,
+	0x84, 0xe3, 0xea, 0x16, 0x77, 0xec, 0x00, 0x03, 0x6d, 0x20, 0xa4, 0xfe, 0x9b, 0x85, 0x8c, 0xf2,
+	0xbd, 0x6e, 0x32, 0xb1, 0xa5, 0x51, 0xdb, 0xc0, 0x79, 0x3f, 0xb0, 0xbc, 0x13, 0x5c, 0x8c, 0xcd,
+	0x0f, 0x8e, 0xa2, 0x0a, 0xd6, 0xa9, 0x57, 0x98, 0x88, 0x09, 0x58, 0x8e, 0x8e, 0x9a, 0xdb, 0xa1,
+	0xee, 0x1e, 0x0d, 0x8d, 0xb6, 0xdc, 0x43, 0xfa, 0xbf, 0x39, 0x84, 0xdb, 0x19, 0x87, 0x46, 0xb7,
+	0x3e, 0x89, 0x51, 0xbc, 0xc8, 0x8c, 0xf9, 0x09, 0x0d, 0x53, 0xd4, 0xc1, 0x09, 0xae, 0x50, 0xff,
+	0x5b, 0x01, 0x6e, 0x0e, 0x54, 0xb1, 0xe0, 0x47, 0x0b, 0x66, 0x0d, 0xcf, 0xd3, 0xe3, 0x83, 0x91,
+	0x6e, 0xf0, 0xf7, 0xd5, 0x21, 0x2a, 0x52, 0x53, 0x18, 0xad, 0x6a, 0xa4, 0x48, 0x95, 0x8f, 0x61,
+	0x26, 0x45, 0xd4, 0xc5, 0xb4, 0x4b, 0x4f, 0x78, 0x31, 0x67, 0xc2, 0x7f, 0x2b, 0xeb, 0xcc, 0xce,
+	0xe9, 0xde, 0x43, 0xa6, 0x99, 0x53, 0xb3, 0xef, 0x45, 0xc8, 0x72, 0x8e, 0xdb, 0xfa, 0x36, 0x9c,
+	0xe1, 0xda, 0x88, 0x9e, 0xd3, 0x19, 0xc2, 0x51, 0xf1, 0xc6, 0xea, 0x7f, 0x5b, 0xca, 0xf8, 0xa0,
+	0x7b, 0x76, 0x49, 0xac, 0xc0, 0x21, 0x4c, 0x25, 0x67, 0x9f, 0xbb, 0x31, 0x9e, 0xab, 0xc3, 0xd7,
+	0x95, 0xca, 0x87, 0x48, 0xad, 0x48, 0xb2, 0x99, 0x53, 0x5d, 0x0e, 0xe5, 0x27, 0x05, 0xb8, 0xd0,
+	0xab, 0xf1, 0x21, 0x36, 0x61, 0xe7, 0x06, 0x5c, 0x31, 0x71, 0x03, 0xce, 0xeb, 0xce, 0xa9, 0x1b,
+	0x27, 0x99, 0xab, 0xbe, 0x0c, 0x5b, 0xf7, 0x32, 0x82, 0x06, 0xcf, 0x03, 0x79, 0x38, 0xef, 0xf8,
+	0x46, 0xe3, 0xa5, 0xe5, 0x34, 0x4f, 0x18, 0x2a, 0xc9, 0xe1, 0xb9, 0x1c, 0x31, 0xd2, 0xad, 0x45,
+	0x21, 0x46, 0xdc, 0xcc, 0x6e, 0xdf, 0x0e, 0x5d, 0xef, 0x7f, 0xb0, 0x87, 0x6a, 0xce, 0x9c, 0xe4,
+	0x36, 0x28, 0x3a, 0xf8, 0x19, 0x3c, 0x18, 0x80, 0x7e, 0xd3, 0xf5, 0xd7, 0x6d, 0x7b, 0xdd, 0xe3,
+	0x99, 0x50, 0xbd, 0xbb, 0x5b, 0x7f, 0x1f, 0xd6, 0x4e, 0x52, 0xa5, 0xe8, 0xd0, 0x8f, 0x8b, 0xf0,
+	0x95, 0x74, 0x71, 0x1a, 0xcd, 0xf0, 0xa6, 0xeb, 0x33, 0x0b, 0xc6, 0x77, 0x6d, 0x9b, 0xb2, 0x5f,
+	0xfb, 0x56, 0xb3, 0x4f, 0x77, 0xc8, 0xf7, 0x0a, 0x70, 0xae, 0x11, 0x95, 0x61, 0xa6, 0xd3, 0xbe,
+	0xd5, 0xd4, 0xdb, 0x01, 0x77, 0x81, 0x30, 0xf6, 0xfc, 0x54, 0x3d, 0x59, 0x83, 0x6a, 0x1a, 0xb3,
+	0xcb, 0x2a, 0xd5, 0xe6, 0x1b, 0x79, 0x60, 0xe5, 0x00, 0xe6, 0x73, 0xe9, 0x87, 0xd8, 0x7a, 0x57,
+	0x61, 0x5a, 0x18, 0xe8, 0x3a, 0x53, 0xc1, 0x0e, 0xb9, 0x76, 0x55, 0xd4, 0xa6, 0x04, 0x74, 0x1d,
+	0x81, 0xf5, 0x07, 0xf0, 0xce, 0xd0, 0x03, 0x12, 0xb3, 0xff, 0xdd, 0x42, 0xe6, 0x82, 0xfc, 0xba,
+	0x69, 0xa2, 0xe2, 0x7e, 0x82, 0xf3, 0xba, 0xab, 0x8b, 0x83, 0x67, 0xa9, 0xe6, 0xba, 0x38, 0xea,
+	0xf5, 0xcc, 0x1b, 0x34, 0xb1, 0x1e, 0x88, 0x6e, 0xfe, 0x6a, 0x56, 0x99, 0xe3, 0xe7, 0xf9, 0xcf,
+	0xb5, 0xa7, 0xd9, 0x67, 0x58, 0x92, 0x9d, 0x10, 0x9d, 0xfd, 0x7e, 0x56, 0x21, 0xda, 0xa6, 0xe1,
+	0x46, 0xf4, 0x8e, 0x81, 0x34, 0x8b, 0x4e, 0x16, 0x35, 0xcc, 0x19, 0x8c, 0x12, 0xbb, 0xed, 0x54,
+	0x42, 0x39, 0x11, 0x7d, 0xe7, 0x49, 0xb0, 0x2e, 0x7d, 0x11, 0xbd, 0xff, 0xd3, 0x02, 0xbc, 0x9b,
+	0x2d, 0x91, 0x0e, 0xb7, 0x6e, 0xfa, 0x6e, 0xab, 0x53, 0x4b, 0x9f, 0x91, 0xf4, 0x7c, 0x16, 0x27,
+	0x67, 0x98, 0xa5, 0xfc, 0x61, 0xbe, 0x09, 0xe3, 0x86, 0x69, 0x72, 0x1b, 0x59, 0x84, 0xd2, 0x0d,
+	0xd3, 0x64, 0x36, 0x72, 0xfd, 0xbd, 0xac, 0x54, 0x1b, 0xa0, 0xcf, 0x62, 0xc4, 0x9f, 0xe7, 0xbd,
+	0x6f, 0xb2, 0x1b, 0x50, 0x9f, 0x19, 0xd6, 0xdb, 0xed, 0x56, 0xcb, 0x88, 0x45, 0x6a, 0x86, 0x78,
+	0xba, 0xa1, 0xfe, 0x83, 0x62, 0x9e, 0x52, 0x99, 0xad, 0x59, 0x28, 0x1e, 0xbb, 0x30, 0x11, 0x20,
+	0xcc, 0x8a, 0x62, 0x27, 0xef, 0xa8, 0x83, 0x97, 0x57, 0x63, 0x40, 0xad, 0x53, 0x93, 0xf2, 0xdb,
+	0x05, 0xa8, 0xc4, 0x50, 0x43, 0xc4, 0x9a, 0xc4, 0xfd, 0x04, 0x66, 0x7a, 0x8b, 0x48, 0x13, 0xde,
+	0x4f, 0xd8, 0x44, 0x3f, 0xf1, 0x24, 0xa2, 0x8c, 0xa6, 0x61, 0x39, 0x81, 0x0c, 0xd9, 0x55, 0x18,
+	0x6c, 0x9d, 0x83, 0x18, 0x57, 0xf2, 0xab, 0x80, 0xd4, 0x14, 0xcb, 0x15, 0x7d, 0xd7, 0xff, 0xa3,
+	0x00, 0x57, 0xf3, 0x53, 0x74, 0x79, 0x54, 0x27, 0x38, 0xc5, 0x94, 0xef, 0x3a, 0x4c, 0x39, 0xed,
+	0x16, 0x4f, 0xe1, 0x8d, 0x1e, 0x08, 0xe0, 0x57, 0x17, 0xf1, 0x28, 0xfa, 0xd4, 0x38, 0xfa, 0x39,
+	0x3d, 0xf1, 0xf3, 0x9f, 0x45, 0xb8, 0xd6, 0x6f, 0xd4, 0x83, 0xa6, 0x3e, 0xeb, 0x5d, 0x52, 0x9f,
+	0xdf, 0x55, 0x07, 0x6b, 0xa1, 0x5f, 0xf6, 0xb3, 0xf2, 0xd7, 0x85, 0x5f, 0x80, 0xc4, 0xe6, 0xbc,
+	0x5c, 0xe3, 0xf2, 0x49, 0x72, 0x8d, 0xbf, 0xc8, 0x8d, 0xba, 0x67, 0x7c, 0xa3, 0xc3, 0x07, 0x64,
+	0xeb, 0xdf, 0x2d, 0xe5, 0xc6, 0xce, 0xf3, 0xaa, 0x16, 0x6b, 0xfb, 0x0a, 0x9f, 0x6a, 0xc8, 0xf8,
+	0x73, 0xf9, 0x8e, 0xff, 0x40, 0x1d, 0xaa, 0x32, 0x35, 0x83, 0xc3, 0xc7, 0x1e, 0x52, 0xe4, 0xca,
+	0x3f, 0x15, 0x60, 0x36, 0x43, 0x49, 0x28, 0x4c, 0xc6, 0x6f, 0x40, 0xe2, 0x08, 0xbb, 0x79, 0x94,
+	0xd7, 0x56, 0x5e, 0xea, 0x59, 0xb8, 0xfe, 0xb4, 0x6d, 0x5a, 0xe1, 0xf1, 0x33, 0x7f, 0x9b, 0x1e,
+	0xb5, 0x0d, 0x5b, 0xe0, 0xb5, 0x44, 0xb5, 0xc9, 0xd8, 0x63, 0x31, 0x15, 0x7b, 0x4c, 0x06, 0x6f,
+	0x4b, 0xe9, 0xe0, 0xed, 0x12, 0x4c, 0xb5, 0x5c, 0x93, 0xfa, 0x18, 0x6e, 0x0a, 0x68, 0xf4, 0x3c,
+	0x5a, 0x04, 0xdc, 0xa6, 0x61, 0xfd, 0x67, 0x05, 0xb8, 0x9d, 0x9b, 0xf9, 0x71, 0x1a, 0x0b, 0x4c,
+	0x36, 0x30, 0x8a, 0x18, 0x55, 0x10, 0xba, 0xba, 0x61, 0x9a, 0xb8, 0xdb, 0xba, 0x7a, 0xdf, 0xab,
+	0xb1, 0x02, 0x3b, 0xee, 0xba, 0x69, 0x92, 0x2d, 0x98, 0x4f, 0x55, 0xe2, 0xa3, 0xea, 0x80, 0xe7,
+	0x75, 0xd7, 0x7a, 0xce, 0x24, 0xea, 0xe1, 0xca, 0x46, 0x5d, 0x87, 0x3b, 0x83, 0x0f, 0x56, 0xb0,
+	0xdc, 0x4d, 0x98, 0xed, 0x78, 0xcc, 0xe4, 0x86, 0x2c, 0x88, 0xfb, 0x5d, 0x12, 0x21, 0x76, 0x65,
+	0xfd, 0x9f, 0x47, 0x32, 0xc7, 0x96, 0x78, 0xb4, 0x4b, 0x5c, 0x1f, 0xd6, 0x9f, 0xba, 0xa1, 0xb5,
+	0x6f, 0x35, 0xd0, 0x34, 0x1b, 0x4a, 0x26, 0xcc, 0xc3, 0x28, 0xb3, 0x19, 0x13, 0x1e, 0x9d, 0x2d,
+	0x7c, 0x04, 0x0f, 0x0b, 0xca, 0x87, 0x37, 0x84, 0x24, 0x98, 0x64, 0xc0, 0x0f, 0x05, 0x2c, 0xf9,
+	0x28, 0x49, 0x2c, 0x37, 0x0d, 0x83, 0xb7, 0x37, 0xa0, 0xea, 0xa7, 0xaf, 0x3e, 0xf3, 0xd0, 0xe3,
+	0x8c, 0x9f, 0xba, 0xfb, 0xbc, 0x0c, 0x55, 0x2b, 0xd0, 0x4d, 0xea, 0xb9, 0xa1, 0x8c, 0xab, 0x88,
+	0x47, 0x8a, 0xa6, 0xad, 0xe0, 0x11, 0x03, 0x8b, 0x99, 0x64, 0xdd, 0xf2, 0x13, 0x22, 0x6c, 0x4c,
+	0x58, 0xda, 0x71, 0x19, 0x16, 0xbf, 0x65, 0x31, 0x71, 0x7a, 0xb7, 0x2c, 0x5e, 0xc0, 0x44, 0xe7,
+	0x0a, 0xef, 0x78, 0xbe, 0x68, 0xef, 0xb1, 0x2a, 0xaa, 0xac, 0x1a, 0x2f, 0x6d, 0x77, 0xaa, 0x52,
+	0xfe, 0xab, 0x00, 0x93, 0x71, 0x5c, 0xa2, 0xff, 0x85, 0xd3, 0xeb, 0x7f, 0x66, 0x49, 0x8b, 0x39,
+	0x4b, 0x9a, 0x99, 0xe0, 0x52, 0xce, 0x04, 0xe7, 0x3c, 0x05, 0x54, 0x1e, 0xf0, 0x29, 0xa0, 0x91,
+	0x9c, 0xa7, 0x80, 0xea, 0xaf, 0x32, 0x47, 0x01, 0xfb, 0x13, 0x7b, 0x50, 0xf1, 0xd4, 0xf9, 0xbb,
+	0x1e, 0x40, 0xde, 0xd2, 0x89, 0x97, 0x41, 0x74, 0xfe, 0xc8, 0xe3, 0x69, 0x37, 0xba, 0xf2, 0x0f,
+	0x45, 0x38, 0x9b, 0xbf, 0x5c, 0xe4, 0x0a, 0xf4, 0x5d, 0xca, 0xea, 0x1b, 0x64, 0x09, 0x16, 0xba,
+	0x52, 0x7d, 0x62, 0x84, 0x34, 0x08, 0xab, 0x05, 0xb2, 0x0a, 0x37, 0xba, 0x12, 0xad, 0x7b, 0x9e,
+	0xef, 0xc6, 0x12, 0x63, 0xaa, 0x45, 0x72, 0x1f, 0x6e, 0x0f, 0x4c, 0xae, 0x6f, 0x1c, 0x58, 0x8e,
+	0x51, 0x2d, 0xf5, 0x6c, 0x43, 0xa3, 0xdf, 0xa6, 0x8d, 0x30, 0xd6, 0x46, 0xb9, 0x67, 0x1b, 0x69,
+	0x72, 0xd1, 0xc6, 0x08, 0xb9, 0x09, 0xd7, 0xbb, 0x77, 0x2c, 0xa1, 0x4c, 0x54, 0x47, 0x57, 0xfe,
+	0xaa, 0x00, 0xe7, 0x7b, 0xdc, 0x4d, 0x25, 0x67, 0x21, 0xe7, 0x76, 0x6a, 0xf5, 0x0d, 0x72, 0x1e,
+	0xce, 0x49, 0xf8, 0x73, 0xea, 0x98, 0x96, 0xd3, 0xe4, 0x63, 0x36, 0xec, 0x6a, 0x21, 0x8e, 0x94,
+	0x33, 0x21, 0x4b, 0x16, 0xe3, 0x48, 0x39, 0x04, 0x89, 0x2c, 0xc5, 0x91, 0x4f, 0xdd, 0x4f, 0x5c,
+	0xa7, 0x49, 0x7d, 0x89, 0x2c, 0x93, 0x8b, 0xf0, 0xa6, 0x44, 0xee, 0x50, 0x27, 0x34, 0x42, 0x0b,
+	0xbd, 0xe0, 0xbc, 0xd5, 0x91, 0x95, 0xef, 0x97, 0xa0, 0xd6, 0x2d, 0x72, 0x2b, 0x38, 0xa0, 0x57,
+	0x5c, 0xb7, 0xfa, 0x86, 0x58, 0x9d, 0x6e, 0x44, 0xf2, 0x21, 0x20, 0x1e, 0x78, 0xad, 0x16, 0xc8,
+	0x5d, 0x58, 0xed, 0x41, 0x1e, 0x3d, 0xf3, 0xf2, 0xf0, 0x78, 0xd3, 0xb7, 0xa8, 0x63, 0x06, 0xd5,
+	0x22, 0x51, 0x61, 0xa5, 0x47, 0x11, 0x1e, 0x8b, 0xef, 0xd0, 0x97, 0xc8, 0x1d, 0xb8, 0xd5, 0x97,
+	0x9e, 0x35, 0xc0, 0xdf, 0x88, 0x31, 0xab, 0x65, 0x72, 0x1d, 0x96, 0x7a, 0x94, 0xd0, 0x84, 0xd9,
+	0x52, 0x1d, 0x21, 0x2b, 0x70, 0xad, 0x07, 0xe1, 0x73, 0xc3, 0xa7, 0x0e, 0xaa, 0xdb, 0x41, 0x75,
+	0xb4, 0x4f, 0x37, 0x38, 0x6d, 0xc7, 0x1e, 0x0d, 0xaa, 0x63, 0x2b, 0x7f, 0xc8, 0xf8, 0xaa, 0x7b,
+	0x74, 0x99, 0xdc, 0x80, 0xc1, 0xc2, 0xcf, 0xd5, 0x37, 0xb2, 0x23, 0x4a, 0x93, 0xee, 0x58, 0xa1,
+	0x4d, 0xa3, 0x0d, 0xdc, 0x83, 0x30, 0x16, 0x9e, 0xac, 0x16, 0xef, 0xfd, 0xcb, 0x79, 0x98, 0x4a,
+	0x70, 0x3e, 0xd9, 0x80, 0x32, 0x33, 0x2f, 0xc9, 0x05, 0xb5, 0xc7, 0x6b, 0xc6, 0xca, 0x45, 0xb5,
+	0xd7, 0x4b, 0xc4, 0x44, 0x83, 0x89, 0xce, 0x4b, 0x45, 0x97, 0xd5, 0x7e, 0x8f, 0x12, 0x2b, 0x75,
+	0xb5, 0xef, 0xf3, 0xbe, 0xe4, 0x0b, 0xa8, 0xc4, 0xa4, 0x3a, 0x59, 0x52, 0xfb, 0xbf, 0xf5, 0xab,
+	0x5c, 0x51, 0x07, 0x78, 0x68, 0x97, 0x7c, 0x13, 0x26, 0x37, 0x12, 0x4f, 0x2b, 0xa9, 0x03, 0xbc,
+	0xbb, 0xab, 0x5c, 0x55, 0x07, 0x7a, 0x4c, 0xf7, 0xdb, 0x30, 0x9b, 0x79, 0x5f, 0x95, 0xe4, 0xdd,
+	0x63, 0xc8, 0x7f, 0x3a, 0x57, 0x59, 0x51, 0x07, 0x7f, 0xad, 0xf5, 0x13, 0x18, 0x13, 0xb4, 0x64,
+	0x41, 0xed, 0xfd, 0xf2, 0xaa, 0xb2, 0xa8, 0xf6, 0x7b, 0x49, 0x73, 0x17, 0xa0, 0x73, 0x4f, 0x9c,
+	0xd4, 0xd5, 0xbe, 0x0f, 0x61, 0x2a, 0x4b, 0xea, 0x00, 0xf7, 0xcc, 0xbf, 0x80, 0x4a, 0xec, 0xfe,
+	0x2e, 0x59, 0x1a, 0xe0, 0xaa, 0x76, 0x76, 0x1d, 0x73, 0x2f, 0x18, 0x7f, 0x13, 0x26, 0xe3, 0xf7,
+	0x41, 0xc8, 0x95, 0x41, 0xae, 0xd3, 0x65, 0xd7, 0x31, 0xff, 0x26, 0x8c, 0x0e, 0xd5, 0x18, 0x62,
+	0x03, 0x13, 0x6d, 0x4f, 0xb5, 0x81, 0xef, 0x15, 0x40, 0xe9, 0x7e, 0x21, 0x82, 0xdc, 0x53, 0x87,
+	0xbe, 0x5c, 0xa2, 0xdc, 0x3f, 0xc1, 0x85, 0x0b, 0xb2, 0x05, 0xa3, 0x5c, 0x57, 0x23, 0x97, 0xd4,
+	0x9e, 0xd7, 0x23, 0x94, 0x05, 0xb5, 0x77, 0x82, 0x3e, 0xab, 0x8a, 0x6b, 0x45, 0xd9, 0xaa, 0x92,
+	0x99, 0xfa, 0xd9, 0xaa, 0x52, 0x89, 0xf6, 0xe4, 0x10, 0xe6, 0x73, 0x73, 0xd8, 0xc9, 0xaa, 0x3a,
+	0x4c, 0xfe, 0xbd, 0xa2, 0xaa, 0xc3, 0x65, 0xc6, 0x37, 0x71, 0xd9, 0x13, 0x14, 0x64, 0x59, 0x1d,
+	0x30, 0x11, 0x5c, 0xb9, 0x31, 0x70, 0xb2, 0x34, 0x69, 0x01, 0xc9, 0xa6, 0x8e, 0x92, 0xcc, 0xee,
+	0xef, 0x9e, 0xc8, 0xab, 0xdc, 0x54, 0x07, 0x4f, 0x45, 0x65, 0x9b, 0xbb, 0x73, 0x48, 0x64, 0x37,
+	0x77, 0x36, 0xb9, 0x2d, 0xbb, 0xb9, 0xf3, 0xf2, 0x2f, 0x5a, 0x40, 0xb2, 0xc9, 0x05, 0xd9, 0x51,
+	0x74, 0xcf, 0x88, 0xc8, 0x8e, 0xa2, 0x47, 0xb2, 0x02, 0xe3, 0x8a, 0xdc, 0x44, 0x80, 0x2c, 0x57,
+	0xf4, 0xcc, 0x61, 0xc8, 0x72, 0x45, 0xef, 0xf4, 0x02, 0xe2, 0xc1, 0x99, 0x9c, 0x18, 0x28, 0xb9,
+	0xa9, 0x0e, 0x9e, 0x74, 0xa0, 0xdc, 0x1a, 0x26, 0xfe, 0x8f, 0xd2, 0xa1, 0x7b, 0xd8, 0x35, 0x2b,
+	0x1d, 0xfa, 0x47, 0xeb, 0x95, 0xfb, 0xea, 0x89, 0xc2, 0xe9, 0xf3, 0xb9, 0x31, 0xd3, 0xec, 0x8c,
+	0xf7, 0x0c, 0xe6, 0x66, 0x67, 0xbc, 0x77, 0x24, 0x96, 0x04, 0x30, 0x97, 0x17, 0x86, 0x24, 0xb7,
+	0xd4, 0x21, 0x02, 0xb4, 0xca, 0xaa, 0x3a, 0x4c, 0x74, 0x95, 0xfc, 0x41, 0x01, 0xea, 0xfd, 0x83,
+	0x9f, 0x64, 0x4d, 0x3d, 0x71, 0x0c, 0x56, 0x79, 0x4f, 0x3d, 0x79, 0xb0, 0x95, 0xfc, 0x6e, 0x01,
+	0x16, 0xfa, 0xc4, 0x06, 0xc9, 0x3b, 0x27, 0x8c, 0x8e, 0x2a, 0xef, 0xaa, 0x27, 0x8c, 0x42, 0x92,
+	0x67, 0x30, 0x2e, 0x63, 0x7e, 0x64, 0x51, 0xed, 0x13, 0x8f, 0x54, 0x2e, 0xab, 0xfd, 0xe2, 0x85,
+	0x4c, 0x65, 0x88, 0x85, 0xe6, 0xb2, 0x2a, 0x43, 0x4e, 0xf0, 0x30, 0xab, 0x32, 0xe4, 0x05, 0xf7,
+	0x90, 0x9d, 0xf3, 0x02, 0x68, 0x39, 0xec, 0xdc, 0x2b, 0xe6, 0x97, 0xc3, 0xce, 0x3d, 0xc3, 0x72,
+	0xe4, 0xf7, 0x0b, 0x70, 0xb9, 0x6f, 0x4c, 0x8b, 0x3c, 0x50, 0x4f, 0x1a, 0xba, 0x53, 0xd6, 0xd4,
+	0x13, 0x47, 0xd0, 0x98, 0x10, 0xcf, 0x06, 0xa6, 0xc8, 0x8a, 0x3a, 0x70, 0x58, 0x4d, 0xb9, 0x39,
+	0x44, 0xa0, 0x8b, 0x18, 0x30, 0x9d, 0x8c, 0x6a, 0x90, 0x6b, 0xea, 0x40, 0xd1, 0x24, 0xe5, 0xfa,
+	0x80, 0xd1, 0x11, 0xa9, 0x3d, 0x64, 0x93, 0xa7, 0x57, 0xd5, 0x61, 0xe2, 0x08, 0xf9, 0xda, 0x43,
+	0x0f, 0x47, 0xed, 0x2f, 0x43, 0xad, 0x9b, 0x37, 0x97, 0xdc, 0x51, 0x87, 0x74, 0x72, 0x2b, 0x77,
+	0xd5, 0x61, 0x3d, 0xc5, 0xf7, 0x7e, 0xaf, 0x08, 0x67, 0x12, 0x65, 0xc4, 0xff, 0x60, 0x79, 0x0e,
+	0x73, 0xe8, 0xa0, 0x3a, 0x4e, 0x3a, 0x1d, 0xb3, 0x27, 0x58, 0x0f, 0xa7, 0xa4, 0x52, 0x51, 0x9f,
+	0xba, 0xd1, 0x50, 0x77, 0xe0, 0x6c, 0xa7, 0xc6, 0xb8, 0xfb, 0x2d, 0x3b, 0xc7, 0x3d, 0x1d, 0x74,
+	0xc9, 0x5a, 0x3f, 0x83, 0xd9, 0x4e, 0xad, 0xf2, 0xed, 0xdd, 0xdb, 0x43, 0xba, 0xdf, 0x12, 0x55,
+	0x2a, 0xe5, 0x1f, 0xff, 0x59, 0xad, 0xf8, 0xb0, 0xf4, 0xdd, 0x42, 0xe1, 0xbf, 0x03, 0x00, 0x00,
+	0xff, 0xff, 0xd8, 0x0a, 0xf4, 0xad, 0x43, 0x68, 0x00, 0x00,
 }
