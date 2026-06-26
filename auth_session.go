@@ -70,10 +70,46 @@ func (a *Auth) getAccessTokenViaCredentials(details *LogOnDetails) (string, erro
 	}
 
 	// 4. ensure no Steam Guard confirmation is required.
-	for _, conf := range beginResp.GetAllowedConfirmations() {
-		if conf.GetConfirmationType() != EAuthSessionGuardType_k_EAuthSessionGuardType_None {
-			return "", fmt.Errorf("steam guard confirmation required (%v) but not supported by this flow", conf.GetConfirmationType())
+	for attempt := 0; attempt < maxPollAttempts; attempt++ {
+		pollResp := new(CAuthentication_PollAuthSessionStatus_Response)
+		if err := authServiceCall(http.MethodPost, "PollAuthSessionStatus",
+			&CAuthentication_PollAuthSessionStatus_Request{
+				ClientId:  proto.Uint64(beginResp.GetClientId()),
+				RequestId: beginResp.GetRequestId(),
+			}, pollResp); err != nil {
+			return "", err
 		}
+
+		if token := pollResp.GetRefreshToken(); token != "" {
+			return token, nil
+		}
+
+		// Check if steamguard required
+		confTypes := beginResp.GetAllowedConfirmations()
+		for _, conf := range confTypes {
+			confType := conf.GetConfirmationType()
+			if confType == EAuthSessionGuardType_k_EAuthSessionGuardType_DeviceCode {
+				// If code is not sent yet
+				if details.TwoFactorCode == "" {
+					return "", fmt.Errorf("steam guard required: %v", confType)
+				}
+
+				// Sending code
+				if err := submitSteamGuardCode(
+					beginResp.GetClientId(),
+					beginResp.GetSteamid(),
+					details.TwoFactorCode,
+					confType,
+				); err != nil {
+					return "", err
+				}
+
+				// Code sent
+				details.TwoFactorCode = ""
+			}
+		}
+
+		time.Sleep(time.Second)
 	}
 
 	// 5. poll until the session yields a refresh token.
@@ -93,6 +129,33 @@ func (a *Auth) getAccessTokenViaCredentials(details *LogOnDetails) (string, erro
 	}
 
 	return "", fmt.Errorf("auth session did not complete after %d attempts", maxPollAttempts)
+}
+
+// submitSteamGuardCode sends Steam Guard code
+func submitSteamGuardCode(clientID uint64, steamID uint64,
+	code string, codeType EAuthSessionGuardType) error {
+
+	updateResp := new(CAuthentication_UpdateAuthSessionWithSteamGuardCode_Response)
+
+	req := &CAuthentication_UpdateAuthSessionWithSteamGuardCode_Request{
+		ClientId: proto.Uint64(clientID),
+		Steamid:  proto.Uint64(steamID),
+		Code:     proto.String(code),
+		CodeType: &codeType,
+	}
+
+	err := authServiceCall(http.MethodPost, "UpdateAuthSessionWithSteamGuardCode",
+		req, updateResp)
+
+	if err != nil {
+		return fmt.Errorf("failed to submit Steam Guard code: %v", err)
+	}
+
+	if updateResp.GetAgreementSessionUrl() != "" {
+		return fmt.Errorf("email confirmation required, please visit: %s", updateResp.GetAgreementSessionUrl())
+	}
+
+	return nil
 }
 
 // authServiceCall invokes an IAuthenticationService method over the WebAPI,
