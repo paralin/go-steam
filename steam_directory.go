@@ -3,6 +3,7 @@ package steam
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"math/rand"
 	"net/http"
 	"sync"
@@ -35,9 +36,16 @@ func (sd *steamDirectory) Initialize() error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_, _ = io.Copy(io.Discard, resp.Body)
+		_ = resp.Body.Close()
+	}()
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("steam directory request failed with status %s", resp.Status)
+		body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return fmt.Errorf("got non-200 response from Steam: status=%d - failed to read body: %w", resp.StatusCode, err)
+		}
+		return fmt.Errorf("got non-200 response from Steam: status=%d body=%s", resp.StatusCode, string(body))
 	}
 	r := struct {
 		Response struct {
