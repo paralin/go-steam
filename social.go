@@ -4,6 +4,10 @@ import (
 	"bytes"
 	"encoding/binary"
 	"encoding/hex"
+	"io"
+	"sync"
+	"time"
+
 	"github.com/golang/protobuf/proto"
 	. "github.com/paralin/go-steam/protocol"
 	. "github.com/paralin/go-steam/protocol/protobuf"
@@ -11,9 +15,6 @@ import (
 	. "github.com/paralin/go-steam/rwu"
 	"github.com/paralin/go-steam/socialcache"
 	"github.com/paralin/go-steam/steamid"
-	"io"
-	"sync"
-	"time"
 )
 
 // Social provides access to social aspects of Steam.

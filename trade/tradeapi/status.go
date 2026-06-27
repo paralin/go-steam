@@ -2,9 +2,10 @@ package tradeapi
 
 import (
 	"encoding/json"
+	"strconv"
+
 	"github.com/paralin/go-steam/jsont"
 	"github.com/paralin/go-steam/steamid"
-	"strconv"
 )
 
 type Status struct {
@@ -99,8 +100,8 @@ type User struct {
 	Confirmed         jsont.UintBool
 	SecSinceTouch     int  `json:"sec_since_touch"`
 	ConnectionPending bool `json:"connection_pending"`
-	Assets            interface{}
-	Currency          interface{} // either []*Currency or empty string
+	Assets            any
+	Currency          any // either []*Currency or empty string
 }
 
 type Currency struct {

@@ -1,7 +1,7 @@
 /*
 Allows automation of Steam Trading.
 
-Usage
+# Usage
 
 Like go-steam, this package is event-based. Call Poll() until the trade has ended, that is until the TradeEndedEvent is emitted.
 
@@ -32,7 +32,7 @@ and `SteamLogin` fields of steam.Web for the respective cookies.
 It is important that there is no delay between the Poll() calls greater than the timeout of the Steam client
 (currently five seconds before the trade partner sees a warning) or the trade will be closed automatically by Steam.
 
-Notes
+# Notes
 
 All method calls to Steam APIs are blocking. This packages' and its subpackages' types are not thread-safe and no calls to any method of the same
 trade instance may be done concurrently except when otherwise noted.

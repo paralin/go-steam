@@ -2,6 +2,7 @@ package steam
 
 import (
 	"crypto/rsa"
+
 	"github.com/paralin/go-steam/cryptoutil"
 	. "github.com/paralin/go-steam/protocol/steamlang"
 )

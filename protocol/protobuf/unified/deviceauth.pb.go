@@ -3,9 +3,13 @@
 
 package unified
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -222,8 +226,10 @@ type CDeviceAuth_AuthorizeRemoteDevice_Request struct {
 func (m *CDeviceAuth_AuthorizeRemoteDevice_Request) Reset() {
 	*m = CDeviceAuth_AuthorizeRemoteDevice_Request{}
 }
-func (m *CDeviceAuth_AuthorizeRemoteDevice_Request) String() string { return proto.CompactTextString(m) }
-func (*CDeviceAuth_AuthorizeRemoteDevice_Request) ProtoMessage()    {}
+func (m *CDeviceAuth_AuthorizeRemoteDevice_Request) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CDeviceAuth_AuthorizeRemoteDevice_Request) ProtoMessage() {}
 func (*CDeviceAuth_AuthorizeRemoteDevice_Request) Descriptor() ([]byte, []int) {
 	return deviceauth_fileDescriptor0, []int{4}
 }
@@ -851,7 +857,9 @@ func init() {
 	proto.RegisterType((*CDeviceAuth_GetExcludedGamesInLibrary_Response_ExcludedGame)(nil), "CDeviceAuth_GetExcludedGamesInLibrary_Response.ExcludedGame")
 }
 
-func init() { proto.RegisterFile("steammessages_deviceauth.steamclient.proto", deviceauth_fileDescriptor0) }
+func init() {
+	proto.RegisterFile("steammessages_deviceauth.steamclient.proto", deviceauth_fileDescriptor0)
+}
 
 var deviceauth_fileDescriptor0 = []byte{
 	// 1335 bytes of a gzipped FileDescriptorProto

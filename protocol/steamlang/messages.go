@@ -5,9 +5,10 @@ package steamlang
 
 import (
 	"encoding/binary"
+	"io"
+
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	"github.com/paralin/go-steam/rwu"
-	"io"
 )
 
 type SteamId uint64

@@ -82,7 +82,7 @@ func (a *Auth) getAccessTokenViaCredentials(ctx context.Context, details *LogOnD
 	if interval <= 0 {
 		interval = time.Second
 	}
-	for attempt := 0; attempt < maxPollAttempts; attempt++ {
+	for attempt := range maxPollAttempts {
 		pollResp := new(CAuthentication_PollAuthSessionStatus_Response)
 		if err := a.authServiceCall(ctx, http.MethodPost, "PollAuthSessionStatus", &CAuthentication_PollAuthSessionStatus_Request{
 			ClientId:  uint64Ptr(beginResp.GetClientId()),

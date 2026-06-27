@@ -16,7 +16,7 @@ type Trade struct {
 	MeReady, ThemReady bool
 
 	lastPoll     time.Time
-	queuedEvents []interface{}
+	queuedEvents []any
 	api          *tradeapi.Trade
 }
 
@@ -35,7 +35,7 @@ func (t *Trade) Version() uint {
 }
 
 // Returns all queued events and removes them from the queue without performing a HTTP request, like Poll() would.
-func (t *Trade) Events() []interface{} {
+func (t *Trade) Events() []any {
 	qe := t.queuedEvents
 	t.queuedEvents = nil
 	return qe
@@ -117,6 +117,6 @@ func (t *Trade) updateEvents(events tradeapi.EventList) {
 	t.api.LogPos = uint(lastLogPos) + 1
 }
 
-func (t *Trade) addEvent(event interface{}) {
+func (t *Trade) addEvent(event any) {
 	t.queuedEvents = append(t.queuedEvents, event)
 }

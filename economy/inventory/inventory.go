@@ -7,8 +7,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/paralin/go-steam/jsont"
 	"strconv"
+
+	"github.com/paralin/go-steam/jsont"
 )
 
 type GenericInventory map[uint32]map[uint64]*Inventory

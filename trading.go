@@ -1,10 +1,10 @@
 package steam
 
 import (
+	"github.com/golang/protobuf/proto"
 	. "github.com/paralin/go-steam/protocol"
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	. "github.com/paralin/go-steam/protocol/steamlang"
-	"github.com/golang/protobuf/proto"
 )
 
 // Provides access to the Steam client's part of Steam Trading, that is bootstrapping

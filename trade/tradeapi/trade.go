@@ -7,15 +7,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/paralin/go-steam/community"
-	"github.com/paralin/go-steam/economy/inventory"
-	"github.com/paralin/go-steam/netutil"
-	"github.com/paralin/go-steam/steamid"
 	"io/ioutil"
 	"net/http"
 	"regexp"
 	"strconv"
 	"time"
+
+	"github.com/paralin/go-steam/community"
+	"github.com/paralin/go-steam/economy/inventory"
+	"github.com/paralin/go-steam/netutil"
+	"github.com/paralin/go-steam/steamid"
 )
 
 const tradeUrl = "https://steamcommunity.com/trade/%d/"
@@ -192,8 +193,8 @@ func (t *Trade) Cancel() (*Status, error) {
 	})
 }
 
-func isSuccess(v interface{}) bool {
-	if m, ok := v.(map[string]interface{}); ok {
+func isSuccess(v any) bool {
+	if m, ok := v.(map[string]any); ok {
 		return m["success"] == true
 	}
 	return false

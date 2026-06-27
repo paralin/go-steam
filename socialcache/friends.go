@@ -2,16 +2,18 @@ package socialcache
 
 import (
 	"errors"
+	"sync"
+
 	. "github.com/paralin/go-steam/protocol/steamlang"
 	"github.com/paralin/go-steam/steamid"
-	"sync"
 )
 
 // FriendsList is a thread safe map
 // They can be iterated over like so:
-// 	for id, friend := range client.Social.Friends.GetCopy() {
-// 		log.Println(id, friend.Name)
-// 	}
+//
+//	for id, friend := range client.Social.Friends.GetCopy() {
+//		log.Println(id, friend.Name)
+//	}
 type FriendsList struct {
 	mutex sync.RWMutex
 	byId  map[steamid.SteamId]*Friend
@@ -67,7 +69,7 @@ func (list *FriendsList) Count() int {
 	return len(list.byId)
 }
 
-//Setter methods
+// Setter methods
 func (list *FriendsList) SetName(id steamid.SteamId, name string) {
 	list.mutex.Lock()
 	defer list.mutex.Unlock()

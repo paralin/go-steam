@@ -70,7 +70,7 @@ func removeGeneratedGo(root string) error {
 }
 
 func buildProto(ctx context.Context, repoRoot string) error {
-	if err := run(ctx, repoRoot, "bash", "generator/update_protos.bash"); err != nil {
+	if err := updateProtoSources(repoRoot); err != nil {
 		return err
 	}
 	return run(ctx, repoRoot,

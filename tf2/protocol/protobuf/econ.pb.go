@@ -3,9 +3,13 @@
 
 package protobuf
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -843,8 +847,10 @@ type CMsgRequestItemPurgatory_FinalizePurchase struct {
 func (m *CMsgRequestItemPurgatory_FinalizePurchase) Reset() {
 	*m = CMsgRequestItemPurgatory_FinalizePurchase{}
 }
-func (m *CMsgRequestItemPurgatory_FinalizePurchase) String() string { return proto.CompactTextString(m) }
-func (*CMsgRequestItemPurgatory_FinalizePurchase) ProtoMessage()    {}
+func (m *CMsgRequestItemPurgatory_FinalizePurchase) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CMsgRequestItemPurgatory_FinalizePurchase) ProtoMessage() {}
 func (*CMsgRequestItemPurgatory_FinalizePurchase) Descriptor() ([]byte, []int) {
 	return econ_fileDescriptor0, []int{2}
 }
@@ -946,10 +952,12 @@ type CMsgGCRequestStoreSalesData struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGCRequestStoreSalesData) Reset()                    { *m = CMsgGCRequestStoreSalesData{} }
-func (m *CMsgGCRequestStoreSalesData) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCRequestStoreSalesData) ProtoMessage()               {}
-func (*CMsgGCRequestStoreSalesData) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{7} }
+func (m *CMsgGCRequestStoreSalesData) Reset()         { *m = CMsgGCRequestStoreSalesData{} }
+func (m *CMsgGCRequestStoreSalesData) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCRequestStoreSalesData) ProtoMessage()    {}
+func (*CMsgGCRequestStoreSalesData) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{7}
+}
 
 func (m *CMsgGCRequestStoreSalesData) GetVersion() uint32 {
 	if m != nil && m.Version != nil {
@@ -1009,8 +1017,10 @@ type CMsgGCRequestStoreSalesDataResponse_Price struct {
 func (m *CMsgGCRequestStoreSalesDataResponse_Price) Reset() {
 	*m = CMsgGCRequestStoreSalesDataResponse_Price{}
 }
-func (m *CMsgGCRequestStoreSalesDataResponse_Price) String() string { return proto.CompactTextString(m) }
-func (*CMsgGCRequestStoreSalesDataResponse_Price) ProtoMessage()    {}
+func (m *CMsgGCRequestStoreSalesDataResponse_Price) String() string {
+	return proto.CompactTextString(m)
+}
+func (*CMsgGCRequestStoreSalesDataResponse_Price) ProtoMessage() {}
 func (*CMsgGCRequestStoreSalesDataResponse_Price) Descriptor() ([]byte, []int) {
 	return econ_fileDescriptor0, []int{8, 0}
 }
@@ -1083,10 +1093,12 @@ type CMsgGCToGCGetUserSessionServer struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGCToGCGetUserSessionServer) Reset()                    { *m = CMsgGCToGCGetUserSessionServer{} }
-func (m *CMsgGCToGCGetUserSessionServer) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCToGCGetUserSessionServer) ProtoMessage()               {}
-func (*CMsgGCToGCGetUserSessionServer) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{12} }
+func (m *CMsgGCToGCGetUserSessionServer) Reset()         { *m = CMsgGCToGCGetUserSessionServer{} }
+func (m *CMsgGCToGCGetUserSessionServer) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCToGCGetUserSessionServer) ProtoMessage()    {}
+func (*CMsgGCToGCGetUserSessionServer) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{12}
+}
 
 func (m *CMsgGCToGCGetUserSessionServer) GetAccountId() uint32 {
 	if m != nil && m.AccountId != nil {
@@ -1122,10 +1134,12 @@ type CMsgGCToGCGetUserServerMembers struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGCToGCGetUserServerMembers) Reset()                    { *m = CMsgGCToGCGetUserServerMembers{} }
-func (m *CMsgGCToGCGetUserServerMembers) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCToGCGetUserServerMembers) ProtoMessage()               {}
-func (*CMsgGCToGCGetUserServerMembers) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{14} }
+func (m *CMsgGCToGCGetUserServerMembers) Reset()         { *m = CMsgGCToGCGetUserServerMembers{} }
+func (m *CMsgGCToGCGetUserServerMembers) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCToGCGetUserServerMembers) ProtoMessage()    {}
+func (*CMsgGCToGCGetUserServerMembers) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{14}
+}
 
 func (m *CMsgGCToGCGetUserServerMembers) GetAccountId() uint32 {
 	if m != nil && m.AccountId != nil {
@@ -1167,10 +1181,12 @@ type CMsgLookupMultipleAccountNames struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *CMsgLookupMultipleAccountNames) Reset()                    { *m = CMsgLookupMultipleAccountNames{} }
-func (m *CMsgLookupMultipleAccountNames) String() string            { return proto.CompactTextString(m) }
-func (*CMsgLookupMultipleAccountNames) ProtoMessage()               {}
-func (*CMsgLookupMultipleAccountNames) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{16} }
+func (m *CMsgLookupMultipleAccountNames) Reset()         { *m = CMsgLookupMultipleAccountNames{} }
+func (m *CMsgLookupMultipleAccountNames) String() string { return proto.CompactTextString(m) }
+func (*CMsgLookupMultipleAccountNames) ProtoMessage()    {}
+func (*CMsgLookupMultipleAccountNames) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{16}
+}
 
 func (m *CMsgLookupMultipleAccountNames) GetAccountids() []uint32 {
 	if m != nil {
@@ -1264,10 +1280,12 @@ type CMsgGCToGCThankedByNewUser struct {
 	XXX_unrecognized     []byte  `json:"-"`
 }
 
-func (m *CMsgGCToGCThankedByNewUser) Reset()                    { *m = CMsgGCToGCThankedByNewUser{} }
-func (m *CMsgGCToGCThankedByNewUser) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCToGCThankedByNewUser) ProtoMessage()               {}
-func (*CMsgGCToGCThankedByNewUser) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{19} }
+func (m *CMsgGCToGCThankedByNewUser) Reset()         { *m = CMsgGCToGCThankedByNewUser{} }
+func (m *CMsgGCToGCThankedByNewUser) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCToGCThankedByNewUser) ProtoMessage()    {}
+func (*CMsgGCToGCThankedByNewUser) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{19}
+}
 
 func (m *CMsgGCToGCThankedByNewUser) GetNewUserAccountid() uint32 {
 	if m != nil && m.NewUserAccountid != nil {
@@ -1289,10 +1307,12 @@ type CMsgGCShuffleCrateContents struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGCShuffleCrateContents) Reset()                    { *m = CMsgGCShuffleCrateContents{} }
-func (m *CMsgGCShuffleCrateContents) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCShuffleCrateContents) ProtoMessage()               {}
-func (*CMsgGCShuffleCrateContents) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{20} }
+func (m *CMsgGCShuffleCrateContents) Reset()         { *m = CMsgGCShuffleCrateContents{} }
+func (m *CMsgGCShuffleCrateContents) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCShuffleCrateContents) ProtoMessage()    {}
+func (*CMsgGCShuffleCrateContents) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{20}
+}
 
 func (m *CMsgGCShuffleCrateContents) GetCrateItemId() uint64 {
 	if m != nil && m.CrateItemId != nil {
@@ -1316,10 +1336,12 @@ type CMsgGCQuestObjective_Progress struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGCQuestObjective_Progress) Reset()                    { *m = CMsgGCQuestObjective_Progress{} }
-func (m *CMsgGCQuestObjective_Progress) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCQuestObjective_Progress) ProtoMessage()               {}
-func (*CMsgGCQuestObjective_Progress) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{21} }
+func (m *CMsgGCQuestObjective_Progress) Reset()         { *m = CMsgGCQuestObjective_Progress{} }
+func (m *CMsgGCQuestObjective_Progress) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCQuestObjective_Progress) ProtoMessage()    {}
+func (*CMsgGCQuestObjective_Progress) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{21}
+}
 
 func (m *CMsgGCQuestObjective_Progress) GetQuestItemId() uint64 {
 	if m != nil && m.QuestItemId != nil {
@@ -1407,10 +1429,12 @@ type CMsgGCQuestComplete_Request struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGCQuestComplete_Request) Reset()                    { *m = CMsgGCQuestComplete_Request{} }
-func (m *CMsgGCQuestComplete_Request) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCQuestComplete_Request) ProtoMessage()               {}
-func (*CMsgGCQuestComplete_Request) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{23} }
+func (m *CMsgGCQuestComplete_Request) Reset()         { *m = CMsgGCQuestComplete_Request{} }
+func (m *CMsgGCQuestComplete_Request) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCQuestComplete_Request) ProtoMessage()    {}
+func (*CMsgGCQuestComplete_Request) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{23}
+}
 
 func (m *CMsgGCQuestComplete_Request) GetQuestItemId() uint64 {
 	if m != nil && m.QuestItemId != nil {
@@ -1469,10 +1493,12 @@ type CMsgCraftCollectionUpgrade struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *CMsgCraftCollectionUpgrade) Reset()                    { *m = CMsgCraftCollectionUpgrade{} }
-func (m *CMsgCraftCollectionUpgrade) String() string            { return proto.CompactTextString(m) }
-func (*CMsgCraftCollectionUpgrade) ProtoMessage()               {}
-func (*CMsgCraftCollectionUpgrade) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{27} }
+func (m *CMsgCraftCollectionUpgrade) Reset()         { *m = CMsgCraftCollectionUpgrade{} }
+func (m *CMsgCraftCollectionUpgrade) String() string { return proto.CompactTextString(m) }
+func (*CMsgCraftCollectionUpgrade) ProtoMessage()    {}
+func (*CMsgCraftCollectionUpgrade) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{27}
+}
 
 func (m *CMsgCraftCollectionUpgrade) GetItemId() []uint64 {
 	if m != nil {
@@ -1487,10 +1513,12 @@ type CMsgCraftHalloweenOffering struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *CMsgCraftHalloweenOffering) Reset()                    { *m = CMsgCraftHalloweenOffering{} }
-func (m *CMsgCraftHalloweenOffering) String() string            { return proto.CompactTextString(m) }
-func (*CMsgCraftHalloweenOffering) ProtoMessage()               {}
-func (*CMsgCraftHalloweenOffering) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{28} }
+func (m *CMsgCraftHalloweenOffering) Reset()         { *m = CMsgCraftHalloweenOffering{} }
+func (m *CMsgCraftHalloweenOffering) String() string { return proto.CompactTextString(m) }
+func (*CMsgCraftHalloweenOffering) ProtoMessage()    {}
+func (*CMsgCraftHalloweenOffering) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{28}
+}
 
 func (m *CMsgCraftHalloweenOffering) GetToolId() uint64 {
 	if m != nil && m.ToolId != nil {
@@ -1536,10 +1564,12 @@ type CMsgGCQuestDiscard_Request struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGCQuestDiscard_Request) Reset()                    { *m = CMsgGCQuestDiscard_Request{} }
-func (m *CMsgGCQuestDiscard_Request) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCQuestDiscard_Request) ProtoMessage()               {}
-func (*CMsgGCQuestDiscard_Request) Descriptor() ([]byte, []int) { return econ_fileDescriptor0, []int{30} }
+func (m *CMsgGCQuestDiscard_Request) Reset()         { *m = CMsgGCQuestDiscard_Request{} }
+func (m *CMsgGCQuestDiscard_Request) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCQuestDiscard_Request) ProtoMessage()    {}
+func (*CMsgGCQuestDiscard_Request) Descriptor() ([]byte, []int) {
+	return econ_fileDescriptor0, []int{30}
+}
 
 func (m *CMsgGCQuestDiscard_Request) GetQuestItemId() uint64 {
 	if m != nil && m.QuestItemId != nil {

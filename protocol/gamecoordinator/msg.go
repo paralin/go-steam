@@ -3,9 +3,9 @@ package gamecoordinator
 import (
 	"io"
 
+	"github.com/golang/protobuf/proto"
 	. "github.com/paralin/go-steam/protocol"
 	. "github.com/paralin/go-steam/protocol/steamlang"
-	"github.com/golang/protobuf/proto"
 )
 
 // An outgoing message to the Game Coordinator.

@@ -3,8 +3,9 @@ package tradeoffer
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/paralin/go-steam/economy/inventory"
 	"regexp"
+
+	"github.com/paralin/go-steam/economy/inventory"
 )
 
 type TradeReceiptItem struct {

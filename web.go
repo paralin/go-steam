@@ -5,19 +5,19 @@ import (
 	"crypto/rand"
 	"encoding/json"
 	"errors"
-	"github.com/paralin/go-steam/cryptoutil"
-	. "github.com/paralin/go-steam/protocol"
-	. "github.com/paralin/go-steam/protocol/protobuf"
-	. "github.com/paralin/go-steam/protocol/steamlang"
 	"net/http"
 	"net/url"
 	"strconv"
 	"sync/atomic"
+
+	"github.com/paralin/go-steam/cryptoutil"
+	. "github.com/paralin/go-steam/protocol"
+	. "github.com/paralin/go-steam/protocol/protobuf"
+	. "github.com/paralin/go-steam/protocol/steamlang"
 )
 
 type Web struct {
-	// 64 bit alignment
-	relogOnNonce uint32
+	relogOnNonce atomic.Uint32
 
 	// The `sessionid` cookie required to use the steam website.
 	// This cookie may contain a characters that will need to be URL-escaped, otherwise
@@ -86,7 +86,7 @@ func (w *Web) apiLogOn() error {
 
 	if resp.StatusCode == 401 {
 		// our web login key has expired, request a new one
-		atomic.StoreUint32(&w.relogOnNonce, 1)
+		w.relogOnNonce.Store(1)
 		w.client.Write(NewClientMsgProtobuf(EMsg_ClientRequestWebAPIAuthenticateUserNonce, new(CMsgClientRequestWebAPIAuthenticateUserNonce)))
 		return nil
 	} else if resp.StatusCode != 200 {
@@ -111,14 +111,13 @@ func (w *Web) apiLogOn() error {
 	return nil
 }
 
-
 func (w *Web) handleAuthNonceResponse(packet *Packet) {
 	// this has to be the best name for a message yet.
 	msg := new(CMsgClientRequestWebAPIAuthenticateUserNonceResponse)
 	packet.ReadProtoMsg(msg)
 	w.webAPINonce = msg.GetWebapiAuthenticateUserNonce()
 
-	if !atomic.CompareAndSwapUint32(&w.relogOnNonce, 1, 0) {
+	if !w.relogOnNonce.CompareAndSwap(1, 0) {
 		w.client.Emit(new(WebSessionIdEvent))
 		return
 	}

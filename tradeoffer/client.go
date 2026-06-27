@@ -3,14 +3,15 @@ package tradeoffer
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/paralin/go-steam/community"
-	"github.com/paralin/go-steam/economy/inventory"
-	"github.com/paralin/go-steam/netutil"
-	"github.com/paralin/go-steam/steamid"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/paralin/go-steam/community"
+	"github.com/paralin/go-steam/economy/inventory"
+	"github.com/paralin/go-steam/netutil"
+	"github.com/paralin/go-steam/steamid"
 )
 
 type APIKey string
@@ -173,15 +174,15 @@ type TradeItem struct {
 // On success returns trade offer id
 func (c *Client) Create(other steamid.SteamId, accessToken *string, myItems, theirItems []TradeItem, counteredOfferId *uint64, message string) (uint64, error) {
 	// Create new trade offer status
-	to := map[string]interface{}{
+	to := map[string]any{
 		"newversion": true,
 		"version":    3,
-		"me": map[string]interface{}{
+		"me": map[string]any{
 			"assets":   myItems,
 			"currency": make([]struct{}, 0),
 			"ready":    false,
 		},
-		"them": map[string]interface{}{
+		"them": map[string]any{
 			"assets":   theirItems,
 			"currency": make([]struct{}, 0),
 			"ready":    false,

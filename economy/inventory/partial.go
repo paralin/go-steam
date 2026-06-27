@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"maps"
 	"net/http"
 )
 
@@ -76,15 +77,9 @@ func Merge(p ...*Inventory) *Inventory {
 			continue
 		}
 
-		for key, value := range i.Items {
-			inv.Items[key] = value
-		}
-		for key, value := range i.Descriptions {
-			inv.Descriptions[key] = value
-		}
-		for key, value := range i.Currencies {
-			inv.Currencies[key] = value
-		}
+		maps.Copy(inv.Items, i.Items)
+		maps.Copy(inv.Descriptions, i.Descriptions)
+		maps.Copy(inv.Currencies, i.Currencies)
 	}
 
 	return inv

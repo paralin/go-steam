@@ -13,7 +13,7 @@ import (
 )
 
 func TestHandleClanStatePreservesCachedFields(t *testing.T) {
-	client := &Client{events: make(chan interface{}, 2)}
+	client := &Client{events: make(chan any, 2)}
 	social := newSocial(client)
 	clanID := steamid.SteamId(76561198000000000)
 	social.Groups.Add(socialcache.Group{

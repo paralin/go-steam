@@ -41,7 +41,7 @@ type Client struct {
 	Trading       *Trading
 	GC            *GameCoordinator
 
-	events        chan interface{}
+	events        chan any
 	handlers      []PacketHandler
 	handlersMutex sync.RWMutex
 
@@ -62,7 +62,7 @@ type PacketHandler interface {
 
 func NewClient() *Client {
 	client := &Client{
-		events:   make(chan interface{}, 30),
+		events:   make(chan any, 30),
 		writeBuf: new(bytes.Buffer),
 	}
 	client.Auth = &Auth{client: client}
@@ -82,22 +82,22 @@ func NewClient() *Client {
 
 // Get the event channel. By convention all events are pointers, except for errors.
 // It is never closed.
-func (c *Client) Events() <-chan interface{} {
+func (c *Client) Events() <-chan any {
 	return c.events
 }
 
-func (c *Client) Emit(event interface{}) {
+func (c *Client) Emit(event any) {
 	c.events <- event
 }
 
 // Emits a FatalErrorEvent formatted with fmt.Errorf and disconnects.
-func (c *Client) Fatalf(format string, a ...interface{}) {
+func (c *Client) Fatalf(format string, a ...any) {
 	c.Emit(FatalErrorEvent(fmt.Errorf(format, a...)))
 	c.Disconnect()
 }
 
 // Emits an error formatted with fmt.Errorf.
-func (c *Client) Errorf(format string, a ...interface{}) {
+func (c *Client) Errorf(format string, a ...any) {
 	c.Emit(fmt.Errorf(format, a...))
 }
 

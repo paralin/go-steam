@@ -3,9 +3,13 @@
 
 package protobuf
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+
+	proto "github.com/golang/protobuf/proto"
+
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -483,7 +487,9 @@ func (x *EServerModificationItemType) UnmarshalJSON(data []byte) error {
 	*x = EServerModificationItemType(value)
 	return nil
 }
-func (EServerModificationItemType) EnumDescriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{1} }
+func (EServerModificationItemType) EnumDescriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{1}
+}
 
 type TF_MatchmakingMode int32
 
@@ -572,7 +578,9 @@ func (x *TF_Matchmaking_WizardStep) UnmarshalJSON(data []byte) error {
 	*x = TF_Matchmaking_WizardStep(value)
 	return nil
 }
-func (TF_Matchmaking_WizardStep) EnumDescriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{3} }
+func (TF_Matchmaking_WizardStep) EnumDescriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{3}
+}
 
 type TF_GC_GameState int32
 
@@ -1646,10 +1654,12 @@ type CMsgGCTFSpecificItemBroadcast struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGCTFSpecificItemBroadcast) Reset()                    { *m = CMsgGCTFSpecificItemBroadcast{} }
-func (m *CMsgGCTFSpecificItemBroadcast) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCTFSpecificItemBroadcast) ProtoMessage()               {}
-func (*CMsgGCTFSpecificItemBroadcast) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{2} }
+func (m *CMsgGCTFSpecificItemBroadcast) Reset()         { *m = CMsgGCTFSpecificItemBroadcast{} }
+func (m *CMsgGCTFSpecificItemBroadcast) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCTFSpecificItemBroadcast) ProtoMessage()    {}
+func (*CMsgGCTFSpecificItemBroadcast) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{2}
+}
 
 func (m *CMsgGCTFSpecificItemBroadcast) GetItemDefIndex() uint32 {
 	if m != nil && m.ItemDefIndex != nil {
@@ -1817,10 +1827,12 @@ type CMsgTFVoteKickBanPlayerResult struct {
 	XXX_unrecognized   []byte  `json:"-"`
 }
 
-func (m *CMsgTFVoteKickBanPlayerResult) Reset()                    { *m = CMsgTFVoteKickBanPlayerResult{} }
-func (m *CMsgTFVoteKickBanPlayerResult) String() string            { return proto.CompactTextString(m) }
-func (*CMsgTFVoteKickBanPlayerResult) ProtoMessage()               {}
-func (*CMsgTFVoteKickBanPlayerResult) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{7} }
+func (m *CMsgTFVoteKickBanPlayerResult) Reset()         { *m = CMsgTFVoteKickBanPlayerResult{} }
+func (m *CMsgTFVoteKickBanPlayerResult) String() string { return proto.CompactTextString(m) }
+func (*CMsgTFVoteKickBanPlayerResult) ProtoMessage()    {}
+func (*CMsgTFVoteKickBanPlayerResult) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{7}
+}
 
 func (m *CMsgTFVoteKickBanPlayerResult) GetAccountIdInitiator() uint32 {
 	if m != nil && m.AccountIdInitiator != nil {
@@ -2013,10 +2025,12 @@ type CMsgReplaySubmitContestEntry struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgReplaySubmitContestEntry) Reset()                    { *m = CMsgReplaySubmitContestEntry{} }
-func (m *CMsgReplaySubmitContestEntry) String() string            { return proto.CompactTextString(m) }
-func (*CMsgReplaySubmitContestEntry) ProtoMessage()               {}
-func (*CMsgReplaySubmitContestEntry) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{16} }
+func (m *CMsgReplaySubmitContestEntry) Reset()         { *m = CMsgReplaySubmitContestEntry{} }
+func (m *CMsgReplaySubmitContestEntry) String() string { return proto.CompactTextString(m) }
+func (*CMsgReplaySubmitContestEntry) ProtoMessage()    {}
+func (*CMsgReplaySubmitContestEntry) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{16}
+}
 
 func (m *CMsgReplaySubmitContestEntry) GetYoutubeUrl() string {
 	if m != nil && m.YoutubeUrl != nil {
@@ -2096,10 +2110,12 @@ type CMsgTFCoaching_AddToCoaches struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CMsgTFCoaching_AddToCoaches) Reset()                    { *m = CMsgTFCoaching_AddToCoaches{} }
-func (m *CMsgTFCoaching_AddToCoaches) String() string            { return proto.CompactTextString(m) }
-func (*CMsgTFCoaching_AddToCoaches) ProtoMessage()               {}
-func (*CMsgTFCoaching_AddToCoaches) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{19} }
+func (m *CMsgTFCoaching_AddToCoaches) Reset()         { *m = CMsgTFCoaching_AddToCoaches{} }
+func (m *CMsgTFCoaching_AddToCoaches) String() string { return proto.CompactTextString(m) }
+func (*CMsgTFCoaching_AddToCoaches) ProtoMessage()    {}
+func (*CMsgTFCoaching_AddToCoaches) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{19}
+}
 
 type CMsgTFCoaching_RemoveFromCoaches struct {
 	XXX_unrecognized []byte `json:"-"`
@@ -2216,10 +2232,12 @@ type CMsgTFCoaching_CoachJoinGame struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgTFCoaching_CoachJoinGame) Reset()                    { *m = CMsgTFCoaching_CoachJoinGame{} }
-func (m *CMsgTFCoaching_CoachJoinGame) String() string            { return proto.CompactTextString(m) }
-func (*CMsgTFCoaching_CoachJoinGame) ProtoMessage()               {}
-func (*CMsgTFCoaching_CoachJoinGame) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{25} }
+func (m *CMsgTFCoaching_CoachJoinGame) Reset()         { *m = CMsgTFCoaching_CoachJoinGame{} }
+func (m *CMsgTFCoaching_CoachJoinGame) String() string { return proto.CompactTextString(m) }
+func (*CMsgTFCoaching_CoachJoinGame) ProtoMessage()    {}
+func (*CMsgTFCoaching_CoachJoinGame) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{25}
+}
 
 func (m *CMsgTFCoaching_CoachJoinGame) GetJoinGame() bool {
 	if m != nil && m.JoinGame != nil {
@@ -2255,10 +2273,12 @@ type CMsgTFCoaching_CoachJoining struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgTFCoaching_CoachJoining) Reset()                    { *m = CMsgTFCoaching_CoachJoining{} }
-func (m *CMsgTFCoaching_CoachJoining) String() string            { return proto.CompactTextString(m) }
-func (*CMsgTFCoaching_CoachJoining) ProtoMessage()               {}
-func (*CMsgTFCoaching_CoachJoining) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{26} }
+func (m *CMsgTFCoaching_CoachJoining) Reset()         { *m = CMsgTFCoaching_CoachJoining{} }
+func (m *CMsgTFCoaching_CoachJoining) String() string { return proto.CompactTextString(m) }
+func (*CMsgTFCoaching_CoachJoining) ProtoMessage()    {}
+func (*CMsgTFCoaching_CoachJoining) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{26}
+}
 
 func (m *CMsgTFCoaching_CoachJoining) GetAccountIdCoach() uint32 {
 	if m != nil && m.AccountIdCoach != nil {
@@ -2334,10 +2354,12 @@ type CMsgTFQuickplay_ScoreServers struct {
 	XXX_unrecognized []byte                                     `json:"-"`
 }
 
-func (m *CMsgTFQuickplay_ScoreServers) Reset()                    { *m = CMsgTFQuickplay_ScoreServers{} }
-func (m *CMsgTFQuickplay_ScoreServers) String() string            { return proto.CompactTextString(m) }
-func (*CMsgTFQuickplay_ScoreServers) ProtoMessage()               {}
-func (*CMsgTFQuickplay_ScoreServers) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{30} }
+func (m *CMsgTFQuickplay_ScoreServers) Reset()         { *m = CMsgTFQuickplay_ScoreServers{} }
+func (m *CMsgTFQuickplay_ScoreServers) String() string { return proto.CompactTextString(m) }
+func (*CMsgTFQuickplay_ScoreServers) ProtoMessage()    {}
+func (*CMsgTFQuickplay_ScoreServers) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{30}
+}
 
 func (m *CMsgTFQuickplay_ScoreServers) GetServers() []*CMsgTFQuickplay_ScoreServers_ServerInfo {
 	if m != nil {
@@ -2486,10 +2508,12 @@ type CMsgTFQuickplay_PlayerJoining struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgTFQuickplay_PlayerJoining) Reset()                    { *m = CMsgTFQuickplay_PlayerJoining{} }
-func (m *CMsgTFQuickplay_PlayerJoining) String() string            { return proto.CompactTextString(m) }
-func (*CMsgTFQuickplay_PlayerJoining) ProtoMessage()               {}
-func (*CMsgTFQuickplay_PlayerJoining) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{32} }
+func (m *CMsgTFQuickplay_PlayerJoining) Reset()         { *m = CMsgTFQuickplay_PlayerJoining{} }
+func (m *CMsgTFQuickplay_PlayerJoining) String() string { return proto.CompactTextString(m) }
+func (*CMsgTFQuickplay_PlayerJoining) ProtoMessage()    {}
+func (*CMsgTFQuickplay_PlayerJoining) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{32}
+}
 
 func (m *CMsgTFQuickplay_PlayerJoining) GetAccountId() uint32 {
 	if m != nil && m.AccountId != nil {
@@ -2504,10 +2528,12 @@ type CMsgGC_GameServer_LevelInfo struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGC_GameServer_LevelInfo) Reset()                    { *m = CMsgGC_GameServer_LevelInfo{} }
-func (m *CMsgGC_GameServer_LevelInfo) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGC_GameServer_LevelInfo) ProtoMessage()               {}
-func (*CMsgGC_GameServer_LevelInfo) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{33} }
+func (m *CMsgGC_GameServer_LevelInfo) Reset()         { *m = CMsgGC_GameServer_LevelInfo{} }
+func (m *CMsgGC_GameServer_LevelInfo) String() string { return proto.CompactTextString(m) }
+func (*CMsgGC_GameServer_LevelInfo) ProtoMessage()    {}
+func (*CMsgGC_GameServer_LevelInfo) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{33}
+}
 
 func (m *CMsgGC_GameServer_LevelInfo) GetLevelLoaded() bool {
 	if m != nil && m.LevelLoaded != nil {
@@ -2551,10 +2577,12 @@ type CMsgGC_GameServer_AuthResult struct {
 	XXX_unrecognized        []byte  `json:"-"`
 }
 
-func (m *CMsgGC_GameServer_AuthResult) Reset()                    { *m = CMsgGC_GameServer_AuthResult{} }
-func (m *CMsgGC_GameServer_AuthResult) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGC_GameServer_AuthResult) ProtoMessage()               {}
-func (*CMsgGC_GameServer_AuthResult) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{35} }
+func (m *CMsgGC_GameServer_AuthResult) Reset()         { *m = CMsgGC_GameServer_AuthResult{} }
+func (m *CMsgGC_GameServer_AuthResult) String() string { return proto.CompactTextString(m) }
+func (*CMsgGC_GameServer_AuthResult) ProtoMessage()    {}
+func (*CMsgGC_GameServer_AuthResult) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{35}
+}
 
 func (m *CMsgGC_GameServer_AuthResult) GetAuthenticated() bool {
 	if m != nil && m.Authenticated != nil {
@@ -2708,10 +2736,12 @@ type CMsgGC_GameServer_ListResponse struct {
 	XXX_unrecognized []byte                                               `json:"-"`
 }
 
-func (m *CMsgGC_GameServer_ListResponse) Reset()                    { *m = CMsgGC_GameServer_ListResponse{} }
-func (m *CMsgGC_GameServer_ListResponse) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGC_GameServer_ListResponse) ProtoMessage()               {}
-func (*CMsgGC_GameServer_ListResponse) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{40} }
+func (m *CMsgGC_GameServer_ListResponse) Reset()         { *m = CMsgGC_GameServer_ListResponse{} }
+func (m *CMsgGC_GameServer_ListResponse) String() string { return proto.CompactTextString(m) }
+func (*CMsgGC_GameServer_ListResponse) ProtoMessage()    {}
+func (*CMsgGC_GameServer_ListResponse) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{40}
+}
 
 func (m *CMsgGC_GameServer_ListResponse) GetOwnedGameServers() []*CMsgGC_GameServer_ListResponse_GameServerIdentity {
 	if m != nil {
@@ -2827,10 +2857,12 @@ type CMsgGC_GameServer_AckPolicy struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CMsgGC_GameServer_AckPolicy) Reset()                    { *m = CMsgGC_GameServer_AckPolicy{} }
-func (m *CMsgGC_GameServer_AckPolicy) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGC_GameServer_AckPolicy) ProtoMessage()               {}
-func (*CMsgGC_GameServer_AckPolicy) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{43} }
+func (m *CMsgGC_GameServer_AckPolicy) Reset()         { *m = CMsgGC_GameServer_AckPolicy{} }
+func (m *CMsgGC_GameServer_AckPolicy) String() string { return proto.CompactTextString(m) }
+func (*CMsgGC_GameServer_AckPolicy) ProtoMessage()    {}
+func (*CMsgGC_GameServer_AckPolicy) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{43}
+}
 
 type CMsgGC_GameServer_AckPolicyResponse struct {
 	Result           *uint32 `protobuf:"varint,1,opt,name=result" json:"result,omitempty"`
@@ -3028,10 +3060,12 @@ type CMsgGC_Halloween_ReservedItem struct {
 	XXX_unrecognized []byte    `json:"-"`
 }
 
-func (m *CMsgGC_Halloween_ReservedItem) Reset()                    { *m = CMsgGC_Halloween_ReservedItem{} }
-func (m *CMsgGC_Halloween_ReservedItem) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGC_Halloween_ReservedItem) ProtoMessage()               {}
-func (*CMsgGC_Halloween_ReservedItem) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{51} }
+func (m *CMsgGC_Halloween_ReservedItem) Reset()         { *m = CMsgGC_Halloween_ReservedItem{} }
+func (m *CMsgGC_Halloween_ReservedItem) String() string { return proto.CompactTextString(m) }
+func (*CMsgGC_Halloween_ReservedItem) ProtoMessage()    {}
+func (*CMsgGC_Halloween_ReservedItem) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{51}
+}
 
 func (m *CMsgGC_Halloween_ReservedItem) GetX() []float32 {
 	if m != nil {
@@ -3117,10 +3151,12 @@ type CMsgGC_Halloween_ItemClaimed struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CMsgGC_Halloween_ItemClaimed) Reset()                    { *m = CMsgGC_Halloween_ItemClaimed{} }
-func (m *CMsgGC_Halloween_ItemClaimed) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGC_Halloween_ItemClaimed) ProtoMessage()               {}
-func (*CMsgGC_Halloween_ItemClaimed) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{54} }
+func (m *CMsgGC_Halloween_ItemClaimed) Reset()         { *m = CMsgGC_Halloween_ItemClaimed{} }
+func (m *CMsgGC_Halloween_ItemClaimed) String() string { return proto.CompactTextString(m) }
+func (*CMsgGC_Halloween_ItemClaimed) ProtoMessage()    {}
+func (*CMsgGC_Halloween_ItemClaimed) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{54}
+}
 
 type CMsgGC_PickupItemEligibility_Query struct {
 	AccountId        *uint32 `protobuf:"varint,1,opt,name=account_id,json=accountId" json:"account_id,omitempty"`
@@ -3443,10 +3479,12 @@ type CMsgCreateOrUpdatePartyReply struct {
 	XXX_unrecognized []byte                     `json:"-"`
 }
 
-func (m *CMsgCreateOrUpdatePartyReply) Reset()                    { *m = CMsgCreateOrUpdatePartyReply{} }
-func (m *CMsgCreateOrUpdatePartyReply) String() string            { return proto.CompactTextString(m) }
-func (*CMsgCreateOrUpdatePartyReply) ProtoMessage()               {}
-func (*CMsgCreateOrUpdatePartyReply) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{61} }
+func (m *CMsgCreateOrUpdatePartyReply) Reset()         { *m = CMsgCreateOrUpdatePartyReply{} }
+func (m *CMsgCreateOrUpdatePartyReply) String() string { return proto.CompactTextString(m) }
+func (*CMsgCreateOrUpdatePartyReply) ProtoMessage()    {}
+func (*CMsgCreateOrUpdatePartyReply) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{61}
+}
 
 const Default_CMsgCreateOrUpdatePartyReply_WizardStep TF_Matchmaking_WizardStep = TF_Matchmaking_WizardStep_TF_Matchmaking_WizardStep_INVALID
 
@@ -4267,10 +4305,12 @@ type CMsgKickedFromMatchmakingQueue struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CMsgKickedFromMatchmakingQueue) Reset()                    { *m = CMsgKickedFromMatchmakingQueue{} }
-func (m *CMsgKickedFromMatchmakingQueue) String() string            { return proto.CompactTextString(m) }
-func (*CMsgKickedFromMatchmakingQueue) ProtoMessage()               {}
-func (*CMsgKickedFromMatchmakingQueue) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{73} }
+func (m *CMsgKickedFromMatchmakingQueue) Reset()         { *m = CMsgKickedFromMatchmakingQueue{} }
+func (m *CMsgKickedFromMatchmakingQueue) String() string { return proto.CompactTextString(m) }
+func (*CMsgKickedFromMatchmakingQueue) ProtoMessage()    {}
+func (*CMsgKickedFromMatchmakingQueue) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{73}
+}
 
 type CMsgTFJoinChatChannel struct {
 	PersonaName      *string           `protobuf:"bytes,1,opt,name=persona_name,json=personaName" json:"persona_name,omitempty"`
@@ -4341,10 +4381,12 @@ type CMsgTFJoinChatChannelResponse struct {
 	XXX_unrecognized []byte                                      `json:"-"`
 }
 
-func (m *CMsgTFJoinChatChannelResponse) Reset()                    { *m = CMsgTFJoinChatChannelResponse{} }
-func (m *CMsgTFJoinChatChannelResponse) String() string            { return proto.CompactTextString(m) }
-func (*CMsgTFJoinChatChannelResponse) ProtoMessage()               {}
-func (*CMsgTFJoinChatChannelResponse) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{76} }
+func (m *CMsgTFJoinChatChannelResponse) Reset()         { *m = CMsgTFJoinChatChannelResponse{} }
+func (m *CMsgTFJoinChatChannelResponse) String() string { return proto.CompactTextString(m) }
+func (*CMsgTFJoinChatChannelResponse) ProtoMessage()    {}
+func (*CMsgTFJoinChatChannelResponse) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{76}
+}
 
 func (m *CMsgTFJoinChatChannelResponse) GetResponse() uint32 {
 	if m != nil && m.Response != nil {
@@ -4417,10 +4459,12 @@ type CMsgTFOtherJoinedChatChannel struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgTFOtherJoinedChatChannel) Reset()                    { *m = CMsgTFOtherJoinedChatChannel{} }
-func (m *CMsgTFOtherJoinedChatChannel) String() string            { return proto.CompactTextString(m) }
-func (*CMsgTFOtherJoinedChatChannel) ProtoMessage()               {}
-func (*CMsgTFOtherJoinedChatChannel) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{77} }
+func (m *CMsgTFOtherJoinedChatChannel) Reset()         { *m = CMsgTFOtherJoinedChatChannel{} }
+func (m *CMsgTFOtherJoinedChatChannel) String() string { return proto.CompactTextString(m) }
+func (*CMsgTFOtherJoinedChatChannel) ProtoMessage()    {}
+func (*CMsgTFOtherJoinedChatChannel) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{77}
+}
 
 func (m *CMsgTFOtherJoinedChatChannel) GetChannelId() uint64 {
 	if m != nil && m.ChannelId != nil {
@@ -4512,10 +4556,12 @@ type CMsgTFRequestChatChannelList struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CMsgTFRequestChatChannelList) Reset()                    { *m = CMsgTFRequestChatChannelList{} }
-func (m *CMsgTFRequestChatChannelList) String() string            { return proto.CompactTextString(m) }
-func (*CMsgTFRequestChatChannelList) ProtoMessage()               {}
-func (*CMsgTFRequestChatChannelList) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{81} }
+func (m *CMsgTFRequestChatChannelList) Reset()         { *m = CMsgTFRequestChatChannelList{} }
+func (m *CMsgTFRequestChatChannelList) String() string { return proto.CompactTextString(m) }
+func (*CMsgTFRequestChatChannelList) ProtoMessage()    {}
+func (*CMsgTFRequestChatChannelList) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{81}
+}
 
 type CMsgTFRequestChatChannelListResponse struct {
 	Channels         []*CMsgTFRequestChatChannelListResponse_ChatChannel `protobuf:"bytes,1,rep,name=channels" json:"channels,omitempty"`
@@ -5020,10 +5066,12 @@ type CMsgMvMVictoryInfo_Player struct {
 	XXX_unrecognized     []byte                     `json:"-"`
 }
 
-func (m *CMsgMvMVictoryInfo_Player) Reset()                    { *m = CMsgMvMVictoryInfo_Player{} }
-func (m *CMsgMvMVictoryInfo_Player) String() string            { return proto.CompactTextString(m) }
-func (*CMsgMvMVictoryInfo_Player) ProtoMessage()               {}
-func (*CMsgMvMVictoryInfo_Player) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{85, 1} }
+func (m *CMsgMvMVictoryInfo_Player) Reset()         { *m = CMsgMvMVictoryInfo_Player{} }
+func (m *CMsgMvMVictoryInfo_Player) String() string { return proto.CompactTextString(m) }
+func (*CMsgMvMVictoryInfo_Player) ProtoMessage()    {}
+func (*CMsgMvMVictoryInfo_Player) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{85, 1}
+}
 
 func (m *CMsgMvMVictoryInfo_Player) GetSteamId() uint64 {
 	if m != nil && m.SteamId != nil {
@@ -5430,10 +5478,12 @@ type CMsgPlayerLeftMatchResponse struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CMsgPlayerLeftMatchResponse) Reset()                    { *m = CMsgPlayerLeftMatchResponse{} }
-func (m *CMsgPlayerLeftMatchResponse) String() string            { return proto.CompactTextString(m) }
-func (*CMsgPlayerLeftMatchResponse) ProtoMessage()               {}
-func (*CMsgPlayerLeftMatchResponse) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{95} }
+func (m *CMsgPlayerLeftMatchResponse) Reset()         { *m = CMsgPlayerLeftMatchResponse{} }
+func (m *CMsgPlayerLeftMatchResponse) String() string { return proto.CompactTextString(m) }
+func (*CMsgPlayerLeftMatchResponse) ProtoMessage()    {}
+func (*CMsgPlayerLeftMatchResponse) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{95}
+}
 
 type CMsgPlayerVoteKickedAfterLeavingMatch struct {
 	SteamId          *uint64 `protobuf:"fixed64,1,opt,name=steam_id,json=steamId" json:"steam_id,omitempty"`
@@ -5496,10 +5546,12 @@ type CMsgHalloween_ServerBossEvent struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *CMsgHalloween_ServerBossEvent) Reset()                    { *m = CMsgHalloween_ServerBossEvent{} }
-func (m *CMsgHalloween_ServerBossEvent) String() string            { return proto.CompactTextString(m) }
-func (*CMsgHalloween_ServerBossEvent) ProtoMessage()               {}
-func (*CMsgHalloween_ServerBossEvent) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{98} }
+func (m *CMsgHalloween_ServerBossEvent) Reset()         { *m = CMsgHalloween_ServerBossEvent{} }
+func (m *CMsgHalloween_ServerBossEvent) String() string { return proto.CompactTextString(m) }
+func (*CMsgHalloween_ServerBossEvent) ProtoMessage()    {}
+func (*CMsgHalloween_ServerBossEvent) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{98}
+}
 
 func (m *CMsgHalloween_ServerBossEvent) GetEventCounter() uint32 {
 	if m != nil && m.EventCounter != nil {
@@ -6025,10 +6077,12 @@ type CAttribute_ItemSlotCriteria struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CAttribute_ItemSlotCriteria) Reset()                    { *m = CAttribute_ItemSlotCriteria{} }
-func (m *CAttribute_ItemSlotCriteria) String() string            { return proto.CompactTextString(m) }
-func (*CAttribute_ItemSlotCriteria) ProtoMessage()               {}
-func (*CAttribute_ItemSlotCriteria) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{104} }
+func (m *CAttribute_ItemSlotCriteria) Reset()         { *m = CAttribute_ItemSlotCriteria{} }
+func (m *CAttribute_ItemSlotCriteria) String() string { return proto.CompactTextString(m) }
+func (*CAttribute_ItemSlotCriteria) ProtoMessage()    {}
+func (*CAttribute_ItemSlotCriteria) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{104}
+}
 
 func (m *CAttribute_ItemSlotCriteria) GetTags() string {
 	if m != nil && m.Tags != nil {
@@ -6118,10 +6172,12 @@ type CGCMsgGC_War_IndividualUpdate struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CGCMsgGC_War_IndividualUpdate) Reset()                    { *m = CGCMsgGC_War_IndividualUpdate{} }
-func (m *CGCMsgGC_War_IndividualUpdate) String() string            { return proto.CompactTextString(m) }
-func (*CGCMsgGC_War_IndividualUpdate) ProtoMessage()               {}
-func (*CGCMsgGC_War_IndividualUpdate) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{107} }
+func (m *CGCMsgGC_War_IndividualUpdate) Reset()         { *m = CGCMsgGC_War_IndividualUpdate{} }
+func (m *CGCMsgGC_War_IndividualUpdate) String() string { return proto.CompactTextString(m) }
+func (*CGCMsgGC_War_IndividualUpdate) ProtoMessage()    {}
+func (*CGCMsgGC_War_IndividualUpdate) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{107}
+}
 
 func (m *CGCMsgGC_War_IndividualUpdate) GetSteamId() uint64 {
 	if m != nil && m.SteamId != nil {
@@ -6304,10 +6360,12 @@ type CAttribute_WorldItemPlacement struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *CAttribute_WorldItemPlacement) Reset()                    { *m = CAttribute_WorldItemPlacement{} }
-func (m *CAttribute_WorldItemPlacement) String() string            { return proto.CompactTextString(m) }
-func (*CAttribute_WorldItemPlacement) ProtoMessage()               {}
-func (*CAttribute_WorldItemPlacement) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{112} }
+func (m *CAttribute_WorldItemPlacement) Reset()         { *m = CAttribute_WorldItemPlacement{} }
+func (m *CAttribute_WorldItemPlacement) String() string { return proto.CompactTextString(m) }
+func (*CAttribute_WorldItemPlacement) ProtoMessage()    {}
+func (*CAttribute_WorldItemPlacement) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{112}
+}
 
 func (m *CAttribute_WorldItemPlacement) GetOriginalItemId() uint64 {
 	if m != nil && m.OriginalItemId != nil {
@@ -6633,10 +6691,12 @@ type CMsgNotificationAcknowledge struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgNotificationAcknowledge) Reset()                    { *m = CMsgNotificationAcknowledge{} }
-func (m *CMsgNotificationAcknowledge) String() string            { return proto.CompactTextString(m) }
-func (*CMsgNotificationAcknowledge) ProtoMessage()               {}
-func (*CMsgNotificationAcknowledge) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{120} }
+func (m *CMsgNotificationAcknowledge) Reset()         { *m = CMsgNotificationAcknowledge{} }
+func (m *CMsgNotificationAcknowledge) String() string { return proto.CompactTextString(m) }
+func (*CMsgNotificationAcknowledge) ProtoMessage()    {}
+func (*CMsgNotificationAcknowledge) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{120}
+}
 
 func (m *CMsgNotificationAcknowledge) GetAccountId() uint32 {
 	if m != nil && m.AccountId != nil {
@@ -6805,10 +6865,12 @@ type CMsgGC_Match_Result_Player struct {
 	XXX_unrecognized []byte              `json:"-"`
 }
 
-func (m *CMsgGC_Match_Result_Player) Reset()                    { *m = CMsgGC_Match_Result_Player{} }
-func (m *CMsgGC_Match_Result_Player) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGC_Match_Result_Player) ProtoMessage()               {}
-func (*CMsgGC_Match_Result_Player) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{122, 0} }
+func (m *CMsgGC_Match_Result_Player) Reset()         { *m = CMsgGC_Match_Result_Player{} }
+func (m *CMsgGC_Match_Result_Player) String() string { return proto.CompactTextString(m) }
+func (*CMsgGC_Match_Result_Player) ProtoMessage()    {}
+func (*CMsgGC_Match_Result_Player) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{122, 0}
+}
 
 const Default_CMsgGC_Match_Result_Player_LeaveReason TFMatchLeaveReason = TFMatchLeaveReason_TFMatchLeaveReason_UNSPECIFIED
 
@@ -6970,14 +7032,16 @@ type CMsgGC_Match_ResultResponse struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CMsgGC_Match_ResultResponse) Reset()                    { *m = CMsgGC_Match_ResultResponse{} }
-func (m *CMsgGC_Match_ResultResponse) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGC_Match_ResultResponse) ProtoMessage()               {}
-func (*CMsgGC_Match_ResultResponse) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{123} }
+func (m *CMsgGC_Match_ResultResponse) Reset()         { *m = CMsgGC_Match_ResultResponse{} }
+func (m *CMsgGC_Match_ResultResponse) String() string { return proto.CompactTextString(m) }
+func (*CMsgGC_Match_ResultResponse) ProtoMessage()    {}
+func (*CMsgGC_Match_ResultResponse) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{123}
+}
 
 type CEconItemPreviewDataBlock struct {
 	Econitem         *CSOEconItem `protobuf:"bytes,1,opt,name=econitem" json:"econitem,omitempty"`
-	XXX_unrecognized []byte                       `json:"-"`
+	XXX_unrecognized []byte       `json:"-"`
 }
 
 func (m *CEconItemPreviewDataBlock) Reset()                    { *m = CEconItemPreviewDataBlock{} }
@@ -7600,10 +7664,12 @@ type CSOTFMatchResultPlayerStats struct {
 	XXX_unrecognized    []byte  `json:"-"`
 }
 
-func (m *CSOTFMatchResultPlayerStats) Reset()                    { *m = CSOTFMatchResultPlayerStats{} }
-func (m *CSOTFMatchResultPlayerStats) String() string            { return proto.CompactTextString(m) }
-func (*CSOTFMatchResultPlayerStats) ProtoMessage()               {}
-func (*CSOTFMatchResultPlayerStats) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{134} }
+func (m *CSOTFMatchResultPlayerStats) Reset()         { *m = CSOTFMatchResultPlayerStats{} }
+func (m *CSOTFMatchResultPlayerStats) String() string { return proto.CompactTextString(m) }
+func (*CSOTFMatchResultPlayerStats) ProtoMessage()    {}
+func (*CSOTFMatchResultPlayerStats) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{134}
+}
 
 func (m *CSOTFMatchResultPlayerStats) GetMatchId() uint64 {
 	if m != nil && m.MatchId != nil {
@@ -7791,10 +7857,12 @@ type CMsgGCRequestMatchMakerStats struct {
 	XXX_unrecognized []byte `json:"-"`
 }
 
-func (m *CMsgGCRequestMatchMakerStats) Reset()                    { *m = CMsgGCRequestMatchMakerStats{} }
-func (m *CMsgGCRequestMatchMakerStats) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCRequestMatchMakerStats) ProtoMessage()               {}
-func (*CMsgGCRequestMatchMakerStats) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{135} }
+func (m *CMsgGCRequestMatchMakerStats) Reset()         { *m = CMsgGCRequestMatchMakerStats{} }
+func (m *CMsgGCRequestMatchMakerStats) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCRequestMatchMakerStats) ProtoMessage()    {}
+func (*CMsgGCRequestMatchMakerStats) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{135}
+}
 
 type CMsgGCDataCenterPopulation struct {
 	Name             *string  `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
@@ -7802,10 +7870,12 @@ type CMsgGCDataCenterPopulation struct {
 	XXX_unrecognized []byte   `json:"-"`
 }
 
-func (m *CMsgGCDataCenterPopulation) Reset()                    { *m = CMsgGCDataCenterPopulation{} }
-func (m *CMsgGCDataCenterPopulation) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCDataCenterPopulation) ProtoMessage()               {}
-func (*CMsgGCDataCenterPopulation) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{136} }
+func (m *CMsgGCDataCenterPopulation) Reset()         { *m = CMsgGCDataCenterPopulation{} }
+func (m *CMsgGCDataCenterPopulation) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCDataCenterPopulation) ProtoMessage()    {}
+func (*CMsgGCDataCenterPopulation) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{136}
+}
 
 func (m *CMsgGCDataCenterPopulation) GetName() string {
 	if m != nil && m.Name != nil {
@@ -7846,10 +7916,12 @@ type CMsgGCMatchMakerStatsResponse struct {
 	XXX_unrecognized               []byte                                  `json:"-"`
 }
 
-func (m *CMsgGCMatchMakerStatsResponse) Reset()                    { *m = CMsgGCMatchMakerStatsResponse{} }
-func (m *CMsgGCMatchMakerStatsResponse) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCMatchMakerStatsResponse) ProtoMessage()               {}
-func (*CMsgGCMatchMakerStatsResponse) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{138} }
+func (m *CMsgGCMatchMakerStatsResponse) Reset()         { *m = CMsgGCMatchMakerStatsResponse{} }
+func (m *CMsgGCMatchMakerStatsResponse) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCMatchMakerStatsResponse) ProtoMessage()    {}
+func (*CMsgGCMatchMakerStatsResponse) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{138}
+}
 
 func (m *CMsgGCMatchMakerStatsResponse) GetMapCount() []uint32 {
 	if m != nil {
@@ -7879,10 +7951,12 @@ type CMsgGCDataCenterPing_Update struct {
 	XXX_unrecognized []byte                                   `json:"-"`
 }
 
-func (m *CMsgGCDataCenterPing_Update) Reset()                    { *m = CMsgGCDataCenterPing_Update{} }
-func (m *CMsgGCDataCenterPing_Update) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCDataCenterPing_Update) ProtoMessage()               {}
-func (*CMsgGCDataCenterPing_Update) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{140} }
+func (m *CMsgGCDataCenterPing_Update) Reset()         { *m = CMsgGCDataCenterPing_Update{} }
+func (m *CMsgGCDataCenterPing_Update) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCDataCenterPing_Update) ProtoMessage()    {}
+func (*CMsgGCDataCenterPing_Update) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{140}
+}
 
 func (m *CMsgGCDataCenterPing_Update) GetPingdata() []*CMsgGCDataCenterPing_Update_PingEntry {
 	if m != nil {
@@ -7933,10 +8007,12 @@ type CMsgGC_KickPlayerFromLobby struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGC_KickPlayerFromLobby) Reset()                    { *m = CMsgGC_KickPlayerFromLobby{} }
-func (m *CMsgGC_KickPlayerFromLobby) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGC_KickPlayerFromLobby) ProtoMessage()               {}
-func (*CMsgGC_KickPlayerFromLobby) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{141} }
+func (m *CMsgGC_KickPlayerFromLobby) Reset()         { *m = CMsgGC_KickPlayerFromLobby{} }
+func (m *CMsgGC_KickPlayerFromLobby) String() string { return proto.CompactTextString(m) }
+func (*CMsgGC_KickPlayerFromLobby) ProtoMessage()    {}
+func (*CMsgGC_KickPlayerFromLobby) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{141}
+}
 
 func (m *CMsgGC_KickPlayerFromLobby) GetTargetID() uint64 {
 	if m != nil && m.TargetID != nil {
@@ -8014,10 +8090,12 @@ type CMsgGCNewMatchForLobbyRequest struct {
 	XXX_unrecognized []byte  `json:"-"`
 }
 
-func (m *CMsgGCNewMatchForLobbyRequest) Reset()                    { *m = CMsgGCNewMatchForLobbyRequest{} }
-func (m *CMsgGCNewMatchForLobbyRequest) String() string            { return proto.CompactTextString(m) }
-func (*CMsgGCNewMatchForLobbyRequest) ProtoMessage()               {}
-func (*CMsgGCNewMatchForLobbyRequest) Descriptor() ([]byte, []int) { return tf_fileDescriptor0, []int{144} }
+func (m *CMsgGCNewMatchForLobbyRequest) Reset()         { *m = CMsgGCNewMatchForLobbyRequest{} }
+func (m *CMsgGCNewMatchForLobbyRequest) String() string { return proto.CompactTextString(m) }
+func (*CMsgGCNewMatchForLobbyRequest) ProtoMessage()    {}
+func (*CMsgGCNewMatchForLobbyRequest) Descriptor() ([]byte, []int) {
+	return tf_fileDescriptor0, []int{144}
+}
 
 func (m *CMsgGCNewMatchForLobbyRequest) GetCurrentMatchId() uint64 {
 	if m != nil && m.CurrentMatchId != nil {

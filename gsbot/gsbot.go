@@ -75,7 +75,7 @@ func (a *Auth) LogOn(ctx context.Context, details *LogOnDetails) error {
 	})
 }
 
-func (a *Auth) HandleEvent(event interface{}) {
+func (a *Auth) HandleEvent(event any) {
 	switch e := event.(type) {
 	case *steam.ConnectedEvent:
 		if err := a.LogOn(context.Background(), a.details); err != nil {
@@ -100,7 +100,7 @@ func NewServerList(bot *GsBot, listPath string) *ServerList {
 	}
 }
 
-func (s *ServerList) HandleEvent(event interface{}) {
+func (s *ServerList) HandleEvent(event any) {
 	switch e := event.(type) {
 	case *steam.ClientCMListEvent:
 		d, err := json.Marshal(e.Addresses)
@@ -176,7 +176,7 @@ func (d *Debug) HandlePacket(packet *protocol.Packet) {
 	}
 }
 
-func (d *Debug) HandleEvent(event interface{}) {
+func (d *Debug) HandleEvent(event any) {
 	d.eventId++
 	name := fmt.Sprintf("%d_%d_%s.txt", time.Now().Unix(), d.eventId, name(event))
 	err := ioutil.WriteFile(path.Join(d.base, "events", name), []byte(spew.Sdump(event)), 0666)
@@ -185,7 +185,7 @@ func (d *Debug) HandleEvent(event interface{}) {
 	}
 }
 
-func name(obj interface{}) string {
+func name(obj any) string {
 	val := reflect.ValueOf(obj)
 	ind := reflect.Indirect(val)
 	if ind.IsValid() {

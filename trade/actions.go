@@ -1,9 +1,10 @@
 package trade
 
 import (
+	"time"
+
 	"github.com/paralin/go-steam/economy/inventory"
 	"github.com/paralin/go-steam/trade/tradeapi"
-	"time"
 )
 
 type Slot uint
@@ -20,7 +21,7 @@ func (t *Trade) action(status *tradeapi.Status, err error) error {
 // like `AddItem` or, if there are no queued events, from a new HTTP request to Steam's API (blocking!).
 // If the latter is the case, this method may also sleep before the request
 // to conform to the polling interval of the official Steam client.
-func (t *Trade) Poll() ([]interface{}, error) {
+func (t *Trade) Poll() ([]any, error) {
 	if t.queuedEvents != nil {
 		return t.Events(), nil
 	}

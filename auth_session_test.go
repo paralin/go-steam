@@ -23,7 +23,7 @@ import (
 
 func TestLogOnWithAccessTokenWritesCMAccessToken(t *testing.T) {
 	client := &Client{
-		events:    make(chan interface{}, 1),
+		events:    make(chan any, 1),
 		conn:      testConnection{},
 		writeChan: make(chan protocol.IMsg, 1),
 	}
@@ -62,7 +62,7 @@ func TestLogOnWithAccessTokenWritesCMAccessToken(t *testing.T) {
 
 func TestLogOnResponseRequestsWebAPINonce(t *testing.T) {
 	client := &Client{
-		events:    make(chan interface{}, 1),
+		events:    make(chan any, 1),
 		conn:      testConnection{},
 		writeChan: make(chan protocol.IMsg, 1),
 	}
