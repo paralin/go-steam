@@ -2,9 +2,10 @@ package protocol
 
 import (
 	"bytes"
-	"github.com/golang/protobuf/proto"
 	"encoding/binary"
 	"fmt"
+
+	protobuf "github.com/aperturerobotics/protobuf-go-lite"
 	. "github.com/paralin/go-steam/protocol/steamlang"
 )
 
@@ -76,11 +77,11 @@ func (p *Packet) String() string {
 	return fmt.Sprintf("Packet{EMsg = %v, Proto = %v, Len = %v, TargetJobId = %v, SourceJobId = %v}", p.EMsg, p.IsProto, len(p.Data), p.TargetJobId, p.SourceJobId)
 }
 
-func (p *Packet) ReadProtoMsg(body proto.Message) *ClientMsgProtobuf {
+func (p *Packet) ReadProtoMsg(body protobuf.Message) *ClientMsgProtobuf {
 	header := NewMsgHdrProtoBuf()
 	buf := bytes.NewBuffer(p.Data)
 	header.Deserialize(buf)
-	proto.Unmarshal(buf.Bytes(), body)
+	_ = body.UnmarshalVT(buf.Bytes())
 	return &ClientMsgProtobuf{ // protobuf messages have no payload
 		Header: header,
 		Body:   body,

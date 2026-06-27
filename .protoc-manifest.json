@@ -1,0 +1,75 @@
+{
+  "version": 2,
+  "protocFlagsHash": "865923d5682d294b6c3c1227b77a0ab47bae0251a77f73274a970345c191eec7",
+  "toolVersions": "protoc=embedded,protobuf-go-lite=v0.14.0,starpc=v0.49.18",
+  "packages": {
+    "github.com/paralin/go-steam/protocol/protobuf": {
+      "hash": "d50297b3a9fce0c7e3fa0938280fdd670b973999d058b73fb10552a4486a3cfa",
+      "generatedFiles": [
+        "protocol/protobuf/app_ticket.pb.go",
+        "protocol/protobuf/base.pb.go",
+        "protocol/protobuf/client_server.pb.go",
+        "protocol/protobuf/client_server_2.pb.go",
+        "protocol/protobuf/client_server_friends.pb.go",
+        "protocol/protobuf/client_server_login.pb.go",
+        "protocol/protobuf/client_server_2.pb.go",
+        "protocol/protobuf/client_server_friends.pb.go",
+        "protocol/protobuf/client_server_login.pb.go",
+        "protocol/protobuf/client_site_license.pb.go",
+        "protocol/protobuf/cmlist.pb.go",
+        "protocol/protobuf/content_manifest.pb.go"
+      ],
+      "protoFiles": [
+        "protocol/protobuf/app_ticket.proto",
+        "protocol/protobuf/base.proto",
+        "protocol/protobuf/client_server.proto",
+        "protocol/protobuf/client_server_2.proto",
+        "protocol/protobuf/client_server_friends.proto",
+        "protocol/protobuf/client_server_login.proto",
+        "protocol/protobuf/client_site_license.proto",
+        "protocol/protobuf/cmlist.proto",
+        "protocol/protobuf/content_manifest.proto"
+      ]
+    },
+    "github.com/paralin/go-steam/protocol/protobuf/unified": {
+      "hash": "a6efc3675cb57f3d28d42cc576bf424a387d0312d4e500fb13657c4af0786fa1",
+      "generatedFiles": [
+        "protocol/protobuf/unified/auth.pb.go",
+        "protocol/protobuf/unified/base.pb.go",
+        "protocol/protobuf/unified/client_objects.pb.go",
+        "protocol/protobuf/unified/cloud.pb.go",
+        "protocol/protobuf/unified/credentials.pb.go",
+        "protocol/protobuf/unified/enums.pb.go",
+        "protocol/protobuf/unified/enums_productinfo.pb.go",
+        "protocol/protobuf/unified/enums_productinfo.pb.go",
+        "protocol/protobuf/unified/gamenotifications.pb.go",
+        "protocol/protobuf/unified/offline.pb.go",
+        "protocol/protobuf/unified/offline_ticket.pb.go",
+        "protocol/protobuf/unified/offline_ticket.pb.go",
+        "protocol/protobuf/unified/parental.pb.go",
+        "protocol/protobuf/unified/parental_objects.pb.go",
+        "protocol/protobuf/unified/parental_objects.pb.go",
+        "protocol/protobuf/unified/partnerapps.pb.go",
+        "protocol/protobuf/unified/player.pb.go",
+        "protocol/protobuf/unified/publishedfile.pb.go"
+      ],
+      "protoFiles": [
+        "protocol/protobuf/unified/auth.proto",
+        "protocol/protobuf/unified/base.proto",
+        "protocol/protobuf/unified/client_objects.proto",
+        "protocol/protobuf/unified/cloud.proto",
+        "protocol/protobuf/unified/credentials.proto",
+        "protocol/protobuf/unified/enums.proto",
+        "protocol/protobuf/unified/enums_productinfo.proto",
+        "protocol/protobuf/unified/gamenotifications.proto",
+        "protocol/protobuf/unified/offline.proto",
+        "protocol/protobuf/unified/offline_ticket.proto",
+        "protocol/protobuf/unified/parental.proto",
+        "protocol/protobuf/unified/parental_objects.proto",
+        "protocol/protobuf/unified/partnerapps.proto",
+        "protocol/protobuf/unified/player.proto",
+        "protocol/protobuf/unified/publishedfile.proto"
+      ]
+    }
+  }
+}

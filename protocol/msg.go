@@ -1,9 +1,10 @@
 package protocol
 
 import (
-	. "github.com/paralin/go-steam/protocol/steamlang"
-	"github.com/golang/protobuf/proto"
 	"io"
+
+	protobuf "github.com/aperturerobotics/protobuf-go-lite"
+	. "github.com/paralin/go-steam/protocol/steamlang"
 )
 
 // Interface for all messages, typically outgoing. They can also be created by
@@ -31,10 +32,10 @@ type IClientMsg interface {
 // Represents a protobuf backed client message with session data.
 type ClientMsgProtobuf struct {
 	Header *MsgHdrProtoBuf
-	Body   proto.Message
+	Body   protobuf.Message
 }
 
-func NewClientMsgProtobuf(eMsg EMsg, body proto.Message) *ClientMsgProtobuf {
+func NewClientMsgProtobuf(eMsg EMsg, body protobuf.Message) *ClientMsgProtobuf {
 	hdr := NewMsgHdrProtoBuf()
 	hdr.Msg = eMsg
 	return &ClientMsgProtobuf{
@@ -64,7 +65,7 @@ func (c *ClientMsgProtobuf) GetSteamId() SteamId {
 }
 
 func (c *ClientMsgProtobuf) SetSteamId(s SteamId) {
-	c.Header.Proto.Steamid = proto.Uint64(uint64(s))
+	c.Header.Proto.Steamid = uint64Ptr(uint64(s))
 }
 
 func (c *ClientMsgProtobuf) GetTargetJobId() JobId {
@@ -72,7 +73,7 @@ func (c *ClientMsgProtobuf) GetTargetJobId() JobId {
 }
 
 func (c *ClientMsgProtobuf) SetTargetJobId(job JobId) {
-	c.Header.Proto.JobidTarget = proto.Uint64(uint64(job))
+	c.Header.Proto.JobidTarget = uint64Ptr(uint64(job))
 }
 
 func (c *ClientMsgProtobuf) GetSourceJobId() JobId {
@@ -80,7 +81,7 @@ func (c *ClientMsgProtobuf) GetSourceJobId() JobId {
 }
 
 func (c *ClientMsgProtobuf) SetSourceJobId(job JobId) {
-	c.Header.Proto.JobidSource = proto.Uint64(uint64(job))
+	c.Header.Proto.JobidSource = uint64Ptr(uint64(job))
 }
 
 func (c *ClientMsgProtobuf) Serialize(w io.Writer) error {
@@ -88,12 +89,16 @@ func (c *ClientMsgProtobuf) Serialize(w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	body, err := proto.Marshal(c.Body)
+	body, err := c.Body.MarshalVT()
 	if err != nil {
 		return err
 	}
 	_, err = w.Write(body)
 	return err
+}
+
+func uint64Ptr(v uint64) *uint64 {
+	return &v
 }
 
 // Represents a struct backed client message.

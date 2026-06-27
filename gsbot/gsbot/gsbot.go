@@ -32,7 +32,7 @@ func main() {
 		Username: os.Args[1],
 		Password: os.Args[2],
 		AuthCode: authcode,
-	}, "sentry.bin")
+	})
 	debug, err := gsbot.NewDebug(bot, "debug")
 	if err != nil {
 		panic(err)

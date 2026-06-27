@@ -5,7 +5,6 @@ package steamlang
 
 import (
 	"encoding/binary"
-	"github.com/golang/protobuf/proto"
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	"github.com/paralin/go-steam/rwu"
 	"io"
@@ -384,7 +383,7 @@ func NewMsgHdrProtoBuf() *MsgHdrProtoBuf {
 
 func (d *MsgHdrProtoBuf) Serialize(w io.Writer) error {
 	var err error
-	buf0, err := proto.Marshal(d.Proto)
+	buf0, err := d.Proto.MarshalVT()
 	if err != nil {
 		return err
 	}
@@ -416,7 +415,7 @@ func (d *MsgHdrProtoBuf) Deserialize(r io.Reader) error {
 	if err != nil {
 		return err
 	}
-	err = proto.Unmarshal(buf1, d.Proto)
+	err = d.Proto.UnmarshalVT(buf1)
 	return err
 }
 
@@ -435,7 +434,7 @@ func NewMsgGCHdrProtoBuf() *MsgGCHdrProtoBuf {
 
 func (d *MsgGCHdrProtoBuf) Serialize(w io.Writer) error {
 	var err error
-	buf0, err := proto.Marshal(d.Proto)
+	buf0, err := d.Proto.MarshalVT()
 	if err != nil {
 		return err
 	}
@@ -467,7 +466,7 @@ func (d *MsgGCHdrProtoBuf) Deserialize(r io.Reader) error {
 	if err != nil {
 		return err
 	}
-	err = proto.Unmarshal(buf1, d.Proto)
+	err = d.Proto.UnmarshalVT(buf1)
 	return err
 }
 

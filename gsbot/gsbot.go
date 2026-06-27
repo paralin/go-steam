@@ -1,6 +1,5 @@
-// The GsBot package contains some useful utilites for working with the
-// steam package. It implements authentication with sentries, server lists and
-// logging messages and events.
+// The GsBot package contains utilities for working with the steam package. It
+// implements authentication, server lists, and logging messages and events.
 //
 // Every module is optional and requires an instance of the GsBot struct.
 // Should a module have a `HandlePacket` method, you must register it with the
@@ -10,6 +9,7 @@
 package gsbot
 
 import (
+	"context"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -22,10 +22,10 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/paralin/go-steam"
 	"github.com/paralin/go-steam/netutil"
 	"github.com/paralin/go-steam/protocol"
-	"github.com/davecgh/go-spew/spew"
 )
 
 // Base structure holding common data among GsBot modules.
@@ -42,22 +42,17 @@ func Default() *GsBot {
 	}
 }
 
-// This module handles authentication. It logs on automatically after a ConnectedEvent
-// and saves the sentry data to a file which is also used for logon if available.
-// If you're logging on for the first time Steam may require an authcode. You can then
-// connect again with the new logon details.
+// This module handles authentication. It logs on automatically after a ConnectedEvent.
+// If Steam requires a Steam Guard code, call LogOn again with updated details.
 type Auth struct {
-	bot             *GsBot
-	details         *LogOnDetails
-	sentryPath      string
-	machineAuthHash []byte
+	bot     *GsBot
+	details *LogOnDetails
 }
 
-func NewAuth(bot *GsBot, details *LogOnDetails, sentryPath string) *Auth {
+func NewAuth(bot *GsBot, details *LogOnDetails) *Auth {
 	return &Auth{
-		bot:        bot,
-		details:    details,
-		sentryPath: sentryPath,
+		bot:     bot,
+		details: details,
 	}
 }
 
@@ -68,35 +63,26 @@ type LogOnDetails struct {
 	TwoFactorCode string
 }
 
-// This is called automatically after every ConnectedEvent, but must be called once again manually
-// with an authcode if Steam requires it when logging on for the first time.
-func (a *Auth) LogOn(details *LogOnDetails) {
+// This is called automatically after every ConnectedEvent, but must be called
+// again manually with a Steam Guard code if Steam requires one.
+func (a *Auth) LogOn(ctx context.Context, details *LogOnDetails) error {
 	a.details = details
-	sentry, err := ioutil.ReadFile(a.sentryPath)
-	if err != nil {
-		a.bot.Log.Printf("Error loading sentry file from path %v - This is normal if you're logging in for the first time.\n", a.sentryPath)
-	}
-	a.bot.Client.Auth.LogOn(&steam.LogOnDetails{
-		Username:       details.Username,
-		Password:       details.Password,
-		SentryFileHash: sentry,
-		AuthCode:       details.AuthCode,
-		TwoFactorCode:  details.TwoFactorCode,
+	return a.bot.Client.Auth.LogOn(ctx, &steam.LogOnDetails{
+		Username:      details.Username,
+		Password:      details.Password,
+		AuthCode:      details.AuthCode,
+		TwoFactorCode: details.TwoFactorCode,
 	})
 }
 
 func (a *Auth) HandleEvent(event interface{}) {
 	switch e := event.(type) {
 	case *steam.ConnectedEvent:
-		a.LogOn(a.details)
+		if err := a.LogOn(context.Background(), a.details); err != nil {
+			a.bot.Log.Print(err)
+		}
 	case *steam.LoggedOnEvent:
 		a.bot.Log.Printf("Logged on (%v) with SteamId %v and account flags %v", e.Result, e.ClientSteamId, e.AccountFlags)
-	case *steam.MachineAuthUpdateEvent:
-		a.machineAuthHash = e.Hash
-		err := ioutil.WriteFile(a.sentryPath, e.Hash, 0666)
-		if err != nil {
-			panic(err)
-		}
 	}
 }
 

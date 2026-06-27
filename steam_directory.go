@@ -36,6 +36,9 @@ func (sd *steamDirectory) Initialize() error {
 		return err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("steam directory request failed with status %s", resp.Status)
+	}
 	r := struct {
 		Response struct {
 			ServerList []string

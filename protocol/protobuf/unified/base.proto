@@ -1,0 +1,15 @@
+syntax = "proto2";
+package unified;
+
+enum EProtoExecutionSite {
+	k_EProtoExecutionSiteUnknown = 0;
+	k_EProtoExecutionSiteSteamClient = 2;
+}
+
+enum EProtoServiceType {
+	k_EProtoServiceTypeSteamMessages = 0;
+	k_EProtoServiceTypeVRGamepadUIMessages = 1;
+}
+
+message NoResponse {
+}

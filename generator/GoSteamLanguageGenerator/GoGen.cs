@@ -56,7 +56,6 @@ namespace GoSteamLanguageGenerator
 			sb.AppendLine("import (");
 			sb.AppendLine("    \"io\"");
 			sb.AppendLine("    \"encoding/binary\"");
-			sb.AppendLine("    \"github.com/golang/protobuf/proto\"");
 			sb.AppendLine("    \"github.com/paralin/go-steam/steamid\"");
 			sb.AppendLine("    \"github.com/paralin/go-steam/rwu\"");
 			sb.AppendLine("   . \"github.com/paralin/go-steam/protocol/protobuf\"");
@@ -312,7 +311,7 @@ namespace GoSteamLanguageGenerator
 			sb.AppendLine("    var err error");
 			foreach (PropNode node in cnode.childNodes) {
 				if (node.Flags == "proto") {
-					sb.AppendLine("    buf" + tempNum + ", err := proto.Marshal(d." + GetUpperName(node.Name) + ")");
+					sb.AppendLine("    buf" + tempNum + ", err := d." + GetUpperName(node.Name) + ".MarshalVT()");
 					sb.AppendLine("    if err != nil { return err }");
 
 					if (node.FlagsOpt != null) {
@@ -382,7 +381,7 @@ namespace GoSteamLanguageGenerator
 					sb.AppendLine("    buf" + tempNum + " := make([]byte, d." + GetUpperName(node.FlagsOpt) + ", d." + GetUpperName(node.FlagsOpt) + ")");
 					sb.AppendLine("    _, err = io.ReadFull(r, buf" + tempNum + ")");
 					sb.AppendLine("    if err != nil { return err }");
-					sb.AppendLine("    err = proto.Unmarshal(buf" + tempNum + ", d." + GetUpperName(node.Name) + ")");
+					sb.AppendLine("    err = d." + GetUpperName(node.Name) + ".UnmarshalVT(buf" + tempNum + ")");
 					tempNum++;
 				} else {
 					string type = EmitType(node.Type);

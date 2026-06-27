@@ -1,12 +1,23 @@
-#get steamkit submodule
-    git submodule update --init --recursive
+# Protocol generation
 
-#windows
-    build project in visual studio
-    go run generator.go
+Initialize the pinned SteamDatabase protobuf source once:
 
-#linux
-    install monodevelop 4.x
-    install mono-xbuild
-    xbuild GoSteamLanguageGenerator.csproj /p:OutputPath=bin/Debug
-    go run generator.go clean proto steamlang
+```sh
+git submodule update --init --recursive generator/Protobufs
+```
+
+Regenerate the checked-in Steam client protobuf files:
+
+```sh
+go run generator.go proto
+```
+
+The `proto` target copies and normalizes the selected SteamDatabase inputs with
+`generator/update_protos.bash`, then runs `aptre` / `protobuf-go-lite` over
+`protocol/protobuf` and `protocol/protobuf/unified`.
+
+SteamLanguage generation still uses the legacy SteamKit generator:
+
+```sh
+go run generator.go steamlang
+```

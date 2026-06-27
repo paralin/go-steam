@@ -1,7 +1,9 @@
 package steam
 
 import (
-	"crypto/sha1"
+	"context"
+	"errors"
+	"net/http"
 	"sync/atomic"
 	"time"
 
@@ -9,89 +11,93 @@ import (
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	. "github.com/paralin/go-steam/protocol/steamlang"
 	"github.com/paralin/go-steam/steamid"
-	"github.com/golang/protobuf/proto"
 )
 
 type Auth struct {
-	client  *Client
-	details *LogOnDetails
+	client                *Client
+	details               *LogOnDetails
+	authServiceBaseURL    string
+	authServiceHTTPClient *http.Client
 }
-
-type SentryHash []byte
-
 type LogOnDetails struct {
 	Username string
 
-	// If logging into an account without a login key, the account's password.
+	// Password starts a modern Steam auth session and exchanges credentials for
+	// a token before CM logon.
 	Password string
 
-	// If you have a Steam Guard email code, you can provide it here.
+	// AccessToken logs on to CM directly when the caller already owns a modern
+	// Steam authentication token.
+	AccessToken string
+
+	// DeviceFriendlyName labels the device in the modern Steam auth session.
+	DeviceFriendlyName string
+
+	// AuthCode supplies a Steam Guard email code when Steam requests one.
 	AuthCode string
 
-	// If you have a Steam Guard mobile two-factor authentication code, you can provide it here.
-	TwoFactorCode  string
-	SentryFileHash SentryHash
-	LoginKey       string
+	// TwoFactorCode supplies a Steam Guard mobile authenticator code when Steam
+	// requests one.
+	TwoFactorCode string
 
-	// true if you want to get a login key which can be used in lieu of
-	// a password for subsequent logins. false or omitted otherwise.
 	ShouldRememberPassword bool
 }
 
-// Log on with the given details. You must always specify username and
-// password OR username and loginkey. For the first login, don't set an authcode or a hash and you'll
-//  receive an error (EResult_AccountLogonDenied)
-// and Steam will send you an authcode. Then you have to login again, this time with the authcode.
-// Shortly after logging in, you'll receive a MachineAuthUpdateEvent with a hash which allows
-// you to login without using an authcode in the future.
-//
-// If you don't use Steam Guard, username and password are enough.
-//
-// After the event EMsg_ClientNewLoginKey is received you can use the LoginKey
-// to login instead of using the password.
-func (a *Auth) LogOn(details *LogOnDetails) {
-	if details.Username == "" {
-		panic("Username must be set!")
+// LogOn exchanges password credentials for a modern Steam access token when
+// needed, then logs on to CM with CMsgClientLogon.AccessToken.
+func (a *Auth) LogOn(ctx context.Context, details *LogOnDetails) error {
+	if details == nil {
+		return errors.New("logon details must be set")
 	}
-	if details.Password == "" && details.LoginKey == "" {
-		panic("Password or LoginKey must be set!")
+	if details.Username == "" {
+		return errors.New("username must be set")
+	}
+	if details.AccessToken == "" && details.Password == "" {
+		return errors.New("password or access token must be set")
 	}
 
-	logon := new(CMsgClientLogon)
-	logon.AccountName = &details.Username
-	logon.Password = &details.Password
-	if details.AuthCode != "" {
-		logon.AuthCode = proto.String(details.AuthCode)
+	accessToken := details.AccessToken
+	if accessToken == "" {
+		var err error
+		accessToken, err = a.getAccessTokenViaCredentials(ctx, details)
+		if err != nil {
+			event := &LogOnFailedEvent{Err: err}
+			var authErr *AuthSessionError
+			if errors.As(err, &authErr) {
+				event.AuthSessionState = authErr.State
+				event.Confirmations = authErr.Confirmations
+			}
+			a.client.Emit(event)
+			return err
+		}
 	}
-	if details.TwoFactorCode != "" {
-		logon.TwoFactorCode = proto.String(details.TwoFactorCode)
+
+	language := "english"
+	protocolVersion := uint32(MsgClientLogon_CurrentProtocol)
+	rememberPassword := details.ShouldRememberPassword
+	logon := &CMsgClientLogon{
+		AccountName:     &details.Username,
+		AccessToken:     &accessToken,
+		ClientLanguage:  &language,
+		ProtocolVersion: &protocolVersion,
 	}
-	logon.ClientLanguage = proto.String("english")
-	logon.ProtocolVersion = proto.Uint32(MsgClientLogon_CurrentProtocol)
-	logon.ShaSentryfile = details.SentryFileHash
-	if details.LoginKey != "" {
-		logon.LoginKey = proto.String(details.LoginKey)
-	}
-	if details.ShouldRememberPassword {
-		logon.ShouldRememberPassword = proto.Bool(details.ShouldRememberPassword)
+	if rememberPassword {
+		logon.ShouldRememberPassword = &rememberPassword
 	}
 
 	atomic.StoreUint64(&a.client.steamId, steamid.NewIdAdv(0, 1, int32(EUniverse_Public), EAccountType_Individual).ToUint64())
 
 	a.client.Write(NewClientMsgProtobuf(EMsg_ClientLogon, logon))
+	return nil
 }
 
 func (a *Auth) HandlePacket(packet *Packet) {
 	switch packet.EMsg {
 	case EMsg_ClientLogOnResponse:
 		a.handleLogOnResponse(packet)
-	case EMsg_ClientNewLoginKey:
-		a.handleLoginKey(packet)
 	case EMsg_ClientSessionToken:
 	case EMsg_ClientLoggedOff:
 		a.handleLoggedOff(packet)
-	case EMsg_ClientUpdateMachineAuth:
-		a.handleUpdateMachineAuth(packet)
 	case EMsg_ClientAccountInfo:
 		a.handleAccountInfo(packet)
 	case EMsg_ClientWalletInfoUpdate:
@@ -113,11 +119,8 @@ func (a *Auth) handleLogOnResponse(packet *Packet) {
 	if result == EResult_OK {
 		atomic.StoreInt32(&a.client.sessionId, msg.Header.Proto.GetClientSessionid())
 		atomic.StoreUint64(&a.client.steamId, msg.Header.Proto.GetSteamid())
-		if body.WebapiAuthenticateUserNonce != nil {
-			a.client.Web.webLoginKey = *body.WebapiAuthenticateUserNonce
-		}
-
-		go a.client.heartbeatLoop(time.Duration(body.GetOutOfGameHeartbeatSeconds()))
+		heartbeatSeconds := body.GetHeartbeatSeconds()
+		go a.client.heartbeatLoop(time.Duration(heartbeatSeconds))
 
 		a.client.Emit(&LoggedOnEvent{
 			Result:         EResult(body.GetEresult()),
@@ -126,6 +129,7 @@ func (a *Auth) handleLogOnResponse(packet *Packet) {
 			ClientSteamId:  steamid.SteamId(body.GetClientSuppliedSteamid()),
 			Body:           body,
 		})
+		a.client.Write(NewClientMsgProtobuf(EMsg_ClientRequestWebAPIAuthenticateUserNonce, new(CMsgClientRequestWebAPIAuthenticateUserNonce)))
 	} else if result == EResult_Fail || result == EResult_ServiceUnavailable || result == EResult_TryAnotherCM {
 		// some error on Steam's side, we'll get an EOF later
 		a.client.Emit(&SteamFailureEvent{
@@ -137,18 +141,6 @@ func (a *Auth) handleLogOnResponse(packet *Packet) {
 		})
 		a.client.Disconnect()
 	}
-}
-
-func (a *Auth) handleLoginKey(packet *Packet) {
-	body := new(CMsgClientNewLoginKey)
-	packet.ReadProtoMsg(body)
-	a.client.Write(NewClientMsgProtobuf(EMsg_ClientNewLoginKeyAccepted, &CMsgClientNewLoginKeyAccepted{
-		UniqueId: proto.Uint32(body.GetUniqueId()),
-	}))
-	a.client.Emit(&LoginKeyEvent{
-		UniqueId: body.GetUniqueId(),
-		LoginKey: body.GetLoginKey(),
-	})
 }
 
 func (a *Auth) handleLoggedOff(packet *Packet) {
@@ -165,22 +157,6 @@ func (a *Auth) handleLoggedOff(packet *Packet) {
 	a.client.Emit(&LoggedOffEvent{Result: result})
 }
 
-func (a *Auth) handleUpdateMachineAuth(packet *Packet) {
-	body := new(CMsgClientUpdateMachineAuth)
-	packet.ReadProtoMsg(body)
-	hash := sha1.New()
-	hash.Write(packet.Data)
-	sha := hash.Sum(nil)
-
-	msg := NewClientMsgProtobuf(EMsg_ClientUpdateMachineAuthResponse, &CMsgClientUpdateMachineAuthResponse{
-		ShaFile: sha,
-	})
-	msg.SetTargetJobId(packet.SourceJobId)
-	a.client.Write(msg)
-
-	a.client.Emit(&MachineAuthUpdateEvent{sha})
-}
-
 func (a *Auth) handleAccountInfo(packet *Packet) {
 	body := new(CMsgClientAccountInfo)
 	packet.ReadProtoMsg(body)
@@ -189,7 +165,5 @@ func (a *Auth) handleAccountInfo(packet *Packet) {
 		Country:              body.GetIpCountry(),
 		CountAuthedComputers: body.GetCountAuthedComputers(),
 		AccountFlags:         EAccountFlags(body.GetAccountFlags()),
-		FacebookId:           body.GetFacebookId(),
-		FacebookName:         body.GetFacebookName(),
 	})
 }

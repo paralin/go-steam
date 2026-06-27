@@ -3,14 +3,12 @@ package steam
 import (
 	"crypto/aes"
 	"crypto/rand"
-	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"github.com/paralin/go-steam/cryptoutil"
 	. "github.com/paralin/go-steam/protocol"
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	. "github.com/paralin/go-steam/protocol/steamlang"
-	"github.com/golang/protobuf/proto"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -33,15 +31,13 @@ type Web struct {
 	// This is only availbile after calling LogOn().
 	SteamLoginSecure string
 
-	webLoginKey string
+	webAPINonce string
 
 	client *Client
 }
 
 func (w *Web) HandlePacket(packet *Packet) {
 	switch packet.EMsg {
-	case EMsg_ClientNewLoginKey:
-		w.handleNewLoginKey(packet)
 	case EMsg_ClientRequestWebAPIAuthenticateUserNonceResponse:
 		w.handleAuthNonceResponse(packet)
 	}
@@ -50,8 +46,8 @@ func (w *Web) HandlePacket(packet *Packet) {
 // Fetches the `steamLogin` cookie. This may only be called after the first
 // WebSessionIdEvent or it will panic.
 func (w *Web) LogOn() {
-	if w.webLoginKey == "" {
-		panic("Web: webLoginKey not initialized!")
+	if w.webAPINonce == "" {
+		panic("Web: webAPINonce not initialized!")
 	}
 
 	go func() {
@@ -76,7 +72,7 @@ func (w *Web) apiLogOn() error {
 
 	cryptedSessionKey := cryptoutil.RSAEncrypt(GetPublicKey(EUniverse_Public), sessionKey)
 	ciph, _ := aes.NewCipher(sessionKey)
-	cryptedLoginKey := cryptoutil.SymmetricEncrypt(ciph, []byte(w.webLoginKey))
+	cryptedLoginKey := cryptoutil.SymmetricEncrypt(ciph, []byte(w.webAPINonce))
 	data := make(url.Values)
 	data.Add("format", "json")
 	data.Add("steamid", strconv.FormatUint(w.client.SteamId().ToUint64(), 10))
@@ -115,29 +111,17 @@ func (w *Web) apiLogOn() error {
 	return nil
 }
 
-func (w *Web) handleNewLoginKey(packet *Packet) {
-	msg := new(CMsgClientNewLoginKey)
-	packet.ReadProtoMsg(msg)
-
-	w.client.Write(NewClientMsgProtobuf(EMsg_ClientNewLoginKeyAccepted, &CMsgClientNewLoginKeyAccepted{
-		UniqueId: proto.Uint32(msg.GetUniqueId()),
-	}))
-
-	// number -> string -> bytes -> base64
-	w.SessionId = base64.StdEncoding.EncodeToString([]byte(strconv.FormatUint(uint64(msg.GetUniqueId()), 10)))
-
-	w.client.Emit(new(WebSessionIdEvent))
-}
 
 func (w *Web) handleAuthNonceResponse(packet *Packet) {
 	// this has to be the best name for a message yet.
 	msg := new(CMsgClientRequestWebAPIAuthenticateUserNonceResponse)
 	packet.ReadProtoMsg(msg)
-	w.webLoginKey = msg.GetWebapiAuthenticateUserNonce()
+	w.webAPINonce = msg.GetWebapiAuthenticateUserNonce()
 
-	// if the nonce was specifically requested in apiLogOn(),
-	// don't emit an event.
-	if atomic.CompareAndSwapUint32(&w.relogOnNonce, 1, 0) {
-		w.LogOn()
+	if !atomic.CompareAndSwapUint32(&w.relogOnNonce, 1, 0) {
+		w.client.Emit(new(WebSessionIdEvent))
+		return
 	}
+
+	w.LogOn()
 }
