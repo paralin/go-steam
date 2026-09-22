@@ -8,7 +8,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/golang/protobuf/proto"
 	. "github.com/paralin/go-steam/protocol"
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	. "github.com/paralin/go-steam/protocol/steamlang"
@@ -19,19 +18,26 @@ import (
 
 // Social provides access to social aspects of Steam.
 type Social struct {
-	mutex sync.RWMutex
-
-	name         string
-	avatar       string
-	personaState EPersonaState
-
+	// Friends retains observed individual relationships.
 	Friends *socialcache.FriendsList
-	Groups  *socialcache.GroupsList
-	Chats   *socialcache.ChatsList
+	// Groups retains observed clan relationships.
+	Groups *socialcache.GroupsList
+	// Chats retains observed room membership.
+	Chats *socialcache.ChatsList
 
+	// client owns the Steam transport and event dispatcher.
 	client *Client
+	// mutex guards the account persona fields below.
+	mutex sync.RWMutex
+	// name is the current account display name.
+	name string
+	// avatar is the latest valid account avatar hash.
+	avatar string
+	// personaState is the current advertised presence.
+	personaState EPersonaState
 }
 
+// newSocial binds account and relationship caches to the Steam client.
 func newSocial(client *Client) *Social {
 	return &Social{
 		Friends: socialcache.NewFriendsList(),
@@ -41,58 +47,58 @@ func newSocial(client *Client) *Social {
 	}
 }
 
-// GetAvatar the local user's avatar
+// GetAvatar returns the latest observed account avatar.
 func (s *Social) GetAvatar() string {
 	s.mutex.RLock()
 	defer s.mutex.RUnlock()
 	return s.avatar
 }
 
-// GetPersonaName the local user's persona name
+// GetPersonaName returns the latest observed account name.
 func (s *Social) GetPersonaName() string {
 	s.mutex.RLock()
 	defer s.mutex.RUnlock()
 	return s.name
 }
 
-// SetPersonaName the local user's persona name and broadcasts it over the network
+// SetPersonaName changes and publishes the account name.
 func (s *Social) SetPersonaName(name string) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	s.name = name
 	s.client.Write(NewClientMsgProtobuf(EMsg_ClientChangeStatus, &CMsgClientChangeStatus{
-		PersonaState: proto.Uint32(uint32(s.personaState)),
-		PlayerName:   proto.String(name),
+		PersonaState: new(uint32(s.personaState)),
+		PlayerName:   new(name),
 	}))
 }
 
-// GetPersonaState the local user's persona state
+// GetPersonaState returns the current advertised presence.
 func (s *Social) GetPersonaState() EPersonaState {
 	s.mutex.RLock()
 	defer s.mutex.RUnlock()
 	return s.personaState
 }
 
-// SetPersonaState the local user's persona state and broadcasts it over the network
+// SetPersonaState changes and publishes the account presence.
 func (s *Social) SetPersonaState(state EPersonaState) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	s.personaState = state
 	s.client.Write(NewClientMsgProtobuf(EMsg_ClientChangeStatus, &CMsgClientChangeStatus{
-		PersonaState: proto.Uint32(uint32(state)),
+		PersonaState: new(uint32(state)),
 	}))
 }
 
-// SendMessage a chat message to ether a room or friend
+// SendMessage sends a direct or room message according to the target identity.
 func (s *Social) SendMessage(to steamid.SteamId, entryType EChatEntryType, message string) {
-	//Friend
+	// Individual accounts receive direct friend messages.
 	if to.GetAccountType() == EAccountType_Individual || to.GetAccountType() == EAccountType_ConsoleUser {
 		s.client.Write(NewClientMsgProtobuf(EMsg_ClientFriendMsg, &CMsgClientFriendMsg{
-			Steamid:       proto.Uint64(to.ToUint64()),
-			ChatEntryType: proto.Int32(int32(entryType)),
+			Steamid:       new(to.ToUint64()),
+			ChatEntryType: new(int32(entryType)),
 			Message:       []byte(message),
 		}))
-		//Chat room
+		// Group identities use the legacy chat-room envelope.
 	} else if to.GetAccountType() == EAccountType_Clan || to.GetAccountType() == EAccountType_Chat {
 		chatID := to.ClanToChat()
 		s.client.Write(NewClientMsg(&MsgClientChatMsg{
@@ -107,14 +113,14 @@ func (s *Social) SendMessage(to steamid.SteamId, entryType EChatEntryType, messa
 // for every new/changed friend
 func (s *Social) AddFriend(id steamid.SteamId) {
 	s.client.Write(NewClientMsgProtobuf(EMsg_ClientAddFriend, &CMsgClientAddFriend{
-		SteamidToAdd: proto.Uint64(id.ToUint64()),
+		SteamidToAdd: new(id.ToUint64()),
 	}))
 }
 
 // RemoveFriend removes a friend from your friends list
 func (s *Social) RemoveFriend(id steamid.SteamId) {
 	s.client.Write(NewClientMsgProtobuf(EMsg_ClientRemoveFriend, &CMsgClientRemoveFriend{
-		Friendid: proto.Uint64(id.ToUint64()),
+		Friendid: new(id.ToUint64()),
 	}))
 }
 
@@ -138,7 +144,7 @@ func (s *Social) RequestFriendListInfo(ids []steamid.SteamId, requestedInfo ECli
 		friends = append(friends, id.ToUint64())
 	}
 	s.client.Write(NewClientMsgProtobuf(EMsg_ClientRequestFriendData, &CMsgClientRequestFriendData{
-		PersonaStateRequested: proto.Uint32(uint32(requestedInfo)),
+		PersonaStateRequested: new(uint32(requestedInfo)),
 		Friends:               friends,
 	}))
 }
@@ -151,16 +157,9 @@ func (s *Social) RequestFriendInfo(id steamid.SteamId, requestedInfo EClientPers
 // RequestProfileInfo requests profile information for a specified SteamId
 func (s *Social) RequestProfileInfo(id steamid.SteamId) {
 	s.client.Write(NewClientMsgProtobuf(EMsg_ClientFriendProfileInfo, &CMsgClientFriendProfileInfo{
-		SteamidFriend: proto.Uint64(id.ToUint64()),
+		SteamidFriend: new(id.ToUint64()),
 	}))
 }
-
-// RequestOfflineMessages requests all offline messages and marks them as read
-/* TODO: Determine if this is possible to re-implement
-func (s *Social) RequestOfflineMessages() {
-	s.client.Write(NewClientMsgProtobuf(EMsg_ClientFSGetFriendMessageHistoryForOfflineMessages, &CMsgClientFSGetFriendMessageHistoryForOfflineMessages{}))
-}
-*/
 
 // JoinChat attempts to join a chat room
 func (s *Social) JoinChat(id steamid.SteamId) {
@@ -183,7 +182,7 @@ func (s *Social) LeaveChat(id steamid.SteamId) {
 	}, payload.Bytes()))
 }
 
-// KickChatMember the specified chat member from the given chat room
+// KickChatMember requests removal of a member from the room.
 func (s *Social) KickChatMember(room steamid.SteamId, user SteamId) {
 	chatID := room.ClanToChat()
 	s.client.Write(NewClientMsg(&MsgClientChatAction{
@@ -193,7 +192,7 @@ func (s *Social) KickChatMember(room steamid.SteamId, user SteamId) {
 	}, make([]byte, 0)))
 }
 
-// BanChatMember the specified chat member from the given chat room
+// BanChatMember requests a room ban for the member.
 func (s *Social) BanChatMember(room steamid.SteamId, user SteamId) {
 	chatID := room.ClanToChat()
 	s.client.Write(NewClientMsg(&MsgClientChatAction{
@@ -203,7 +202,7 @@ func (s *Social) BanChatMember(room steamid.SteamId, user SteamId) {
 	}, make([]byte, 0)))
 }
 
-// UnbanChatMember the specified chat member from the given chat room
+// UnbanChatMember requests removal of the member’s room ban.
 func (s *Social) UnbanChatMember(room steamid.SteamId, user SteamId) {
 	chatID := room.ClanToChat()
 	s.client.Write(NewClientMsg(&MsgClientChatAction{
@@ -242,17 +241,17 @@ func (s *Social) HandlePacket(packet *Packet) {
 		s.handleIgnoreFriendResponse(packet)
 	case EMsg_ClientFriendProfileInfoResponse:
 		s.handleProfileInfoResponse(packet)
-		// case EMsg_ClientFSGetFriendMessageHistoryResponse:
-		// s.handleFriendMessageHistoryResponse(packet)
 	}
 }
 
+// handleAccountInfo requests the persona after account login.
 func (s *Social) handleAccountInfo(packet *Packet) {
-	//Just fire the personainfo, Auth handles the callback
+	// Auth owns account login; request the current persona through the social stream.
 	flags := EClientPersonaStateFlag_PlayerName | EClientPersonaStateFlag_Presence | EClientPersonaStateFlag_SourceID
 	s.RequestFriendInfo(s.client.SteamId(), EClientPersonaStateFlag(flags))
 }
 
+// handleFriendsList updates relationships before publishing the initial roster.
 func (s *Social) handleFriendsList(packet *Packet) {
 	list := new(CMsgClientFriendsList)
 	packet.ReadProtoMsg(list)
@@ -300,6 +299,7 @@ func (s *Social) handleFriendsList(packet *Packet) {
 	}
 }
 
+// handlePersonaState merges fields identified by Steam presence flags.
 func (s *Social) handlePersonaState(packet *Packet) {
 	list := new(CMsgClientPersonaState)
 	packet.ReadProtoMsg(list)
@@ -372,6 +372,7 @@ func (s *Social) handlePersonaState(packet *Packet) {
 	}
 }
 
+// handleClanState updates cached group state before publishing its observation.
 func (s *Social) handleClanState(packet *Packet) {
 	body := new(CMsgClientClanState)
 	packet.ReadProtoMsg(body)
@@ -436,6 +437,7 @@ func (s *Social) handleClanState(packet *Packet) {
 	})
 }
 
+// handleFriendResponse publishes the result of a friend request.
 func (s *Social) handleFriendResponse(packet *Packet) {
 	body := new(CMsgClientAddFriendResponse)
 	packet.ReadProtoMsg(body)
@@ -446,6 +448,7 @@ func (s *Social) handleFriendResponse(packet *Packet) {
 	})
 }
 
+// handleFriendMsg publishes a timestamped direct message.
 func (s *Social) handleFriendMsg(packet *Packet) {
 	body := new(CMsgClientFriendMsgIncoming)
 	packet.ReadProtoMsg(body)
@@ -458,6 +461,7 @@ func (s *Social) handleFriendMsg(packet *Packet) {
 	})
 }
 
+// handleChatMsg publishes a legacy chat-room message.
 func (s *Social) handleChatMsg(packet *Packet) {
 	body := new(MsgClientChatMsg)
 	payload := packet.ReadClientMsg(body).Payload
@@ -470,6 +474,7 @@ func (s *Social) handleChatMsg(packet *Packet) {
 	})
 }
 
+// handleChatEnter retains the room roster before announcing entry.
 func (s *Social) handleChatEnter(packet *Packet) {
 	body := new(MsgClientChatEnter)
 	payload := packet.ReadClientMsg(body).Payload
@@ -501,6 +506,7 @@ func (s *Social) handleChatEnter(packet *Packet) {
 	})
 }
 
+// handleChatMemberInfo updates room membership before publishing the change.
 func (s *Social) handleChatMemberInfo(packet *Packet) {
 	body := new(MsgClientChatMemberInfo)
 	payload := packet.ReadClientMsg(body).Payload
@@ -536,6 +542,7 @@ func (s *Social) handleChatMemberInfo(packet *Packet) {
 	}
 }
 
+// readChatMember decodes the retained binary chat membership layout.
 func readChatMember(r io.Reader) (SteamId, EChatPermission, EClanPermission) {
 	_, _ = ReadString(r) // MessageObject
 	_, _ = ReadByte(r)   // 7
@@ -550,6 +557,7 @@ func readChatMember(r io.Reader) (SteamId, EChatPermission, EClanPermission) {
 	return SteamId(id), EChatPermission(chat), EClanPermission(clan)
 }
 
+// handleChatActionResult publishes a moderation action result.
 func (s *Social) handleChatActionResult(packet *Packet) {
 	body := new(MsgClientChatActionResult)
 	packet.ReadClientMsg(body)
@@ -561,6 +569,7 @@ func (s *Social) handleChatActionResult(packet *Packet) {
 	})
 }
 
+// handleChatInvite publishes the invitation supplied by Steam.
 func (s *Social) handleChatInvite(packet *Packet) {
 	body := new(CMsgClientChatInvite)
 	packet.ReadProtoMsg(body)
@@ -575,6 +584,7 @@ func (s *Social) handleChatInvite(packet *Packet) {
 	})
 }
 
+// handleIgnoreFriendResponse publishes Steam’s ignore-list result.
 func (s *Social) handleIgnoreFriendResponse(packet *Packet) {
 	body := new(MsgClientSetIgnoreFriendResponse)
 	packet.ReadClientMsg(body)
@@ -583,6 +593,7 @@ func (s *Social) handleIgnoreFriendResponse(packet *Packet) {
 	})
 }
 
+// handleProfileInfoResponse publishes the requested profile observation.
 func (s *Social) handleProfileInfoResponse(packet *Packet) {
 	body := new(CMsgClientFriendProfileInfoResponse)
 	packet.ReadProtoMsg(body)
@@ -598,23 +609,3 @@ func (s *Social) handleProfileInfoResponse(packet *Packet) {
 		Summary:     body.GetSummary(),
 	})
 }
-
-/*
-func (s *Social) handleFriendMessageHistoryResponse(packet *Packet) {
-	body := new(CMsgClientFSGetFriendMessageHistoryResponse)
-	packet.ReadProtoMsg(body)
-	steamid := SteamId(body.GetSteamid())
-	for _, message := range body.GetMessages() {
-		if !message.GetUnread() {
-			continue // Skip already read messages
-		}
-		s.client.Emit(&ChatMsgEvent{
-			ChatterId: steamid,
-			Message:   message.GetMessage(),
-			EntryType: EChatEntryType_ChatMsg,
-			Timestamp: time.Unix(int64(message.GetTimestamp()), 0),
-			Offline:   true, // GetUnread is true
-		})
-	}
-}
-*/

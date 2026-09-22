@@ -3,13 +3,13 @@ package gamecoordinator
 import (
 	"bytes"
 
-	"github.com/golang/protobuf/proto"
+	protobuf "github.com/aperturerobotics/protobuf-go-lite"
 	. "github.com/paralin/go-steam/protocol"
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	. "github.com/paralin/go-steam/protocol/steamlang"
 )
 
-// An incoming, partially unread message from the Game Coordinator.
+// GCPacket retains a parsed coordinator header and undecoded message bytes.
 type GCPacket struct {
 	AppId       uint32
 	MsgType     uint32
@@ -19,6 +19,7 @@ type GCPacket struct {
 	TargetJobId JobId
 }
 
+// NewGCPacket parses protobuf or legacy headers while preserving job correlation.
 func NewGCPacket(wrapper *CMsgGCClient) (*GCPacket, error) {
 	packet := &GCPacket{
 		AppId:   wrapper.GetAppid(),
@@ -53,10 +54,13 @@ func NewGCPacket(wrapper *CMsgGCClient) (*GCPacket, error) {
 	return packet, nil
 }
 
-func (g *GCPacket) ReadProtoMsg(body proto.Message) {
-	proto.Unmarshal(g.Body, body)
+// ReadProtoMsg replaces the supplied message using its generated lite decoder.
+func (g *GCPacket) ReadProtoMsg(body protobuf.Message) {
+	body.Reset()
+	_ = body.UnmarshalVT(g.Body)
 }
 
+// ReadMsg decodes the retained binary body into the supplied message.
 func (g *GCPacket) ReadMsg(body MessageBody) {
 	body.Deserialize(bytes.NewReader(g.Body))
 }

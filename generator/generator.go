@@ -11,6 +11,7 @@ import (
 	"strings"
 )
 
+// main executes requested generation targets in order.
 func main() {
 	if len(os.Args) < 2 {
 		fatal(errors.New("invalid target: available targets: clean, proto, steamlang"))
@@ -33,6 +34,7 @@ func main() {
 	}
 }
 
+// clean removes generated outputs without changing retained schema inputs.
 func clean(repoRoot string) error {
 	for _, root := range []string{
 		filepath.Join(repoRoot, "protocol", "protobuf"),
@@ -54,6 +56,7 @@ func clean(repoRoot string) error {
 	return nil
 }
 
+// removeGeneratedGo removes generated Go files below one package root.
 func removeGeneratedGo(root string) error {
 	return filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
@@ -69,24 +72,28 @@ func removeGeneratedGo(root string) error {
 	})
 }
 
+// buildProto normalizes pinned Valve schemas and generates lite codecs.
 func buildProto(ctx context.Context, repoRoot string) error {
 	if err := updateProtoSources(repoRoot); err != nil {
 		return err
 	}
 	return run(ctx, repoRoot,
-		"go", "run", "github.com/aperturerobotics/common/cmd/aptre@v0.34.0",
-		"generate", "--language", "go",
+		"go", "run", "github.com/aperturerobotics/common/cmd/aptre@v0.35.2",
+		"generate", "--language", "go", "--rpc", "none",
 		"--targets", "protocol/protobuf/*.proto",
 		"--targets", "protocol/protobuf/unified/*.proto",
+		"--targets", "tf2/protocol/protobuf/*.proto",
 		"--force", "--verbose",
 	)
 }
 
+// buildSteamLanguage runs the retained SteamKit binary-message generator.
 func buildSteamLanguage(ctx context.Context, repoRoot string) error {
 	exePath := filepath.Join("generator", "GoSteamLanguageGenerator", "bin", "Debug", "GoSteamLanguageGenerator.exe")
 	return run(ctx, repoRoot, "mono", exePath, filepath.Join("generator", "SteamKit"), filepath.Join("protocol", "steamlang"))
 }
 
+// run joins one cancellable generation command with inherited diagnostics.
 func run(ctx context.Context, dir, name string, args ...string) error {
 	cmd := exec.CommandContext(ctx, name, args...)
 	cmd.Dir = dir
@@ -98,6 +105,7 @@ func run(ctx context.Context, dir, name string, args ...string) error {
 	return nil
 }
 
+// fatal prints a failed generation operation and terminates the command.
 func fatal(err error) {
 	if err == nil {
 		return

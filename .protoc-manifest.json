@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "protocFlagsHash": "865923d5682d294b6c3c1227b77a0ab47bae0251a77f73274a970345c191eec7",
-  "toolVersions": "protoc=embedded,protobuf-go-lite=v0.14.0,starpc=v0.49.18",
+  "protocFlagsHash": "7d19044f90ce750eccb6166c42d4b0455d31c37ad5a5dda4bc9c24a6f9d11f76",
+  "toolVersions": "protoc=embedded,protobuf-go-lite=v0.16.0,starpc=v0.49.21",
   "packages": {
     "github.com/paralin/go-steam/protocol/protobuf": {
       "hash": "d50297b3a9fce0c7e3fa0938280fdd670b973999d058b73fb10552a4486a3cfa",
@@ -32,13 +32,14 @@
       ]
     },
     "github.com/paralin/go-steam/protocol/protobuf/unified": {
-      "hash": "a6efc3675cb57f3d28d42cc576bf424a387d0312d4e500fb13657c4af0786fa1",
+      "hash": "fe1dacd761751c119758245c41b00230768e72986fab140bd475fd613f426067",
       "generatedFiles": [
         "protocol/protobuf/unified/auth.pb.go",
         "protocol/protobuf/unified/base.pb.go",
         "protocol/protobuf/unified/client_objects.pb.go",
         "protocol/protobuf/unified/cloud.pb.go",
         "protocol/protobuf/unified/credentials.pb.go",
+        "protocol/protobuf/unified/deviceauth.pb.go",
         "protocol/protobuf/unified/enums.pb.go",
         "protocol/protobuf/unified/enums_productinfo.pb.go",
         "protocol/protobuf/unified/enums_productinfo.pb.go",
@@ -59,6 +60,7 @@
         "protocol/protobuf/unified/client_objects.proto",
         "protocol/protobuf/unified/cloud.proto",
         "protocol/protobuf/unified/credentials.proto",
+        "protocol/protobuf/unified/deviceauth.proto",
         "protocol/protobuf/unified/enums.proto",
         "protocol/protobuf/unified/enums_productinfo.proto",
         "protocol/protobuf/unified/gamenotifications.proto",
@@ -69,6 +71,25 @@
         "protocol/protobuf/unified/partnerapps.proto",
         "protocol/protobuf/unified/player.proto",
         "protocol/protobuf/unified/publishedfile.proto"
+      ]
+    },
+    "github.com/paralin/go-steam/tf2/protocol/protobuf": {
+      "hash": "e806d283cc281ceca68967c95033586ca90d6f30c0194510b173a450fcbe15b9",
+      "generatedFiles": [
+        "tf2/protocol/protobuf/base.pb.go",
+        "tf2/protocol/protobuf/econ.pb.go",
+        "tf2/protocol/protobuf/gcsdk.pb.go",
+        "tf2/protocol/protobuf/steam.pb.go",
+        "tf2/protocol/protobuf/system.pb.go",
+        "tf2/protocol/protobuf/tf.pb.go"
+      ],
+      "protoFiles": [
+        "tf2/protocol/protobuf/base.proto",
+        "tf2/protocol/protobuf/econ.proto",
+        "tf2/protocol/protobuf/gcsdk.proto",
+        "tf2/protocol/protobuf/steam.proto",
+        "tf2/protocol/protobuf/system.proto",
+        "tf2/protocol/protobuf/tf.proto"
       ]
     }
   }
