@@ -80,6 +80,13 @@ func (a *Auth) HandlePacket(packet *Packet) {
 	case EMsg_ClientSessionToken:
 	case EMsg_ClientLoggedOff:
 		a.handleLoggedOff(packet)
+	case EMsg_ClientPlayingSessionState:
+		body := new(CMsgClientPlayingSessionState)
+		packet.ReadProtoMsg(body)
+		a.client.Emit(&PlayingSessionStateEvent{
+			PlayingBlocked: body.GetPlayingBlocked(),
+			PlayingApp:     body.GetPlayingApp(),
+		})
 	case EMsg_ClientAccountInfo:
 		a.handleAccountInfo(packet)
 	case EMsg_ClientWalletInfoUpdate:
