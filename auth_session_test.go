@@ -22,13 +22,16 @@ import (
 	steamlang "github.com/paralin/go-steam/protocol/steamlang"
 )
 
+// TestLogOnWithAccessTokenWritesCMAccessToken keeps passwords out of token-based logon.
 func TestLogOnWithAccessTokenWritesCMAccessToken(t *testing.T) {
+	// Capture the outgoing CM message without starting transport workers.
 	client := &Client{
 		events:  make(chan any, 1),
 		session: &clientSession{ctx: context.Background(), conn: testConnection{}, writes: make(chan protocol.IMsg, 1), heartbeat: make(chan time.Duration, 1)},
 	}
 	auth := &Auth{client: client}
 
+	// Authenticate with the reusable token alone.
 	if err := auth.LogOn(context.Background(), &LogOnDetails{
 		Username:    "alice",
 		AccessToken: "access-token",
@@ -36,6 +39,7 @@ func TestLogOnWithAccessTokenWritesCMAccessToken(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// Verify the wire message contains the token and omits the password.
 	select {
 	case msg := <-client.session.writes:
 		clientMsg, ok := msg.(*protocol.ClientMsgProtobuf)
@@ -60,7 +64,9 @@ func TestLogOnWithAccessTokenWritesCMAccessToken(t *testing.T) {
 	}
 }
 
+// TestLogOnResponseRequestsWebAPINonce requests web authentication after accepted CM logon.
 func TestLogOnResponseRequestsWebAPINonce(t *testing.T) {
+	// Deliver an accepted logon response to the real authentication handler.
 	client := &Client{
 		events:  make(chan any, 1),
 		session: &clientSession{ctx: context.Background(), conn: testConnection{}, writes: make(chan protocol.IMsg, 1), heartbeat: make(chan time.Duration, 1)},
@@ -68,6 +74,7 @@ func TestLogOnResponseRequestsWebAPINonce(t *testing.T) {
 	auth := &Auth{client: client}
 	auth.handleLogOnResponse(clientLogOnResponsePacket(t))
 
+	// Publish authenticated state before requesting the web nonce.
 	select {
 	case event := <-client.events:
 		if _, ok := event.(*LoggedOnEvent); !ok {
@@ -77,6 +84,7 @@ func TestLogOnResponseRequestsWebAPINonce(t *testing.T) {
 		t.Fatal("logged-on event was not emitted")
 	}
 
+	// The outgoing request uses the dedicated web-authentication message.
 	select {
 	case msg := <-client.session.writes:
 		clientMsg, ok := msg.(*protocol.ClientMsgProtobuf)
@@ -94,7 +102,9 @@ func TestLogOnResponseRequestsWebAPINonce(t *testing.T) {
 	}
 }
 
+// TestGetAccessTokenViaCredentialsReturnsRefreshToken preserves the reusable auth result.
 func TestGetAccessTokenViaCredentialsReturnsRefreshToken(t *testing.T) {
+	// Serve the RSA, authentication and polling methods through a real HTTP boundary.
 	server := newAuthServiceTestServer(t, func(t *testing.T, name string, r *http.Request) protobuf.Message {
 		switch name {
 		case "GetPasswordRSAPublicKey":
@@ -144,6 +154,7 @@ func TestGetAccessTokenViaCredentialsReturnsRefreshToken(t *testing.T) {
 	})
 	defer server.Close()
 
+	// The complete exchange yields a refresh token for the supplied credentials.
 	auth := &Auth{authServiceBaseURL: server.URL + "/", authServiceHTTPClient: server.Client()}
 	token, err := auth.getAccessTokenViaCredentials(context.Background(), &LogOnDetails{
 		Username:               "alice",
@@ -158,7 +169,9 @@ func TestGetAccessTokenViaCredentialsReturnsRefreshToken(t *testing.T) {
 	}
 }
 
+// TestAuthServiceCallReportsEresultAsDenied preserves denial carried in successful HTTP responses.
 func TestAuthServiceCallReportsEresultAsDenied(t *testing.T) {
+	// Steam can encode an authentication failure in headers on an HTTP 200 response.
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("x-eresult", "5")
 		w.Header().Set("x-error_message", "invalid password")
@@ -166,6 +179,7 @@ func TestAuthServiceCallReportsEresultAsDenied(t *testing.T) {
 	}))
 	defer server.Close()
 
+	// Expose the protocol denial instead of accepting the HTTP status alone.
 	auth := &Auth{authServiceBaseURL: server.URL + "/", authServiceHTTPClient: server.Client()}
 	err := auth.authServiceCall(
 		context.Background(),
@@ -183,7 +197,9 @@ func TestAuthServiceCallReportsEresultAsDenied(t *testing.T) {
 	}
 }
 
+// TestGetAccessTokenViaCredentialsReportsSteamGuard retains the required confirmation method.
 func TestGetAccessTokenViaCredentialsReportsSteamGuard(t *testing.T) {
+	// Return the email-code challenge from Steam's initial authentication response.
 	server := newAuthServiceTestServer(t, func(t *testing.T, name string, r *http.Request) protobuf.Message {
 		switch name {
 		case "GetPasswordRSAPublicKey":
@@ -209,6 +225,7 @@ func TestGetAccessTokenViaCredentialsReportsSteamGuard(t *testing.T) {
 	})
 	defer server.Close()
 
+	// A caller without a code receives the same challenge and account hint.
 	auth := &Auth{authServiceBaseURL: server.URL + "/", authServiceHTTPClient: server.Client()}
 	_, err := auth.getAccessTokenViaCredentials(context.Background(), &LogOnDetails{
 		Username: "alice",
@@ -229,7 +246,9 @@ func TestGetAccessTokenViaCredentialsReportsSteamGuard(t *testing.T) {
 	}
 }
 
+// TestGetAccessTokenViaCredentialsSubmitsSteamGuardCode submits a device code in the same session.
 func TestGetAccessTokenViaCredentialsSubmitsSteamGuardCode(t *testing.T) {
+	// Validate the device challenge response before allowing polling to complete.
 	updated := false
 	server := newAuthServiceTestServer(t, func(t *testing.T, name string, r *http.Request) protobuf.Message {
 		switch name {
@@ -267,6 +286,7 @@ func TestGetAccessTokenViaCredentialsSubmitsSteamGuardCode(t *testing.T) {
 	})
 	defer server.Close()
 
+	// Supply the device code with the credentials and complete authentication.
 	auth := &Auth{authServiceBaseURL: server.URL + "/", authServiceHTTPClient: server.Client()}
 	_, err := auth.getAccessTokenViaCredentials(context.Background(), &LogOnDetails{
 		Username:      "alice",
@@ -281,7 +301,9 @@ func TestGetAccessTokenViaCredentialsSubmitsSteamGuardCode(t *testing.T) {
 	}
 }
 
+// TestGetAccessTokenViaCredentialsSubmitsEmailSteamGuardCode preserves the email code type.
 func TestGetAccessTokenViaCredentialsSubmitsEmailSteamGuardCode(t *testing.T) {
+	// Validate the email challenge response before allowing polling to complete.
 	updated := false
 	server := newAuthServiceTestServer(t, func(t *testing.T, name string, r *http.Request) protobuf.Message {
 		switch name {
@@ -319,6 +341,7 @@ func TestGetAccessTokenViaCredentialsSubmitsEmailSteamGuardCode(t *testing.T) {
 	})
 	defer server.Close()
 
+	// Supply the email code with the credentials and complete authentication.
 	auth := &Auth{authServiceBaseURL: server.URL + "/", authServiceHTTPClient: server.Client()}
 	_, err := auth.getAccessTokenViaCredentials(context.Background(), &LogOnDetails{
 		Username: "alice",
@@ -333,12 +356,14 @@ func TestGetAccessTokenViaCredentialsSubmitsEmailSteamGuardCode(t *testing.T) {
 	}
 }
 
+// TestGetAccessTokenViaCredentialsPollsManualSteamGuardConfirmation accepts out-of-band approval.
 func TestGetAccessTokenViaCredentialsPollsManualSteamGuardConfirmation(t *testing.T) {
 	for _, confirmationType := range []unified.EAuthSessionGuardType{
 		unified.EAuthSessionGuardType_k_EAuthSessionGuardType_DeviceConfirmation,
 		unified.EAuthSessionGuardType_k_EAuthSessionGuardType_EmailConfirmation,
 	} {
 		t.Run(confirmationType.String(), func(t *testing.T) {
+			// Poll the original session without submitting an unrelated one-time code.
 			server := newAuthServiceTestServer(t, func(t *testing.T, name string, r *http.Request) protobuf.Message {
 				switch name {
 				case "GetPasswordRSAPublicKey":
@@ -374,6 +399,7 @@ func TestGetAccessTokenViaCredentialsPollsManualSteamGuardConfirmation(t *testin
 			})
 			defer server.Close()
 
+			// Complete the manual confirmation exchange using its retained request identity.
 			auth := &Auth{authServiceBaseURL: server.URL + "/", authServiceHTTPClient: server.Client()}
 			token, err := auth.getAccessTokenViaCredentials(context.Background(), &LogOnDetails{
 				Username: "alice",
@@ -389,6 +415,7 @@ func TestGetAccessTokenViaCredentialsPollsManualSteamGuardConfirmation(t *testin
 	}
 }
 
+// clientLogOnResponsePacket creates an accepted Steam session with a two-second heartbeat.
 func clientLogOnResponsePacket(t *testing.T) *protocol.Packet {
 	t.Helper()
 	return protoBodyPacket(t, steamlang.EMsg_ClientLogOnResponse, &steampb.CMsgClientLogonResponse{
@@ -398,6 +425,7 @@ func clientLogOnResponsePacket(t *testing.T) *protocol.Packet {
 	})
 }
 
+// protoBodyPacket frames a generated protobuf without optional header fields.
 func protoBodyPacket(t *testing.T, eMsg steamlang.EMsg, msg protobuf.Message) *protocol.Packet {
 	t.Helper()
 	buf := new(bytes.Buffer)
@@ -421,6 +449,7 @@ func protoBodyPacket(t *testing.T, eMsg steamlang.EMsg, msg protobuf.Message) *p
 	}
 }
 
+// newAuthServiceTestServer serves versioned Steam authentication methods over local HTTP.
 func newAuthServiceTestServer(t *testing.T, handle func(*testing.T, string, *http.Request) protobuf.Message) *httptest.Server {
 	t.Helper()
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -432,6 +461,7 @@ func newAuthServiceTestServer(t *testing.T, handle func(*testing.T, string, *htt
 	}))
 }
 
+// readAuthRequest decodes the generated request from either GET or POST encoding.
 func readAuthRequest(t *testing.T, r *http.Request, msg protobuf.Message) {
 	t.Helper()
 	encoded := r.URL.Query().Get("input_protobuf_encoded")
@@ -453,6 +483,7 @@ func readAuthRequest(t *testing.T, r *http.Request, msg protobuf.Message) {
 	}
 }
 
+// writeAuthResponse sends the generated binary body consumed by the auth client.
 func writeAuthResponse(t *testing.T, w http.ResponseWriter, msg protobuf.Message) {
 	t.Helper()
 	data, err := msg.MarshalVT()
@@ -465,6 +496,7 @@ func writeAuthResponse(t *testing.T, w http.ResponseWriter, msg protobuf.Message
 	}
 }
 
+// authRSAPublicKeyResponse provides a disposable RSA key for password encryption tests.
 func authRSAPublicKeyResponse(t *testing.T) *unified.CAuthentication_GetPasswordRSAPublicKey_Response {
 	t.Helper()
 	key, err := rsa.GenerateKey(rand.Reader, 1024)
@@ -478,34 +510,46 @@ func authRSAPublicKeyResponse(t *testing.T) *unified.CAuthentication_GetPassword
 	}
 }
 
+// uint32Ptr preserves optional integer presence in test messages.
 func uint32Ptr(value uint32) *uint32 {
 	return &value
 }
 
+// int32Ptr preserves optional signed integer presence in test messages.
 func int32Ptr(value int32) *int32 {
 	return &value
 }
 
+// guardTypePtr preserves optional confirmation-method presence in test messages.
 func guardTypePtr(value unified.EAuthSessionGuardType) *unified.EAuthSessionGuardType {
 	return &value
 }
 
+// testConnection accepts authentication messages without opening a socket.
 type testConnection struct{}
 
+// Read leaves packet delivery to the authentication test.
 func (testConnection) Read() (*protocol.Packet, error) {
 	return nil, nil
 }
 
+// Write accepts an authentication frame.
 func (testConnection) Write([]byte) error {
 	return nil
 }
 
+// Close has no transport resources to release.
 func (testConnection) Close() error {
 	return nil
 }
 
+// SetReadTimeout accepts the server's authenticated liveness deadline.
+func (testConnection) SetReadTimeout(time.Duration) error { return nil }
+
+// SetEncryptionKey leaves test authentication messages unencrypted.
 func (testConnection) SetEncryptionKey([]byte) {}
 
+// IsEncrypted reports the test transport's plaintext contract.
 func (testConnection) IsEncrypted() bool {
 	return false
 }

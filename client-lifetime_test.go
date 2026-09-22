@@ -22,13 +22,26 @@ type stalledConnection struct {
 }
 
 // Read blocks until the simulated socket closes.
-func (c *stalledConnection) Read() (*protocol.Packet, error) { <-c.closed; return nil, io.EOF }
+func (c *stalledConnection) Read() (*protocol.Packet, error) {
+	<-c.closed
+	return nil, io.EOF
+}
 
 // Write announces the blocked transport write.
-func (c *stalledConnection) Write([]byte) error { close(c.writing); <-c.closed; return io.EOF }
+func (c *stalledConnection) Write([]byte) error {
+	close(c.writing)
+	<-c.closed
+	return io.EOF
+}
 
 // Close releases the simulated socket once per Client session.
-func (c *stalledConnection) Close() error { close(c.closed); return nil }
+func (c *stalledConnection) Close() error {
+	close(c.closed)
+	return nil
+}
+
+// SetReadTimeout leaves shutdown control with the blocked-write test.
+func (c *stalledConnection) SetReadTimeout(time.Duration) error { return nil }
 
 // SetEncryptionKey accepts the test's unencrypted transport.
 func (c *stalledConnection) SetEncryptionKey([]byte) {}

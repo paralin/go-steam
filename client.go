@@ -331,7 +331,8 @@ func (c *Client) writeLoop(session *clientSession) {
 			heartbeat = ticker.C
 			continue
 		case <-heartbeat:
-			message = NewClientMsgProtobuf(EMsg_ClientHeartBeat, new(CMsgClientHeartBeat))
+			reply := true
+			message = NewClientMsgProtobuf(EMsg_ClientHeartBeat, &CMsgClientHeartBeat{SendReply: &reply})
 			message.(IClientMsg).SetSessionId(c.SessionId())
 			message.(IClientMsg).SetSteamId(SteamId(c.SteamId()))
 		case message = <-session.writes:
@@ -353,16 +354,25 @@ func (c *Client) writeLoop(session *clientSession) {
 	}
 }
 
-// setHeartbeat updates the writer's heartbeat interval after authentication.
+// setHeartbeat binds transport liveness to Steam's authenticated heartbeat interval.
 func (c *Client) setHeartbeat(seconds time.Duration) {
+	// Reject invalid protocol timing before accessing the active socket.
 	if seconds <= 0 {
 		c.Fatalf("Steam supplied an invalid heartbeat interval")
 		return
 	}
+
+	// Retain the current transport while configuring its reader and writer.
 	c.mutex.RLock()
 	session := c.session
 	c.mutex.RUnlock()
 	if session == nil {
+		return
+	}
+
+	// Three unanswered heartbeat intervals terminate a silently broken transport.
+	if err := session.conn.SetReadTimeout(3 * seconds * time.Second); err != nil {
+		c.failSession(session, errors.Wrap(err, "set Steam heartbeat deadline"))
 		return
 	}
 	select {
