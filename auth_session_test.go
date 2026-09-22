@@ -13,6 +13,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	protobuf "github.com/aperturerobotics/protobuf-go-lite"
 	protocol "github.com/paralin/go-steam/protocol"
@@ -23,9 +24,8 @@ import (
 
 func TestLogOnWithAccessTokenWritesCMAccessToken(t *testing.T) {
 	client := &Client{
-		events:    make(chan any, 1),
-		conn:      testConnection{},
-		writeChan: make(chan protocol.IMsg, 1),
+		events:  make(chan any, 1),
+		session: &clientSession{ctx: context.Background(), conn: testConnection{}, writes: make(chan protocol.IMsg, 1), heartbeat: make(chan time.Duration, 1)},
 	}
 	auth := &Auth{client: client}
 
@@ -37,7 +37,7 @@ func TestLogOnWithAccessTokenWritesCMAccessToken(t *testing.T) {
 	}
 
 	select {
-	case msg := <-client.writeChan:
+	case msg := <-client.session.writes:
 		clientMsg, ok := msg.(*protocol.ClientMsgProtobuf)
 		if !ok {
 			t.Fatalf("message = %T", msg)
@@ -62,9 +62,8 @@ func TestLogOnWithAccessTokenWritesCMAccessToken(t *testing.T) {
 
 func TestLogOnResponseRequestsWebAPINonce(t *testing.T) {
 	client := &Client{
-		events:    make(chan any, 1),
-		conn:      testConnection{},
-		writeChan: make(chan protocol.IMsg, 1),
+		events:  make(chan any, 1),
+		session: &clientSession{ctx: context.Background(), conn: testConnection{}, writes: make(chan protocol.IMsg, 1), heartbeat: make(chan time.Duration, 1)},
 	}
 	auth := &Auth{client: client}
 	auth.handleLogOnResponse(clientLogOnResponsePacket(t))
@@ -79,7 +78,7 @@ func TestLogOnResponseRequestsWebAPINonce(t *testing.T) {
 	}
 
 	select {
-	case msg := <-client.writeChan:
+	case msg := <-client.session.writes:
 		clientMsg, ok := msg.(*protocol.ClientMsgProtobuf)
 		if !ok {
 			t.Fatalf("message = %T", msg)

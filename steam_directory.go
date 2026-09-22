@@ -1,87 +1,100 @@
 package steam
 
 import (
-	"encoding/json"
-	"fmt"
+	"context"
 	"io"
-	"math/rand"
+	"math/rand/v2"
 	"net/http"
 	"sync"
 	"time"
 
+	"github.com/aperturerobotics/fastjson"
 	"github.com/paralin/go-steam/netutil"
+	"github.com/pkg/errors"
 )
 
-// Load initial server list from Steam Directory Web API.
-// Call InitializeSteamDirectory() before Connect() to use
-// steam directory server list instead of static one.
-func InitializeSteamDirectory() error {
-	return steamDirectoryCache.Initialize()
-}
+// InitializeSteamDirectory fetches Steam's CM directory within fifteen seconds.
+func InitializeSteamDirectory() error { return steamDirectoryCache.Initialize() }
 
-var steamDirectoryCache *steamDirectory = &steamDirectory{}
+// steamDirectoryCache shares discovered addresses across authenticated clients.
+var steamDirectoryCache = &steamDirectory{}
 
+// steamDirectory guards the current CM address list.
 type steamDirectory struct {
-	sync.RWMutex
-	servers       []string
-	isInitialized bool
+	// mtx guards servers; network I/O never holds this lock.
+	mtx sync.RWMutex
+	// servers contains parsed addresses from the latest successful discovery.
+	servers []*netutil.PortAddr
 }
 
-// Get server list from steam directory and save it for later
-func (sd *steamDirectory) Initialize() error {
-	sd.Lock()
-	defer sd.Unlock()
-	client := new(http.Client)
-	resp, err := client.Get(fmt.Sprintf("https://api.steampowered.com/ISteamDirectory/GetCMList/v1/?cellId=0"))
+// Initialize fetches the directory with the default bounded discovery lifetime.
+func (sd *steamDirectory) Initialize() error { return sd.InitializeContext(context.Background()) }
+
+// InitializeContext fetches and validates Steam's public CM address list.
+func (sd *steamDirectory) InitializeContext(ctx context.Context) error {
+	// Bound discovery independently from the lifetime of a connected Steam client.
+	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
+	defer cancel()
+	request, err := http.NewRequestWithContext(ctx, http.MethodGet, "https://api.steampowered.com/ISteamDirectory/GetCMList/v1/?cellId=0", nil)
 	if err != nil {
 		return err
 	}
-	defer func() {
-		_, _ = io.Copy(io.Discard, resp.Body)
-		_ = resp.Body.Close()
-	}()
-	if resp.StatusCode != http.StatusOK {
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			return fmt.Errorf("got non-200 response from Steam: status=%d - failed to read body: %w", resp.StatusCode, err)
-		}
-		return fmt.Errorf("got non-200 response from Steam: status=%d body=%s", resp.StatusCode, string(body))
-	}
-	r := struct {
-		Response struct {
-			ServerList []string
-			Result     uint32
-			Message    string
-		}
-	}{}
-	if err = json.NewDecoder(resp.Body).Decode(&r); err != nil {
+	response, err := http.DefaultClient.Do(request)
+	if err != nil {
 		return err
 	}
-	if r.Response.Result != 1 {
-		return fmt.Errorf("Failed to get steam directory, result: %v, message: %v\n", r.Response.Result, r.Response.Message)
+	defer response.Body.Close()
+	body, err := io.ReadAll(io.LimitReader(response.Body, 1024*1024+1))
+	if err != nil {
+		return err
 	}
-	if len(r.Response.ServerList) == 0 {
-		return fmt.Errorf("Steam returned zero servers for steam directory request\n")
+	if len(body) > 1024*1024 {
+		return errors.New("Steam directory response exceeds one MiB")
 	}
-	sd.servers = r.Response.ServerList
-	sd.isInitialized = true
+	if response.StatusCode != http.StatusOK {
+		return errors.Errorf("got non-200 response from Steam: status=%d body=%s", response.StatusCode, string(body))
+	}
+
+	// Parse actual addresses before replacing the last useful directory snapshot.
+	var parser fastjson.Parser
+	value, err := parser.ParseBytes(body)
+	if err != nil {
+		return err
+	}
+	if value.GetUint("response", "result") != 1 {
+		return errors.New("Steam directory request failed")
+	}
+	var servers []*netutil.PortAddr
+	for _, entry := range value.GetArray("response", "serverlist") {
+		address, err := entry.StringBytes()
+		if err != nil {
+			return err
+		}
+		parsed := netutil.ParsePortAddr(string(address))
+		if parsed == nil {
+			return errors.New("Steam directory returned an invalid address")
+		}
+		servers = append(servers, parsed)
+	}
+	if len(servers) == 0 {
+		return errors.New("Steam directory returned no servers")
+	}
+	sd.mtx.Lock()
+	sd.servers = servers
+	sd.mtx.Unlock()
 	return nil
 }
 
+// GetRandomCM returns a parsed address from an initialized directory.
 func (sd *steamDirectory) GetRandomCM() *netutil.PortAddr {
-	sd.RLock()
-	defer sd.RUnlock()
-	if !sd.isInitialized {
-		panic("steam directory is not initialized")
-	}
-	rng := rand.New(rand.NewSource(time.Now().UnixNano()))
-	addr := netutil.ParsePortAddr(sd.servers[rng.Int31n(int32(len(sd.servers)))])
-	return addr
+	sd.mtx.RLock()
+	defer sd.mtx.RUnlock()
+	return sd.servers[rand.IntN(len(sd.servers))]
 }
 
+// IsInitialized reports whether discovery has supplied usable CM addresses.
 func (sd *steamDirectory) IsInitialized() bool {
-	sd.RLock()
-	defer sd.RUnlock()
-	isInitialized := sd.isInitialized
-	return isInitialized
+	sd.mtx.RLock()
+	defer sd.mtx.RUnlock()
+	return len(sd.servers) != 0
 }

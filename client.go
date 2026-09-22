@@ -3,11 +3,11 @@ package steam
 import (
 	"bytes"
 	"compress/gzip"
+	"context"
 	"crypto/rand"
 	"encoding/binary"
-	"fmt"
 	"hash/crc32"
-	"io/ioutil"
+	"io"
 	"net"
 	"sync"
 	"sync/atomic"
@@ -19,51 +19,62 @@ import (
 	. "github.com/paralin/go-steam/protocol/protobuf"
 	. "github.com/paralin/go-steam/protocol/steamlang"
 	"github.com/paralin/go-steam/steamid"
+	"github.com/pkg/errors"
 )
 
-// Represents a client to the Steam network.
+// Client communicates with the Steam network.
 // Always poll events from the channel returned by Events() or receiving messages will stop.
 // All access, unless otherwise noted, should be threadsafe.
 //
-// When a FatalErrorEvent is emitted, the connection is automatically closed. The same client can be used to reconnect.
+// A FatalErrorEvent closes the connection. Connect waits for the old transport
+// to finish before establishing its replacement.
 // Other errors don't have any effect.
 type Client struct {
-	// these need to be 64 bit aligned for sync/atomic on 32bit
-	sessionId    int32
-	_            uint32
-	steamId      uint64
-	currentJobId uint64
+	// sessionId is the authenticated Steam session identifier.
+	sessionId atomic.Int32
+	// steamId is the authenticated account identity.
+	steamId atomic.Uint64
+	// currentJobId allocates request identities across transport lifetimes.
+	currentJobId atomic.Uint64
 
-	Auth          *Auth
-	Social        *Social
-	Web           *Web
+	// Auth implements account authentication.
+	Auth *Auth
+	// Social implements friends and persona operations.
+	Social *Social
+	// Web implements Steam web authentication.
+	Web *Web
+	// Notifications implements account notifications.
 	Notifications *Notifications
-	Trading       *Trading
-	GC            *GameCoordinator
+	// Trading implements trade operations.
+	Trading *Trading
+	// GC dispatches application coordinator traffic.
+	GC *GameCoordinator
 
-	events        chan any
-	handlers      []PacketHandler
+	// events carries protocol observations to the caller.
+	events chan any
+	// handlers receives incoming packets in registration order.
+	handlers []PacketHandler
+	// handlersMutex guards packet-handler registration.
 	handlersMutex sync.RWMutex
 
-	tempSessionKey []byte
-
+	// ConnectionTimeout bounds discovery and dialing; zero uses thirty seconds.
 	ConnectionTimeout time.Duration
 
-	mutex     sync.RWMutex // guarding conn and writeChan
-	conn      connection
-	writeChan chan IMsg
-	writeBuf  *bytes.Buffer
-	heartbeat *time.Ticker
+	// mutex guards the active connection and its completion channels.
+	mutex sync.RWMutex
+	// session owns one transport, its queues, encryption handshake and cancellation.
+	session *clientSession
 }
 
+// PacketHandler consumes Steam packets on the connection reader goroutine.
 type PacketHandler interface {
 	HandlePacket(*Packet)
 }
 
+// NewClient constructs a disconnected Steam client.
 func NewClient() *Client {
 	client := &Client{
-		events:   make(chan any, 30),
-		writeBuf: new(bytes.Buffer),
+		events: make(chan any, 30),
 	}
 	client.Auth = &Auth{client: client}
 	client.RegisterPacketHandler(client.Auth)
@@ -80,28 +91,29 @@ func NewClient() *Client {
 	return client
 }
 
-// Get the event channel. By convention all events are pointers, except for errors.
+// Events returns the event channel. By convention all events are pointers, except for errors.
 // It is never closed.
 func (c *Client) Events() <-chan any {
 	return c.events
 }
 
+// Emit publishes an event to the continuously drained event stream.
 func (c *Client) Emit(event any) {
 	c.events <- event
 }
 
-// Emits a FatalErrorEvent formatted with fmt.Errorf and disconnects.
+// Fatalf reports a fatal protocol error and disconnects.
 func (c *Client) Fatalf(format string, a ...any) {
-	c.Emit(FatalErrorEvent(fmt.Errorf(format, a...)))
+	c.Emit(FatalErrorEvent(errors.Errorf(format, a...)))
 	c.Disconnect()
 }
 
-// Emits an error formatted with fmt.Errorf.
+// Errorf reports a recoverable protocol error.
 func (c *Client) Errorf(format string, a ...any) {
-	c.Emit(fmt.Errorf(format, a...))
+	c.Emit(errors.Errorf(format, a...))
 }
 
-// Registers a PacketHandler that receives all incoming packets.
+// RegisterPacketHandler attaches an incoming packet consumer.
 func (c *Client) RegisterPacketHandler(handler PacketHandler) {
 	c.handlersMutex.Lock()
 	defer c.handlersMutex.Unlock()
@@ -110,171 +122,264 @@ func (c *Client) RegisterPacketHandler(handler PacketHandler) {
 
 // GetNextJobId returns the next job ID to use.
 func (c *Client) GetNextJobId() JobId {
-	return JobId(atomic.AddUint64(&c.currentJobId, 1))
+	return JobId(c.currentJobId.Add(1))
 }
 
 // SteamId returns the client's steam ID.
 func (c *Client) SteamId() steamid.SteamId {
-	return steamid.SteamId(atomic.LoadUint64(&c.steamId))
+	return steamid.SteamId(c.steamId.Load())
 }
 
 // SessionId returns the session id.
 func (c *Client) SessionId() int32 {
-	return atomic.LoadInt32(&c.sessionId)
+	return c.sessionId.Load()
 }
 
+// Connected reports whether the current transport remains open.
 func (c *Client) Connected() bool {
 	c.mutex.RLock()
 	defer c.mutex.RUnlock()
-	return c.conn != nil
+	return c.session != nil && c.session.ctx.Err() == nil
 }
 
-// Connects to a random Steam server and returns its address.
-// If this client is already connected, it is disconnected first.
-// This method tries to use an address from the Steam Directory and falls
-// back to the built-in server list if the Steam Directory can't be reached.
-// If you want to connect to a specific server, use `ConnectTo`.
+// Connect connects through Steam's directory, reporting failure on Events.
 func (c *Client) Connect() *netutil.PortAddr {
-	var server *netutil.PortAddr
+	server, err := c.ConnectContext(context.Background())
+	if err != nil {
+		c.Emit(FatalErrorEvent(err))
+	}
+	return server
+}
 
-	// try to initialize the directory cache
+// ConnectContext connects through Steam's directory within the supplied lifetime.
+// Cancellation closes the socket. The caller must continuously consume Events.
+// Connect calls on one Client must be serialized by the caller.
+func (c *Client) ConnectContext(ctx context.Context) (*netutil.PortAddr, error) {
+	// Bound discovery and dialing without shortening the established connection.
+	timeout := c.ConnectionTimeout
+	if timeout <= 0 {
+		timeout = 30 * time.Second
+	}
+	setupCtx, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
+	var server *netutil.PortAddr
 	if !steamDirectoryCache.IsInitialized() {
-		_ = steamDirectoryCache.Initialize()
+		_ = steamDirectoryCache.InitializeContext(setupCtx)
 	}
 	if steamDirectoryCache.IsInitialized() {
 		server = steamDirectoryCache.GetRandomCM()
 	} else {
 		server = GetRandomCM()
 	}
-
-	c.ConnectTo(server)
-	return server
+	if err := c.connectToBind(ctx, setupCtx, server, nil); err != nil {
+		return server, err
+	}
+	return server, nil
 }
 
-// Connects to a specific server.
-// If this client is already connected, it is disconnected first.
-func (c *Client) ConnectTo(addr *netutil.PortAddr) {
-	c.ConnectToBind(addr, nil)
-}
+// ConnectTo connects to an explicit CM, reporting failure on Events.
+func (c *Client) ConnectTo(addr *netutil.PortAddr) { c.ConnectToBind(addr, nil) }
 
-// Connects to a specific server, and binds to a specified local IP
-// If this client is already connected, it is disconnected first.
+// ConnectToBind connects to an explicit CM and optional local address.
 func (c *Client) ConnectToBind(addr *netutil.PortAddr, local *net.TCPAddr) {
+	if err := c.ConnectToBindContext(context.Background(), addr, local); err != nil {
+		c.Emit(FatalErrorEvent(err))
+	}
+}
+
+// ConnectToBindContext connects to an explicit CM for the supplied lifetime.
+func (c *Client) ConnectToBindContext(ctx context.Context, addr *netutil.PortAddr, local *net.TCPAddr) error {
+	timeout := c.ConnectionTimeout
+	if timeout <= 0 {
+		timeout = 30 * time.Second
+	}
+	setupCtx, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
+	return c.connectToBind(ctx, setupCtx, addr, local)
+}
+
+// connectToBind releases the previous transport before installing a new session.
+func (c *Client) connectToBind(ctx, setupCtx context.Context, addr *netutil.PortAddr, local *net.TCPAddr) error {
+	// Wait for all old packet handlers before replacing their transport identity.
 	c.Disconnect()
-
-	conn, err := dialTCP(local, addr.ToTCPAddr())
+	if err := c.Wait(setupCtx); err != nil {
+		return err
+	}
+	conn, err := dialTCPContext(setupCtx, local, addr.ToTCPAddr())
 	if err != nil {
-		c.Fatalf("Connect failed: %v", err)
-		return
+		return err
 	}
-	c.conn = conn
-	c.writeChan = make(chan IMsg, 5)
 
-	go c.readLoop()
-	go c.writeLoop()
-}
-
-func (c *Client) Disconnect() {
+	// Bind reader, writer and heartbeat work to this socket's cancellation.
+	runCtx, cancel := context.WithCancel(ctx)
+	session := &clientSession{ctx: runCtx, cancel: cancel, conn: conn,
+		writes: make(chan IMsg, 5), heartbeat: make(chan time.Duration, 1),
+		readDone: make(chan struct{}), writeDone: make(chan struct{}), disconnectDone: make(chan struct{})}
 	c.mutex.Lock()
-	defer c.mutex.Unlock()
-
-	if c.conn == nil {
-		return
-	}
-
-	c.conn.Close()
-	c.conn = nil
-	if c.heartbeat != nil {
-		c.heartbeat.Stop()
-	}
-	close(c.writeChan)
-	c.Emit(&DisconnectedEvent{})
-
+	c.session = session
+	c.mutex.Unlock()
+	context.AfterFunc(runCtx, func() { c.disconnectSession(session) })
+	go c.readLoop(session)
+	go c.writeLoop(session)
+	return nil
 }
 
-// Adds a message to the send queue. Modifications to the given message after
-// writing are not allowed (possible race conditions).
-//
-// Writes to this client when not connected are ignored.
+// Disconnect cancels the current transport and unblocks queued writers.
+func (c *Client) Disconnect() {
+	c.mutex.RLock()
+	session := c.session
+	c.mutex.RUnlock()
+	if session != nil {
+		c.disconnectSession(session)
+	}
+}
+
+// disconnectSession closes a socket once, independently of subsequent connections.
+func (c *Client) disconnectSession(session *clientSession) {
+	c.mutex.Lock()
+	if session.closed {
+		c.mutex.Unlock()
+		return
+	}
+	session.closed = true
+	c.mutex.Unlock()
+	session.cancel()
+	_ = session.conn.Close()
+	c.Emit(&DisconnectedEvent{})
+	close(session.disconnectDone)
+}
+
+// Wait joins the current transport's reader, writer and heartbeat processing.
+// The event stream must remain drained until Wait returns.
+func (c *Client) Wait(ctx context.Context) error {
+	c.mutex.RLock()
+	session := c.session
+	c.mutex.RUnlock()
+	if session == nil {
+		return nil
+	}
+	for _, done := range []<-chan struct{}{session.readDone, session.writeDone, session.disconnectDone} {
+		select {
+		case <-done:
+		case <-ctx.Done():
+			return ctx.Err()
+		}
+	}
+	return nil
+}
+
+// Write queues a message until the current transport closes. Disconnected writes
+// are ignored. Callers must not modify a message after submitting it.
 func (c *Client) Write(msg IMsg) {
+	// Attach Steam identity before handing the immutable message to the writer.
 	if cm, ok := msg.(IClientMsg); ok {
 		cm.SetSessionId(c.SessionId())
 		cm.SetSteamId(SteamId(c.SteamId()))
 	}
 	c.mutex.RLock()
-	defer c.mutex.RUnlock()
-	if c.conn == nil {
+	session := c.session
+	c.mutex.RUnlock()
+	if session == nil {
 		return
 	}
-	c.writeChan <- msg
+
+	// Never hold the transport lock while waiting for send capacity.
+	select {
+	case <-session.ctx.Done():
+	case session.writes <- msg:
+	}
 }
 
-func (c *Client) readLoop() {
+// readLoop dispatches packets only within the socket that received them.
+func (c *Client) readLoop(session *clientSession) {
+	defer close(session.readDone)
 	for {
-		// This *should* be atomic on most platforms, but the Go spec doesn't guarantee it
-		c.mutex.RLock()
-		conn := c.conn
-		c.mutex.RUnlock()
-		if conn == nil {
+		packet, err := session.conn.Read()
+		if err != nil {
+			c.failSession(session, errors.Wrap(err, "read Steam connection"))
 			return
 		}
-		packet, err := conn.Read()
-
-		if err != nil {
-			c.Fatalf("Error reading from the connection: %v", err)
+		if session.ctx.Err() != nil {
 			return
 		}
 		c.handlePacket(packet)
 	}
 }
 
-func (c *Client) writeLoop() {
+// writeLoop owns serialization and heartbeat timing for one socket.
+func (c *Client) writeLoop(session *clientSession) {
+	defer close(session.writeDone)
+	var buffer bytes.Buffer
+	var ticker *time.Ticker
+	var heartbeat <-chan time.Time
+	defer func() {
+		if ticker != nil {
+			ticker.Stop()
+		}
+	}()
 	for {
-		c.mutex.RLock()
-		conn := c.conn
-		c.mutex.RUnlock()
-		if conn == nil {
+		// Heartbeats share the writer lifetime; no timer goroutine survives shutdown.
+		var message IMsg
+		select {
+		case <-session.ctx.Done():
 			return
+		case interval := <-session.heartbeat:
+			if ticker != nil {
+				ticker.Stop()
+			}
+			ticker = time.NewTicker(interval)
+			heartbeat = ticker.C
+			continue
+		case <-heartbeat:
+			message = NewClientMsgProtobuf(EMsg_ClientHeartBeat, new(CMsgClientHeartBeat))
+			message.(IClientMsg).SetSessionId(c.SessionId())
+			message.(IClientMsg).SetSteamId(SteamId(c.SteamId()))
+		case message = <-session.writes:
 		}
 
-		msg, ok := <-c.writeChan
-		if !ok {
+		// Serialize once and discard the buffer before the next message.
+		if session.ctx.Err() != nil {
 			return
 		}
-
-		err := msg.Serialize(c.writeBuf)
+		err := message.Serialize(&buffer)
+		if err == nil {
+			err = session.conn.Write(buffer.Bytes())
+		}
+		buffer.Reset()
 		if err != nil {
-			c.writeBuf.Reset()
-			c.Fatalf("Error serializing message %v: %v", msg, err)
-			return
-		}
-
-		err = conn.Write(c.writeBuf.Bytes())
-
-		c.writeBuf.Reset()
-
-		if err != nil {
-			c.Fatalf("Error writing message %v: %v", msg, err)
+			c.failSession(session, errors.Wrap(err, "write Steam connection"))
 			return
 		}
 	}
 }
 
-func (c *Client) heartbeatLoop(seconds time.Duration) {
-	if c.heartbeat != nil {
-		c.heartbeat.Stop()
+// setHeartbeat updates the writer's heartbeat interval after authentication.
+func (c *Client) setHeartbeat(seconds time.Duration) {
+	if seconds <= 0 {
+		c.Fatalf("Steam supplied an invalid heartbeat interval")
+		return
 	}
-	c.heartbeat = time.NewTicker(seconds * time.Second)
-	for {
-		_, ok := <-c.heartbeat.C
-		if !ok {
-			break
-		}
-		c.Write(NewClientMsgProtobuf(EMsg_ClientHeartBeat, new(CMsgClientHeartBeat)))
+	c.mutex.RLock()
+	session := c.session
+	c.mutex.RUnlock()
+	if session == nil {
+		return
 	}
-	c.heartbeat = nil
+	select {
+	case <-session.ctx.Done():
+	case session.heartbeat <- seconds * time.Second:
+	}
 }
 
+// failSession reports transport failure without closing a replacement socket.
+func (c *Client) failSession(session *clientSession, err error) {
+	if session.ctx.Err() == nil {
+		c.Emit(FatalErrorEvent(err))
+	}
+	c.disconnectSession(session)
+}
+
+// handlePacket dispatches transport control and registered protocol handlers.
 func (c *Client) handlePacket(packet *Packet) {
 	switch packet.EMsg {
 	case EMsg_ChannelEncryptRequest:
@@ -294,17 +399,22 @@ func (c *Client) handlePacket(packet *Packet) {
 	}
 }
 
+// handleChannelEncryptRequest answers the Steam encryption challenge.
 func (c *Client) handleChannelEncryptRequest(packet *Packet) {
+	c.mutex.RLock()
+	session := c.session
+	c.mutex.RUnlock()
 	body := NewMsgChannelEncryptRequest()
 	packet.ReadMsg(body)
 
 	if body.Universe != EUniverse_Public {
-		c.Fatalf("Invalid univserse %v!", body.Universe)
+		c.Fatalf("invalid Steam universe %v", body.Universe)
+		return
 	}
 
-	c.tempSessionKey = make([]byte, 32)
-	rand.Read(c.tempSessionKey)
-	encryptedKey := cryptoutil.RSAEncrypt(GetPublicKey(EUniverse_Public), c.tempSessionKey)
+	session.tempSessionKey = make([]byte, 32)
+	rand.Read(session.tempSessionKey)
+	encryptedKey := cryptoutil.RSAEncrypt(GetPublicKey(EUniverse_Public), session.tempSessionKey)
 
 	payload := new(bytes.Buffer)
 	payload.Write(encryptedKey)
@@ -317,7 +427,11 @@ func (c *Client) handleChannelEncryptRequest(packet *Packet) {
 	c.Write(NewMsg(NewMsgChannelEncryptResponse(), payload.Bytes()))
 }
 
+// handleChannelEncryptResult installs the negotiated transport key.
 func (c *Client) handleChannelEncryptResult(packet *Packet) {
+	c.mutex.RLock()
+	session := c.session
+	c.mutex.RUnlock()
 	body := NewMsgChannelEncryptResult()
 	packet.ReadMsg(body)
 
@@ -325,12 +439,13 @@ func (c *Client) handleChannelEncryptResult(packet *Packet) {
 		c.Fatalf("Encryption failed: %v", body.Result)
 		return
 	}
-	c.conn.SetEncryptionKey(c.tempSessionKey)
-	c.tempSessionKey = nil
+	session.conn.SetEncryptionKey(session.tempSessionKey)
+	session.tempSessionKey = nil
 
 	c.Emit(&ConnectedEvent{})
 }
 
+// handleMulti decodes and dispatches a batch of Steam messages.
 func (c *Client) handleMulti(packet *Packet) {
 	body := new(CMsgMulti)
 	packet.ReadProtoMsg(body)
@@ -344,7 +459,8 @@ func (c *Client) handleMulti(packet *Packet) {
 			return
 		}
 
-		payload, err = ioutil.ReadAll(r)
+		defer r.Close()
+		payload, err = io.ReadAll(r)
 		if err != nil {
 			c.Errorf("handleMulti: Error while decompressing: %v", err)
 			return
@@ -354,7 +470,14 @@ func (c *Client) handleMulti(packet *Packet) {
 	pr := bytes.NewReader(payload)
 	for pr.Len() > 0 {
 		var length uint32
-		binary.Read(pr, binary.LittleEndian, &length)
+		if err := binary.Read(pr, binary.LittleEndian, &length); err != nil {
+			c.Errorf("read multi-message length: %v", err)
+			return
+		}
+		if uint64(length) > uint64(pr.Len()) {
+			c.Errorf("multi-message length exceeds the remaining payload")
+			return
+		}
 		packetData := make([]byte, length)
 		pr.Read(packetData)
 		p, err := NewPacket(packetData)
@@ -366,11 +489,16 @@ func (c *Client) handleMulti(packet *Packet) {
 	}
 }
 
+// handleClientCMList publishes replacement connection-manager addresses.
 func (c *Client) handleClientCMList(packet *Packet) {
 	body := new(CMsgClientCMList)
 	packet.ReadProtoMsg(body)
 
 	l := make([]*netutil.PortAddr, 0)
+	if len(body.GetCmAddresses()) != len(body.GetCmPorts()) {
+		c.Errorf("Steam CM address and port counts differ")
+		return
+	}
 	for i, ip := range body.GetCmAddresses() {
 		l = append(l, &netutil.PortAddr{
 			IP:   readIp(ip),
@@ -381,6 +509,7 @@ func (c *Client) handleClientCMList(packet *Packet) {
 	c.Emit(&ClientCMListEvent{l})
 }
 
+// readIp converts a wire IPv4 address to network byte order.
 func readIp(ip uint32) net.IP {
 	r := make(net.IP, 4)
 	r[3] = byte(ip)

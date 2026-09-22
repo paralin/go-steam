@@ -5,8 +5,6 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"encoding/base64"
-	"errors"
-	"fmt"
 	"io"
 	"math/big"
 	"net/http"
@@ -16,6 +14,7 @@ import (
 
 	protobuf "github.com/aperturerobotics/protobuf-go-lite"
 	. "github.com/paralin/go-steam/protocol/protobuf/unified"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -26,7 +25,9 @@ const (
 // SteamGuardConfirmation describes a Steam Guard confirmation required by a
 // modern authentication session.
 type SteamGuardConfirmation struct {
-	Type    EAuthSessionGuardType
+	// Type identifies the requested code or approval method.
+	Type EAuthSessionGuardType
+	// Message gives the account owner the server-provided confirmation hint.
 	Message string
 }
 
@@ -71,7 +72,7 @@ func (a *Auth) getAccessTokenViaCredentials(ctx context.Context, details *LogOnD
 		return "", err
 	}
 	if msg := beginResp.GetExtendedErrorMessage(); msg != "" {
-		return "", newAuthSessionError(AuthSessionStateDenied, nil, fmt.Errorf("begin auth session failed: %s", msg))
+		return "", newAuthSessionError(AuthSessionStateDenied, nil, errors.Errorf("begin auth session failed: %s", msg))
 	}
 	confirmations, err := a.submitAvailableSteamGuardCode(ctx, beginResp, details)
 	if err != nil {
@@ -97,7 +98,7 @@ func (a *Auth) getAccessTokenViaCredentials(ctx context.Context, details *LogOnD
 			return token, nil
 		}
 		if url := pollResp.GetAgreementSessionUrl(); url != "" {
-			return "", newAuthSessionError(AuthSessionStateAgreement, nil, fmt.Errorf("auth session requires agreement: %s", url))
+			return "", newAuthSessionError(AuthSessionStateAgreement, nil, errors.Errorf("auth session requires agreement: %s", url))
 		}
 		if attempt == maxPollAttempts-1 {
 			break
@@ -106,7 +107,7 @@ func (a *Auth) getAccessTokenViaCredentials(ctx context.Context, details *LogOnD
 			return "", err
 		}
 	}
-	return "", newAuthSessionError(authSessionTimeoutState(confirmations), confirmations, fmt.Errorf("auth session did not complete after %d attempts", maxPollAttempts))
+	return "", newAuthSessionError(authSessionTimeoutState(confirmations), confirmations, errors.Errorf("auth session did not complete after %d attempts", maxPollAttempts))
 }
 
 func (a *Auth) submitAvailableSteamGuardCode(ctx context.Context, resp *CAuthentication_BeginAuthSessionViaCredentials_Response, details *LogOnDetails) ([]SteamGuardConfirmation, error) {
@@ -131,10 +132,20 @@ func (a *Auth) submitAvailableSteamGuardCode(ctx context.Context, resp *CAuthent
 			return confirmations, nil
 		}
 	}
+	// Prompt without beginning another session, so emailed codes remain valid.
+	if details.ConfirmSteamGuard != nil && len(confirmations) != 0 {
+		code, kind, err := details.ConfirmSteamGuard(ctx, confirmations)
+		if err != nil {
+			return confirmations, newAuthSessionError(AuthSessionStateCanceled, confirmations, err)
+		}
+		if kind == EAuthSessionGuardType_k_EAuthSessionGuardType_EmailCode || kind == EAuthSessionGuardType_k_EAuthSessionGuardType_DeviceCode {
+			return confirmations, a.submitSteamGuardCode(ctx, resp.GetClientId(), resp.GetSteamid(), code, kind)
+		}
+	}
 	if len(confirmations) == 0 || manualConfirmationAvailable {
 		return confirmations, nil
 	}
-	return confirmations, newAuthSessionError(steamGuardState(confirmations), confirmations, fmt.Errorf("steam guard confirmation required"))
+	return confirmations, newAuthSessionError(steamGuardState(confirmations), confirmations, errors.Errorf("steam guard confirmation required"))
 }
 
 func steamGuardState(confirmations []SteamGuardConfirmation) AuthSessionState {
@@ -172,7 +183,7 @@ func (a *Auth) submitSteamGuardCode(ctx context.Context, clientID, steamID uint6
 		return err
 	}
 	if url := updateResp.GetAgreementSessionUrl(); url != "" {
-		return newAuthSessionError(AuthSessionStateAgreement, nil, fmt.Errorf("steam guard agreement required: %s", url))
+		return newAuthSessionError(AuthSessionStateAgreement, nil, errors.Errorf("steam guard agreement required: %s", url))
 	}
 	return nil
 }
@@ -208,19 +219,22 @@ func (a *Auth) authServiceCall(ctx context.Context, method, name string, req pro
 	}
 	defer httpResp.Body.Close()
 
-	body, err := io.ReadAll(httpResp.Body)
+	body, err := io.ReadAll(io.LimitReader(httpResp.Body, 1024*1024+1))
 	if err != nil {
 		return newAuthSessionError(AuthSessionStateTransport, nil, err)
+	}
+	if len(body) > 1024*1024 {
+		return newAuthSessionError(AuthSessionStateTransport, nil, errors.New("authentication response exceeds one MiB"))
 	}
 	if eresult := httpResp.Header.Get("x-eresult"); eresult != "" && eresult != "1" {
 		msg := httpResp.Header.Get("x-error_message")
 		if msg == "" {
 			msg = httpResp.Status
 		}
-		return newAuthSessionError(AuthSessionStateDenied, nil, fmt.Errorf("%s failed: eresult %s (%s)", name, eresult, msg))
+		return newAuthSessionError(AuthSessionStateDenied, nil, errors.Errorf("%s failed: eresult %s (%s)", name, eresult, msg))
 	}
 	if httpResp.StatusCode != http.StatusOK {
-		return newAuthSessionError(AuthSessionStateTransport, nil, fmt.Errorf("%s failed: %s: %s", name, httpResp.Status, string(body)))
+		return newAuthSessionError(AuthSessionStateTransport, nil, errors.Errorf("%s failed: %s", name, httpResp.Status))
 	}
 	if err := resp.UnmarshalVT(body); err != nil {
 		return newAuthSessionError(AuthSessionStateProtobuf, nil, err)
@@ -245,11 +259,11 @@ func (a *Auth) authServiceClient() *http.Client {
 func encryptPassword(password, modHex, expHex string) (string, error) {
 	mod := new(big.Int)
 	if _, ok := mod.SetString(modHex, 16); !ok {
-		return "", fmt.Errorf("invalid RSA modulus %q", modHex)
+		return "", errors.Errorf("invalid RSA modulus %q", modHex)
 	}
 	exp := new(big.Int)
 	if _, ok := exp.SetString(expHex, 16); !ok {
-		return "", fmt.Errorf("invalid RSA exponent %q", expHex)
+		return "", errors.Errorf("invalid RSA exponent %q", expHex)
 	}
 	ciphertext, err := rsa.EncryptPKCS1v15(rand.Reader, &rsa.PublicKey{N: mod, E: int(exp.Int64())}, []byte(password))
 	if err != nil {

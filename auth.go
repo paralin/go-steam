@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"net/http"
-	"sync/atomic"
 	"time"
 
 	. "github.com/paralin/go-steam/protocol"
@@ -13,34 +12,14 @@ import (
 	"github.com/paralin/go-steam/steamid"
 )
 
+// Auth performs Steam authentication and dispatches account events.
 type Auth struct {
-	client                *Client
-	details               *LogOnDetails
-	authServiceBaseURL    string
+	// client receives authenticated identity and account events.
+	client *Client
+	// authServiceBaseURL overrides the official endpoint for protocol tests.
+	authServiceBaseURL string
+	// authServiceHTTPClient overrides the authentication HTTP transport.
 	authServiceHTTPClient *http.Client
-}
-type LogOnDetails struct {
-	Username string
-
-	// Password starts a modern Steam auth session and exchanges credentials for
-	// a token before CM logon.
-	Password string
-
-	// AccessToken logs on to CM directly when the caller already owns a modern
-	// Steam authentication token.
-	AccessToken string
-
-	// DeviceFriendlyName labels the device in the modern Steam auth session.
-	DeviceFriendlyName string
-
-	// AuthCode supplies a Steam Guard email code when Steam requests one.
-	AuthCode string
-
-	// TwoFactorCode supplies a Steam Guard mobile authenticator code when Steam
-	// requests one.
-	TwoFactorCode string
-
-	ShouldRememberPassword bool
 }
 
 // LogOn exchanges password credentials for a modern Steam access token when
@@ -56,6 +35,7 @@ func (a *Auth) LogOn(ctx context.Context, details *LogOnDetails) error {
 		return errors.New("password or access token must be set")
 	}
 
+	// Exchange interactive credentials only when no reusable token was supplied.
 	accessToken := details.AccessToken
 	if accessToken == "" {
 		var err error
@@ -72,6 +52,7 @@ func (a *Auth) LogOn(ctx context.Context, details *LogOnDetails) error {
 		}
 	}
 
+	// Send the token over the encrypted CM connection.
 	language := "english"
 	protocolVersion := uint32(MsgClientLogon_CurrentProtocol)
 	rememberPassword := details.ShouldRememberPassword
@@ -85,12 +66,13 @@ func (a *Auth) LogOn(ctx context.Context, details *LogOnDetails) error {
 		logon.ShouldRememberPassword = &rememberPassword
 	}
 
-	atomic.StoreUint64(&a.client.steamId, steamid.NewIdAdv(0, 1, int32(EUniverse_Public), EAccountType_Individual).ToUint64())
+	a.client.steamId.Store(steamid.NewIdAdv(0, 1, int32(EUniverse_Public), EAccountType_Individual).ToUint64())
 
 	a.client.Write(NewClientMsgProtobuf(EMsg_ClientLogon, logon))
 	return nil
 }
 
+// HandlePacket dispatches Steam authentication and account packets.
 func (a *Auth) HandlePacket(packet *Packet) {
 	switch packet.EMsg {
 	case EMsg_ClientLogOnResponse:
@@ -106,6 +88,7 @@ func (a *Auth) HandlePacket(packet *Packet) {
 	}
 }
 
+// handleLogOnResponse establishes authenticated identity and heartbeat timing.
 func (a *Auth) handleLogOnResponse(packet *Packet) {
 	if !packet.IsProto {
 		a.client.Fatalf("Got non-proto logon response!")
@@ -117,10 +100,10 @@ func (a *Auth) handleLogOnResponse(packet *Packet) {
 
 	result := EResult(body.GetEresult())
 	if result == EResult_OK {
-		atomic.StoreInt32(&a.client.sessionId, msg.Header.Proto.GetClientSessionid())
-		atomic.StoreUint64(&a.client.steamId, msg.Header.Proto.GetSteamid())
+		a.client.sessionId.Store(msg.Header.Proto.GetClientSessionid())
+		a.client.steamId.Store(msg.Header.Proto.GetSteamid())
 		heartbeatSeconds := body.GetHeartbeatSeconds()
-		go a.client.heartbeatLoop(time.Duration(heartbeatSeconds))
+		a.client.setHeartbeat(time.Duration(heartbeatSeconds))
 
 		a.client.Emit(&LoggedOnEvent{
 			Result:         EResult(body.GetEresult()),
@@ -143,6 +126,7 @@ func (a *Auth) handleLogOnResponse(packet *Packet) {
 	}
 }
 
+// handleLoggedOff reports Steam termination of the authenticated session.
 func (a *Auth) handleLoggedOff(packet *Packet) {
 	result := EResult_Invalid
 	if packet.IsProto {
@@ -157,6 +141,7 @@ func (a *Auth) handleLoggedOff(packet *Packet) {
 	a.client.Emit(&LoggedOffEvent{Result: result})
 }
 
+// handleAccountInfo publishes the signed-in account profile.
 func (a *Auth) handleAccountInfo(packet *Packet) {
 	body := new(CMsgClientAccountInfo)
 	packet.ReadProtoMsg(body)
