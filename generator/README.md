@@ -1,30 +1,66 @@
 # Protocol generation
 
-Initialize the pinned SteamDatabase protobuf source once:
+All generated Go files and their schema inputs are retained in this repository.
+Normal builds need only the Go module dependencies. The generators run in Go;
+there is no SteamKit checkout, C# compiler, Mono, .NET, or Docker requirement.
+
+## Regenerate retained definitions
+
+Run from the repository root:
 
 ```sh
-git submodule update --init --recursive generator/Protobufs
+go mod vendor
+go run ./generator steamlang proto
 ```
 
-Regenerate the checked-in Steam client protobuf files:
+`steamlang` reads the import tree rooted at
+[`steamlang/steammsg.steamd`](./steamlang/steammsg.steamd) and emits
+`protocol/steamlang/enums.go` and `messages.go`. It retains public enum values,
+message field order, fixed-width layouts, and constructor defaults. Protobuf
+headers use the same bounded decoder as the network client. Only flag enums
+expand bit combinations when formatted; unknown ordinary enum values print
+as numbers.
+
+`proto` invokes the pinned Go `aptre` tool to generate `protobuf-go-lite` codecs
+for the Steam, unified-message, TF2, and Web API packages. The tool obtains its
+compiler dependencies through its normal cache. It reads checked-in schemas
+without refreshing them from a separate source checkout. Stage newly added or
+changed `.proto` files before generation because `aptre` discovers tracked
+inputs through Git.
+
+The same commands also work from this directory as `go run . <target>`.
+`clean` removes generated Go outputs and preserves handwritten files and inputs.
+
+## Refresh protobuf inputs
+
+The optional SteamDatabase submodule is needed only when refreshing upstream
+protobuf definitions:
 
 ```sh
-cd generator && go run . proto
+git submodule update --init generator/Protobufs
+go run ./generator refresh-proto
 ```
 
-The `proto` target copies and normalizes the selected SteamDatabase inputs in
-Go, then runs `aptre` / `protobuf-go-lite` over `protocol/protobuf` and
-`protocol/protobuf/unified` and `tf2/protocol/protobuf`. All message packages and
-GC interfaces use `protobuf-go-lite`; no reflection-based protobuf runtime is
-required. Newly introduced schemas must be added to Git before generation.
+Review the normalized `.proto` changes, stage the intended schemas, then run
+`go run ./generator proto`. Updating the submodule revision is an explicit
+protocol update and should include the corresponding compatibility review.
 
-The retained `extra/deviceauth.proto` comes from SteamDatabase revision
-`fd37505^`, before that source was removed. It preserves the existing public
-device-auth messages. TF2 uses a separate protobuf namespace while retaining its
-public Go package path. The source normalizer preserves enum aliases.
+The normalizer retains enum aliases and isolates TF2's protobuf namespace
+while preserving its public Go import path. `extra/deviceauth.proto` retains
+SteamDatabase's device-auth messages from revision `fd37505^`, before that
+source was removed upstream.
 
-SteamLanguage generation still uses the legacy SteamKit generator:
+## Update SteamLanguage definitions
+
+Edit the retained `.steamd` files and run `go run ./generator steamlang`.
+Imports are relative to the importing file. The parser supports enums, flag
+combinations, aliases, class constants, fixed arrays, Steam IDs, boolean fields,
+protobuf headers, and deprecation metadata. Historical message types remain
+available even when the source marks them removed.
+
+See [definition provenance](./steamlang/README.md) before importing a newer
+upstream snapshot. Run the focused checks after changing either generator:
 
 ```sh
-cd generator && go run . steamlang
+go test -timeout=30s ./generator ./protocol/steamlang ./protocol/gamecoordinator ./web/...
 ```

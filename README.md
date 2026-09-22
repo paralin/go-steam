@@ -1,65 +1,90 @@
 # Steam for Go
 
-> Automate actions on the Steam network with Go.
+[![Go Reference](https://pkg.go.dev/badge/github.com/paralin/go-steam.svg)](https://pkg.go.dev/github.com/paralin/go-steam)
 
-## Introduction
-
-This library implements Steam's protocol to allow automation of different actions on Steam without running an actual Steam client. It is based on [SteamKit2](https://github.com/SteamRE/SteamKit), a .NET library.
-
-In addition, it contains APIs to Steam Community features, like trade offers and inventories.
-
-Some of the currently implemented features:
-
-  * Trading and trade offers, including inventories and notifications
-  * Friend and group management
-  * Chatting with friends
-  * Persona states (online, offline, looking to trade, etc.)
-  * SteamGuard with two-factor authentication
-  * Team Fortress 2: Crafting, moving, naming and deleting items
-
-If this is useful to you, there's also the [go-steamapi](https://github.com/Philipp15b/go-steamapi) package that wraps some of the official Steam Web API's types.
-
-This package was originally authored by [Philipp15b](https://github.com/Philipp15b/go-steam).
+**go-steam** connects Go programs to the Steam network, game coordinators,
+Steam Community, and the Steam Web API. It runs without the Steam desktop
+client. Builds and protocol generation use Go; SteamKit, Mono, and .NET are
+not required.
 
 ## Installation
 
-    go get github.com/paralin/go-steam
+```sh
+go get github.com/paralin/go-steam
+```
 
-## Usage
+Use the Go version declared in [go.mod](./go.mod).
 
-You can view the documentation with the [`godoc`](http://golang.org/cmd/godoc) tool or
-[online on godoc.org](http://godoc.org/github.com/paralin/go-steam).
+## Packages
 
-You should also take a look at the following sub-packages:
+| Package | Purpose |
+| --- | --- |
+| [`steam`](https://pkg.go.dev/github.com/paralin/go-steam) | Steam connections, authentication, friends, chat, presence, and GC transport |
+| [`gsbot`](./gsbot) | Bot lifecycle helpers and an [example bot](./gsbot/gsbot) |
+| [`web`](./web) | Context-aware Steam Web API client, profiles, applications, inventories, schemas, and trade offers |
+| [`web/dota`](./web/dota) | Dota match history and match details over HTTP |
+| [`steamid`](./steamid) | Steam account and group identifiers |
+| [`tradeoffer`](./tradeoffer), [`trade`](./trade) | Steam Community trading and authenticated trade sessions |
+| [`economy/inventory`](./economy/inventory) | Steam Community inventories |
+| [`tf2`](./tf2) | Team Fortress 2 game-coordinator operations |
 
-  * [`gsbot`](http://godoc.org/github.com/paralin/go-steam/gsbot) utilites that make writing bots easier
-  * [example bot](http://godoc.org/github.com/paralin/go-steam/gsbot/gsbot) and [its source code](https://github.com/paralin/go-steam/blob/master/gsbot/gsbot/gsbot.go)
-  * [`trade`](http://godoc.org/github.com/paralin/go-steam/trade) for trading
-  * [`tradeoffer`](http://godoc.org/github.com/paralin/go-steam/tradeoffer) for trade offers
-  * [`economy/inventory`](http://godoc.org/github.com/paralin/go-steam/economy/inventory) for inventories
-  * [`tf2`](http://godoc.org/github.com/paralin/go-steam/tf2) for Team Fortress 2 related things
+Game-coordinator clients for [Deadlock](https://github.com/paralin/go-deadlock)
+and [Dota 2](https://github.com/paralin/go-dota2) build on the Steam connection.
+The `web` packages use HTTP and an API key independently of that connection.
 
-## Working with go-steam
+## Steam Web API
 
-Whether you want to develop your own Steam bot or directly work on go-steam itself, there are are few things to know.
+```go
+client, err := web.NewClient(web.Config{APIKey: apiKey})
+if err != nil {
+    return err
+}
 
- * If something is not working, check first if the same operation works (under the same conditions!) in the Steam client on that account. Maybe there's something go-steam doesn't handle correctly or you're missing a warning that's not obviously shown in go-steam. This is particularly important when working with trading since there are [restrictions](https://support.steampowered.com/kb_article.php?ref=1047-edfm-2932), for example newly authorized devices will not be able to trade for seven days.
- * Since Steam does not maintain a public API for most of the things go-steam implements, you can expect that sometimes things break randomly. Especially the `trade` and `tradeoffer` packages have been affected in the past.
- * Always gather as much information as possible. When you file an issue, be as precise and complete as you can. This makes debugging way easier.
- * If you haven't noticed yet, expect to find lots of things out yourself. Debugging can be complicated and Steam's internals are too.
- * Sometimes things break and other [SteamKit ports](https://github.com/SteamRE/SteamKit/wiki/Ports) are fixed already. Maybe take a look what people are saying over there? There's also the [SteamKit IRC channel](https://github.com/SteamRE/SteamKit/wiki#contact).
+profiles, err := client.GetPlayerSummaries(ctx, []steamid.SteamId{accountID})
+if err != nil {
+    return err
+}
+```
 
-## Updating go-steam to a new SteamKit version
+Pass a context to every request. The default client uses a 30-second HTTP
+timeout and a 64 MiB response limit. Callers control caching and retries;
+mutations are never retried automatically. See [the Web API guide](./web/README.md)
+for pagination, error handling, and the port's API changes.
 
-To update go-steam to a new version of SteamKit, do the following:
+## Protocol generation
 
-    cd generator
-    go get -d -v ./
-    go build -v
-    ./generator clean proto steamlang
+Generated sources and their definitions are checked in. Normal builds do not
+run generators. To regenerate from the retained definitions, run from the
+repository root:
 
-Apply the protocol changes where necessary.
+```sh
+go mod vendor
+go run ./generator steamlang proto
+```
 
-## License
+The Go SteamLanguage parser emits fixed-width binary messages and enums.
+Protobuf messages use
+[`protobuf-go-lite`](https://github.com/aperturerobotics/protobuf-go-lite)
+for binary and JSON codecs, including the GC interfaces and Web API records.
 
-Steam for Go is licensed under the New BSD License. More information can be found in LICENSE.txt.
+Refreshing upstream definitions is a separate operation. See
+[the generator guide](./generator/README.md) for source provenance and update
+commands.
+
+## Testing
+
+```sh
+go test -race -timeout=60s ./...
+```
+
+Web API tests use local HTTP servers and do not require credentials. Protocol
+tests cover binary layouts, protobuf framing, malformed lengths, buffer reuse,
+and reproducible generation.
+
+## License and attribution
+
+The Go library is distributed under the [New BSD License](./LICENSE.txt) and
+was originally authored by [Philipp Schröer](https://github.com/Philipp15b).
+The Web API port retains its [MIT notice](./web/LICENSE). Imported SteamLanguage
+definitions retain their [SteamRE LGPL notice](./generator/steamlang/LICENSE)
+and [provenance](./generator/steamlang/README.md).

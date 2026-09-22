@@ -1,0 +1,487 @@
+syntax = "proto3";
+
+package steam.web;
+
+option go_package = "github.com/paralin/go-steam/web;web";
+
+import "github.com/aperturerobotics/protobuf-go-lite/types/known/structpb/struct.proto";
+
+// App describes one Steam store product.
+message App {
+  // AppId identifies the Steam application.
+  uint32 app_id = 1 [json_name = "appid"];
+  // Name is the localized display name.
+  string name = 2 [json_name = "name"];
+  // LastModified is the last known information or price change, in Unix seconds.
+  uint32 last_modified = 3 [json_name = "last_modified"];
+  // PriceChangeNumber changes when Valve updates this product's price.
+  uint32 price_change_number = 4 [json_name = "price_change_number"];
+}
+
+// AppList contains one ascending page of the Steam store directory.
+message AppList {
+  // Apps contains products matching the requested categories and time range.
+  repeated App apps = 1;
+  // HaveMoreResults indicates that another page is available.
+  bool have_more_results = 2 [json_name = "have_more_results"];
+  // LastAppId is the continuation cursor for the next page.
+  uint32 last_app_id = 3 [json_name = "last_appid"];
+}
+
+// PlayerBan summarizes account restrictions exposed by Steam.
+message PlayerBan {
+  // SteamId identifies the account as a 64-bit Steam ID.
+  uint64 steam_id = 1 [json_name = "SteamId"];
+  // CommunityBanned reports a Steam Community ban.
+  bool community_banned = 2 [json_name = "CommunityBanned"];
+  // VacBanned reports at least one VAC ban.
+  bool vac_banned = 3 [json_name = "VACBanned"];
+  // EconomyBan is Valve's trade restriction label.
+  string economy_ban = 4 [json_name = "EconomyBan"];
+  // NumberOfVacBans counts VAC bans.
+  uint32 number_of_vac_bans = 5 [json_name = "NumberOfVACBans"];
+  // DaysSinceLastBan is the age of the most recent ban in days.
+  uint32 days_since_last_ban = 6 [json_name = "DaysSinceLastBan"];
+  // NumberOfGameBans counts game-issued bans.
+  uint32 number_of_game_bans = 7 [json_name = "NumberOfGameBans"];
+}
+
+// AssetClassInfo describes one economy item class.
+message AssetClassInfo {
+  // ClassId identifies the economy item class.
+  string class_id = 1 [json_name = "classid"];
+  // IconUrl is the economy image path relative to Steam's image CDN.
+  string icon_url = 2 [json_name = "icon_url"];
+  // MarketHashName is the stable market listing name.
+  string market_hash_name = 3 [json_name = "market_hash_name"];
+  // Tradable is Valve's string flag indicating trade eligibility.
+  string tradable = 4 [json_name = "tradable"];
+  // Marketable is Valve's string flag indicating market eligibility.
+  string marketable = 5 [json_name = "marketable"];
+}
+
+// Friend records a visible Steam relationship.
+message Friend {
+  // SteamId identifies the account as a 64-bit Steam ID.
+  uint64 steam_id = 1 [json_name = "steamid"];
+  // Relationship is Valve's relationship label.
+  string relationship = 2 [json_name = "relationship"];
+  // FriendSince is the friendship creation time in Unix seconds.
+  int64 friend_since = 3 [json_name = "friend_since"];
+}
+
+// Inventory contains an application inventory and its access result.
+message Inventory {
+  // Status is Valve's inventory result code; 1 means success.
+  uint32 status = 1 [json_name = "status"];
+  // BackpackSlots is the account's available backpack capacity.
+  int32 backpack_slots = 2 [json_name = "num_backpack_slots"];
+  // Items contains the items in this result.
+  repeated Item items = 3 [json_name = "items"];
+}
+
+// Item describes an owned economy item.
+message Item {
+  // Id is the current 64-bit inventory identity.
+  uint64 id = 1 [json_name = "id"];
+  // OriginalId identifies the item before ownership transfers.
+  uint64 original_id = 2 [json_name = "original_id"];
+  // Defindex identifies the item or attribute definition in the application schema.
+  uint32 defindex = 3 [json_name = "defindex"];
+  // Level is the level reported by the game.
+  int32 level = 4 [json_name = "level"];
+  // Quantity is the number of items in this stack.
+  int32 quantity = 5 [json_name = "quantity"];
+  // Origin identifies how the item was acquired.
+  int32 origin = 6 [json_name = "origin"];
+  // Untradeable prevents trading this item.
+  bool untradeable = 7 [json_name = "flag_cannot_trade"];
+  // Uncraftable prevents using this item in crafting.
+  bool uncraftable = 8 [json_name = "flag_cannot_craft"];
+  // InventoryToken encodes backpack position and game-specific inventory flags.
+  uint32 inventory_token = 9 [json_name = "inventory"];
+  // Quality identifies the item quality in the application schema.
+  int32 quality = 10 [json_name = "quality"];
+  // CustomName is the owner-assigned name.
+  string custom_name = 11 [json_name = "custom_name"];
+  // CustomDescription is the owner-assigned description.
+  string custom_description = 12 [json_name = "custom_description"];
+  // Attributes contains the attributes attached to this record.
+  repeated Attribute attributes = 13 [json_name = "attributes"];
+  // Equipped contains the class and slot assignments for this item.
+  repeated EquipInfo equipped = 14 [json_name = "equipped"];
+}
+
+// Attribute contains one item attribute with its game-defined value.
+message Attribute {
+  // Defindex identifies the item or attribute definition in the application schema.
+  uint32 defindex = 1 [json_name = "defindex"];
+  // Value preserves the numeric, string, or structured attribute payload.
+  google.protobuf.Value value = 2 [json_name = "value"];
+  // FloatValue is the decoded floating-point form supplied by Valve.
+  double float_value = 3 [json_name = "float_value"];
+  // AccountInfo identifies an account referenced by the attribute.
+  AccountInfo account_info = 4 [json_name = "accountinfo"];
+}
+
+// AccountInfo identifies an account referenced by an item attribute.
+message AccountInfo {
+  // SteamId identifies the account as a 64-bit Steam ID.
+  uint64 steam_id = 1 [json_name = "steamid"];
+  // PersonaName is the account's current display name.
+  string persona_name = 2 [json_name = "personaname"];
+}
+
+// EquipInfo places an item in a class loadout.
+message EquipInfo {
+  // Class is the game-defined numeric character class.
+  int32 class = 1 [json_name = "class"];
+  // Slot identifies the equipment slot.
+  int32 slot = 2 [json_name = "slot"];
+}
+
+// Asset describes an item offered in the application store.
+message Asset {
+  // Prices maps currency codes to prices in their smallest units.
+  map<string, int32> prices = 1 [json_name = "prices"];
+  // Defindex identifies the item or attribute definition in the application schema.
+  int32 defindex = 2 [json_name = "name"];
+  // Date is Valve's store-entry date string.
+  string date = 3 [json_name = "date"];
+  // Tags contains store category names.
+  repeated string tags = 4 [json_name = "tags"];
+  // TagIds contains Valve's store category identifiers.
+  repeated int64 tag_ids = 5 [json_name = "tag_ids"];
+}
+
+// PlayerSummary describes the visible portion of a Steam profile.
+message PlayerSummary {
+  // SteamId identifies the account as a 64-bit Steam ID.
+  uint64 steam_id = 1 [json_name = "steamid"];
+  // CommunityVisibilityState is Valve's profile visibility code.
+  int32 community_visibility_state = 2 [json_name = "communityvisibilitystate"];
+  // ProfileUrl is the Steam Community profile URL.
+  string profile_url = 3 [json_name = "profileurl"];
+  // ProfileState reports whether the profile has been configured.
+  int32 profile_state = 4 [json_name = "profilestate"];
+  // PersonaName is the account's current display name.
+  string persona_name = 5 [json_name = "personaname"];
+  // LastLogoff is the last sign-out time in Unix seconds.
+  int64 last_logoff = 6 [json_name = "lastlogoff"];
+  // PersonaState is Valve's numeric presence state.
+  int32 persona_state = 7 [json_name = "personastate"];
+  // SmallAvatarUrl is the smallest avatar image URL.
+  string small_avatar_url = 8 [json_name = "avatar"];
+  // MediumAvatarUrl is the medium avatar image URL.
+  string medium_avatar_url = 9 [json_name = "avatarmedium"];
+  // LargeAvatarUrl is the full avatar image URL.
+  string large_avatar_url = 10 [json_name = "avatarfull"];
+  // TimeCreated is the creation timestamp in Unix seconds.
+  int64 time_created = 11 [json_name = "timecreated"];
+  // RealName is the optional real name published by the account.
+  string real_name = 12 [json_name = "realname"];
+  // GameExtraInfo is the current game's display name.
+  string game_extra_info = 13 [json_name = "gameextrainfo"];
+  // PrimaryClanId is the account's primary group Steam ID.
+  uint64 primary_clan_id = 14 [json_name = "primaryclanid"];
+  // GameId identifies the game currently being played.
+  uint64 game_id = 15 [json_name = "gameid"];
+  // GameServerIp is the current server address when exposed by Steam.
+  string game_server_ip = 16 [json_name = "gameserverip"];
+}
+
+// ResolveVanityURLResponse reports the lookup result for a profile alias.
+message ResolveVanityURLResponse {
+  // Success is Valve's result code; 1 means the alias resolved.
+  int32 success = 1 [json_name = "success"];
+  // SteamId identifies the account as a 64-bit Steam ID.
+  uint64 steam_id = 2 [json_name = "steamid"];
+  // Message describes a failed alias lookup.
+  string message = 3 [json_name = "message"];
+}
+
+// Schema defines an application's economy items and attributes.
+message Schema {
+  // Status is Valve's schema result code; 1 means success.
+  int32 status = 1 [json_name = "status"];
+  // FullSchemaUrl locates the complete items_game definition file.
+  string full_schema_url = 2 [json_name = "items_game_url"];
+  // Qualities maps internal quality names to numeric identifiers.
+  map<string, int32> qualities = 3 [json_name = "qualities"];
+  // QualityNames maps internal quality names to localized labels.
+  map<string, string> quality_names = 4 [json_name = "qualityNames"];
+  // OriginNames names the possible item acquisition origins.
+  repeated Origin origin_names = 5 [json_name = "originNames"];
+  // Items contains the items in this result.
+  repeated SchemaItem items = 6 [json_name = "items"];
+  // Attributes contains the attributes attached to this record.
+  repeated SchemaAttribute attributes = 7 [json_name = "attributes"];
+  // ItemSets contains equipment-set definitions and bonuses.
+  repeated ItemSet item_sets = 8 [json_name = "item_sets"];
+  // AttributeControlledAttachedParticles contains particle effects selectable through attributes.
+  repeated ParticleEffect attribute_controlled_attached_particles = 9 [json_name = "attribute_controlled_attached_particles"];
+  // ItemLevels defines score thresholds and rank titles.
+  repeated ItemRankSet item_levels = 10 [json_name = "item_levels"];
+  // KillEaterScoreTypes names counters supported by stat-tracking items.
+  repeated KillEaterScoreType kill_eater_score_types = 11 [json_name = "kill_eater_score_types"];
+}
+
+// SchemaItem defines one economy item kind.
+message SchemaItem {
+  // Name is the internal item name.
+  string name = 1 [json_name = "name"];
+  // Defindex identifies the item or attribute definition in the application schema.
+  int32 defindex = 2 [json_name = "defindex"];
+  // ItemClass names the game entity class implementing this item.
+  string item_class = 3 [json_name = "item_class"];
+  // ItemTypeName is the localized category label.
+  string item_type_name = 4 [json_name = "item_type_name"];
+  // ItemName is the localized item name.
+  string item_name = 5 [json_name = "item_name"];
+  // Description is the localized description or localization token.
+  string description = 6 [json_name = "item_description"];
+  // ProperName controls whether the displayed name takes an article.
+  bool proper_name = 7 [json_name = "proper_name"];
+  // Slot identifies the equipment slot.
+  string slot = 8 [json_name = "item_slot"];
+  // DefaultQuality is the quality used when none is specified.
+  int32 default_quality = 9 [json_name = "item_quality"];
+  // InventoryImage is the game resource path for the inventory icon.
+  string inventory_image = 10 [json_name = "image_inventory"];
+  // ImageUrl is the standard inventory image URL.
+  string image_url = 11 [json_name = "image_url"];
+  // ImageUrlLarge is the larger inventory image URL.
+  string image_url_large = 12 [json_name = "image_url_large"];
+  // DropType names the game's drop behavior.
+  string drop_type = 13 [json_name = "drop_type"];
+  // ItemSet names the item set containing this item.
+  string item_set = 14 [json_name = "item_set"];
+  // HolidayRestriction names the holiday required to use this item.
+  string holiday_restriction = 15 [json_name = "holiday_restriction"];
+  // MinLevel is the lowest generated item level.
+  int32 min_level = 16 [json_name = "min_ilevel"];
+  // MaxLevel is the highest generated item level.
+  int32 max_level = 17 [json_name = "max_ilevel"];
+  // CraftClass names the crafting category.
+  string craft_class = 18 [json_name = "craft_class"];
+  // Capabilities maps supported item operations to their availability.
+  map<string, bool> capabilities = 19 [json_name = "capabilities"];
+  // UsedByClasses names character classes that can equip this item.
+  repeated string used_by_classes = 20 [json_name = "used_by_classes"];
+  // ClassLoadoutSlots maps each character class to its equipment slot.
+  map<string, string> class_loadout_slots = 21 [json_name = "per_class_loadout_slots"];
+  // Styles contains selectable visual variants.
+  repeated Style styles = 22 [json_name = "styles"];
+  // Attributes contains the attributes attached to this record.
+  repeated SchemaItemAttribute attributes = 23 [json_name = "attributes"];
+}
+
+// Origin names one item acquisition origin.
+message Origin {
+  // Id identifies this record within the application.
+  int32 id = 1 [json_name = "origin"];
+  // Name is the localized display name.
+  string name = 2 [json_name = "name"];
+}
+
+// Style names an item's visual variant.
+message Style {
+  // Name is the localized display name.
+  string name = 1 [json_name = "name"];
+}
+
+// SchemaItemAttribute defines a default attribute on an item or item set.
+message SchemaItemAttribute {
+  // Name is the internal attribute name.
+  string name = 1 [json_name = "name"];
+  // Class names the game-defined attribute class.
+  string class = 2 [json_name = "class"];
+  // Value is the default numeric attribute value.
+  double value = 3 [json_name = "value"];
+}
+
+// SchemaAttribute defines an economy attribute's interpretation and display.
+message SchemaAttribute {
+  // Name is the internal attribute name.
+  string name = 1 [json_name = "name"];
+  // Defindex identifies the item or attribute definition in the application schema.
+  int32 defindex = 2 [json_name = "defindex"];
+  // Class names the game-defined attribute class.
+  string class = 3 [json_name = "attribute_class"];
+  // MinValue is the lower bound allowed by the schema.
+  double min_value = 4 [json_name = "minvalue"];
+  // MaxValue is the upper bound allowed by the schema.
+  double max_value = 5 [json_name = "maxvalue"];
+  // Description is the localized description or localization token.
+  string description = 6 [json_name = "description_string"];
+  // DescriptionFormat selects how the value is formatted for display.
+  string description_format = 7 [json_name = "description_format"];
+  // EffectType classifies the attribute's displayed effect.
+  string effect_type = 8 [json_name = "effect_type"];
+  // Hidden omits the attribute from item descriptions.
+  bool hidden = 9 [json_name = "hidden"];
+  // StoredAsInteger interprets the attribute storage as an integer.
+  bool stored_as_integer = 10 [json_name = "stored_as_integer"];
+}
+
+// ItemSet defines a collection of equipment and its set bonuses.
+message ItemSet {
+  // InternalName identifies the item set in game definitions.
+  string internal_name = 1 [json_name = "item_set"];
+  // Name is the localized display name.
+  string name = 2 [json_name = "name"];
+  // StoreBundle names the store bundle for the set.
+  string store_bundle = 3 [json_name = "store_bundle"];
+  // Items lists internal names of items belonging to the set.
+  repeated string items = 4 [json_name = "items"];
+  // Attributes contains the attributes attached to this record.
+  repeated SchemaItemAttribute attributes = 5 [json_name = "attributes"];
+}
+
+// ParticleEffect defines an attachable economy particle effect.
+message ParticleEffect {
+  // System names the particle system resource.
+  string system = 1 [json_name = "system"];
+  // Id identifies this record within the application.
+  int32 id = 2 [json_name = "id"];
+  // AttachToRootbone attaches the effect to the entity's root bone.
+  bool attach_to_rootbone = 3 [json_name = "attach_to_rootbone"];
+  // Attachment names the entity attachment point.
+  string attachment = 4 [json_name = "attachment"];
+  // Name is the localized display name.
+  string name = 5 [json_name = "name"];
+}
+
+// ItemRankSet groups score thresholds for a stat-tracking counter.
+message ItemRankSet {
+  // Name is the localized display name.
+  string name = 1 [json_name = "name"];
+  // Levels contains the ordered rank thresholds.
+  repeated ItemRank levels = 2 [json_name = "levels"];
+}
+
+// ItemRank defines one stat-tracking rank threshold.
+message ItemRank {
+  // Level is the level reported by the game.
+  int32 level = 1 [json_name = "level"];
+  // RequiredScore is the minimum counter value needed for this rank.
+  int32 required_score = 2 [json_name = "required_score"];
+  // Name is the localized display name.
+  string name = 3 [json_name = "name"];
+}
+
+// KillEaterScoreType names one stat-tracking counter category.
+message KillEaterScoreType {
+  // Id identifies this record within the application.
+  int32 id = 1 [json_name = "type"];
+  // Name is the localized display name.
+  string name = 2 [json_name = "type_name"];
+}
+
+// ServerInfo describes a server registered at the queried address.
+message ServerInfo {
+  // Addr is the server's advertised IP and port.
+  string addr = 1 [json_name = "addr"];
+  // Gmsindex is Valve's game-master-server index.
+  uint32 gmsindex = 2 [json_name = "gmsindex"];
+  // Message contains Valve's server lookup detail.
+  string message = 3 [json_name = "message"];
+  // AppId identifies the Steam application.
+  uint64 app_id = 4 [json_name = "appid"];
+  // GameDir names the server's game directory.
+  string game_dir = 5 [json_name = "gamedir"];
+  // Region is Valve's server region code.
+  int32 region = 6 [json_name = "region"];
+  // VacSecured reports VAC protection.
+  bool vac_secured = 7 [json_name = "secure"];
+  // LanOnly limits the server to LAN play.
+  bool lan_only = 8 [json_name = "lan"];
+  // GamePort is the gameplay port.
+  uint32 game_port = 9 [json_name = "gameport"];
+  // SpecPort is the spectator port.
+  uint32 spec_port = 10 [json_name = "specport"];
+}
+
+// TradeAsset identifies an item or currency on one side of a trade.
+message TradeAsset {
+  // AppId identifies the Steam application.
+  uint32 app_id = 1 [json_name = "appid"];
+  // ContextId identifies the inventory context within the application.
+  uint64 context_id = 2 [json_name = "contextid"];
+  // AssetId identifies this inventory asset.
+  uint64 asset_id = 3 [json_name = "assetid"];
+  // CurrencyId identifies an economy currency entry.
+  uint64 currency_id = 4 [json_name = "currencyid"];
+  // ClassId identifies the economy item class.
+  uint64 class_id = 5 [json_name = "classid"];
+  // InstanceId distinguishes variants within an item class.
+  uint64 instance_id = 6 [json_name = "instanceid"];
+  // Amount is the quantity offered.
+  uint64 amount = 7 [json_name = "amount"];
+  // Missing reports that the asset is no longer in the inventory.
+  bool missing = 8 [json_name = "missing"];
+  // MarketHashName is the listing name resolved from the response descriptions.
+  string market_hash_name = 9 [json_name = "markethashname"];
+}
+
+// TradeOffer records a sent or received Steam trade proposal.
+message TradeOffer {
+  // TradeOfferId is the 64-bit offer identity.
+  uint64 trade_offer_id = 1 [json_name = "tradeofferid"];
+  // OtherAccountId is the other participant's 32-bit account ID.
+  uint64 other_account_id = 2 [json_name = "accountid_other"];
+  // Message is the message attached by the sender.
+  string message = 3 [json_name = "message"];
+  // ExpirationTime is the expiry timestamp in Unix seconds.
+  uint32 expiration_time = 4 [json_name = "expiration_time"];
+  // State is Valve's numeric offer state.
+  int32 state = 5 [json_name = "trade_offer_state"];
+  // ToGive contains assets leaving the authenticated account.
+  repeated TradeAsset to_give = 6 [json_name = "items_to_give"];
+  // ToReceive contains assets arriving at the authenticated account.
+  repeated TradeAsset to_receive = 7 [json_name = "items_to_receive"];
+  // IsOurs reports that the authenticated account created the offer.
+  bool is_ours = 8 [json_name = "is_our_offer"];
+  // TimeCreated is the creation timestamp in Unix seconds.
+  uint32 time_created = 9 [json_name = "time_created"];
+  // TimeUpdated is the latest state-change timestamp in Unix seconds.
+  uint32 time_updated = 10 [json_name = "time_updated"];
+  // FromRealTimeTrade reports that this offer originated in a live trade.
+  bool from_real_time_trade = 11 [json_name = "from_real_time_trade"];
+  // EscrowEndDate is the escrow release timestamp in Unix seconds.
+  uint32 escrow_end_date = 12 [json_name = "escrow_end_date"];
+  // ConfirmationMethod is Valve's confirmation-method code.
+  int32 confirmation_method = 13 [json_name = "confirmation_method"];
+  // TradeId identifies the completed trade when one exists.
+  uint64 trade_id = 14 [json_name = "tradeid"];
+}
+
+// TradeOffers contains one page of an account's trade offers.
+message TradeOffers {
+  // Descriptions contains localized item metadata for both sides.
+  repeated ItemDescription descriptions = 3;
+  // NextCursor continues the offer history; zero ends pagination.
+  uint64 next_cursor = 4 [json_name = "next_cursor"];
+  // Sent contains offers created by the authenticated account.
+  repeated TradeOffer sent = 1 [json_name = "trade_offers_sent"];
+  // Received contains offers addressed to the authenticated account.
+  repeated TradeOffer received = 2 [json_name = "trade_offers_received"];
+}
+
+// ItemDescription provides display metadata for an economy item class and variant.
+message ItemDescription {
+  // AppId identifies the Steam application.
+  uint32 app_id = 1 [json_name = "appid"];
+  // ClassId identifies the economy item class.
+  uint64 class_id = 2 [json_name = "classid"];
+  // InstanceId distinguishes variants within an item class.
+  uint64 instance_id = 3 [json_name = "instanceid"];
+  // MarketHashName is the stable market listing name.
+  string market_hash_name = 4 [json_name = "market_hash_name"];
+  // IconUrl is the economy image path relative to Steam's image CDN.
+  string icon_url = 5 [json_name = "icon_url"];
+  // NameColor is the hexadecimal display color for the item name.
+  string name_color = 6 [json_name = "name_color"];
+  // Name is the localized display name.
+  string name = 7 [json_name = "name"];
+}

@@ -1,0 +1,183 @@
+syntax = "proto3";
+
+package steam.web.dota;
+
+option go_package = "github.com/paralin/go-steam/web/dota;dota";
+
+// HistoryResult contains one Dota history page and its access result.
+message HistoryResult {
+  // Status is Valve's history result code; 1 means success.
+  uint32 status = 1 [json_name = "status"];
+  // StatusDetail describes a history access failure.
+  string status_detail = 2 [json_name = "statusdetail"];
+  // NumResults counts matches in this page.
+  uint32 num_results = 3 [json_name = "num_results"];
+  // TotalResults counts matches visible to this query.
+  uint32 total_results = 4 [json_name = "total_results"];
+  // ResultsRemaining counts matches after this page.
+  uint32 results_remaining = 5 [json_name = "results_remaining"];
+  // Matches contains matches in descending match-ID order.
+  repeated Match matches = 6 [json_name = "matches"];
+}
+
+// Match summarizes one match in a Dota history page.
+message Match {
+  // MatchId is Valve's 64-bit match identity.
+  uint64 match_id = 1 [json_name = "match_id"];
+  // MatchSequenceNo orders matches by their processing sequence.
+  uint64 match_sequence_no = 2 [json_name = "match_seq_num"];
+  // MatchStart is the match start timestamp in Unix seconds.
+  uint32 match_start = 3 [json_name = "start_time"];
+  // LobbyType is Valve's numeric lobby category, including values added after this client.
+  int32 lobby_type = 4 [json_name = "lobby_type"];
+  // Players contains the participants exposed by Valve for this match.
+  repeated PlayerSummary players = 5 [json_name = "players"];
+}
+
+// PlayerSummary identifies one participant in a Dota history entry.
+message PlayerSummary {
+  // AccountId is the 32-bit Steam account ID; hidden accounts may use Valve's anonymous sentinel.
+  uint32 account_id = 1 [json_name = "account_id"];
+  // PlayerSlot encodes the team in bit 7 and the player position in the remaining bits.
+  uint32 player_slot = 2 [json_name = "player_slot"];
+  // HeroId identifies the hero in the game's definitions.
+  uint32 hero_id = 3 [json_name = "hero_id"];
+}
+
+// MatchResult contains the public statistics for a completed Dota match.
+message MatchResult {
+  // Players contains the participants exposed by Valve for this match.
+  repeated Player players = 1 [json_name = "players"];
+  // Season identifies the ranked season when supplied.
+  uint32 season = 2 [json_name = "season"];
+  // RadiantWin reports a Radiant victory.
+  bool radiant_win = 3 [json_name = "radiant_win"];
+  // Duration is the match duration in seconds.
+  uint32 duration = 4 [json_name = "duration"];
+  // MatchStart is the match start timestamp in Unix seconds.
+  uint32 match_start = 5 [json_name = "start_time"];
+  // MatchId is Valve's 64-bit match identity.
+  uint64 match_id = 6 [json_name = "match_id"];
+  // MatchSequenceNo orders matches by their processing sequence.
+  uint64 match_sequence_no = 7 [json_name = "match_seq_num"];
+  // TowerStatusRadiant is the bitmask of surviving Radiant towers.
+  uint32 tower_status_radiant = 8 [json_name = "tower_status_radiant"];
+  // TowerStatusDire is the bitmask of surviving Dire towers.
+  uint32 tower_status_dire = 9 [json_name = "tower_status_dire"];
+  // BarracksStatusRadiant is the bitmask of surviving Radiant barracks.
+  uint32 barracks_status_radiant = 10 [json_name = "barracks_status_radiant"];
+  // BarracksStatusDire is the bitmask of surviving Dire barracks.
+  uint32 barracks_status_dire = 11 [json_name = "barracks_status_dire"];
+  // Cluster identifies the server cluster that hosted the match.
+  uint32 cluster = 12 [json_name = "cluster"];
+  // FirstBloodTime is the first-blood time relative to game start, in seconds.
+  int32 first_blood_time = 13 [json_name = "first_blood_time"];
+  // LobbyType is Valve's numeric lobby category, including values added after this client.
+  int32 lobby_type = 14 [json_name = "lobby_type"];
+  // HumanPlayers counts human participants.
+  uint32 human_players = 15 [json_name = "human_players"];
+  // LeagueId identifies the tournament league.
+  uint32 league_id = 16 [json_name = "leagueid"];
+  // PositiveVotes counts positive spectator votes.
+  uint32 positive_votes = 17 [json_name = "positive_votes"];
+  // NegativeVotes counts negative spectator votes.
+  uint32 negative_votes = 18 [json_name = "negative_votes"];
+  // GameMode is Valve's numeric game mode, including values added after this client.
+  int32 game_mode = 19 [json_name = "game_mode"];
+  // PicksBans contains the ordered drafting actions.
+  repeated PickBan picks_bans = 20 [json_name = "picks_bans"];
+}
+
+// Player contains one Dota participant's final statistics.
+message Player {
+  // AccountId is the 32-bit Steam account ID; hidden accounts may use Valve's anonymous sentinel.
+  uint32 account_id = 1 [json_name = "account_id"];
+  // PlayerSlot encodes the team in bit 7 and the player position in the remaining bits.
+  uint32 player_slot = 2 [json_name = "player_slot"];
+  // HeroId identifies the hero in the game's definitions.
+  uint32 hero_id = 3 [json_name = "hero_id"];
+  // Item0 identifies the item in inventory slot 0; zero means empty.
+  uint32 item0 = 4 [json_name = "item_0"];
+  // Item1 identifies the item in inventory slot 1; zero means empty.
+  uint32 item1 = 5 [json_name = "item_1"];
+  // Item2 identifies the item in inventory slot 2; zero means empty.
+  uint32 item2 = 6 [json_name = "item_2"];
+  // Item3 identifies the item in inventory slot 3; zero means empty.
+  uint32 item3 = 7 [json_name = "item_3"];
+  // Item4 identifies the item in inventory slot 4; zero means empty.
+  uint32 item4 = 8 [json_name = "item_4"];
+  // Item5 identifies the item in inventory slot 5; zero means empty.
+  uint32 item5 = 9 [json_name = "item_5"];
+  // Kills counts enemy hero kills.
+  uint32 kills = 10 [json_name = "kills"];
+  // Deaths counts deaths.
+  uint32 deaths = 11 [json_name = "deaths"];
+  // Assists counts assisted hero kills.
+  uint32 assists = 12 [json_name = "assists"];
+  // LeaverStatus is Valve's participation and abandonment status.
+  uint32 leaver_status = 13 [json_name = "leaver_status"];
+  // GoldRemaining is unspent gold at match end.
+  uint32 gold_remaining = 14 [json_name = "gold"];
+  // LastHits counts last hits.
+  uint32 last_hits = 15 [json_name = "last_hits"];
+  // Denies counts denied allied units.
+  uint32 denies = 16 [json_name = "denies"];
+  // Gpm is average gold earned per minute.
+  uint32 gpm = 17 [json_name = "gold_per_min"];
+  // Xpm is average experience earned per minute.
+  uint32 xpm = 18 [json_name = "xp_per_min"];
+  // GoldSpent is the total gold spent during the match.
+  uint32 gold_spent = 19 [json_name = "gold_spent"];
+  // HeroDamage is total damage dealt to enemy heroes.
+  uint32 hero_damage = 20 [json_name = "hero_damage"];
+  // TowerDamage is total damage dealt to enemy buildings.
+  uint32 tower_damage = 21 [json_name = "tower_damage"];
+  // HeroHealing is total healing applied to heroes.
+  uint32 hero_healing = 22 [json_name = "hero_healing"];
+  // Level is the level reported by the game.
+  uint32 level = 23 [json_name = "level"];
+  // Abilities contains ability upgrades in purchase order.
+  repeated Ability abilities = 24 [json_name = "ability_upgrades"];
+  // Units contains additional controlled units with separate inventories.
+  repeated Unit units = 25 [json_name = "additional_units"];
+}
+
+// Ability records one Dota ability upgrade.
+message Ability {
+  // Id identifies the upgraded ability.
+  uint32 id = 1 [json_name = "ability"];
+  // TimeUpgraded is the upgrade time relative to game start, in seconds.
+  int32 time_upgraded = 2 [json_name = "time"];
+  // Level is the hero level when the upgrade was purchased.
+  uint32 level = 3 [json_name = "level"];
+}
+
+// Unit records a controlled Dota unit's final inventory.
+message Unit {
+  // Name is the internal unit name.
+  string name = 1 [json_name = "unitname"];
+  // Item0 identifies the item in inventory slot 0; zero means empty.
+  uint32 item0 = 2 [json_name = "item_0"];
+  // Item1 identifies the item in inventory slot 1; zero means empty.
+  uint32 item1 = 3 [json_name = "item_1"];
+  // Item2 identifies the item in inventory slot 2; zero means empty.
+  uint32 item2 = 4 [json_name = "item_2"];
+  // Item3 identifies the item in inventory slot 3; zero means empty.
+  uint32 item3 = 5 [json_name = "item_3"];
+  // Item4 identifies the item in inventory slot 4; zero means empty.
+  uint32 item4 = 6 [json_name = "item_4"];
+  // Item5 identifies the item in inventory slot 5; zero means empty.
+  uint32 item5 = 7 [json_name = "item_5"];
+}
+
+// PickBan records one ordered Dota draft action.
+message PickBan {
+  // IsPick distinguishes a pick from a ban.
+  bool is_pick = 1 [json_name = "is_pick"];
+  // HeroId identifies the hero in the game's definitions.
+  uint32 hero_id = 2 [json_name = "hero_id"];
+  // Team is the drafting side: 0 for Radiant or 1 for Dire.
+  uint32 team = 3 [json_name = "team"];
+  // Order is the action's zero-based position in the draft.
+  uint32 order = 4 [json_name = "order"];
+}

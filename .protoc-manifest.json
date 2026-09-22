@@ -91,6 +91,24 @@
         "tf2/protocol/protobuf/system.proto",
         "tf2/protocol/protobuf/tf.proto"
       ]
+    },
+    "github.com/paralin/go-steam/web": {
+      "hash": "27785452c17fae83f26df40d20f57a03c2a758b24fc625ffec08e8905d12b7a3",
+      "generatedFiles": [
+        "web/types.pb.go"
+      ],
+      "protoFiles": [
+        "web/types.proto"
+      ]
+    },
+    "github.com/paralin/go-steam/web/dota": {
+      "hash": "e8f553e7bf0cd49f7881d2f7122b7c1c880c19043cf1b6177335d5b18ddbbf6c",
+      "generatedFiles": [
+        "web/dota/types.pb.go"
+      ],
+      "protoFiles": [
+        "web/dota/types.proto"
+      ]
     }
   }
 }
