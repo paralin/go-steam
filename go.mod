@@ -3,8 +3,8 @@ module github.com/paralin/go-steam
 go 1.26.0
 
 require (
-	github.com/aperturerobotics/fastjson v0.1.2-0.20260705010846-94f343f5bb34
-	github.com/aperturerobotics/protobuf-go-lite v0.18.1-0.20260922073011-561b6c171b0f
+	github.com/aperturerobotics/fastjson v0.1.2-0.20261021211904-de4eaec00660
+	github.com/aperturerobotics/protobuf-go-lite v0.19.0
 	github.com/davecgh/go-spew v1.1.1
 	github.com/pkg/errors v0.9.1
 )
